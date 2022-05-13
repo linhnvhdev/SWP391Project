@@ -5,8 +5,6 @@
  */
 package Controller;
 
-import Dal.AccountDBContext;
-import Model.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -18,7 +16,21 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Linhnvhdev
  */
-public class RegisterController extends HttpServlet {
+public class HomeController extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("View/home.jsp").forward(request, response);
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -32,7 +44,7 @@ public class RegisterController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("View/register.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -46,24 +58,7 @@ public class RegisterController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String retypePassword = request.getParameter("repassword");
-        AccountDBContext accDB = new AccountDBContext();
-        Account acc = accDB.getAccount(username);
-        // account with that username already exist
-        if(acc != null){
-            request.setAttribute("errorMessage", "Account already exist");
-        }
-        // retypePassword not match with password
-        else if(password.compareTo(retypePassword) != 0) {
-            request.setAttribute("errorMessage", "retype password not match");
-        }
-        else{
-            accDB.insertAccount(username,password);
-            request.setAttribute("successMessage", "register successfully");
-        }
-        request.getRequestDispatcher("View/register.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

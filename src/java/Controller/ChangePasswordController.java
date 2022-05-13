@@ -54,19 +54,20 @@ public class ChangePasswordController extends HttpServlet {
         Account acc = accDB.getAccount(username,password);
         // account with that username not exist
         if(acc == null){
-            response.getWriter().write("Account dont exist or wrong password");
+            request.setAttribute("errorMessage", "Account dont exist or wrong password");
         }
         else if(password.compareTo(newPassword) == 0){
-            response.getWriter().write("new password is the same as current password");
+            request.setAttribute("errorMessage", "new password is the same as current password");
         }
         // retypePassword not match with password
         else if(newPassword.compareTo(reNewPassword) != 0) {
-            response.getWriter().write("retype password not match");
+            request.setAttribute("errorMessage", "retype password not match");
         }
         else{
             accDB.updateAccount(username,newPassword);
-            response.getWriter().write("change password successful");
+            request.setAttribute("successMessage", "change password successfully");
         }
+        request.getRequestDispatcher("View/chgpwd.jsp").forward(request, response);
     }
 
     /**

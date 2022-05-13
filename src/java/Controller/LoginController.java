@@ -32,6 +32,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.getSession().invalidate();
         request.getRequestDispatcher("View/login.jsp").forward(request, response);
     }
 
@@ -52,10 +53,11 @@ public class LoginController extends HttpServlet {
         Account acc = accDB.getAccount(username, password);
         if(acc != null){
             request.getSession().setAttribute("account", acc);
-            response.getWriter().write("login successful");
+            response.sendRedirect("home");
         }
         else{
-            response.getWriter().print("Login failed");
+            request.setAttribute("errorMessage","Login failed");
+            request.getRequestDispatcher("View/login.jsp").forward(request, response);
         }
     }
 
