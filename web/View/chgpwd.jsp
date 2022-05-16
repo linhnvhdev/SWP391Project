@@ -24,7 +24,7 @@
             Password: <input type="password" name="password"><br>
             New Password: <input type="password" name="newPassword"><br>
             Retype Password: <input type="password" name="reNewPassword"><br>
-            <input type="submit" value="Register"><br>
+            <input type="submit" value="change to password"><br>
             <a href="login">back to login</a>
         </form>
     </body>

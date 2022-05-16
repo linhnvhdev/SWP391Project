@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import Util.SystemMessage;
 
 /**
  *
@@ -54,18 +55,18 @@ public class ChangePasswordController extends HttpServlet {
         Account acc = accDB.getAccount(username,password);
         // account with that username not exist
         if(acc == null){
-            request.setAttribute("errorMessage", "Account dont exist or wrong password");
+            request.setAttribute("errorMessage", SystemMessage.ACCOUNT_WRONG);
         }
         else if(password.compareTo(newPassword) == 0){
             request.setAttribute("errorMessage", "new password is the same as current password");
         }
         // retypePassword not match with password
         else if(newPassword.compareTo(reNewPassword) != 0) {
-            request.setAttribute("errorMessage", "retype password not match");
+            request.setAttribute("errorMessage", SystemMessage.RETYPE_PASSWORD_WRONG);
         }
         else{
             accDB.updateAccount(username,newPassword);
-            request.setAttribute("successMessage", "change password successfully");
+            request.setAttribute("successMessage", SystemMessage.CHANGE_PASSWORD_SUCCESS);
         }
         request.getRequestDispatcher("View/chgpwd.jsp").forward(request, response);
     }

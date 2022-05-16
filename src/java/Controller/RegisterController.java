@@ -9,17 +9,19 @@ import Dal.AccountDBContext;
 import Model.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import Util.SystemMessage;
 
 /**
  *
  * @author Linhnvhdev
  */
 public class RegisterController extends HttpServlet {
-
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -49,19 +51,30 @@ public class RegisterController extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String retypePassword = request.getParameter("repassword");
+        String name = request.getParameter("name");
+        String gmail = request.getParameter("gmail");
+        String gender = request.getParameter("gender");
+        String dob = request.getParameter("dob");
+        String role = request.getParameter("role");
         AccountDBContext accDB = new AccountDBContext();
         Account acc = accDB.getAccount(username);
         // account with that username already exist
         if(acc != null){
-            request.setAttribute("errorMessage", "Account already exist");
+            request.setAttribute("errorMessage", SystemMessage.ACCOUNT_EXIST);
         }
         // retypePassword not match with password
         else if(password.compareTo(retypePassword) != 0) {
-            request.setAttribute("errorMessage", "retype password not match");
+            request.setAttribute("errorMessage", SystemMessage.RETYPE_PASSWORD_WRONG);
         }
         else{
-            accDB.insertAccount(username,password);
-            request.setAttribute("successMessage", "register successfully");
+            // User validation
+            String nameValid = name;
+            String gmailValid = gmail;
+            boolean genderValid = Boolean.parseBoolean(gender);
+            Date dobValid = Date.valueOf(dob);
+            int roleValid = Integer.parseInt(role); 
+            accDB.insertAccount(username,password,nameValid,gmailValid,genderValid,dobValid,roleValid);
+            request.setAttribute("successMessage", SystemMessage.REGISTER_SUCCESS);
         }
         request.getRequestDispatcher("View/register.jsp").forward(request, response);
     }

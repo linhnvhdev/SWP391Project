@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import Util.SystemMessage;
 
 /**
  *
@@ -56,7 +57,7 @@ public class LoginController extends HttpServlet {
             response.sendRedirect("home");
         }
         else{
-            request.setAttribute("errorMessage","Login failed");
+            request.setAttribute("errorMessage",SystemMessage.LOGIN_FAILED);
             request.getRequestDispatcher("View/login.jsp").forward(request, response);
         }
     }
