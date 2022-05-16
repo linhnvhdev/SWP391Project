@@ -14,13 +14,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import Util.SystemMessage;
 
 /**
  *
  * @author Linhnvhdev
  */
 public class RegisterController extends HttpServlet {
-
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -59,11 +60,11 @@ public class RegisterController extends HttpServlet {
         Account acc = accDB.getAccount(username);
         // account with that username already exist
         if(acc != null){
-            request.setAttribute("errorMessage", "Account already exist");
+            request.setAttribute("errorMessage", SystemMessage.ACCOUNT_EXIST);
         }
         // retypePassword not match with password
         else if(password.compareTo(retypePassword) != 0) {
-            request.setAttribute("errorMessage", "retype password not match");
+            request.setAttribute("errorMessage", SystemMessage.RETYPE_PASSWORD_WRONG);
         }
         else{
             // User validation
@@ -73,7 +74,7 @@ public class RegisterController extends HttpServlet {
             Date dobValid = Date.valueOf(dob);
             int roleValid = Integer.parseInt(role); 
             accDB.insertAccount(username,password,nameValid,gmailValid,genderValid,dobValid,roleValid);
-            request.setAttribute("successMessage", "register successfully");
+            request.setAttribute("successMessage", SystemMessage.REGISTER_SUCCESS);
         }
         request.getRequestDispatcher("View/register.jsp").forward(request, response);
     }
