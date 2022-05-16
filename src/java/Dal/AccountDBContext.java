@@ -6,6 +6,7 @@
 package Dal;
 
 import Model.Account;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -87,5 +88,35 @@ public class AccountDBContext extends DBContext {
         } catch (SQLException ex) {
             Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void insertAccount(String username, String password, String name, String gmail, boolean gender, Date dob, int role) {
+        try {
+            connection.setAutoCommit(false);
+            UserDBContext userDB = new UserDBContext();
+            int userID = userDB.insertUser(name, gmail, gender, dob, role);
+            String sql="INSERT INTO [SWP391Project].[dbo].[Account]\n" +
+            "           ([Username]\n" +
+            "           ,[Password]\n" +
+            "           ,[UserId])\n" +
+            "     VALUES\n" +
+            "           (?\n" +
+            "           ,?\n" +
+            "           ,?)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, username);
+            stm.setString(2, password);
+            stm.setInt(3, userID);
+            stm.executeUpdate();
+            connection.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
+        
     }
 }

@@ -9,6 +9,7 @@ import Dal.AccountDBContext;
 import Model.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -49,6 +50,11 @@ public class RegisterController extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String retypePassword = request.getParameter("repassword");
+        String name = request.getParameter("name");
+        String gmail = request.getParameter("gmail");
+        String gender = request.getParameter("gender");
+        String dob = request.getParameter("dob");
+        String role = request.getParameter("role");
         AccountDBContext accDB = new AccountDBContext();
         Account acc = accDB.getAccount(username);
         // account with that username already exist
@@ -60,7 +66,13 @@ public class RegisterController extends HttpServlet {
             request.setAttribute("errorMessage", "retype password not match");
         }
         else{
-            accDB.insertAccount(username,password);
+            // User validation
+            String nameValid = name;
+            String gmailValid = gmail;
+            boolean genderValid = Boolean.parseBoolean(gender);
+            Date dobValid = Date.valueOf(dob);
+            int roleValid = Integer.parseInt(role); 
+            accDB.insertAccount(username,password,nameValid,gmailValid,genderValid,dobValid,roleValid);
             request.setAttribute("successMessage", "register successfully");
         }
         request.getRequestDispatcher("View/register.jsp").forward(request, response);

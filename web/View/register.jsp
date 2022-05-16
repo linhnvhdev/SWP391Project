@@ -23,6 +23,15 @@
             Username: <input type="text" name="username"><br>
             Password: <input type="password" name="password"><br>
             Retype Password: <input type="password" name="repassword"><br>
+            Name: <input type="text" name="name" required><br>
+            Gmail: <input type="gmail" name="gmail"><br> 
+            Gender: <input type="radio" name="gender" value="True" default> Male
+                    <input type="radio" name="gender" value="False" > Female<br>
+            DOB: <input type="date" name="dob"><br>
+            Role: <select name="role">
+                    <option value="1">Learner</option>
+                    <option value="2">Course creator</option>
+            </select><br>
             <input type="submit" value="Register"><br>
             <a href="login">back to login</a>
         </form>

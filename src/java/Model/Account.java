@@ -11,42 +11,41 @@ package Model;
  */
 public class Account {
     private String username;
-    private String email;
     private String password;
+    private User user;
 
     public Account() {
     }
 
-    public Account(String username, String email, String password) {
+    public Account(String username, String password, User user) {
         this.username = username;
-        this.email = email;
         this.password = password;
+        this.user = user;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     public String getPassword() {
         return password;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public void setUsername(String username) {
         this.username = username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     
 }
