@@ -1,0 +1,78 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : May 18, 2022, 4:15:13 PM
+    Author     : sioni
+*/
+body{
+    margin:0;
+    padding:0;
+    color: black;
+}
+
+
+.background-img  {
+    background-image: url("../img/background3.jpg");
+    background-size: cover; /* Resize the background image to cover the entire container */
+    background-repeat: no-repeat;
+    height: 100vh;
+
+}
+
+form
+{
+
+    display: inline-block;
+    margin-left: 40%;
+    margin-right: auto;
+    text-align: center;
+    margin-top:20%;
+    font-size: 30px;
+
+}
+
+input[type=password] {
+    width: 20em;  height: 2em;
+    margin-top: 5px;
+    margin-bottom:5px;
+}
+
+input[type=text] {
+    width: 20em;  height: 2em;
+    margin-top:5px;
+    margin-bottom:5px;
+}
+input[type=submit] {
+    width: 200px;
+    height: 50px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    margin-left: 30px;
+    padding-right: 20px;
+    background-image: url("../img/meo.gif");
+
+}
+a{
+    text-align: center;
+}
+a:link {
+    color: Blue;
+    background-color: transparent;
+    text-decoration: none;
+}
+a:visited {
+    color: Black;
+    background-color: transparent;
+    text-decoration: none;
+}
+a:hover {
+    color: red;
+    background-color: transparent;
+    text-decoration: underline;
+}
+#register1:hover{
+    font-size: 20px;
+}

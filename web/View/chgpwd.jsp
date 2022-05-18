@@ -11,8 +11,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link href="css/cssforchgpwd.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+          <div class="background-img">
         <form action="chgpwd" method="POST">
             <c:if test="${requestScope.errorMessage != null}">
                 <div style="color: red">${requestScope.errorMessage}</div>
@@ -24,8 +26,9 @@
             Password: <input type="password" name="password"><br>
             New Password: <input type="password" name="newPassword"><br>
             Retype Password: <input type="password" name="reNewPassword"><br>
-            <input type="submit" value="change to password"><br>
+            <input id="register1" type="submit"  style="color:white;"value="change to password"><br>
             <a href="login">back to login</a>
         </form>
+          </div>
     </body>
 </html>
