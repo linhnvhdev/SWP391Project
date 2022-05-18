@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Linhnvhdev
  */
-public class HomeController extends HttpServlet {
+public class CourseDetailController extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -36,12 +36,12 @@ public class HomeController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
+        int courseId = Integer.parseInt(request.getParameter("courseId"));
         User user = acc.getUser();
         CourseDBContext courseDB = new CourseDBContext();
-        ArrayList<Course> courseList = courseDB.getCourseList(user.getId());
-        request.setAttribute("courseList", courseList);
-        request.setAttribute("user", user);
-        request.getRequestDispatcher("View/home.jsp").forward(request, response);
+        Course course = courseDB.getCourse(courseId);
+        request.setAttribute("course",course);
+        request.getRequestDispatcher("View/courseDetail.jsp").forward(request, response);
     }
 
     /**
