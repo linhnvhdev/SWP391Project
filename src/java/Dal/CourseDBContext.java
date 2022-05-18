@@ -48,7 +48,7 @@ public class CourseDBContext extends DBContext {
             "      ,[Course_Name]\n" +
             "      ,[Creator_ID]\n" +
             "  FROM [SWP391Project].[dbo].[Course]\n" +
-            "  WHERE Course_ID = 3";
+            "  WHERE Course_ID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, courseId);
             ResultSet rs = stm.executeQuery();
@@ -64,5 +64,39 @@ public class CourseDBContext extends DBContext {
             Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public int getNumFlashcard(int courseId) {
+        try {
+            String sql="SELECT COUNT(*)\n" +
+            "FROM Flashcard\n" +
+            "WHERE Course_ID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, courseId);
+            ResultSet rs = stm.executeQuery();
+            if(rs.next()){
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    public int getNumQuestion(int courseId) {
+        try {
+            String sql="SELECT COUNT(*)\n" +
+            "FROM Question\n" +
+            "WHERE Course_ID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, courseId);
+            ResultSet rs = stm.executeQuery();
+            if(rs.next()){
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 }
