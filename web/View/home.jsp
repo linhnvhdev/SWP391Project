@@ -11,7 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Trang chủ</title>
-        <link href="${pageContext.request.contextPath}/View/css/homeStyle.css" rel="stylesheet" type="text/css"/>
+        <link href="View/css/homeStyle.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <div class="header">
@@ -20,7 +20,7 @@
         </div>
         <div class="main-content">
             <div class="left">
-                <img src="${pageContext.request.contextPath}/View/imgs/AvatarExample.png" alt="avatar">
+                <img src="View/imgs/AvatarExample.png" alt="avatar">
                 <table border="solid 1px">
                     <tr>
                         <td>Name</td><td>${requestScope.user.name}</td>

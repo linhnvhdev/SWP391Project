@@ -40,7 +40,11 @@ public class CourseDetailController extends HttpServlet {
         User user = acc.getUser();
         CourseDBContext courseDB = new CourseDBContext();
         Course course = courseDB.getCourse(courseId);
+        int numFlashcard = courseDB.getNumFlashcard(courseId);
+        int numQuestion = courseDB.getNumQuestion(courseId);
         request.setAttribute("course",course);
+        request.setAttribute("numFlashcard",numFlashcard);
+        request.setAttribute("numQuestion",numQuestion);
         request.getRequestDispatcher("View/courseDetail.jsp").forward(request, response);
     }
 
