@@ -1,0 +1,106 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : May 11, 2022, 8:27:17 PM
+    Author     : sioni
+*/
+
+body{
+    margin:0;
+
+    padding:0;
+}
+
+
+.background-img  {
+    background-image: url("../img/background.jpg");
+    background-size: cover; /* Resize the background image to cover the entire container */
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+
+.login {
+    width: 400px;
+    height: 300px;
+    border-radius: 10px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    outline: none;
+
+
+}
+input {
+    width: 200px;
+    height: 40px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+
+    padding-left: 20px;
+}
+
+div.form
+{
+    display: block;
+    text-align: center;
+}
+form {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+   
+}
+input[type=submit] {
+    width: 200px;
+    height: 50px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    margin-left: 30px;
+    padding-right: 20px;
+    background-image: url("../img/giphy.gif");
+}
+#login1:hover{
+    font-size: 30px;
+}
+a{
+    text-align: center;
+}
+a:link {
+    color: Blue;
+    background-color: transparent;
+    text-decoration: none;
+}
+a:visited {
+    color: Black;
+    background-color: transparent;
+    text-decoration: none;
+}
+a:hover {
+    color: red;
+    background-color: transparent;
+    text-decoration: underline;
+}
+h1{
+    margin-top: 0px;
+    width: 300px;
+    height: 30px;
+    padding-top: 200px;
+    padding-bottom: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+ 
+}
+.rainbow-text {
+    width: 400px;
+    background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
+    color: transparent;
+
+    -webkit-background-clip: text;
+
+}
+
