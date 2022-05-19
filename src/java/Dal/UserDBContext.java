@@ -5,6 +5,7 @@
  */
 package Dal;
 
+import Model.User;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -55,5 +56,38 @@ public class UserDBContext extends DBContext {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
+    }
+    
+    public User getUser(int userId){
+        try {
+            String sql="SELECT [User_ID]\n" +
+                    "      ,[Name]\n" +
+                    "      ,[Mail]\n" +
+                    "      ,[Gender]\n" +
+                    "      ,[Dob]\n" +
+                    "      ,[Exp]\n" +
+                    "      ,[Level]\n" +
+                    "      ,[Role_ID]\n" +
+                    "  FROM [SWP391Project].[dbo].[User]\n" +
+                    "  WHERE [User_ID]=?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, userId);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                User user = new User();
+                user.setId(rs.getInt("User_ID"));
+                user.setName(rs.getString("Name"));
+                user.setGmail(rs.getString("Mail"));
+                user.setGender(rs.getBoolean("Gender"));
+                user.setDob(rs.getDate("Dob"));
+                user.setExp(rs.getInt("Exp"));
+                user.setLevel(rs.getInt("Level"));
+                user.setRole(rs.getInt("Role_ID"));
+                return user;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }
