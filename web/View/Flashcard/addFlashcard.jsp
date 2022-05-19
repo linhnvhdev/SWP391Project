@@ -11,10 +11,14 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cssforflashcard.css" />
     </head>
     <body>
-        <a href="../home">Back to home</a><br>
-        <a href="../course?courseId=${requestScope.courseId}">Back to course</a><br>
+        <div class="header">
+        <a class="column" href="../home">Back to home</a>
+        <a class="column" href="../course?courseId=${requestScope.courseId}">Back to course</a>
+        </div>
+      
         <form action="add" method="POST">
             <c:if test="${requestScope.courseList.size() == 0}">
                 <h1>You don't have any course to create flashcard</h1>
@@ -32,5 +36,6 @@
                 <input type="submit" value="Add">
             </c:if>
         </form>
+
     </body>
 </html>

@@ -10,12 +10,18 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cssforadd.css" />
+
     </head>
     <body>
+
+         <div class= "background-img">
         <a href="../home">Back to home</a><br>
         <form action="add" method="POST">
             Course name: <input type="text" name="courseName">
-            <input type="submit" value="Create course">
+            <input id="create1" type="submit" value="Create course">
         </form>
-    </body>
+        
+         </div>
+    </body> 
 </html>

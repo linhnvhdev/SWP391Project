@@ -8,7 +8,7 @@ and open the template in the editor.
     Author     : Linhnvhdev
 */
 body{
-     margin:0;
+    margin:0;
     padding:0;
 }
 
@@ -40,28 +40,29 @@ body{
 .table{
     margin-left: 35%;
     font-size: 130%;
-    
+
+
 }
 .column {
-  float: left;
-  width: 50%;
-  text-align: center;
-  font-size: 30px;
+    float: left;
+    width: 50%;
+    text-align: center;
+    font-size: 30px;
 }
 
 .row:after {
-  content: "";
-  display: table;
-  clear: both;
+    content: "";
+    display: table;
+    clear: both;
 }
 
 a:link {
-    color: Blue;
+    color: white;
     background-color: transparent;
     text-decoration: none;
 }
 a:visited {
-    color: Black;
+    color: black;
     background-color: transparent;
     text-decoration: none;
 }
