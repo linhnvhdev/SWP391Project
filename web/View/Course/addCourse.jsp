@@ -12,6 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <a href="../home">Back to home</a><br>
         <form action="add" method="POST">
             Course name: <input type="text" name="courseName">
             <input type="submit" value="Create course">
