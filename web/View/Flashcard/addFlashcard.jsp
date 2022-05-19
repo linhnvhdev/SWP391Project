@@ -13,6 +13,8 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <a href="../home">Back to home</a><br>
+        <a href="../course?courseId=${requestScope.courseId}">Back to course</a><br>
         <form action="add" method="POST">
             <c:if test="${requestScope.courseList.size() == 0}">
                 <h1>You don't have any course to create flashcard</h1>

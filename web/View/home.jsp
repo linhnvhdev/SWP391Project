@@ -26,7 +26,9 @@
                 <c:forEach var="course" items="${requestScope.courseList}">
                     <a href="course?courseId=${course.id}">${course.name}</a><br>
                 </c:forEach>
-
+                <c:if test="${sessionScope.account.user.role >= 2}">
+                    <a href="course/add"><button>Add new course</button></a>
+                </c:if>
             </div>
             <div class="right">
                 <img style="width: 512px; height: 512px;"src="img/char.png" alt="avatar"/>

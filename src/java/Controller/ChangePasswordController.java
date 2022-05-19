@@ -67,6 +67,7 @@ public class ChangePasswordController extends HttpServlet {
         else{
             accDB.updateAccount(username,newPassword);
             request.setAttribute("successMessage", SystemMessage.CHANGE_PASSWORD_SUCCESS);
+            request.getSession().invalidate();
         }
         request.getRequestDispatcher("View/chgpwd.jsp").forward(request, response);
     }

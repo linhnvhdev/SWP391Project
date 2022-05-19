@@ -6,6 +6,7 @@
 package Controller.Course;
 
 import Dal.CourseDBContext;
+import Dal.UserCourseDBContext;
 import Model.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -50,6 +51,8 @@ public class AddCourseController extends HttpServlet {
         String courseName = request.getParameter("courseName");
         CourseDBContext courseDB = new CourseDBContext();
         int courseId = courseDB.addCourse(courseName,acc.getUser().getId());
+        UserCourseDBContext userCourseDB = new UserCourseDBContext();
+        userCourseDB.insertUserCourse(acc.getUser().getId(), courseId);
         response.sendRedirect("../course?courseId="+courseId);
     }
 
