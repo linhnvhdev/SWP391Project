@@ -24,7 +24,7 @@
 
                 <h3>Course list:</h3>
                 <c:forEach var="course" items="${requestScope.courseList}">
-                    <a href="#">${course.name}</a><br>
+                    <a href="course?courseId=${course.id}">${course.name}</a><br>
                 </c:forEach>
 
             </div>

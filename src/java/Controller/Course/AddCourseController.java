@@ -3,15 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package Controller.Course;
 
 import Dal.CourseDBContext;
 import Model.Account;
-import Model.Course;
-import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Linhnvhdev
  */
-public class CourseDetailController extends HttpServlet {
+public class AddCourseController extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -35,17 +32,7 @@ public class CourseDetailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Account acc = (Account) request.getSession().getAttribute("account");
-        int courseId = Integer.parseInt(request.getParameter("courseId"));
-        User user = acc.getUser();
-        CourseDBContext courseDB = new CourseDBContext();
-        Course course = courseDB.getCourse(courseId);
-        int numFlashcard = courseDB.getNumFlashcard(courseId);
-        int numQuestion = courseDB.getNumQuestion(courseId);
-        request.setAttribute("course",course);
-        request.setAttribute("numFlashcard",numFlashcard);
-        request.setAttribute("numQuestion",numQuestion);
-        request.getRequestDispatcher("View/courseDetail.jsp").forward(request, response);
+        request.getRequestDispatcher("../View/Course/addCourse.jsp").forward(request, response);
     }
 
     /**
@@ -59,7 +46,11 @@ public class CourseDetailController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        Account acc = (Account) request.getSession().getAttribute("account");
+        String courseName = request.getParameter("courseName");
+        CourseDBContext courseDB = new CourseDBContext();
+        int courseId = courseDB.addCourse(courseName,acc.getUser().getId());
+        response.sendRedirect("../course?courseId="+courseId);
     }
 
     /**

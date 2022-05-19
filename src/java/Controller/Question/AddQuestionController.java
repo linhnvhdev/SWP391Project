@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package Controller.Question;
 
+import Dal.AnswerDBContext;
 import Dal.CourseDBContext;
+import Dal.QuestionDBContext;
 import Model.Account;
 import Model.Course;
 import Model.User;
@@ -21,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Linhnvhdev
  */
-public class CourseDetailController extends HttpServlet {
+public class AddQuestionController extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -36,16 +38,15 @@ public class CourseDetailController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
-        int courseId = Integer.parseInt(request.getParameter("courseId"));
+        String courseIdRaw = request.getParameter("courseId");
+        int courseId = -1;
+        if(courseIdRaw != null) courseId = Integer.parseInt(courseIdRaw);
         User user = acc.getUser();
         CourseDBContext courseDB = new CourseDBContext();
-        Course course = courseDB.getCourse(courseId);
-        int numFlashcard = courseDB.getNumFlashcard(courseId);
-        int numQuestion = courseDB.getNumQuestion(courseId);
-        request.setAttribute("course",course);
-        request.setAttribute("numFlashcard",numFlashcard);
-        request.setAttribute("numQuestion",numQuestion);
-        request.getRequestDispatcher("View/courseDetail.jsp").forward(request, response);
+        ArrayList<Course> courseList = courseDB.getCourseListByCreator(user.getId());
+        request.setAttribute("courseId", courseId);
+        request.setAttribute("courseList", courseList);
+        request.getRequestDispatcher("../View/Question/addQuestion.jsp").forward(request, response);      
     }
 
     /**
@@ -59,7 +60,20 @@ public class CourseDetailController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        int courseId = Integer.parseInt(request.getParameter("courseId"));
+        String question = request.getParameter("question");
+        String[] answers = request.getParameterValues("answer");
+        QuestionDBContext questionDB = new QuestionDBContext();
+        AnswerDBContext answerDB = new AnswerDBContext();
+        // add question to database
+        int questionId = questionDB.addQuestion(question,courseId);
+        // add answer to that question in the database
+        for(int i = 0;i < answers.length;i++){
+            String answer = answers[i];
+            boolean isCorrect = Boolean.parseBoolean(request.getParameter("isCorrect"+(i+1)));
+            answerDB.addAnswer(answer,questionId,isCorrect);
+        }
+        response.sendRedirect("../question/add?courseId="+courseId);
     }
 
     /**
