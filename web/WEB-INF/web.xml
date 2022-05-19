@@ -25,8 +25,8 @@
         <servlet-class>Controller.HomeController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>QuestionController</servlet-name>
-        <servlet-class>Controller.QuestionController</servlet-class>
+        <servlet-name>RevisionController</servlet-name>
+        <servlet-class>Controller.RevisionController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -45,8 +45,8 @@
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>QuestionController</servlet-name>
-        <url-pattern>/QuestionController</url-pattern>
+        <servlet-name>RevisionController</servlet-name>
+        <url-pattern>/RevisionController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

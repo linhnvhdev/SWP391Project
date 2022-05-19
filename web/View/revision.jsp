@@ -14,7 +14,8 @@
         <title>JSP Page</title>
     </head>
     <body>
-        ${requestScope.done}
-        ${requestScope.notYet}
+        <h1>Revision</h1>
+        Total Question: ${requestScope.done + requestScope.notYet} 
+        Remaining Question: ${requestScope.notYet}
     </body>
 </html>
