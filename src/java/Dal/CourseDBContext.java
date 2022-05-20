@@ -18,6 +18,27 @@ import java.util.logging.Logger;
  * @author Linhnvhdev
  */
 public class CourseDBContext extends DBContext {
+    public ArrayList<Course> getCourseList(){
+        ArrayList<Course> courseList = new ArrayList<>();
+        try {
+            String sql="SELECT Course_ID,Course_Name,Creator_ID\n" +
+                    "FROM Course";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            UserDBContext userDB = new UserDBContext();
+            while(rs.next()){
+                Course c = new Course();
+                c.setId(rs.getInt("Course_ID"));
+                c.setName(rs.getString("Course_Name"));
+                c.setCreator(userDB.getUser(rs.getInt("Creator_ID")));
+                courseList.add(c);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return courseList;
+    }
+    
     public ArrayList<Course> getCourseList(int userId){
         ArrayList<Course> courseList = new ArrayList<>();
         try {
