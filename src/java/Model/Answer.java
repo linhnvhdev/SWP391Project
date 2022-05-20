@@ -13,10 +13,26 @@ public class Answer {
     private int id;
     private String detail;
     private Question question;
-
+    private boolean isCorrect;
     public Answer() {
     }
 
+    public Answer(int id, String detail, Question question, boolean isCorrect) {
+        this.id = id;
+        this.detail = detail;
+        this.question = question;
+        this.isCorrect = isCorrect;
+    }
+
+    public boolean isIsCorrect() {
+        return isCorrect;
+    }
+
+    public void setIsCorrect(boolean isCorrect) {
+        this.isCorrect = isCorrect;
+    }
+    
+    
     public Answer(int id, String detail, Question question) {
         this.id = id;
         this.detail = detail;
