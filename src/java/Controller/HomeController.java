@@ -6,6 +6,7 @@
 package Controller;
 
 import Dal.CourseDBContext;
+import Dal.UserDBContext;
 import Model.Account;
 import Model.Course;
 import Model.User;
@@ -36,7 +37,9 @@ public class HomeController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
-        User user = acc.getUser();
+        UserDBContext userDB = new UserDBContext();
+        User user = userDB.getUser(acc.getUser().getId());
+        
         CourseDBContext courseDB = new CourseDBContext();
         ArrayList<Course> courseList = courseDB.getCourseList(user.getId());
         request.setAttribute("courseList", courseList);
