@@ -24,6 +24,10 @@
         <filter-name>LoginFilter</filter-name>
         <servlet-name>HomeController</servlet-name>
     </filter-mapping>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <servlet-name>ExamController</servlet-name>
+    </filter-mapping>
     <servlet>
         <servlet-name>LoginController</servlet-name>
         <servlet-class>Controller.LoginController</servlet-class>
@@ -55,6 +59,10 @@
     <servlet>
         <servlet-name>AddCourseController</servlet-name>
         <servlet-class>Controller.Course.AddCourseController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ExamController</servlet-name>
+        <servlet-class>Controller.Exam.ExamController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -88,10 +96,12 @@
         <servlet-name>AddCourseController</servlet-name>
         <url-pattern>/course/add</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExamController</servlet-name>
+        <url-pattern>/exam</url-pattern>
+    </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>30</session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>home</welcome-file>
