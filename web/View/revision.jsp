@@ -16,6 +16,10 @@
     <body>
         <h1>Revision</h1>
         Total Question: ${requestScope.done + requestScope.notYet} 
-        Remaining Question: ${requestScope.notYet}
-    </body>
+        Remaining Question: ${requestScope.notYet}       
+        <!--        <form method="get" action="">
+                    <button type="submit">Let the hunt begin!</button>
+                </form>-->
+        <a href="RevisionQuestionController?id=${requestScope.randomID}"/>start</a>
+</body>
 </html>
