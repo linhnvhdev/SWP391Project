@@ -40,6 +40,7 @@ public class CourseDetailController extends HttpServlet {
         User user = acc.getUser();
         CourseDBContext courseDB = new CourseDBContext();
         Course course = courseDB.getCourse(courseId);
+        request.getSession().setAttribute("course", course);
         int numFlashcard = courseDB.getNumFlashcard(courseId);
         int numQuestion = courseDB.getNumQuestion(courseId);
         request.setAttribute("course",course);
@@ -59,6 +60,18 @@ public class CourseDetailController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+               Account acc = (Account) request.getSession().getAttribute("account");
+        int courseId = Integer.parseInt(request.getParameter("courseId"));
+        User user = acc.getUser();
+        CourseDBContext courseDB = new CourseDBContext();
+        Course course = courseDB.getCourse(courseId);
+        request.getSession().setAttribute("course", course);
+        int numFlashcard = courseDB.getNumFlashcard(courseId);
+        int numQuestion = courseDB.getNumQuestion(courseId);
+        request.setAttribute("course",course);
+        request.setAttribute("numFlashcard",numFlashcard);
+        request.setAttribute("numQuestion",numQuestion);
+        request.getRequestDispatcher("View/courseDetail.jsp").forward(request, response);
         
     }
 

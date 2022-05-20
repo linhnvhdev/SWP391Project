@@ -38,7 +38,7 @@
             </div>
             <div class="right">
                 <div>
-                    <a href="#"><button>Learn</button></a>
+                    <a href="flashcard"><button>Learn</button></a>
                 </div>
                 <div>
                     <a href="#"><button>Practice</button></a>
