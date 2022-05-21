@@ -15,6 +15,7 @@
     </head>
     <body>
         <div class="header">
+            <a href="home">Back to home</a>
             <a href="login">Log out</a>
             <a href="chgpwd">Change password</a>
         </div>
@@ -30,9 +31,15 @@
                     </tr>
                     <tr>
                         <td>Flashcard</td><td>${requestScope.numFlashcard}</td>
+                        <c:if test="${sessionScope.account.user.role >= 2}">
+                            <td><a href="flashcard/add?courseId=${course.id}">Add flashcard</a></td>
+                        </c:if>
                     </tr>
                     <tr>
                         <td>Question</td><td>${requestScope.numQuestion}</td>
+                        <c:if test="${sessionScope.account.user.role >= 2}">
+                            <td><a href="question/add?courseId=${course.id}">Add question</a></td>
+                        </c:if>
                     </tr>
                 </table>
             </div>

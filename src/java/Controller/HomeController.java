@@ -39,9 +39,8 @@ public class HomeController extends HttpServlet {
         Account acc = (Account) request.getSession().getAttribute("account");
         UserDBContext userDB = new UserDBContext();
         User user = userDB.getUser(acc.getUser().getId());
-        
         CourseDBContext courseDB = new CourseDBContext();
-        ArrayList<Course> courseList = courseDB.getCourseList(user.getId());
+        ArrayList<Course> courseList = courseDB.getCourseList();
         request.setAttribute("courseList", courseList);
         request.setAttribute("user", user);
         request.getRequestDispatcher("View/home.jsp").forward(request, response);

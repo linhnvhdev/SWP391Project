@@ -12,15 +12,24 @@ package Model;
 public class Question {
     private int id;
     private String detail;
-    private User course;
-
+    private Course course;
+    private Exam exam;
+    
     public Question() {
+        
     }
 
-    public Question(int id, String detail, User course) {
+    public Question(int id, String detail, Course course) {
         this.id = id;
         this.detail = detail;
         this.course = course;
+    }
+
+    public Question(int id, String detail, Course course, Exam exam) {
+        this.id = id;
+        this.detail = detail;
+        this.course = course;
+        this.exam = exam;
     }
 
     public int getId() {
@@ -31,7 +40,7 @@ public class Question {
         return detail;
     }
 
-    public User getCourse() {
+    public Course getCourse() {
         return course;
     }
 
@@ -43,9 +52,20 @@ public class Question {
         this.detail = detail;
     }
 
-    public void setCourse(User course) {
+    public void setCourse(Course course) {
         this.course = course;
     }
+
+    public Exam getExam() {
+        return exam;
+    }
+
+    public void setExam(Exam exam) {
+        this.exam = exam;
+    }
+    
+
+    
     
     
 }

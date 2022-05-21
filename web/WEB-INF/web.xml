@@ -1,5 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>Filter.LoginFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>CourseCreatorFilter</filter-name>
+        <filter-class>Filter.CourseCreatorFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CourseCreatorFilter</filter-name>
+        <servlet-name>AddCourseController</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>CourseCreatorFilter</filter-name>
+        <servlet-name>AddQuestionController</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>CourseCreatorFilter</filter-name>
+        <servlet-name>AddFlashcardController</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <servlet-name>HomeController</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <servlet-name>ExamController</servlet-name>
+    </filter-mapping>
     <servlet>
         <servlet-name>LoginController</servlet-name>
         <servlet-class>Controller.LoginController</servlet-class>
@@ -23,6 +51,22 @@
     <servlet>
         <servlet-name>FlashCardController</servlet-name>
         <servlet-class>Controller.FlashCardController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddFlashcardController</servlet-name>
+        <servlet-class>Controller.Flashcard.AddFlashcardController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddQuestionController</servlet-name>
+        <servlet-class>Controller.Question.AddQuestionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddCourseController</servlet-name>
+        <servlet-class>Controller.Course.AddCourseController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ExamController</servlet-name>
+        <servlet-class>Controller.Exam.ExamController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -48,9 +92,26 @@
         <servlet-name>FlashCardController</servlet-name>
         <url-pattern>/flashcard</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddFlashcardController</servlet-name>
+        <url-pattern>/flashcard/add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddQuestionController</servlet-name>
+        <url-pattern>/question/add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddCourseController</servlet-name>
+        <url-pattern>/course/add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExamController</servlet-name>
+        <url-pattern>/exam</url-pattern>
+    </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>30</session-timeout>
     </session-config>
+    <welcome-file-list>
+        <welcome-file>home</welcome-file>
+    </welcome-file-list>
 </web-app>

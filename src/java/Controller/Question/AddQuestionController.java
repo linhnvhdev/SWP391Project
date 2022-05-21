@@ -3,23 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package Controller.Question;
 
-import Dal.AccountDBContext;
+import Dal.AnswerDBContext;
+import Dal.CourseDBContext;
+import Dal.QuestionDBContext;
 import Model.Account;
+import Model.Course;
+import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import Util.SystemMessage;
 
 /**
  *
  * @author Linhnvhdev
  */
-public class ChangePasswordController extends HttpServlet {
+public class AddQuestionController extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -33,7 +37,16 @@ public class ChangePasswordController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("View/chgpwd.jsp").forward(request, response);
+        Account acc = (Account) request.getSession().getAttribute("account");
+        String courseIdRaw = request.getParameter("courseId");
+        int courseId = -1;
+        if(courseIdRaw != null) courseId = Integer.parseInt(courseIdRaw);
+        User user = acc.getUser();
+        CourseDBContext courseDB = new CourseDBContext();
+        ArrayList<Course> courseList = courseDB.getCourseListByCreator(user.getId());
+        request.setAttribute("courseId", courseId);
+        request.setAttribute("courseList", courseList);
+        request.getRequestDispatcher("../View/Question/addQuestion.jsp").forward(request, response);      
     }
 
     /**
@@ -47,29 +60,20 @@ public class ChangePasswordController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String newPassword = request.getParameter("newPassword");
-        String reNewPassword = request.getParameter("reNewPassword");
-        AccountDBContext accDB = new AccountDBContext();
-        Account acc = accDB.getAccount(username,password);
-        // account with that username not exist
-        if(acc == null){
-            request.setAttribute("errorMessage", SystemMessage.ACCOUNT_WRONG);
+        int courseId = Integer.parseInt(request.getParameter("courseId"));
+        String question = request.getParameter("question");
+        String[] answers = request.getParameterValues("answer");
+        QuestionDBContext questionDB = new QuestionDBContext();
+        AnswerDBContext answerDB = new AnswerDBContext();
+        // add question to database
+        int questionId = questionDB.addQuestion(question,courseId);
+        // add answer to that question in the database
+        for(int i = 0;i < answers.length;i++){
+            String answer = answers[i];
+            boolean isCorrect = Boolean.parseBoolean(request.getParameter("isCorrect"+(i+1)));
+            answerDB.addAnswer(answer,questionId,isCorrect);
         }
-        else if(password.compareTo(newPassword) == 0){
-            request.setAttribute("errorMessage", "new password is the same as current password");
-        }
-        // retypePassword not match with password
-        else if(newPassword.compareTo(reNewPassword) != 0) {
-            request.setAttribute("errorMessage", SystemMessage.RETYPE_PASSWORD_WRONG);
-        }
-        else{
-            accDB.updateAccount(username,newPassword);
-            request.setAttribute("successMessage", SystemMessage.CHANGE_PASSWORD_SUCCESS);
-            request.getSession().invalidate();
-        }
-        request.getRequestDispatcher("View/chgpwd.jsp").forward(request, response);
+        response.sendRedirect("../question/add?courseId="+courseId);
     }
 
     /**
