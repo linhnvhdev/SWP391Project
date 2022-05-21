@@ -45,7 +45,7 @@
             </div>
             <div class="right">
                 <div>
-                    <a href="#"><button>Learn</button></a>
+                    <a href="flashcard?courseId=${course.id}"><button>Learn</button></a>
                 </div>
                 <div>
                     <a href="revision?courseId=${course.id}"><button>Practice</button></a>
