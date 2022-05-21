@@ -63,8 +63,8 @@ public class ExamDBContext extends DBContext {
                 Question q = new Question();
                 q.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
                 q.setExam(examDB.getExam(rs.getInt("Course_ID")));
-                q.setQuestion_Detail(rs.getString("Question_Detail"));
-                q.setQuestion_ID(rs.getInt("Question_ID"));
+                q.setDetail(rs.getString("Question_Detail"));
+                q.setId(rs.getInt("Question_ID"));
                 questionList.add(q);
             }
         } catch (SQLException ex) {
@@ -113,8 +113,8 @@ public class ExamDBContext extends DBContext {
                 Question q = new Question();
                 q.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
                 q.setExam(examDB.getExam(rs.getInt("Course_ID")));
-                q.setQuestion_Detail(rs.getString("Question_Detail"));
-                q.setQuestion_ID(rs.getInt("Question_ID"));
+                q.setDetail(rs.getString("Question_Detail"));
+                q.setId(rs.getInt("Question_ID"));
                 return q;
             }
         } catch (SQLException ex) {
@@ -186,8 +186,8 @@ public class ExamDBContext extends DBContext {
                 Question q = new Question();
                 q.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
                 q.setExam(examDB.getExam(rs.getInt("Course_ID")));
-                q.setQuestion_Detail(rs.getString("Question_Detail"));
-                q.setQuestion_ID(rs.getInt("Question_ID"));
+                q.setDetail(rs.getString("Question_Detail"));
+                q.setId(rs.getInt("Question_ID"));
                 questionList.add(q);
             }
         } catch (SQLException ex) {
@@ -244,15 +244,17 @@ public class ExamDBContext extends DBContext {
         return null;
     }
 
-    public void updateScore(int uid, int score) {
+    public void updateScore(int eid, int uid, int score) {
         String sql = "UPDATE [User_Exam]\n"
                 + "   SET [Score] = ?\n"
-                + " WHERE User_ID = ?";
+                + " WHERE Exam_ID = ?\n"
+                + " AND User_ID = ?";
         PreparedStatement stm = null;
         try {
             stm = connection.prepareStatement(sql);
             stm.setInt(1, score);
-            stm.setInt(2, uid);
+            stm.setInt(2, eid);
+            stm.setInt(3, uid);
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ExamDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -274,14 +276,15 @@ public class ExamDBContext extends DBContext {
         }
     }
 
-    public int getScore(int uid) {
+    public int getScore(int eid, int uid) {
         try {
-            String sql = "SELECT Score\n"
+            String sql = "SELECT Score \n"
                     + "FROM User_Exam\n"
-                    + "WHERE User_ID = ?";
+                    + "WHERE Exam_ID = ?\n"
+                    + "AND [User_ID] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, uid);
-            ExamDBContext examDB = new ExamDBContext();
+            stm.setInt(1, eid);
+            stm.setInt(2, uid);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 return rs.getInt("Score");
@@ -289,7 +292,24 @@ public class ExamDBContext extends DBContext {
         } catch (SQLException ex) {
             Logger.getLogger(ExamDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return 0;
+        return 10;
+    }
+
+    public int getPassedScore(int id) {
+        try {
+            String sql = "SELECT Passed\n"
+                    + "FROM Exam\n"
+                    + "WHERE Exam_ID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("Passed");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ExamDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 10;
     }
 
 }

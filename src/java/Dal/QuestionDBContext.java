@@ -24,16 +24,15 @@ public class QuestionDBContext extends DBContext {
     public ArrayList<Question> getQuestions() {
         ArrayList<Question> questions = new ArrayList<>();
         try {
-            String sql = "select Question_ID, Question_Detail, Course_ID, isRead from [Question]";
+            String sql = "select Question_ID, Question_Detail, Course_ID from [Question]";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             CourseDBContext courseDB = new CourseDBContext();
             while (rs.next()) {
                 Question q = new Question();
-                q.setQuestion_ID(rs.getInt("Question_ID"));
+                q.setId(rs.getInt("Question_ID"));
                 q.setQuestion_Detail(rs.getString("Question_Detail"));
                 q.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
-                q.setIsRead(rs.getBoolean("isRead"));
                 questions.add(q);
             }
         } catch (SQLException ex) {
@@ -45,16 +44,16 @@ public class QuestionDBContext extends DBContext {
     public ArrayList<Question> getRemainingQuestions() {
         ArrayList<Question> questions = new ArrayList<>();
         try {
-            String sql = "select Question_ID, Question_Detail, Course_ID, isRead from [Question] where [isRead] = 0";
+            String sql = "select Question_ID, Question_Detail, Course_ID from [Question] where [isRead] = 0";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             CourseDBContext courseDB = new CourseDBContext();
             while (rs.next()) {
                 Question q = new Question();
-                q.setQuestion_ID(rs.getInt("Question_ID"));
+                q.setId(rs.getInt("Question_ID"));
                 q.setQuestion_Detail(rs.getString("Question_Detail"));
                 q.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
-                q.setIsRead(rs.getBoolean("isRead"));
+      
                 questions.add(q);
             }
         } catch (SQLException ex) {
@@ -68,7 +67,6 @@ public class QuestionDBContext extends DBContext {
             String sql = "SELECT [Question_ID]\n"
                     + "      ,[Question_Detail]\n"
                     + "      ,[Course_ID]\n"
-                    + "      ,[isRead]\n"
                     + "  FROM [dbo].[Question]"
                     + " WHERE [Question_ID] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -77,9 +75,9 @@ public class QuestionDBContext extends DBContext {
             CourseDBContext courseDB = new CourseDBContext();
             while (rs.next()) {
                 Question q = new Question();
-                q.setQuestion_ID(rs.getInt("Question_ID"));
+                q.setId(rs.getInt("Question_ID"));
                 q.setQuestion_Detail(rs.getString("Question_Detail"));
-                q.setIsRead(rs.getBoolean("isRead"));
+
                 q.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
                 return q;
             }
@@ -97,7 +95,7 @@ public class QuestionDBContext extends DBContext {
         PreparedStatement stm = null;
         try {
             stm = connection.prepareStatement(sql);
-            stm.setInt(1, q.getQuestion_ID());
+            stm.setInt(1, q.getId());
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(QuestionDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -126,4 +124,6 @@ public class QuestionDBContext extends DBContext {
         }
         return 0;
     }
+
+    
 }
