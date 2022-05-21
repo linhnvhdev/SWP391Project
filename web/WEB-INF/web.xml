@@ -99,6 +99,12 @@
     <servlet-mapping>
         <servlet-name>ExamController</servlet-name>
         <url-pattern>/exam</url-pattern>
+        <servlet-name>RevisionController</servlet-name>
+        <url-pattern>/RevisionController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RevisionQuestionController</servlet-name>
+        <url-pattern>/RevisionQuestionController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

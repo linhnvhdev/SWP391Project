@@ -5,10 +5,7 @@
  */
 package Model;
 
-/**
- *
- * @author Linhnvhdev
- */
+
 public class Course {
     private int id;
     private String name;
@@ -45,6 +42,6 @@ public class Course {
 
     public void setCreator(User creator) {
         this.creator = creator;
-    }
-    
+    }   
 }
+

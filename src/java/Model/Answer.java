@@ -5,10 +5,8 @@
  */
 package Model;
 
-/**
- *
- * @author Linhnvhdev
- */
+
+
 public class Answer {
     private int id;
     private String detail;
@@ -62,6 +60,5 @@ public class Answer {
     public void setQuestion(Question question) {
         this.question = question;
     }
-    
-    
+     
 }

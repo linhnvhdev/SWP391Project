@@ -18,39 +18,19 @@ import java.util.logging.Logger;
  * @author Linhnvhdev
  */
 public class CourseDBContext extends DBContext {
-    public ArrayList<Course> getCourseList(){
+
+    public ArrayList<Course> getCourseList(int userId) {
         ArrayList<Course> courseList = new ArrayList<>();
         try {
-            String sql="SELECT Course_ID,Course_Name,Creator_ID\n" +
-                    "FROM Course";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            ResultSet rs = stm.executeQuery();
-            UserDBContext userDB = new UserDBContext();
-            while(rs.next()){
-                Course c = new Course();
-                c.setId(rs.getInt("Course_ID"));
-                c.setName(rs.getString("Course_Name"));
-                c.setCreator(userDB.getUser(rs.getInt("Creator_ID")));
-                courseList.add(c);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return courseList;
-    }
-    
-    public ArrayList<Course> getCourseList(int userId){
-        ArrayList<Course> courseList = new ArrayList<>();
-        try {
-            String sql="SELECT c.Course_ID,c.Course_Name,c.Creator_ID\n" +
-                    "FROM [User] u INNER JOIN [User_Course] uc ON u.[User_ID]= uc.[User_ID]\n" +
-                    "	INNER JOIN Course c ON uc.Course_ID = c.Course_ID\n" +
-                    "	WHERE u.[User_ID] = ?";
+            String sql = "SELECT c.Course_ID,c.Course_Name,c.Creator_ID\n"
+                    + "FROM [User] u INNER JOIN [User_Course] uc ON u.[User_ID]= uc.[User_ID]\n"
+                    + "	INNER JOIN Course c ON uc.Course_ID = c.Course_ID\n"
+                    + "	WHERE u.[User_ID] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, userId);
             ResultSet rs = stm.executeQuery();
             UserDBContext userDB = new UserDBContext();
-            while(rs.next()){
+            while (rs.next()) {
                 Course c = new Course();
                 c.setId(rs.getInt("Course_ID"));
                 c.setName(rs.getString("Course_Name"));
@@ -62,65 +42,87 @@ public class CourseDBContext extends DBContext {
         }
         return courseList;
     }
-    
-    public ArrayList<Course> getCourseListByCreator(int userId){
-        ArrayList<Course> courseList = new ArrayList<>();
+
+    public Course getCourse(int Course_ID) {
         try {
-            String sql="SELECT [Course_ID]\n" +
-            "      ,[Course_Name]\n" +
-            "      ,[Creator_ID]\n" +
-            "  FROM [dbo].[Course]\n" +
-            "  WHERE Creator_ID = ?";
+            String sql = "SELECT [Course_ID]\n"
+                    + "      ,[Course_Name]\n"
+                    + "      ,[Creator_ID]\n"
+                    + "  FROM [dbo].[Course]"
+                    + "WHERE [Course_ID] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, userId);
+            stm.setInt(1, Course_ID);
             ResultSet rs = stm.executeQuery();
             UserDBContext userDB = new UserDBContext();
-            while(rs.next()){
-                Course c = new Course();
-                c.setId(rs.getInt("Course_ID"));
-                c.setName(rs.getString("Course_Name"));
-                c.setCreator(userDB.getUser(rs.getInt("Creator_ID")));
-                courseList.add(c);
+            while (rs.next()) {
+                Course course = new Course();
+                course.setId(rs.getInt("Course_ID"));
+                course.setName(rs.getString("Course_Name"));
+                course.setCreator(userDB.getUser(rs.getInt("Creator_ID")));
+                return course;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return courseList;
-    }
-    
-    public Course getCourse(int courseId){
-        try {
-            String sql="SELECT [Course_ID]\n" +
-            "      ,[Course_Name]\n" +
-            "      ,[Creator_ID]\n" +
-            "  FROM [SWP391Project].[dbo].[Course]\n" +
-            "  WHERE Course_ID = ?";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, courseId);
-            ResultSet rs = stm.executeQuery();
-            UserDBContext userDB = new UserDBContext();
-            while(rs.next()){
-                Course c = new Course();
-                c.setId(rs.getInt("Course_ID"));
-                c.setName(rs.getString("Course_Name"));
-                c.setCreator(userDB.getUser(rs.getInt("Creator_ID")));
-                return c;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
+    public ArrayList<Course> getCourseList() {
+        ArrayList<Course> courseList = new ArrayList<>();
+        try {
+            String sql = "SELECT Course_ID,Course_Name,Creator_ID\n"
+                    + "FROM Course";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            UserDBContext userDB = new UserDBContext();
+            while (rs.next()) {
+                Course c = new Course();
+                c.setId(rs.getInt("Course_ID"));
+                c.setName(rs.getString("Course_Name"));
+                c.setCreator(userDB.getUser(rs.getInt("Creator_ID")));
+                courseList.add(c);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return courseList;
+    }
+
+    public ArrayList<Course> getCourseListByCreator(int userId) {
+        ArrayList<Course> courseList = new ArrayList<>();
+        try {
+            String sql = "SELECT [Course_ID]\n"
+                    + "      ,[Course_Name]\n"
+                    + "      ,[Creator_ID]\n"
+                    + "  FROM [dbo].[Course]\n"
+                    + "  WHERE Creator_ID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, userId);
+            ResultSet rs = stm.executeQuery();
+            UserDBContext userDB = new UserDBContext();
+            while (rs.next()) {
+                Course c = new Course();
+                c.setId(rs.getInt("Course_ID"));
+                c.setName(rs.getString("Course_Name"));
+                c.setCreator(userDB.getUser(rs.getInt("Creator_ID")));
+                courseList.add(c);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return courseList;
+    }
+
+
     public int getNumFlashcard(int courseId) {
         try {
-            String sql="SELECT COUNT(*)\n" +
-            "FROM Flashcard\n" +
-            "WHERE Course_ID = ?";
+            String sql = "SELECT COUNT(*)\n"
+                    + "FROM Flashcard\n"
+                    + "WHERE Course_ID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, courseId);
             ResultSet rs = stm.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 return rs.getInt(1);
             }
         } catch (SQLException ex) {
@@ -131,13 +133,13 @@ public class CourseDBContext extends DBContext {
 
     public int getNumQuestion(int courseId) {
         try {
-            String sql="SELECT COUNT(*)\n" +
-            "FROM Question\n" +
-            "WHERE Course_ID = ?";
+            String sql = "SELECT COUNT(*)\n"
+                    + "FROM Question\n"
+                    + "WHERE Course_ID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, courseId);
             ResultSet rs = stm.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 return rs.getInt(1);
             }
         } catch (SQLException ex) {
@@ -148,19 +150,19 @@ public class CourseDBContext extends DBContext {
 
     public int addCourse(String courseName, int creatorId) {
         try {
-            String sql="INSERT INTO [dbo].[Course]\n" +
-            "           ([Course_Name]\n" +
-            "           ,[Creator_ID])\n" +
-            "	OUTPUT INSERTED.Course_ID\n" +
-            "     VALUES\n" +
-            "           (?\n" +
-            "           ,?)";
+            String sql = "INSERT INTO [dbo].[Course]\n"
+                    + "           ([Course_Name]\n"
+                    + "           ,[Creator_ID])\n"
+                    + "	OUTPUT INSERTED.Course_ID\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?)";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, courseName);
             stm.setInt(2, creatorId);
             stm.execute();
             ResultSet rs = stm.getResultSet();
-            if(rs.next()){
+            if (rs.next()) {
                 return rs.getInt(1);
             }
         } catch (SQLException ex) {
