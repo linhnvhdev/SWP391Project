@@ -17,21 +17,19 @@ import java.util.logging.Logger;
  *
  * @author Bi
  */
-
-
 public class QuestionDBContext extends DBContext {
 
     public ArrayList<Question> getQuestions() {
         ArrayList<Question> questions = new ArrayList<>();
         try {
-            String sql = "select Question_ID, Question_Detail, Course_ID from [Question]";
+            String sql = "select Question_ID, Question_Detail, Course_ID, isRead from [Question]";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             CourseDBContext courseDB = new CourseDBContext();
             while (rs.next()) {
                 Question q = new Question();
                 q.setId(rs.getInt("Question_ID"));
-                q.setQuestion_Detail(rs.getString("Question_Detail"));
+                q.setDetail(rs.getString("Question_Detail"));
                 q.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
                 questions.add(q);
             }
@@ -41,19 +39,43 @@ public class QuestionDBContext extends DBContext {
         return questions;
     }
 
-    public ArrayList<Question> getRemainingQuestions() {
+    public ArrayList<Question> getQuestions(int courseId) {
         ArrayList<Question> questions = new ArrayList<>();
         try {
-            String sql = "select Question_ID, Question_Detail, Course_ID from [Question] where [isRead] = 0";
+            String sql = "select Question_ID, Question_Detail, Course_ID from [Question] WHERE Course_ID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, courseId);
             ResultSet rs = stm.executeQuery();
             CourseDBContext courseDB = new CourseDBContext();
             while (rs.next()) {
                 Question q = new Question();
                 q.setId(rs.getInt("Question_ID"));
-                q.setQuestion_Detail(rs.getString("Question_Detail"));
+                q.setDetail(rs.getString("Question_Detail"));
                 q.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
-      
+                questions.add(q);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return questions;
+    }
+
+    public ArrayList<Question> getRemainingQuestions(int userId, int courseId) {
+        ArrayList<Question> questions = new ArrayList<>();
+        try {
+            String sql = "SELECT Question_ID, Question_Detail, Course_ID, Exam_ID\n"
+                    + "FROM Question\n"
+                    + "WHERE Question_ID NOT IN (SELECT Question_ID FROM User_Question WHERE [User_ID] = ? AND IsRead = 1) AND [Course_ID] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, userId);
+            stm.setInt(2, courseId);
+            ResultSet rs = stm.executeQuery();
+            CourseDBContext courseDB = new CourseDBContext();
+            while (rs.next()) {
+                Question q = new Question();
+                q.setId(rs.getInt("Question_ID"));
+                q.setDetail(rs.getString("Question_Detail"));
+                q.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
                 questions.add(q);
             }
         } catch (SQLException ex) {
@@ -76,8 +98,7 @@ public class QuestionDBContext extends DBContext {
             while (rs.next()) {
                 Question q = new Question();
                 q.setId(rs.getInt("Question_ID"));
-                q.setQuestion_Detail(rs.getString("Question_Detail"));
-
+                q.setDetail(rs.getString("Question_Detail"));
                 q.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
                 return q;
             }
@@ -124,6 +145,4 @@ public class QuestionDBContext extends DBContext {
         }
         return 0;
     }
-
-    
 }

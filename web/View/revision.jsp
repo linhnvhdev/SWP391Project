@@ -14,12 +14,18 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <div class="header">
+            <a href="home">Back to home</a>
+            <a href="login">Log out</a>
+            <a href="chgpwd">Change password</a>
+        </div>
         <h1>Revision</h1>
-        Total Question: ${requestScope.done + requestScope.notYet} 
-        Remaining Question: ${requestScope.notYet}       
+        <h2></h2>
+        Total Question: ${requestScope.totalQuestion} 
+        Remaining Question: ${requestScope.remainingQuestion}       
         <!--        <form method="get" action="">
                     <button type="submit">Let the hunt begin!</button>
                 </form>-->
-        <a href="RevisionQuestionController?id=${requestScope.randomID}"/>start</a>
+        <a href="revision/question?id=${requestScope.randomID}&courseId=${requestScope.courseId}"/>start</a>
 </body>
 </html>

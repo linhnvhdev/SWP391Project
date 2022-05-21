@@ -15,14 +15,20 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <div class="header">
+            <a href="../home">Back to home</a>
+            <a href="../login">Log out</a>
+            <a href="../chgpwd">Change password</a>
+        </div>
         <% Question question = (Question) request.getAttribute("q");
             ArrayList<Answer> answers = (ArrayList<Answer>) request.getAttribute("answers");
 //            Answer correctAns = (Answer) request.getAttribute("answer");
         %>
-        <h1><%=question.getQuestion_Detail()%></h1>
-        <form method="post" action="RevisionQuestionController?id=${requestScope.id}">
+        <h1><%=question.getDetail()%></h1>
+        <h2>Exp:${requestScope.exp}</h2>
+        <form method="post" action="question?id=${requestScope.id}&courseId=${requestScope.courseId}">
         <%for (Answer answer : answers) {%>
-        <input type="radio" name="answer" value="<%=answer.getAnswer_ID()%>"/><%=answer.getAnswer_Detail()%></br>
+        <input type="radio" name="answer" value="<%=answer.getId()%>"/><%=answer.getDetail()%></br>
         <%}%>       
         <%//=correctAns.getAnswer_ID()%>
             <button type="submit">Next</button>

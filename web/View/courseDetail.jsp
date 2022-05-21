@@ -45,10 +45,10 @@
             </div>
             <div class="right">
                 <div>
-                    <a href="#"><button>Learn</button></a>
+                    <a href="flashcard?courseId=${course.id}"><button>Learn</button></a>
                 </div>
                 <div>
-                    <a href="#"><button>Practice</button></a>
+                    <a href="revision?courseId=${course.id}"><button>Practice</button></a>
                 </div>
                 <div>
                     <a href="exam?courseId=${course.id}"><button>Boss fight</button></a>
@@ -58,3 +58,5 @@
         <div class="footer"></div>
     </body>
 </html>
+
+
