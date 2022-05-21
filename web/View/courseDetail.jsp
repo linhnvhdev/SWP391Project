@@ -51,7 +51,7 @@
                     <a href="#"><button>Practice</button></a>
                 </div>
                 <div>
-                    <a href="#"><button>Boss fight</button></a>
+                    <a href="exam?courseId=${course.id}"><button>Boss fight</button></a>
                 </div>
             </div>            
         </div>

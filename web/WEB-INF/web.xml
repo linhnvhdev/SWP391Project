@@ -28,6 +28,10 @@
         <filter-name>LoginFilter</filter-name>
         <servlet-name>ExamController</servlet-name>
     </filter-mapping>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <servlet-name>ResultController</servlet-name>
+    </filter-mapping>
     <servlet>
         <servlet-name>LoginController</servlet-name>
         <servlet-class>Controller.LoginController</servlet-class>
@@ -64,6 +68,18 @@
         <servlet-name>ExamController</servlet-name>
         <servlet-class>Controller.Exam.ExamController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RevisionQuestionController</servlet-name>
+        <servlet-class>Controller.RevisionQuestionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RevisionController</servlet-name>
+        <servlet-class>Controller.RevisionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ResultController</servlet-name>
+        <servlet-class>Controller.Exam.ResultController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -97,14 +113,20 @@
         <url-pattern>/course/add</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ExamController</servlet-name>
-        <url-pattern>/exam</url-pattern>
         <servlet-name>RevisionController</servlet-name>
         <url-pattern>/RevisionController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>RevisionQuestionController</servlet-name>
         <url-pattern>/RevisionQuestionController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExamController</servlet-name>
+        <url-pattern>/exam</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResultController</servlet-name>
+        <url-pattern>/result</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

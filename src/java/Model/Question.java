@@ -11,11 +11,52 @@ package Model;
  * @author Bi
  */
 public class Question {
-    private int Question_ID;
-    private String Question_Detail;
-    private Course Course;
-    private boolean isRead;
+    private int id;
+    private String detail;
+    private Course course;
     private Exam exam;
+
+    public Question() {
+        
+    }
+
+    public Question(int id, String detail, Course course) {
+        this.id = id;
+        this.detail = detail;
+        this.course = course;
+    }
+
+    public Question(int id, String detail, Course course, Exam exam) {
+        this.id = id;
+        this.detail = detail;
+        this.course = course;
+        this.exam = exam;
+    }
+    
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
 
     public Exam getExam() {
         return exam;
@@ -24,37 +65,5 @@ public class Question {
     public void setExam(Exam exam) {
         this.exam = exam;
     }
-    
-    public void setIsRead(boolean isRead) {
-        this.isRead = isRead;
-    }
 
-    public boolean isIsRead() {
-        return isRead;
-    }
-
-
-    public int getQuestion_ID() {
-        return Question_ID;
-    }
-
-    public String getQuestion_Detail() {
-        return Question_Detail;
-    }
-
-    public void setCourse(Course Course) {
-        this.Course = Course;
-    }
-
-    public Course getCourse() {
-        return Course;
-    }
-
-    public void setQuestion_ID(int Question_ID) {
-        this.Question_ID = Question_ID;
-    }
-
-    public void setQuestion_Detail(String Question_Detail) {
-        this.Question_Detail = Question_Detail;
-    }
 }
