@@ -19,26 +19,26 @@ import java.util.logging.Logger;
  * @author Linhnvhdev
  */
 public class UserDBContext extends DBContext {
-    
-    public int insertUser(String name, String gmail, boolean gender, Date dob, int role){
+
+    public int insertUser(String name, String gmail, boolean gender, Date dob, int role) {
         try {
-            String sql="INSERT INTO [SWP391Project].[dbo].[User]\n" +
-            "           ([Name]\n" +
-            "           ,[Mail]\n" +
-            "           ,[Gender]\n" +
-            "           ,[Dob]\n" +
-            "           ,[Exp]\n" +
-            "           ,[Level]\n" +
-            "           ,[Role_ID])\n" +
-            "OUTPUT INSERTED.[User_ID]\n" +
-            "     VALUES\n" +
-            "           (?\n" +
-            "           ,?\n" +
-            "           ,?\n" +
-            "           ,?\n" +
-            "           ,?\n" +
-            "           ,?\n" +
-            "           ,?)";
+            String sql = "INSERT INTO [SWP391Project].[dbo].[User]\n"
+                    + "           ([Name]\n"
+                    + "           ,[Mail]\n"
+                    + "           ,[Gender]\n"
+                    + "           ,[Dob]\n"
+                    + "           ,[Exp]\n"
+                    + "           ,[Level]\n"
+                    + "           ,[Role_ID])\n"
+                    + "OUTPUT INSERTED.[User_ID]\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?)";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, name);
             stm.setString(2, gmail);
@@ -49,7 +49,7 @@ public class UserDBContext extends DBContext {
             stm.setInt(7, role);
             stm.execute();
             ResultSet rs = stm.getResultSet();
-            if(rs.next()){
+            if (rs.next()) {
                 return rs.getInt(1);
             }
         } catch (SQLException ex) {
@@ -57,23 +57,23 @@ public class UserDBContext extends DBContext {
         }
         return 0;
     }
-    
-    public User getUser(int userId){
+
+    public User getUser(int userId) {
         try {
-            String sql="SELECT [User_ID]\n" +
-                    "      ,[Name]\n" +
-                    "      ,[Mail]\n" +
-                    "      ,[Gender]\n" +
-                    "      ,[Dob]\n" +
-                    "      ,[Exp]\n" +
-                    "      ,[Level]\n" +
-                    "      ,[Role_ID]\n" +
-                    "  FROM [SWP391Project].[dbo].[User]\n" +
-                    "  WHERE [User_ID]=?";
+            String sql = "SELECT [User_ID]\n"
+                    + "      ,[Name]\n"
+                    + "      ,[Mail]\n"
+                    + "      ,[Gender]\n"
+                    + "      ,[Dob]\n"
+                    + "      ,[Exp]\n"
+                    + "      ,[Level]\n"
+                    + "      ,[Role_ID]\n"
+                    + "  FROM [SWP391Project].[dbo].[User]\n"
+                    + "  WHERE [User_ID]=?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, userId);
             ResultSet rs = stm.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 User user = new User();
                 user.setId(rs.getInt("User_ID"));
                 user.setName(rs.getString("Name"));
@@ -89,5 +89,39 @@ public class UserDBContext extends DBContext {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public int getUserExp(int userId) {
+        try {
+            String sql = "SELECT [Exp]\n"
+                    + "FROM [User] \n"
+                    + "WHERE [User_ID] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, userId);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                int exp = rs.getInt("Exp");
+                return exp;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    public void updateUserExp(int userId, int exp) {
+        try {
+            String sql = "UPDATE [dbo].[User]\n"
+                    + "   SET [Exp] = ?\n"
+                    + "\n"
+                    + " WHERE [User_ID] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, exp);
+            stm.setInt(2, userId);
+            stm.execute();
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

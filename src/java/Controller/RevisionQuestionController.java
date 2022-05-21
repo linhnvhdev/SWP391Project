@@ -7,6 +7,9 @@ package Controller;
 
 import Dal.AnswerDBContext;
 import Dal.QuestionDBContext;
+import Dal.UserDBContext;
+import Dal.UserQuestionDBContext;
+import Model.Account;
 import Model.Answer;
 import Model.Question;
 import java.io.IOException;
@@ -23,47 +26,18 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class RevisionQuestionController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet RevisionQuestionController</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet RevisionQuestionController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
+        Account account = (Account)request.getSession().getAttribute("account");
+        int userId = account.getUser().getId();
+        UserDBContext userDb = new UserDBContext();
+        int exp = userDb.getUserExp(userId);
+        request.setAttribute("exp", exp);
         QuestionDBContext questionDB = new QuestionDBContext();
-        if (!questionDB.getRemainingQuestions().isEmpty()) {
+        int courseId = Integer.parseInt(request.getParameter("courseId"));
+        if (!questionDB.getRemainingQuestions(userId,courseId).isEmpty()) {
             Question q = questionDB.getQuestion(id);
             AnswerDBContext answerDB = new AnswerDBContext();
             ArrayList<Answer> answers = answerDB.getAnswers(id);
@@ -73,60 +47,56 @@ public class RevisionQuestionController extends HttpServlet {
             request.setAttribute("q", q);
 //            int randomID = getRandomID();
             request.setAttribute("id", id);
-            request.getRequestDispatcher("View/revision_question.jsp").forward(request, response);
+            request.setAttribute("courseId", courseId);
+            request.getRequestDispatcher("../View/revision_question.jsp").forward(request, response);
         } else {
-            response.sendRedirect("RevisionController");
+            response.sendRedirect("../revision?courseId=" + courseId);
         }
 
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
+        Account account = (Account)request.getSession().getAttribute("account");
+        int userId = account.getUser().getId();
+        int questionId = Integer.parseInt(request.getParameter("id"));
         int answerID = Integer.parseInt(request.getParameter("answer"));
+        int courseId = Integer.parseInt(request.getParameter("courseId"));
         QuestionDBContext db = new QuestionDBContext();
         AnswerDBContext answerDB = new AnswerDBContext();
-        Question q = db.getQuestion(id);
-        Answer correctAnswer = answerDB.getCorrectAnswer(q);
+        UserQuestionDBContext userQuestionDB = new UserQuestionDBContext();
+        UserDBContext userDb = new UserDBContext();
+        int exp = userDb.getUserExp(userId);
+        request.setAttribute("exp", exp);
+        Question question = db.getQuestion(questionId);
+        Answer correctAnswer = answerDB.getCorrectAnswer(question);
         if (answerID == correctAnswer.getId()) {
-            db.updateQuestionStatus(q);          
+            userQuestionDB.insertUserQuestion(userId, questionId, true);
+            userDb.updateUserExp(userId, exp+10);
         }
-        if (!db.getRemainingQuestions().isEmpty()) {
-          
-          response.sendRedirect("RevisionQuestionController?id="+getRandomID());
+        if (!db.getRemainingQuestions(userId, courseId).isEmpty()) {
+            request.setAttribute("courseId", courseId);
+            response.sendRedirect("question?id=" + getRandomID(userId,courseId) + "&courseId=" + courseId);
         } else {
-            response.sendRedirect("RevisionController");
+            response.sendRedirect("../revision?courseId=" + courseId);
         }
 
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 
-    public int getRandomID() {
+    public int getRandomID(int userId, int courseId) {
         QuestionDBContext db = new QuestionDBContext();
-        ArrayList<Question> remainingQuestion = db.getRemainingQuestions();
+        ArrayList<Question> remainingQuestion = db.getRemainingQuestions(userId, courseId);
         int randomID = 0;
         int index = (int) (Math.random() * remainingQuestion.size());
         for (int i = 0; i < remainingQuestion.size(); i++) {
             if (i == index) {
-                randomID = remainingQuestion.get(i).getQuestion_ID();
+                randomID = remainingQuestion.get(i).getId();
                 break;
             }
         }

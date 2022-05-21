@@ -7,6 +7,8 @@ package Controller;
 
 import Dal.AnswerDBContext;
 import Dal.QuestionDBContext;
+import Dal.UserDBContext;
+import Model.Account;
 import Model.Answer;
 import Model.Question;
 import java.io.IOException;
@@ -49,21 +51,22 @@ public class RevisionController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        QuestionDBContext db = new QuestionDBContext();
-        ArrayList<Question> questions = db.getQuestions();
+        Account account = (Account)request.getSession().getAttribute("account");
+        int userId = account.getUser().getId();
+        QuestionDBContext questionDb = new QuestionDBContext();
+        
+        int courseId = Integer.parseInt(request.getParameter("courseId"));
+        ArrayList<Question> questions = questionDb.getQuestions(courseId);
+        ArrayList<Question> remainingQuestions = questionDb.getRemainingQuestions(userId, courseId);
         request.setAttribute("questions", questions);
-        int isRead = 0, isNotRead = 0;
-        for (Question question : questions) {
-            if (question.isIsRead()) {
-                isRead++;
-            } else {
-                isNotRead++;
-            }
-        }      
-        int randomID = getRandomID();
+        int totalQuestion = questions.size();
+        int remainingQuestion = remainingQuestions.size();
+        int randomID = getRandomID(userId, courseId);
+        
+        request.setAttribute("courseId", courseId);
         request.setAttribute("randomID", randomID);
-        request.setAttribute("done", isRead);
-        request.setAttribute("notYet", isNotRead);
+        request.setAttribute("totalQuestion", totalQuestion);
+        request.setAttribute("remainingQuestion", remainingQuestion);
         request.getRequestDispatcher("View/revision.jsp").forward(request, response);
     }
 
@@ -78,14 +81,20 @@ public class RevisionController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Account account = (Account)request.getSession().getAttribute("account");
+        int userId = account.getUser().getId();
         int id = Integer.parseInt(request.getParameter("id"));
+        int courseId = Integer.parseInt(request.getParameter("courseId"));
         QuestionDBContext questionDB = new QuestionDBContext();
         Question q = questionDB.getQuestion(id);
+        UserDBContext userDb = new UserDBContext();
+        int exp = userDb.getUserExp(userId);
+        request.setAttribute("exp", exp);
         AnswerDBContext answerDB = new AnswerDBContext();
         ArrayList<Answer> answers = answerDB.getAnswers(id);
         request.setAttribute("answers", answers);
         request.setAttribute("q", q);
-        int randomID = getRandomID();
+        int randomID = getRandomID(userId, courseId);
         request.setAttribute("randomID", randomID);
         request.getRequestDispatcher("View/revision_question.jsp").forward(request, response);
     }
@@ -100,14 +109,14 @@ public class RevisionController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
     
-    public int getRandomID(){
+    public int getRandomID(int userId, int courseId){
         QuestionDBContext db = new QuestionDBContext();
-        ArrayList<Question> remainingQuestion = db.getRemainingQuestions();
+        ArrayList<Question> remainingQuestion = db.getRemainingQuestions(userId, courseId);
         int randomID =0;   
         int index = (int)(Math.random() * remainingQuestion.size());
         for (int i = 0; i < remainingQuestion.size();i++) {    
             if(i==index){
-                randomID = remainingQuestion.get(i).getQuestion_ID();
+                randomID = remainingQuestion.get(i).getId();
                 break;
             }
         }

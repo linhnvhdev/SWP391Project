@@ -63,8 +63,8 @@ public class ExamDBContext extends DBContext {
                 Question q = new Question();
                 q.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
                 q.setExam(examDB.getExam(rs.getInt("Course_ID")));
-                q.setQuestion_Detail(rs.getString("Question_Detail"));
-                q.setQuestion_ID(rs.getInt("Question_ID"));
+                q.setDetail(rs.getString("Question_Detail"));
+                q.setId(rs.getInt("Question_ID"));
                 questionList.add(q);
             }
         } catch (SQLException ex) {
@@ -113,8 +113,8 @@ public class ExamDBContext extends DBContext {
                 Question q = new Question();
                 q.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
                 q.setExam(examDB.getExam(rs.getInt("Course_ID")));
-                q.setQuestion_Detail(rs.getString("Question_Detail"));
-                q.setQuestion_ID(rs.getInt("Question_ID"));
+                q.setDetail(rs.getString("Question_Detail"));
+                q.setId(rs.getInt("Question_ID"));
                 return q;
             }
         } catch (SQLException ex) {
@@ -186,8 +186,8 @@ public class ExamDBContext extends DBContext {
                 Question q = new Question();
                 q.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
                 q.setExam(examDB.getExam(rs.getInt("Course_ID")));
-                q.setQuestion_Detail(rs.getString("Question_Detail"));
-                q.setQuestion_ID(rs.getInt("Question_ID"));
+                q.setDetail(rs.getString("Question_Detail"));
+                q.setId(rs.getInt("Question_ID"));
                 questionList.add(q);
             }
         } catch (SQLException ex) {

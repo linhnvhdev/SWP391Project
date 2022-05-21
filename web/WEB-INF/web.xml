@@ -41,6 +41,14 @@
         <servlet-class>Controller.ChangePasswordController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>RevisionController</servlet-name>
+        <servlet-class>Controller.RevisionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RevisionQuestionController</servlet-name>
+        <servlet-class>Controller.RevisionQuestionController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>HomeController</servlet-name>
         <servlet-class>Controller.HomeController</servlet-class>
     </servlet>
@@ -99,12 +107,14 @@
     <servlet-mapping>
         <servlet-name>ExamController</servlet-name>
         <url-pattern>/exam</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>RevisionController</servlet-name>
-        <url-pattern>/RevisionController</url-pattern>
+        <url-pattern>/revision</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>RevisionQuestionController</servlet-name>
-        <url-pattern>/RevisionQuestionController</url-pattern>
+        <url-pattern>/revision/question</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

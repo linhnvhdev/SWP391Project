@@ -47,7 +47,7 @@ public class AnswerDBContext extends DBContext {
         try {
             String sql = "select Answer_ID, Answer_Detail, Question_ID, isCorrect from Answer where Question_ID = ? and isCorrect = 1";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, q.getQuestion_ID());
+            stm.setInt(1, q.getId());
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Answer a = new Answer();

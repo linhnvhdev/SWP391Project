@@ -48,7 +48,7 @@
                     <a href="#"><button>Learn</button></a>
                 </div>
                 <div>
-                    <a href="#"><button>Practice</button></a>
+                    <a href="revision?courseId=${course.id}"><button>Practice</button></a>
                 </div>
                 <div>
                     <a href="#"><button>Boss fight</button></a>
