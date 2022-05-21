@@ -6,6 +6,7 @@
 package Dal;
 
 import Model.Account;
+import Model.User;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +21,7 @@ import java.util.logging.Logger;
 public class AccountDBContext extends DBContext {
     public Account getAccount(String username, String password){
         try {
-            String sql ="SELECT [Username],[Password]\n" +
+            String sql ="SELECT [Username],[Password],[User_ID]\n" +
             "FROM Account\n" +
             "WHERE [Username] = ? AND [Password] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -31,6 +32,9 @@ public class AccountDBContext extends DBContext {
                 Account acc = new Account();
                 acc.setUsername(rs.getString("Username"));
                 acc.setPassword(rs.getString("Password"));
+                UserDBContext userDB = new UserDBContext();
+                User user = userDB.getUser(rs.getInt("User_ID"));
+                acc.setUser(user);
                 return acc;
             }
         } catch (SQLException ex) {
@@ -98,7 +102,7 @@ public class AccountDBContext extends DBContext {
             String sql="INSERT INTO [SWP391Project].[dbo].[Account]\n" +
             "           ([Username]\n" +
             "           ,[Password]\n" +
-            "           ,[UserId])\n" +
+            "           ,[User_ID])\n" +
             "     VALUES\n" +
             "           (?\n" +
             "           ,?\n" +

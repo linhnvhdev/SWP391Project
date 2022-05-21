@@ -5,6 +5,7 @@
  */
 package Model;
 
+
 public class Course {
     private int id;
     private String name;
@@ -43,3 +44,4 @@ public class Course {
         this.creator = creator;
     }   
 }
+

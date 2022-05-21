@@ -31,8 +31,8 @@ public class AnswerDBContext extends DBContext {
             QuestionDBContext questionDB = new QuestionDBContext();
             while (rs.next()) {
                 Answer a = new Answer();
-                a.setAnswer_ID(rs.getInt("Answer_ID"));
-                a.setAnswer_Detail(rs.getString("Answer_Detail"));
+                a.setId(rs.getInt("Answer_ID"));
+                a.setDetail(rs.getString("Answer_Detail"));
                 a.setIsCorrect(rs.getBoolean("isCorrect"));
                 a.setQuestion(questionDB.getQuestion(rs.getInt("Question_ID")));
                 answers.add(a);
@@ -51,8 +51,8 @@ public class AnswerDBContext extends DBContext {
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Answer a = new Answer();
-                a.setAnswer_ID(rs.getInt("Answer_ID"));
-                a.setAnswer_Detail(rs.getString("Answer_Detail"));
+                a.setId(rs.getInt("Answer_ID"));
+                a.setDetail(rs.getString("Answer_Detail"));
                 a.setIsCorrect(rs.getBoolean("isCorrect"));
                 a.setQuestion(q);
                 return a;
@@ -62,4 +62,25 @@ public class AnswerDBContext extends DBContext {
         }
         return null;
     }
+
+    public void addAnswer(String answer, int questionId, boolean correct) {
+        try {
+            String sql="INSERT INTO [dbo].[Answer]\n" +
+                    "           ([Answer_Detail]\n" +
+                    "           ,[Question_ID]\n" +
+                    "           ,[IsCorrect])\n" +
+                    "     VALUES\n" +
+                    "           (?\n" +
+                    "           ,?\n" +
+                    "           ,?)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, answer);
+            stm.setInt(2, questionId);
+            stm.setBoolean(3, correct);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AnswerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 }

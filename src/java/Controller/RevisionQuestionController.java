@@ -97,7 +97,7 @@ public class RevisionQuestionController extends HttpServlet {
         AnswerDBContext answerDB = new AnswerDBContext();
         Question q = db.getQuestion(id);
         Answer correctAnswer = answerDB.getCorrectAnswer(q);
-        if (answerID == correctAnswer.getAnswer_ID()) {
+        if (answerID == correctAnswer.getId()) {
             db.updateQuestionStatus(q);          
         }
         if (!db.getRemainingQuestions().isEmpty()) {

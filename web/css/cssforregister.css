@@ -1,0 +1,97 @@
+input[type=date] {
+       width: 20em;  height: 2em
+}
+
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : May 11, 2022, 10:14:56 PM
+    Author     : sioni
+*/
+
+body{
+    margin:0;
+    padding:0;
+    color: black;
+}
+
+
+.background-img  {
+    background-image: url("../img/background2.jpg");
+    background-size: cover; /* Resize the background image to cover the entire container */
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+
+div.form
+{
+    display: block;
+    text-align: center;
+}
+form
+{
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 16%;
+    
+    
+}
+input[type=text] {
+    width: 20em;  height: 2em;
+    margin-top: 5px;
+    margin-bottom:5px;
+}
+input[type=password] {
+    width: 20em;  height: 2em;
+    margin-top: 5px;
+    margin-bottom:5px;
+}
+input[type=gmail] {
+    width: 20em;  height: 2em;
+    margin-top: 5px;
+    margin-bottom:5px;
+}
+input[type=radio] {
+    width: 2em;  height: 2em;
+    margin-top: 5px;
+    margin-bottom:5px;
+}
+input[type=date] {
+       width: 20em;  height: 2em;
+    margin-top:5px;
+    margin-bottom:5px;
+}
+input[type=submit] {
+   
+       width:100px  ;
+       
+     height: 30px;
+     margin-top: 5px;
+    margin-bottom:10px;
+}
+a{
+    text-align: center;
+}
+a:link {
+  color: Blue;
+  background-color: transparent;
+  text-decoration: none;
+}
+a:visited {
+  color: Black;
+  background-color: transparent;
+  text-decoration: none;
+}
+a:hover {
+  color: red;
+  background-color: transparent;
+  text-decoration: underline;
+}
+#register1:hover{
+    font-size: 20px;
+}

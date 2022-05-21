@@ -4,9 +4,29 @@
         <filter-name>LoginFilter</filter-name>
         <filter-class>Filter.LoginFilter</filter-class>
     </filter>
+    <filter>
+        <filter-name>CourseCreatorFilter</filter-name>
+        <filter-class>Filter.CourseCreatorFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CourseCreatorFilter</filter-name>
+        <servlet-name>AddCourseController</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>CourseCreatorFilter</filter-name>
+        <servlet-name>AddQuestionController</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>CourseCreatorFilter</filter-name>
+        <servlet-name>AddFlashcardController</servlet-name>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>LoginFilter</filter-name>
         <servlet-name>HomeController</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <servlet-name>ExamController</servlet-name>
     </filter-mapping>
     <servlet>
         <servlet-name>LoginController</servlet-name>
@@ -25,12 +45,24 @@
         <servlet-class>Controller.HomeController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>RevisionController</servlet-name>
-        <servlet-class>Controller.RevisionController</servlet-class>
+        <servlet-name>CourseDetailController</servlet-name>
+        <servlet-class>Controller.CourseDetailController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>RevisionQuestionController</servlet-name>
-        <servlet-class>Controller.RevisionQuestionController</servlet-class>
+        <servlet-name>AddFlashcardController</servlet-name>
+        <servlet-class>Controller.Flashcard.AddFlashcardController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddQuestionController</servlet-name>
+        <servlet-class>Controller.Question.AddQuestionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddCourseController</servlet-name>
+        <servlet-class>Controller.Course.AddCourseController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ExamController</servlet-name>
+        <servlet-class>Controller.Exam.ExamController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -49,6 +81,24 @@
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>CourseDetailController</servlet-name>
+        <url-pattern>/course</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddFlashcardController</servlet-name>
+        <url-pattern>/flashcard/add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddQuestionController</servlet-name>
+        <url-pattern>/question/add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddCourseController</servlet-name>
+        <url-pattern>/course/add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExamController</servlet-name>
+        <url-pattern>/exam</url-pattern>
         <servlet-name>RevisionController</servlet-name>
         <url-pattern>/RevisionController</url-pattern>
     </servlet-mapping>
@@ -57,8 +107,9 @@
         <url-pattern>/RevisionQuestionController</url-pattern>
     </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>30</session-timeout>
     </session-config>
+    <welcome-file-list>
+        <welcome-file>home</welcome-file>
+    </welcome-file-list>
 </web-app>

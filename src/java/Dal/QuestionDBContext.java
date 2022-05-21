@@ -17,6 +17,8 @@ import java.util.logging.Logger;
  *
  * @author Bi
  */
+
+
 public class QuestionDBContext extends DBContext {
 
     public ArrayList<Question> getQuestions() {
@@ -100,5 +102,28 @@ public class QuestionDBContext extends DBContext {
         } catch (SQLException ex) {
             Logger.getLogger(QuestionDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public int addQuestion(String question, int courseId) {
+        try {
+            String sql = "INSERT INTO [dbo].[Question]\n"
+                    + "           ([Question_Detail]\n"
+                    + "           ,[Course_ID])\n"
+                    + "	OUTPUT INSERTED.Question_ID\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, question);
+            stm.setInt(2, courseId);
+            stm.execute();
+            ResultSet rs = stm.getResultSet();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 }

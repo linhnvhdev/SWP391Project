@@ -66,4 +66,108 @@ public class CourseDBContext extends DBContext {
         }
         return null;
     }
+
+    public ArrayList<Course> getCourseList() {
+        ArrayList<Course> courseList = new ArrayList<>();
+        try {
+            String sql = "SELECT Course_ID,Course_Name,Creator_ID\n"
+                    + "FROM Course";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            UserDBContext userDB = new UserDBContext();
+            while (rs.next()) {
+                Course c = new Course();
+                c.setId(rs.getInt("Course_ID"));
+                c.setName(rs.getString("Course_Name"));
+                c.setCreator(userDB.getUser(rs.getInt("Creator_ID")));
+                courseList.add(c);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return courseList;
+    }
+
+    public ArrayList<Course> getCourseListByCreator(int userId) {
+        ArrayList<Course> courseList = new ArrayList<>();
+        try {
+            String sql = "SELECT [Course_ID]\n"
+                    + "      ,[Course_Name]\n"
+                    + "      ,[Creator_ID]\n"
+                    + "  FROM [dbo].[Course]\n"
+                    + "  WHERE Creator_ID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, userId);
+            ResultSet rs = stm.executeQuery();
+            UserDBContext userDB = new UserDBContext();
+            while (rs.next()) {
+                Course c = new Course();
+                c.setId(rs.getInt("Course_ID"));
+                c.setName(rs.getString("Course_Name"));
+                c.setCreator(userDB.getUser(rs.getInt("Creator_ID")));
+                courseList.add(c);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return courseList;
+    }
+
+
+    public int getNumFlashcard(int courseId) {
+        try {
+            String sql = "SELECT COUNT(*)\n"
+                    + "FROM Flashcard\n"
+                    + "WHERE Course_ID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, courseId);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    public int getNumQuestion(int courseId) {
+        try {
+            String sql = "SELECT COUNT(*)\n"
+                    + "FROM Question\n"
+                    + "WHERE Course_ID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, courseId);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    public int addCourse(String courseName, int creatorId) {
+        try {
+            String sql = "INSERT INTO [dbo].[Course]\n"
+                    + "           ([Course_Name]\n"
+                    + "           ,[Creator_ID])\n"
+                    + "	OUTPUT INSERTED.Course_ID\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, courseName);
+            stm.setInt(2, creatorId);
+            stm.execute();
+            ResultSet rs = stm.getResultSet();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
 }

@@ -5,46 +5,60 @@
  */
 package Model;
 
-/**
- *
- * @author Bi
- */
+
+
 public class Answer {
-    private int Answer_ID;
-    private String Answer_Detail;
-    private Question Question;
+    private int id;
+    private String detail;
+    private Question question;
     private boolean isCorrect;
-
-    public int getAnswer_ID() {
-        return Answer_ID;
+    public Answer() {
     }
 
-    public String getAnswer_Detail() {
-        return Answer_Detail;
-    }
-
-    public Question getQuestion() {
-        return Question;
+    public Answer(int id, String detail, Question question, boolean isCorrect) {
+        this.id = id;
+        this.detail = detail;
+        this.question = question;
+        this.isCorrect = isCorrect;
     }
 
     public boolean isIsCorrect() {
         return isCorrect;
     }
 
-    public void setAnswer_ID(int Answer_ID) {
-        this.Answer_ID = Answer_ID;
-    }
-
-    public void setAnswer_Detail(String Answer_Detail) {
-        this.Answer_Detail = Answer_Detail;
-    }
-
-    public void setQuestion(Question Question) {
-        this.Question = Question;
-    }
-
     public void setIsCorrect(boolean isCorrect) {
         this.isCorrect = isCorrect;
     }
     
+    
+    public Answer(int id, String detail, Question question) {
+        this.id = id;
+        this.detail = detail;
+        this.question = question;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+     
 }

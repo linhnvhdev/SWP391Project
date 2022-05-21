@@ -7,6 +7,7 @@ package Model;
 
 /**
  *
+<<<<<<< HEAD
  * @author Bi
  */
 public class Question {
@@ -47,8 +48,4 @@ public class Question {
     public void setQuestion_Detail(String Question_Detail) {
         this.Question_Detail = Question_Detail;
     }
-
-    
-    
-    
 }

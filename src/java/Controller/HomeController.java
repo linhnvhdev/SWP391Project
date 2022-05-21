@@ -5,8 +5,14 @@
  */
 package Controller;
 
+import Dal.CourseDBContext;
+import Dal.UserDBContext;
+import Model.Account;
+import Model.Course;
+import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,20 +23,6 @@ import javax.servlet.http.HttpServletResponse;
  * @author Linhnvhdev
  */
 public class HomeController extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        request.getRequestDispatcher("View/home.jsp").forward(request, response);
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -44,7 +36,14 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        Account acc = (Account) request.getSession().getAttribute("account");
+        UserDBContext userDB = new UserDBContext();
+        User user = userDB.getUser(acc.getUser().getId());
+        CourseDBContext courseDB = new CourseDBContext();
+        ArrayList<Course> courseList = courseDB.getCourseList();
+        request.setAttribute("courseList", courseList);
+        request.setAttribute("user", user);
+        request.getRequestDispatcher("View/home.jsp").forward(request, response);
     }
 
     /**
@@ -58,7 +57,7 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
     }
 
     /**
