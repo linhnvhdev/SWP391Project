@@ -5,7 +5,7 @@
  */
 package Controller;
 
-import Dal.FlashCardDBContext;
+import Dal.FlashcardDBContext;
 import Model.Account;
 import Model.Course;
 import Model.Flashcard;
@@ -41,7 +41,7 @@ public class FlashCardController extends HttpServlet {
         String index_raw = request.getParameter("index_raw");
         
         //getData
-        FlashCardDBContext fcDB = new FlashCardDBContext();
+        FlashcardDBContext fcDB = new FlashcardDBContext();
         ArrayList<Flashcard> ListFC = fcDB.getlistFC();
         Account acc = (Account) request.getSession().getAttribute("account");
         User user = acc.getUser();

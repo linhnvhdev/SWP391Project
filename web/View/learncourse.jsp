@@ -22,7 +22,10 @@
         %>
     </head>
     <body>
+        <a href="home"><button>Home</button></a>
+     
         <form action="flashcard" method="POST">
+        <div class="card">
         <div class="flip-card-container">
             <div class="flip-card">
                 
@@ -36,11 +39,12 @@
             </div>
         </div>
         <div class="other-card">
-         <div class="other-card-item"><input type="submit" value="back" name="back"> </div>
-          <div class="other-card-item"><h6><%=index+1%>/<%=ListFC.size()%></h6></div>
-          <div class="other-card-item"><input type="submit" value="next" name="next"></div>
-          <div class="other-card-item"><input type="hidden" value="<%=index%>" name="index_raw"></div>
-       
+         <input type="submit" value="back" name="back"> 
+        <h5><%=index+1%>/<%=ListFC.size()%></h5>
+         <input type="submit" value="next" name="next">
+          <input type="hidden" value="<%=index%>" name="index_raw">
+       </div>
+        </div>
         </form>
         
         
