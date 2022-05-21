@@ -15,7 +15,16 @@ public class Question {
     private String Question_Detail;
     private Course Course;
     private boolean isRead;
+    private Exam exam;
 
+    public Exam getExam() {
+        return exam;
+    }
+
+    public void setExam(Exam exam) {
+        this.exam = exam;
+    }
+    
     public void setIsRead(boolean isRead) {
         this.isRead = isRead;
     }
