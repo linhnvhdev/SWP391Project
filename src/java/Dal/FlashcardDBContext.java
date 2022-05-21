@@ -5,8 +5,13 @@
  */
 package Dal;
 
+import Model.Course;
+import Model.Flashcard;
+import Model.User;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,6 +39,97 @@ public class FlashcardDBContext extends DBContext {
         } catch (SQLException ex) {
             Logger.getLogger(FlashcardDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    public ArrayList<Flashcard> getlistFC() {
+        ArrayList<Flashcard> List = new ArrayList<>();
+        try {
+            String sql = "select Flashcard_ID,Flash_front,Flash_back,Course_ID from Flashcard";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Flashcard f = new Flashcard();
+                Course c = new Course();
+                c.setId(rs.getInt("Course_ID"));
+                f.setId(rs.getInt("Flashcard_ID"));
+                f.setFront(rs.getString("Flash_front"));
+                f.setBack(rs.getString("Flash_back"));
+                f.setCourse(c);
+                List.add(f);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FlashcardDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return List;
+    }
+
+    public void IsreadFC(Flashcard f, User u, Course c) {
+        ArrayList<Flashcard> fcList = new ArrayList<>();
+        boolean isRead = false;
+        try {
+            String sql = "select Flashcard_ID from User_FlashCard\n"
+                    + "where User_ID =?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, u.getId());
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                if (rs.getInt("Flashcard_ID") == f.getId()) {
+                    isRead = true;
+                    break;
+                }
+            }
+            if (isRead == false) {
+                addFlashCardRead(f, u);
+                addExpFc(u, c);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(FlashcardDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void addExpFc(User u, Course c) {
+       
+            try {
+                String sql = "UPDATE [User_Course]\n"
+                        + "   SET \n"
+                        + "       [Exp] = [Exp] + 1\n"
+                        + " WHERE [User_ID] =? and [Course_ID] = ?\n";
+                
+                PreparedStatement stm = connection.prepareStatement(sql);
+                stm.setInt(1, u.getId());
+                stm.setInt(2, c.getId());
+                stm.executeUpdate();
+            } catch (SQLException ex) {
+                Logger.getLogger(FlashcardDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+            String sql = "UPDATE [User]\n"
+                    + "   SET [Exp] =[Exp]+1 \n"
+                    + " WHERE [User_ID] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, u.getId());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(FlashcardDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void addFlashCardRead(Flashcard f, User u) {
+        try {
+            String sql = "INSERT INTO [User_FlashCard]\n"
+                    + "           ([User_ID]\n"
+                    + "           ,[Flashcard_ID])\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, u.getId());
+            stm.setInt(2, f.getId());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(FlashcardDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
     
 }
