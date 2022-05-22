@@ -39,7 +39,7 @@
             </div>
             <div class="other-card">
              <div class="other-card-item"><input type="submit" value="back" name="back"> </div>
-              <div class="other-card-item"><h6><%=index+1%>/<%=ListFC.size()%></h6></div>
+              <div class="other-card-item"><h1><%=index+1%>/<%=ListFC.size()%></h1></div>
               <div class="other-card-item"><input type="submit" value="next" name="next"></div>
               <div class="other-card-item"><input type="hidden" value="<%=index%>" name="index_raw"></div>
             </div>

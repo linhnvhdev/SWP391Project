@@ -91,22 +91,6 @@ public class UserDBContext extends DBContext {
         return null;
     }
 
-    public void updateUserExp(int userId, int exp) {
-        try {
-            String sql = "UPDATE [dbo].[User]\n"
-                    + "   SET [Exp] = ?\n"
-                    + "\n"
-                    + " WHERE [User_ID] = ?";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, exp);
-            stm.setInt(2, userId);
-            stm.execute();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
     public int getUserExp(int userId) {
         try {
             String sql = "SELECT [Exp]\n"
@@ -123,5 +107,21 @@ public class UserDBContext extends DBContext {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
+    }
+
+    public void updateUserExp(int userId, int exp) {
+        try {
+            String sql = "UPDATE [dbo].[User]\n"
+                    + "   SET [Exp] = ?\n"
+                    + "\n"
+                    + " WHERE [User_ID] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, exp);
+            stm.setInt(2, userId);
+            stm.execute();
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

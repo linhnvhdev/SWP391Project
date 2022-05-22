@@ -37,4 +37,3 @@ public class UserQuestionDBContext extends DBContext {
     }
 
 }
-

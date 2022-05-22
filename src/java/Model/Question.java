@@ -32,34 +32,30 @@ public class Question {
         this.course = course;
         this.exam = exam;
     }
-    
+
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getDetail() {
         return detail;
     }
 
-    public void setDetail(String detail) {
-        this.detail = detail;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public Course getCourse() {
         return course;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
+    public void setId(int Question_ID) {
+        this.id = Question_ID;
     }
 
-    public Exam getExam() {
-        return exam;
+    public void setDetail(String Question_Detail) {
+        this.detail = Question_Detail;
     }
 
     public void setExam(Exam exam) {

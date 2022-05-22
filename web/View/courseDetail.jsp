@@ -10,8 +10,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="View/css/homeStyle.css" rel="stylesheet" type="text/css"/>
+        
         <title>Course</title>
+  
         <link href="css/cssforcoursedetail.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
@@ -25,10 +26,10 @@
         <div class="left">
             <div class="button1">
                 <div>
-                    <a class="button" href="#"><button class="button4">Learn</button></a>
+                    <a class="button" href="flashcard?courseId=${course.id}"><button class="button4">Learn</button></a>
                 </div>
                 <div>
-                    <a class="button" href="#"><button class="button2">Practice</button></a>
+                    <a class="button" href="revision?courseId=${course.id}"><button class="button2">Practice</button></a>
                 </div>
                 <div>
                     <a class="button" href="#" ><button class="button3">Boss fight</button></a>
