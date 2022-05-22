@@ -56,6 +56,26 @@
         <servlet-name>AddCourseController</servlet-name>
         <servlet-class>Controller.Course.AddCourseController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ExamController</servlet-name>
+        <servlet-class>Controller.Exam.ExamController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RevisionQuestionController</servlet-name>
+        <servlet-class>Controller.RevisionQuestionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RevisionController</servlet-name>
+        <servlet-class>Controller.RevisionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ResultController</servlet-name>
+        <servlet-class>Controller.Exam.ResultController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FlashCardController</servlet-name>
+        <servlet-class>Controller.FlashCardController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -87,6 +107,26 @@
     <servlet-mapping>
         <servlet-name>AddCourseController</servlet-name>
         <url-pattern>/course/add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RevisionController</servlet-name>
+        <url-pattern>/revision</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RevisionQuestionController</servlet-name>
+        <url-pattern>/revision/question</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExamController</servlet-name>
+        <url-pattern>/exam</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResultController</servlet-name>
+        <url-pattern>/result</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FlashCardController</servlet-name>
+        <url-pattern>/flashcard</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

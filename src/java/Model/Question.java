@@ -7,14 +7,17 @@ package Model;
 
 /**
  *
- * @author Linhnvhdev
+<<<<<<< HEAD
+ * @author Bi
  */
 public class Question {
     private int id;
     private String detail;
     private Course course;
+    private Exam exam;
 
     public Question() {
+        
     }
 
     public Question(int id, String detail, Course course) {
@@ -23,29 +26,44 @@ public class Question {
         this.course = course;
     }
 
+    public Question(int id, String detail, Course course, Exam exam) {
+        this.id = id;
+        this.detail = detail;
+        this.course = course;
+        this.exam = exam;
+    }
+    
+
     public int getId() {
         return id;
-    }
-
-    public String getDetail() {
-        return detail;
-    }
-
-    public Course getCourse() {
-        return course;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
+    public String getDetail() {
+        return detail;
+    }
+
     public void setDetail(String detail) {
         this.detail = detail;
+    }
+
+    public Course getCourse() {
+        return course;
     }
 
     public void setCourse(Course course) {
         this.course = course;
     }
-    
-    
+
+    public Exam getExam() {
+        return exam;
+    }
+
+    public void setExam(Exam exam) {
+        this.exam = exam;
+    }
+
 }
