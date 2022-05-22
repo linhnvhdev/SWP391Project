@@ -16,11 +16,20 @@ public class Question {
     private Course course;
     private Exam exam;
 
-    public Exam getExam() {
-        return exam;
+    public Question() {
+        
     }
 
-    public void setExam(Exam exam) {
+    public Question(int id, String detail, Course course) {
+        this.id = id;
+        this.detail = detail;
+        this.course = course;
+    }
+
+    public Question(int id, String detail, Course course, Exam exam) {
+        this.id = id;
+        this.detail = detail;
+        this.course = course;
         this.exam = exam;
     }
 
@@ -48,4 +57,9 @@ public class Question {
     public void setDetail(String Question_Detail) {
         this.detail = Question_Detail;
     }
+
+    public void setExam(Exam exam) {
+        this.exam = exam;
+    }
+
 }

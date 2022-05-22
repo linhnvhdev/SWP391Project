@@ -16,6 +16,7 @@ import java.util.logging.Logger;
  * @author Linhnvhdev
  */
 public class DBContext {
+
     protected Connection connection;
     
     public DBContext(){
