@@ -1,0 +1,81 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : May 19, 2022, 11:07:28 PM
+    Author     : sioni
+*/
+
+body{
+    margin:0;
+    padding:0;
+    color: black;
+}
+
+
+.background-img  {
+    background-image: url("../img/background4.gif");
+    background-size: cover; /* Resize the background image to cover the entire container */
+    background-repeat: no-repeat;
+    height: 100vh;
+
+}
+form{
+     position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    margin-top: -50px;
+    margin-left: -70px;
+    width: 350px;
+    height: 200px;
+    text-align: center;
+    
+}
+input[type=text] {
+    width: 20em;  height: 2em;
+    margin-top: 5px;
+    margin-bottom:5px;
+    
+    
+}
+a{
+
+
+      font-size: 50px;
+    margin-left: 48%;
+    margin-right: 50px;
+    text-align: center;
+}
+a:link {
+    color: white;
+    background-color: transparent;
+    text-decoration: none;
+}
+a:visited {
+    color: white;
+    background-color: transparent;
+    text-decoration: none;
+}
+a:hover {
+    color: red;
+    background-color: transparent;
+    text-decoration: underline;
+}
+input[type=submit] {
+    width: 230px;
+    height: 50px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    margin-left: 30px;
+    padding-right: 20px;
+    background-image: url("../img/meo.gif");
+    color: white;
+    font-size:30px;
+
+}
+#create1:hover{
+    font-size: 35px;
+}

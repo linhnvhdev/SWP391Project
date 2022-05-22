@@ -22,10 +22,15 @@
         <div class="main-content">
             <div class="left">
 
-                <h3>Course list:</h3>
-                <c:forEach var="course" items="${requestScope.courseList}">
-                    <a href="course?courseId=${course.id}">${course.name}</a><br>
-                </c:forEach>
+                <h3 style="  font-size: 30px;">Course list:</h3>
+                <table style="border-color: black; font-size:30px; margin-bottom: 20px;" border="solid 2px">
+
+                    <c:forEach var="course" items="${requestScope.courseList}">
+                        <tr>
+                            <td> <a href="course?courseId=${course.id}">${course.name}</a><br>
+                            </c:forEach></td>
+                    </tr>
+                </table>
                 <c:if test="${sessionScope.account.user.role >= 2}">
                     <a href="course/add"><button>Add new course</button></a>
                 </c:if>
