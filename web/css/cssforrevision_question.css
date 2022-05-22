@@ -1,0 +1,39 @@
+
+.homescreen-content {
+    height: 100%;
+    display: flex;
+  }
+.split {
+
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+    
+}
+
+.test1 {
+    left:0;
+    height: 55%;
+    width: 100%;
+    background-color: white;
+
+}
+
+.test2 {
+    
+    left:0;
+    top: 70%;
+    height: 30%;
+    width: 100%;
+    background-color: pink;
+}
+
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}

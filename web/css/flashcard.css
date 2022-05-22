@@ -58,4 +58,20 @@ body{
 }
 .other-card{
     display:flex;
+    margin-left:10%;
+     
+       
+     height: 30px;
+     margin-top: 5px;
+    margin-bottom:10px;
+    
+}
+input[type=submit] {
+    margin-left: 5px;
+       margin-right: 5px;
+     
+    height: 40px;
+       width:80px  ;
+       text-align: center;
+   
 }
