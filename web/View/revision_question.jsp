@@ -48,7 +48,9 @@
                     </div>
                 </div>
             </div>
-        </div>
-                            /
+                 <a href="../home">Back to home</a>
+            </div>
+            
+        </div>                    
     </body>
 </html>
