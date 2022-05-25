@@ -1,6 +1,6 @@
 <%-- 
-    Document   : register
-    Created on : May 12, 2022, 10:19:59 PM
+    Document   : login
+    Created on : May 12, 2022, 10:03:49 PM
     Author     : Linhnvhdev
 --%>
 
@@ -10,36 +10,67 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-        <link href="css/cssforregister.css" rel="stylesheet" type="text/css"/>
+        <title>Login</title>
+        
+        <link href="${pageContext.request.contextPath}/css/cssforregister.css" rel="stylesheet"/>
+       
     </head>
     <body>
-        <div class="background-img">
-            <div class="form">
-                <form action="register" method="POST">
-                    <c:if test="${requestScope.errorMessage != null}">
-                        <div style="color: red">${requestScope.errorMessage}</div>
-                    </c:if>
-                    <c:if test="${requestScope.successMessage != null}">
-                        <div style="color: green">${requestScope.successMessage}</div>
-                    </c:if>
-                    Username: <input type="text" name="username"><br>
-                    Password: <input type="password" name="password"><br>
-                    RePassword: <input type="password" name="repassword"><br>
-                    Name: <input type="text" name="name" required><br>
-                    Gmai    xl: <input type="gmail" name="gmail" required><br> 
-                    Gender: <input type="radio" name="gender" value="True" checked> Male
-                    <input type="radio" name="gender" value="False" > Female<br>
-                    DOB: <input type="date" name="dob" required><br>
-                    Role: <select name="role">
+        <div id="tsparticles">  </div>
+        <div class="login-box">
+            <h2>Login</h2>
+            <form action="register" method="POST">
+                <c:if test="${requestScope.errorMessage != null}">
+                    <div style="color: green">${requestScope.errorMessage}</div>
+                </c:if>
+                <c:if test="${requestScope.successMessage != null}">
+                    <div style="color: white">${requestScope.successMessage}</div>
+                </c:if>
+
+                <c:if test="${requestScope.errorMessage != null}">
+                    <div style="color: red">${requestScope.errorMessage}</div>
+                </c:if>
+                <div class="user-box">
+                    <h3> Username: </h3><input type="text" name="username">
+
+                </div>
+                <div class="user-box">
+                    <h3> Password:  </h3><input type="password" name="password">
+
+                </div>
+                <div class="user-box">
+                    <h3> Confirm Password: </h3> <input type="password" name="repassword">
+
+                </div>
+                <div class="user-box">
+                    <h3>Name:</h3> <input type="text" name="name" required>
+
+                </div>
+
+                <div class="user-box">
+                    <h3>Gmail: </h3><input type="gmail" name="gmail" required>
+
+                </div>
+                <div class="user-box">
+                    <h3> DOB:</h3> <input type="date" name="dob" required>
+                    <h3> Role:</h3> <select name="role">
                         <option value="1">Learner</option>
                         <option value="2">Course creator</option>
-                    </select><br>
-
-                    <input id="register1" type="submit" value="Register"><br>
-                    <a href="login">back to login</a>
-                </form>
-            </div>
+                    </select>
+                </div>
+                <div>
+                    <a href="register">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <input type="submit" value="Register"><br>
+                    </a>
+                </div>
+            </form>
         </div>
+          
+        <script src="https://cdn.jsdelivr.net/npm/tsparticles@1.18.3/dist/tsparticles.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/backgroundparticles.js" type="text/javascript"></script>
+    
     </body>
 </html>
