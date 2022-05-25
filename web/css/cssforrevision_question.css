@@ -15,16 +15,16 @@
 
 .test1 {
     left:0;
-    height: 55%;
-    width: 100%;
+    height: 40%;
+    width: 10%;
     background-color: white;
-
+   
 }
 
 .test2 {
 
     left:0;
-    top: 60%;
+    top: 10%;
     height: 40%;
     width: 100%;
     background-color: pink;
@@ -36,4 +36,11 @@
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
+ 
+}
+
+.header{
+    display:flex;
+       position: relative;
+    top: -200px;
 }

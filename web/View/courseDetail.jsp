@@ -32,7 +32,7 @@
                     <a class="button" href="revision?courseId=${course.id}"><button class="button2">Practice</button></a>
                 </div>
                 <div>
-                    <a class="button" href="#" ><button class="button3">Boss fight</button></a>
+                    <a class="button" href="exam?courseId=${course.id}" ><button class="button3">Boss fight</button></a>
                 </div>
             </div>            
         </div>
