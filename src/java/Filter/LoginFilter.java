@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LoginFilter implements Filter {
     
+    private static String[] nonLoginPath = {"/login","/register","/chgpwd","css","img","js"};
     private static final boolean debug = true;
 
     // The filter configuration object we are associated with.  If
@@ -104,6 +105,13 @@ public class LoginFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         Account account = (Account) httpRequest.getSession().getAttribute("account");
+        String path = ((HttpServletRequest) request).getRequestURI();
+        for(String specialPath : nonLoginPath){
+            if(path.contains(specialPath)){
+                chain.doFilter(request, response);
+                return;
+            }
+        }
         if(account == null){
             httpResponse.sendRedirect(httpRequest.getContextPath()+"/login");
         }
@@ -137,7 +145,8 @@ public class LoginFilter implements Filter {
     /**
      * Init method for this filter
      */
-    public void init(FilterConfig filterConfig) {        
+    public void init(FilterConfig filterConfig) { 
+        
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {                
