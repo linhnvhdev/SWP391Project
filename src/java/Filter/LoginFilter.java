@@ -112,7 +112,8 @@ public class LoginFilter implements Filter {
                 return;
             }
         }
-        if(account == null){
+        if(account == null || account.isActive() != true){
+            
             httpResponse.sendRedirect(httpRequest.getContextPath()+"/login");
         }
         else{

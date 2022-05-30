@@ -11,6 +11,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,7 +23,7 @@ import java.util.logging.Logger;
 public class AccountDBContext extends DBContext {
     public Account getAccount(String username, String password){
         try {
-            String sql ="SELECT [Username],[Password],[User_ID]\n" +
+            String sql ="SELECT [Username],[Password],[User_ID],[IsActive]\n" +
             "FROM Account\n" +
             "WHERE [Username] = ? AND [Password] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -35,6 +37,7 @@ public class AccountDBContext extends DBContext {
                 UserDBContext userDB = new UserDBContext();
                 User user = userDB.getUser(rs.getInt("User_ID"));
                 acc.setUser(user);
+                acc.setIsActive((Boolean)rs.getObject("IsActive"));
                 return acc;
             }
         } catch (SQLException ex) {
@@ -45,7 +48,7 @@ public class AccountDBContext extends DBContext {
     
     public Account getAccount(String username){
         try {
-            String sql ="SELECT [Username],[Password]\n" +
+            String sql ="SELECT [Username],[Password],[IsActive]\n" +
             "FROM Account\n" +
             "WHERE [Username] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -55,6 +58,7 @@ public class AccountDBContext extends DBContext {
                 Account acc = new Account();
                 acc.setUsername(rs.getString("Username"));
                 acc.setPassword(rs.getString("Password"));
+                acc.setIsActive((Boolean)rs.getObject("IsActive"));
                 return acc;
             }
         } catch (SQLException ex) {
@@ -122,5 +126,60 @@ public class AccountDBContext extends DBContext {
             }
         }
         
+    }
+    
+    public ArrayList<Account> getAccountList(){
+        ArrayList<Account> accountList = new ArrayList<>();
+        try {
+            String sql = "SELECT u.[User_ID]\n" +
+            ",[Username]\n" +
+            ",[Password]\n" +
+            ",[Name]\n" +
+            ",[Mail]\n" +
+            ",[Gender]\n" +
+            ",[Dob]\n" +
+            ",[Exp]\n" +
+            ",[Level]\n" +
+            ",[Role_ID]\n" +
+            ",a.IsActive\n" +
+            "FROM [User] u INNER JOIN Account a ON u.[User_ID] = a.[User_ID]";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                Account acc = new Account();
+                acc.setUsername(rs.getString("Username"));
+                acc.setPassword(rs.getString("Password"));
+                User user = new User();
+                user.setId(rs.getInt("User_ID"));
+                user.setName(rs.getString("Name"));
+                user.setGmail(rs.getString("Mail"));
+                user.setGender(rs.getBoolean("Gender"));
+                user.setDob(rs.getDate("Dob"));
+                user.setExp(rs.getInt("Exp"));
+                user.setLevel(rs.getInt("Level"));
+                user.setRole(rs.getInt("Role_ID"));
+                acc.setUser(user);
+                acc.setIsActive((Boolean)rs.getObject("IsActive"));
+                accountList.add(acc);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return accountList;
+    }
+
+    public void updateStatus(String username, Boolean status) {
+        try {
+            String sql="UPDATE [dbo].[Account]\n" +
+            "   SET [IsActive] = ?\n" +
+            "	WHERE Username = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            if(status == null) stm.setNull(1,Types.BIT);
+            else stm.setBoolean(1, status);
+            stm.setString(2, username);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

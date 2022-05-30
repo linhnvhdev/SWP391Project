@@ -109,4 +109,10 @@ public class User {
     public void setRole(int role) {
         this.role = role;
     }
+    
+    public String getRoleName() {
+        if(role == 1) return "Learner";
+        if(role == 2) return "Course Creator";
+        return "Admin";
+    }
 }

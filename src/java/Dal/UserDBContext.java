@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -123,5 +124,62 @@ public class UserDBContext extends DBContext {
         } catch (SQLException ex) {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void updateUser(int id, String name, String gmail, boolean gender, Date dob, int exp, int level) {
+        try {
+            String sql = "UPDATE [dbo].[User]\n" +
+            "   SET [Name] = ?\n" +
+            "      ,[Mail] = ?\n" +
+            "      ,[Gender] = ?\n" +
+            "      ,[Dob] = ?\n" +
+            "      ,[Exp] = ?\n" +
+            "      ,[Level] = ?\n" +
+            "WHERE [User_ID] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, name);
+            stm.setString(2, gmail);
+            stm.setBoolean(3, gender);
+            stm.setDate(4, dob);
+            stm.setInt(5, exp);
+            stm.setInt(6, level);
+            stm.setInt(7, id);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public ArrayList<User> getUserList() {
+        ArrayList<User> userList = new ArrayList<>();
+        try {
+            String sql = "SELECT u.[User_ID]\n" +
+            ",[Name]\n" +
+            ",[Mail]\n" +
+            ",[Gender]\n" +
+            ",[Dob]\n" +
+            ",[Exp]\n" +
+            ",[Level]\n" +
+            ",[Role_ID]\n" +
+            ",a.IsActive\n" +
+            "FROM [User] u INNER JOIN Account a ON u.[User_ID] = a.[User_ID]";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("User_ID"));
+                user.setName(rs.getString("Name"));
+                user.setGmail(rs.getString("Mail"));
+                user.setGender(rs.getBoolean("Gender"));
+                user.setDob(rs.getDate("Dob"));
+                user.setExp(rs.getInt("Exp"));
+                user.setLevel(rs.getInt("Level"));
+                user.setRole(rs.getInt("Role_ID"));
+                userList.add(user);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return userList;
     }
 }
