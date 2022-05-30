@@ -11,8 +11,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Exam Page</title>
-        <script src="js/exam.js" type="text/javascript"></script>
         <link href="${pageContext.request.contextPath}/css/exam.css" rel="stylesheet" type="text/css"/>
+        <script src="js/exam.js" type="text/javascript"></script>
+     
     </head>
     <body>
         <h1>Exam</h1>
