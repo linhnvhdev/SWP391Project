@@ -11,20 +11,21 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Exam Page</title>
-        <link href="${pageContext.request.contextPath}/css/exam.css" rel="stylesheet" type="text/css"/>
+        <link href="<%=application.getContextPath()%>/css/exam.css" rel="stylesheet" type="text/css"/>
+        <!--        <link rel="icon" href="data:;base64,iVBORw0KGgo="> <!--    bug do browser-->
         <script src="js/exam.js" type="text/javascript"></script>
-     
+
     </head>
     <body>
+        <div class="background-img">
         <h1>Exam</h1>
         <div class="top">   
             <div class="row">
                 <div class="player">
                     <div class="column">
                         <!--phan nay hien thi user -->
-                        USER HP              
-
-
+                        USER HP    <br>
+                        <img id="playerchar" src='${pageContext.request.contextPath}/img/iddle.gif'>
                     </div>
                 </div>
 
@@ -46,7 +47,7 @@
                                 </tr>
                             </tbody>
                         </table>
-
+                        <img id="Boss" src='${pageContext.request.contextPath}/img/iddle.gif'>
                     </div>
                 </div>
             </div>
@@ -81,7 +82,7 @@
                             <c:if test="${q.id == a.question.id}">          
                                 <tr>
 
-                                    <td><input onclick="document.getElementById('myImage').src = '${pageContext.request.contextPath}/img/attack.gif'" type="submit" class="answer" value="${a.id}" name="aid"/>: ${a.detail}</td>
+                                    <td><input onclick="document.getElementById('playerchar').src = '${pageContext.request.contextPath}/img/attack.gif'" type="submit" class="answer" value="${a.id}" name="aid"/>: ${a.detail}</td>
                                 </tr>
                             </c:if>                         
                         </c:forEach>
@@ -95,6 +96,7 @@
                 pagger("containerbot",${requestScope.courseId},${requestScope.pageindex},${requestScope.totalpage}, 1);
             </script>
             <a href="result?eid=${requestScope.eid}&courseId=${requestScope.courseId}"><button>FINISH</button></a>
+        </div>
         </div>
     </body>
 </html>

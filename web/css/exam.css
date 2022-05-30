@@ -8,20 +8,32 @@ and open the template in the editor.
     Author     : LENOVO
 */
 
+body{
+    margin:0;
+    padding:0;
+    color: black;
+}
 
+
+.background-img  {
+    background-image: url("../img/background5.png");
+    background-size: cover; /* Resize the background image to cover the entire container */
+    background-repeat: no-repeat;
+    height: 100vh;
+
+}
 .top {
     height: 50vh;
- 
 }
 .bot {
     height: 50vh;
  
 }
 
-column{
+.column{
   float: left;
   width: 50%;
-  padding: 10px;
+
 }
 
 /* Clear floats after the columns */
@@ -30,6 +42,6 @@ column{
   display: table;
   clear: both;
 }
-* {
-  box-sizing: border-box;
+#playerchar{
+    padding-top:50px;
 }
