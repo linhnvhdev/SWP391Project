@@ -8,12 +8,11 @@ and open the template in the editor.
     Author     : LENOVO
 */
 
-body{
+.body{
     margin:0;
     padding:0;
-    color: black;
-}
 
+}
 
 .background-img  {
     background-image: url("../img/background5.png");
@@ -26,22 +25,58 @@ body{
     height: 50vh;
 }
 .bot {
-    height: 50vh;
- 
+    height: 30vh;
+
 }
 
 .column{
-  float: left;
-  width: 50%;
+    float: left;
+    width: 40%;
 
 }
 
 /* Clear floats after the columns */
 .row:after {
-  content: "";
-  display: table;
-  clear: both;
+    content: "";
+    display: table;
+    clear: both;
 }
 #playerchar{
     padding-top:50px;
+}
+#table1{
+
+    position:relative;
+    left:60%;
+
+}
+#Boss{
+    position:relative;
+    left:50%;
+
+}
+
+.playerhp{
+    position:relative;
+    left:20%;
+}
+.ex{
+    padding-bottom: 30px;
+    font-size:50PX;
+    margin-left:50%;
+}
+#question{
+    font-size:50px;
+}
+#tdquestion {
+    font-size: 24px;
+}
+input[type="submit"]
+{   
+    position: relative;
+    display: inline-block;
+    font-size: 16px;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: 0.5s;
 }

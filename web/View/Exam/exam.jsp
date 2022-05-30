@@ -18,13 +18,15 @@
     </head>
     <body>
         <div class="background-img">
-        <h1>Exam</h1>
+            <div class="ex">
+                Exam</div>
         <div class="top">   
             <div class="row">
                 <div class="player">
                     <div class="column">
                         <!--phan nay hien thi user -->
-                        USER HP    <br>
+                        <div class="playerhp">USER HP   
+                        </div>
                         <img id="playerchar" src='${pageContext.request.contextPath}/img/iddle.gif'>
                     </div>
                 </div>
@@ -33,9 +35,9 @@
                 <div class="boss">
                     <div class="column">
                         <!--    -->
-                        BOSS HP
+            
 
-                        <table border="1">
+                        <table id="table1" border="1">
 
                             <tbody>
                                 <tr>
@@ -59,22 +61,22 @@
 
                     <tbody>
                         <tr>
-                            <td>${requestScope.score} / ${requestScope.maxScore}</td>
+                            <td id="question">${requestScope.score} / ${requestScope.maxScore}</td>
                     <input type="hidden" name="score" value="${requestScope.score}"/>
                     <input type="hidden" name="eid" value="${requestScope.eid}"/>
                     <input type="hidden" name="maxScore" value="${requestScope.maxScore}"/>
                     <input type="hidden" name="passScore" value="${requestScope.passScore}"/>
                     </tr>
                     <tr>
-                        <td>Question_detail</td>
+                        <td id="question" >Question_detail</td>
                     <input type="hidden" name="courseId" value="${requestScope.courseId}"/>
                     </tr>
                     <c:forEach items="${requestScope.questionList}" var="q">
 
-                        <tr >
+                        <tr  id="question">
                         <input type="hidden" name="qid" value="${q.id}"/>
                         <input type="hidden" name="pageindex" value="${requestScope.pageindex}"/>
-                        <td>Question: ${q.detail}</td>
+                        <td >Question: ${q.detail}</td>
                         </tr>
 
                         <c:forEach items = "${requestScope.answerList}" var="a">
@@ -82,7 +84,7 @@
                             <c:if test="${q.id == a.question.id}">          
                                 <tr>
 
-                                    <td><input onclick="document.getElementById('playerchar').src = '${pageContext.request.contextPath}/img/attack.gif'" type="submit" class="answer" value="${a.id}" name="aid"/>: ${a.detail}</td>
+                                <td id="tdquestion"><input onclick="document.getElementById('playerchar').src = '${pageContext.request.contextPath}/img/attack.gif'" type="submit" class="answer" value="${a.id}" name="aid"/>: ${a.detail}</td>
                                 </tr>
                             </c:if>                         
                         </c:forEach>
