@@ -41,17 +41,27 @@ public class ExamController extends HttpServlet {
             throws ServletException, IOException {
 
         Account acc = (Account) request.getSession().getAttribute("account");
-        User user = acc.getUser();
-
+        Integer score = (Integer) request.getSession().getAttribute("score");
         ArrayList<Integer> answeredQuestionList = (ArrayList<Integer>) request.getSession().getAttribute("answeredQuestionList");
-        //create a list to store question have answered
+        ArrayList<Answer> answerList =(ArrayList<Answer> ) request.getSession().getAttribute("answerList");
+        Integer currentBossHP = (Integer) request.getSession().getAttribute("currentBossHP");
+        //    create a list to store question have answered
         if (answeredQuestionList == null) {
             answeredQuestionList = new ArrayList<>();
             request.getSession().setAttribute("answeredQuestionList", answeredQuestionList);
         }
-
+        //
+        if (score == null) {
+            score = 0;
+            request.getSession().setAttribute("score", score);
+        }
+        // When starting the exam
+//        if (currentBossHP == null) {
+//            currentBossHP = maxScore;
+//            request.getSession().setAttribute("currentBossHP", currentBossHP);
+//        }
         
-
+        User user = acc.getUser();
         int courseId = Integer.parseInt(request.getParameter("courseId"));
         ExamDBContext examDB = new ExamDBContext();
         Exam exam = examDB.getExam(courseId);
@@ -59,14 +69,17 @@ public class ExamController extends HttpServlet {
         // int score = examDB.getScore(exam.getId(), acc.getUser().getId());
         int numQues = examDB.countQuesPerExam(exam.getId());
         int maxScore = numQues * 10;
-        Integer score = (Integer) request.getSession().getAttribute("score");
-        if (score == null) {
-            score = 0;
-            request.getSession().setAttribute("score", score);
+        if (currentBossHP == null) {
+            currentBossHP = maxScore;
+            request.getSession().setAttribute("currentBossHP", currentBossHP);
         }
 
         // load all answer in DB !!!        
-        ArrayList<Answer> answerList = examDB.getAllAnswers();
+        
+       if (answerList == null) {
+            answerList = examDB.getAllAnswers(exam.getId());
+            request.getSession().setAttribute("answerList", answerList);
+        }
         int pagesize = 1;
         String page = request.getParameter("page");
         if (page == null || page.trim().length() == 0) {
@@ -86,12 +99,7 @@ public class ExamController extends HttpServlet {
             }
         }
 
-        Integer currentBossHP = (Integer) request.getSession().getAttribute("currentBossHP");
-        // When starting the exam
-        if (currentBossHP == null) {
-            currentBossHP = maxScore;
-            request.getSession().setAttribute("currentBossHP", currentBossHP);
-        }
+       
 
         request.setAttribute("totalpage", totalpage);
         request.setAttribute("pageindex", pageindex);
@@ -152,7 +160,7 @@ public class ExamController extends HttpServlet {
             session.setAttribute("score", score);
         }
 
-        response.sendRedirect("exam?page=" + (page + 1) + "&courseId=" + (courseId)+"&questionId="+(question_id));
+        response.sendRedirect("exam?page=" + (page + 1) + "&courseId=" + (courseId) + "&questionId=" + (question_id));
     }
 
     /**
