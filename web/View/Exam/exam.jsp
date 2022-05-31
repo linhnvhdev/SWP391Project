@@ -52,6 +52,13 @@
                     <input type="hidden" name="passScore" value="${requestScope.passScore}"/>
                 </tr>
                 <tr>
+                    <td>
+                    <c:if test="${requestScope.answeredMessage != null}">
+                        <div style="color: green">${requestScope.answeredMessage}</div>
+                    </c:if>
+                    </td>
+                </tr>
+                <tr>
                     <td>Question_detail</td>
             <input type="hidden" name="courseId" value="${requestScope.courseId}"/>
                 </tr>
@@ -66,8 +73,9 @@
                     <c:forEach items = "${requestScope.answerList}" var="a">
                         
                             <c:if test="${q.id == a.question.id}">       
-                            <tr>
-                                <td><input type="submit" class="answer" value="${a.id}" name="aid"/>: ${a.detail}</td>
+                            <tr>    
+                                <input type="hidden" name="aid" value="${a.id}"/>
+                                <td><input type="submit" style="width: 100%;" value="${a.detail}" /></td>
                             </tr>
                             </c:if>                         
                     </c:forEach>
