@@ -66,7 +66,7 @@ public class ExamController extends HttpServlet {
 //            ArrayList<Answer> answers = examDB.getAnswers(question.getId());
 //        }
         // load all answer in DB !!!        
-        ArrayList<Answer> answerList = examDB.getAllAnswers();
+        ArrayList<Answer> answerList = examDB.getAllAnswers(exam.getId());
         int pagesize = 1;
         String page = request.getParameter("page");
         if (page == null || page.trim().length() == 0) {

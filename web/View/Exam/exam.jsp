@@ -17,12 +17,11 @@
 <style> 
 .playermove {
   position: relative;
-  animation: playermove 10s infinite;
+  animation: playermove 5s infinite;
 }
 
 @keyframes playermove {
     0%   {left: 0px;}
-  25%  {left: 200px;}
   50%  {left: 400px;}
   75%  {left: 600px;}
   100% {left: 800px;}

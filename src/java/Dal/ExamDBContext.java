@@ -123,13 +123,16 @@ public class ExamDBContext extends DBContext {
         return null;
     }
 
-    public ArrayList<Answer> getAllAnswers() {
+    public ArrayList<Answer> getAllAnswers(int eid) {
         ArrayList<Answer> answers = new ArrayList();
         try {
-            String sql = "SELECT *\n"
-                    + "FROM Answer";
+            String sql = "SELECT a.Answer_Detail, a.Answer_ID, a.Question_ID, a.Question_ID, a.IsCorrect\n"
+                    + "FROM ANSWER a INNER JOIN Question q ON a.Question_ID = q.Question_ID\n"
+                    + "	INNER JOIN Exam e ON e.Exam_ID = q.Exam_ID\n"
+                    + "WHERE e.Exam_ID = ?";
 
             PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, eid);
             ResultSet rs = stm.executeQuery();
             ExamDBContext examDB = new ExamDBContext();
             while (rs.next()) {
