@@ -13,20 +13,23 @@
         <title>Exam Page</title>
         <link href="<%=application.getContextPath()%>/css/exam.css" rel="stylesheet" type="text/css"/>
         <!--        <link rel="icon" href="data:;base64,iVBORw0KGgo="> <!--    bug do browser-->
+  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
         <script src="js/exam.js" type="text/javascript"></script>
-<style> 
-.playermove {
-  position: relative;
-  animation: playermove 5s infinite;
-}
+        <style> 
+            .playermove {
+                position: relative;
+                animation: playermove 5s infinite;
+            }
 
-@keyframes playermove {
-    0%   {left: 0px;}
-  50%  {left: 400px;}
-  75%  {left: 600px;}
-  100% {left: 800px;}
-}
-</style>
+            @keyframes playermove {
+                0%   {left: 0px;}
+                25%  {left: 200px;}
+                50%  {left: 400px;}
+                75%  {left: 600px;}
+                100% {left: 800px;}
+            }
+        </style>
     </head>
     <body>
         <div class="background-img">
@@ -37,8 +40,13 @@
                     <div class="player">
                         <div class="column">
                             <!--phan nay hien thi user -->
-                            <div class="playerhp">USER HP   
+                            <div class="playerhp">
+                                USER HP   
+                                <div id="progressBar">
+                                    <div class="bar"></div>
+                                </div>
                             </div>
+
                             <div class="playermove">
                                 <img id="playerchar" src='${pageContext.request.contextPath}/img/iddle.gif'>
                             </div>
@@ -63,7 +71,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <img id="Boss" src='${pageContext.request.contextPath}/img/iddle.gif'>
+                            <img id="Boss" src='${pageContext.request.contextPath}/img/boss.gif'>
                         </div>
                     </div>
                 </div>
@@ -98,7 +106,7 @@
                                 <c:if test="${q.id == a.question.id}">          
                                     <tr>
                                     <input type="hidden" name="aid" value="${a.id}"/>
-                                    <td><input onclick="document.getElementById('playerchar').src = '${pageContext.request.contextPath}/img/attack.gif'" type="submit" style="width: 100%;" value="${a.detail}" /></td>
+                                    <td><input onclick="document.getElementById('playerchar').src = '${pageContext.request.contextPath}/img/attack.gif'" type="submit" value="${a.detail}" /></td>
                                     </tr>
                                 </c:if>                         
                             </c:forEach>
@@ -106,13 +114,17 @@
                         </c:forEach>
                         </tbody>
                     </table>
+
                 </form>
-                <div id ="containerbot" >        </div>
-                <script>
-                    pagger("containerbot",${requestScope.courseId},${requestScope.pageindex},${requestScope.totalpage}, 1);
-                </script>
-                <a href="result?eid=${requestScope.eid}&courseId=${requestScope.courseId}"><button>FINISH</button></a>
+                <div class="pagination" id ="containerbot" >    
+                    <script>
+                        pagger("containerbot",${requestScope.courseId},${requestScope.pageindex},${requestScope.totalpage}, 1);
+                    </script>
+                    <a class="active" href="result?eid=${requestScope.eid}&courseId=${requestScope.courseId}"><button>FINISH</button></a>
+                </div>
             </div>
         </div>
+                 <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+                 <script src="js/progressbar.js" type="text/javascript"></script>
     </body>
 </html>

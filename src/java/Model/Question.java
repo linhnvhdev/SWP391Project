@@ -7,7 +7,6 @@ package Model;
 
 /**
  *
-<<<<<<< HEAD
  * @author Bi
  */
 public class Question {
@@ -15,6 +14,7 @@ public class Question {
     private String detail;
     private Course course;
     private Exam exam;
+    private Difficulty difficulty;
 
     public Question() {
         
@@ -24,6 +24,13 @@ public class Question {
         this.id = id;
         this.detail = detail;
         this.course = course;
+    }
+    
+    public Question(int id, String detail, Course course,Difficulty difficulty) {
+        this.id = id;
+        this.detail = detail;
+        this.course = course;
+        this.difficulty = difficulty;
     }
 
     public Question(int id, String detail, Course course, Exam exam) {
@@ -41,13 +48,21 @@ public class Question {
     public String getDetail() {
         return detail;
     }
+    
+    public Course getCourse() {
+        return course;
+    }
+
+    public Exam getExam() {
+        return exam;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
 
     public void setCourse(Course course) {
         this.course = course;
-    }
-
-    public Course getCourse() {
-        return course;
     }
 
     public void setId(int Question_ID) {
@@ -60,6 +75,10 @@ public class Question {
 
     public void setExam(Exam exam) {
         this.exam = exam;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
     }
 
 }

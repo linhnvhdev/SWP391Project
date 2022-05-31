@@ -32,8 +32,7 @@
                 <div class="centered">
                     <% Question question = (Question) request.getAttribute("q");
                         ArrayList<Answer> answers = (ArrayList<Answer>) request.getAttribute("answers");
-                        // Answer correctAns = (Answer) request.getAttribute("answer");
-%>
+                        // Answer correctAns = (Answer) request.getAttribute("answer");%>
                     <div>
                         <h1><%=question.getDetail()%></h1>
                         <h2>Exp:${requestScope.exp}</h2>
@@ -49,6 +48,13 @@
                     </div>
                 </div>
             </div>
+
         </div>          
+
+                 <a href="../home">Back to home</a>
+            </div>
+            
+        </div>                    
+
     </body>
 </html>

@@ -8,17 +8,20 @@ and open the template in the editor.
     Author     : LENOVO
 */
 
-.body{
-    margin:0;
-    padding:0;
-
+body, html {
+  height: 100%;
+  margin: 0;
 }
 
 .background-img  {
     background-image: url("../img/background5.png");
-    background-size: cover; /* Resize the background image to cover the entire container */
-    background-repeat: no-repeat;
-    height: 100vh;
+
+  height: 100%; 
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 
 }
 .top {
@@ -79,4 +82,48 @@ input[type="submit"]
     text-transform: uppercase;
     overflow: hidden;
     transition: 0.5s;
+    margin-left:40%;
+    margin-right:auto;
+    width: 50%;
+   height: 25px;
+
 }
+/* Set the style for the a tag */
+.pagination a {
+color: black;
+padding-top: 10px;
+padding-right: 16px;
+padding-left: 16px;
+font-size: 30px;
+text-decoration: none;
+transition: background-color .3s;
+}
+
+
+/* add background color when user hovers on inactive class */
+.pagination a:hover:not(.active) {
+background-color: mediumspringgreen;
+
+}
+span
+{
+   font-size: 30px; 
+}
+#progressBar {
+  width: 50%;
+
+  background-color: #0a5f44;
+}
+
+#progressBar div {
+  height: 100%;
+  text-align: right;
+  padding: 0 10px;
+  line-height: 22px; 
+  width: 0;
+  background-color: #cbea00;
+  box-sizing: border-box;
+}
+
+
+

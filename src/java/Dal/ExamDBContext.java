@@ -168,11 +168,11 @@ public class ExamDBContext extends DBContext {
     public ArrayList<Question> getQuestions(int eid, int pageindex, int pagesize) {
         ArrayList<Question> questionList = new ArrayList();
         try {
-            String sql = "SELECT tb.Question_ID, tb.Question_Detail, tb.Course_ID, tb.Exam_ID \n" +
-            "FROM\n" +
-            "(SELECT q.Question_ID,q.Question_Detail,q.Course_ID,q.Exam_ID, ROW_NUMBER() OVER (ORDER BY Question_ID ASC) as row_index FROM Question q INNER JOIN Exam e ON q.Exam_ID = e.Exam_ID WHERE e.Exam_ID = ?) tb\n" +
-            "WHERE	row_index >= ( ? - 1 ) * ? +1\n" +
-            "AND row_index <= ? * ?";
+            String sql = "SELECT tb.Question_ID, tb.Question_Detail, tb.Course_ID, tb.Exam_ID \n"
+                    + "FROM\n"
+                    + "(SELECT q.Question_ID,q.Question_Detail,q.Course_ID,q.Exam_ID, ROW_NUMBER() OVER (ORDER BY Question_ID ASC) as row_index FROM Question q INNER JOIN Exam e ON q.Exam_ID = e.Exam_ID WHERE e.Exam_ID = ?) tb\n"
+                    + "WHERE	row_index >= ( ? - 1 ) * ? +1\n"
+                    + "AND row_index <= ? * ?";
 
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, eid);

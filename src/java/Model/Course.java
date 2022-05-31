@@ -10,6 +10,7 @@ public class Course {
     private int id;
     private String name;
     private User creator;
+    private String description;
 
     public Course() {
     }
@@ -18,6 +19,14 @@ public class Course {
         this.id = id;
         this.name = name;
         this.creator = creator;
+        this.description = "";
+    }
+
+    public Course(int id, String name, User creator, String description) {
+        this.id = id;
+        this.name = name;
+        this.creator = creator;
+        this.description = description;
     }
 
     public int getId() {
@@ -32,6 +41,10 @@ public class Course {
         return creator;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -43,5 +56,9 @@ public class Course {
     public void setCreator(User creator) {
         this.creator = creator;
     }   
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
 

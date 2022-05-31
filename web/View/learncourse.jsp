@@ -23,6 +23,7 @@
         %>
     </head>
     <body>
+        
         <form action="flashcard" method="POST">
             <input type="hidden" value="${requestScope.courseId}" name="courseId">
             <div class="flip-card-container">
@@ -43,6 +44,8 @@
               <div class="other-card-item"><input type="submit" value="next" name="next"></div>
               <div class="other-card-item"><input type="hidden" value="<%=index%>" name="index_raw"></div>
             </div>
+            <a href="home" >Back to home</a> 
+            <a href="course?courseId=${requestScope.courseId}">Back to course</a>
         </form>
         
         
