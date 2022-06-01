@@ -18,6 +18,7 @@
         <div class="header">
             <a  class="column" href="login">Log out</a>
             <a  class="column" href="chgpwd">Change password</a>
+            <a  class="column" href="course/library">Course Library</a>
         </div>
         <div class="main-content">
             <div class="left">

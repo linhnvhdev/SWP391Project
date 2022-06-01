@@ -34,6 +34,14 @@
                 <div>
                     <a class="button" href="exam?courseId=${course.id}" ><button class="button3">Boss fight</button></a>
                 </div>
+                <c:if test="${requestScope.isEnrolled == false}">
+                    <div>
+                        <form action="course" method="POST">
+                            <input type="hidden" name="courseId" value="${course.id}">
+                            <input type="submit" value="Enroll course">
+                        </form>
+                    </div>
+                </c:if>
             </div>            
         </div>
             <c:set var="course" value="${requestScope.course}"/>
