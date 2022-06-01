@@ -21,9 +21,9 @@
             <div class="top">
 
                 <div class="header">
-                    <a href="../home">Back to home</a>
-                    <a href="../login">Log out</a>
-                    <a href="../chgpwd">Change password</a>
+                    <a class="column1" href="../home">Back to home</a>
+                    <a class="column1"href="../login">Log out</a>
+                    <a class="column1" href="../chgpwd">Change password</a>
                 </div>
                 <div class="player">
                     <div class="column">
@@ -47,11 +47,12 @@
                 <% Question question = (Question) request.getAttribute("q");
                     ArrayList<Answer> answers = (ArrayList<Answer>) request.getAttribute("answers");
                     // Answer correctAns = (Answer) request.getAttribute("answer");%>
-                <div>
-                    <h1><%=question.getDetail()%></h1>
-                    <h2>Exp:${requestScope.exp}</h2>
+                <div class="detail">
+                    <p><%=question.getDetail()%></p>
+                    <p>Exp:${requestScope.exp}</p>
+                      </div>
                     <div class="column">
-                        <div id="question">
+                        <div class="question">
                         <form method="post" action="question?id=${requestScope.id}&courseId=${requestScope.courseId}">
                             <%for (Answer answer : answers) {%>
                             <input onclick="document.getElementById('playerchar').src = '${pageContext.request.contextPath}/img/attack.gif'" type="submit" name="answer" value="<%=answer.getId()%>"/><%=answer.getDetail()%></br>
@@ -62,7 +63,7 @@
                         </div>
                     </div>
 
-                </div>
+              
             </div>
         </div>
     </body>
