@@ -15,12 +15,6 @@ public class Course {
     public Course() {
     }
     
-    public Course(int id, String name, User creator) {
-        this.id = id;
-        this.name = name;
-        this.creator = creator;
-        this.description = "";
-    }
 
     public Course(int id, String name, User creator, String description) {
         this.id = id;

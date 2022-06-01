@@ -21,6 +21,7 @@
             <a class="column" href="home">Back to home</a>
             <a class="column" href="login">Log out</a>
             <a class="column" href="chgpwd">Change password</a>
+            <a class="column" href="coursesetting?courseId=${course.id}">Course setting</a>
         </div>
          <div class="main-content">
         <div class="left">
