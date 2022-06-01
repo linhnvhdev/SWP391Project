@@ -34,7 +34,8 @@
     <body>
         <div class="background-img">
             <div class="ex">
-                Exam</div>
+                Exam
+            </div>
             <div class="top">   
                 <div class="row">
                     <div class="player">
@@ -45,7 +46,22 @@
                                 <div id="progressBar">
                                     <div class="bar"></div>
                                 </div>
-                            </div>
+                            </div><div class="boss">
+                        <div class="column">
+                            <table id="table1" border="1">
+                                <tbody>
+                                    <tr>
+                                        <td>BOSS NAME</td>
+                                    </tr>
+                                    <tr>
+                                        <td>BOSS HP</td>
+                                        <td>   ${requestScope.currentBossHP}   / ${requestScope.passScore} </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <img id="Boss" src='${pageContext.request.contextPath}/img/boss.gif'>
+                        </div>
+                    </div>
 
                             <div class="playermove">
                                 <img id="playerchar" src='${pageContext.request.contextPath}/img/iddle.gif'>
@@ -56,11 +72,7 @@
 
                     <div class="boss">
                         <div class="column">
-                            <!--    -->
-
-
                             <table id="table1" border="1">
-
                                 <tbody>
                                     <tr>
                                         <td>BOSS NAME</td>
@@ -125,6 +137,10 @@
             </div>
         </div>
                  <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+                 <script>
+                     var eid=${requestScope.eid};
+                     var courseId=${requestScope.courseId};
+                 </script>
                  <script src="js/progressbar.js" type="text/javascript"></script>
     </body>
 </html>
