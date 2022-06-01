@@ -16,4 +16,6 @@ public class SystemMessage {
     public static final String ACCOUNT_WRONG = "Wrong username or password";
     public static final String CHANGE_PASSWORD_SUCCESS = "change password successfully";
     public static final String LOGIN_FAILED = "Login failed";
+    public static final String Reset_Successful="reset password successful";
+    public static final String UserName_Donot_Exits="Username do not exits";
 }

@@ -9,6 +9,7 @@ import Dal.AccountDBContext;
 import Dal.UserDBContext;
 import Model.Account;
 import Model.User;
+import Util.SystemMessage;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Properties;
@@ -78,11 +79,19 @@ public class ResetPasswordController extends HttpServlet {
             String username = request.getParameter("username");
             AccountDBContext adb = new AccountDBContext();
             Account a = adb.getAccount(username);
+            //username do exits
+            if(a!=null){
             UserDBContext uDB = new UserDBContext();
             User u = uDB.getUser(a.getUser().getId());
             String newPassword = RandomPassword();
+            adb.updateAccount(username, newPassword);
             sendMail(u.getGmail(),newPassword);
-            response.getWriter().print("new password was sent!please check your email");
+            request.setAttribute("resetpassword_successful", SystemMessage.Reset_Successful);}
+            //username do not exits
+            else{
+            request.setAttribute("Not_exit", SystemMessage.UserName_Donot_Exits);
+            }
+            request.getRequestDispatcher("/View/resetpassword.jsp").forward(request, response);
         } catch (MessagingException ex) {
             Logger.getLogger(ResetPasswordController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -134,7 +143,7 @@ public class ResetPasswordController extends HttpServlet {
         }
 
     private String RandomPassword() {
-        String charac = "abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*<>?:";//26 chu 10so
+        String charac = "abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*<>?:";
         String newpassword = "";
         for (int i = 0; i <= 5; i++) {
             Random r = new Random();
