@@ -90,7 +90,13 @@ button{
 #Boss{
      position:absolute;
     left:70%;
-    bottom: 100px;
+    top: 100px;
     width: 200px;
     height: 200px;
+}
+#playerchar{
+         position:absolute;
+    right:70%;
+    top: 100px;
+   
 }

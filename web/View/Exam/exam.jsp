@@ -46,22 +46,7 @@
                                 <div id="progressBar">
                                     <div class="bar"></div>
                                 </div>
-                            </div><div class="boss">
-                        <div class="column">
-                            <table id="table1" border="1">
-                                <tbody>
-                                    <tr>
-                                        <td>BOSS NAME</td>
-                                    </tr>
-                                    <tr>
-                                        <td>BOSS HP</td>
-                                        <td>   ${requestScope.currentBossHP}   / ${requestScope.passScore} </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <img id="Boss" src='${pageContext.request.contextPath}/img/boss.gif'>
-                        </div>
-                    </div>
+                       
 
                             <div class="playermove">
                                 <img id="playerchar" src='${pageContext.request.contextPath}/img/iddle.gif'>
