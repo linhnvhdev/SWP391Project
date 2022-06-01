@@ -48,7 +48,7 @@ public class AccountDBContext extends DBContext {
     
     public Account getAccount(String username){
         try {
-            String sql ="SELECT [Username],[Password],[IsActive]\n" +
+            String sql ="SELECT [Username],[Password],[User_ID],[IsActive]\n" +
             "FROM Account\n" +
             "WHERE [Username] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -58,6 +58,9 @@ public class AccountDBContext extends DBContext {
                 Account acc = new Account();
                 acc.setUsername(rs.getString("Username"));
                 acc.setPassword(rs.getString("Password"));
+                UserDBContext userDB = new UserDBContext();
+                User user = userDB.getUser(rs.getInt("User_ID"));
+                acc.setUser(user);
                 acc.setIsActive((Boolean)rs.getObject("IsActive"));
                 return acc;
             }
@@ -106,15 +109,19 @@ public class AccountDBContext extends DBContext {
             String sql="INSERT INTO [SWP391Project].[dbo].[Account]\n" +
             "           ([Username]\n" +
             "           ,[Password]\n" +
-            "           ,[User_ID])\n" +
+            "           ,[User_ID]\n" +
+            "           ,[IsActive])\n" +        
             "     VALUES\n" +
             "           (?\n" +
             "           ,?\n" +
+            "           ,?\n" +        
             "           ,?)";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, username);
             stm.setString(2, password);
             stm.setInt(3, userID);
+            if(role == 1) stm.setBoolean(4, true);
+            if(role == 2) stm.setNull(4,Types.BIT);
             stm.executeUpdate();
             connection.commit();
         } catch (SQLException ex) {
