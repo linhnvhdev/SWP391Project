@@ -34,6 +34,7 @@
                 <c:if test="${sessionScope.account.user.role >= 2}">
                     <a href="course/add"><button>Add new course</button></a>
                 </c:if>
+                <a href="leaderboard" style="  font-size: 30px;color: green">Leaderboard</a>
             </div>
             <div class="right">
                 <img style="width: 512px; height: 512px;"src="img/char.png" alt="avatar"/>
