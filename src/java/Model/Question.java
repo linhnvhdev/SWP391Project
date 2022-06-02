@@ -5,6 +5,8 @@
  */
 package Model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Bi
@@ -20,16 +22,11 @@ public class Question {
         
     }
 
-    public Question(int id, String detail, Course course) {
+    public Question(int id, String detail, Course course, Exam exam, Difficulty difficulty) {
         this.id = id;
         this.detail = detail;
         this.course = course;
-    }
-    
-    public Question(int id, String detail, Course course,Difficulty difficulty) {
-        this.id = id;
-        this.detail = detail;
-        this.course = course;
+        this.exam = exam;
         this.difficulty = difficulty;
     }
 

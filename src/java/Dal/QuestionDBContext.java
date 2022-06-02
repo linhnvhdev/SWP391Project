@@ -5,6 +5,7 @@
  */
 package Dal;
 
+import Model.Answer;
 import Model.Question;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -94,12 +95,14 @@ public class QuestionDBContext extends DBContext {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, Question_ID);
             ResultSet rs = stm.executeQuery();
-            CourseDBContext courseDB = new CourseDBContext();
+            CourseDBContext courseDB = new CourseDBContext();          
             while (rs.next()) {
                 Question q = new Question();
+               
                 q.setId(rs.getInt("Question_ID"));
                 q.setDetail(rs.getString("Question_Detail"));
                 q.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
+                
                 return q;
             }
         } catch (SQLException ex) {

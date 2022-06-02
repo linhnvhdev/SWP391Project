@@ -23,7 +23,7 @@ public class AnswerDBContext extends DBContext {
     public ArrayList<Answer> getAnswers(int Question_ID) {
         ArrayList<Answer> answers = new ArrayList<>();
         try {
-            String sql = "select Answer_ID, Answer_Detail, Question_ID, isCorrect from Answer\n"
+            String sql = "select Answer_ID, Answer_Detail, Question_ID, IsCorrect from Answer\n"
                     + "where Question_ID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, Question_ID);
@@ -33,7 +33,7 @@ public class AnswerDBContext extends DBContext {
                 Answer a = new Answer();
                 a.setId(rs.getInt("Answer_ID"));
                 a.setDetail(rs.getString("Answer_Detail"));
-                a.setIsCorrect(rs.getBoolean("isCorrect"));
+                a.setIsCorrect(rs.getBoolean("IsCorrect"));
                 a.setQuestion(questionDB.getQuestion(rs.getInt("Question_ID")));
                 answers.add(a);
             }
@@ -42,7 +42,32 @@ public class AnswerDBContext extends DBContext {
         }
         return answers;
     }
-    
+
+    public ArrayList<Answer> getAnswersCourse(int courseId) {
+        ArrayList<Answer> answers = new ArrayList<>();
+        try {
+            String sql = "SELECT Answer_ID, Answer_Detail, a.Question_ID, IsCorrect \n"
+                    + "FROM Answer a inner join Question q \n"
+                    + "ON a.Question_ID = q.Question_ID\n"
+                    + "WHERE Course_ID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, courseId);
+            ResultSet rs = stm.executeQuery();
+            QuestionDBContext questionDB = new QuestionDBContext();
+            while (rs.next()) {
+                Answer a = new Answer();
+                a.setId(rs.getInt("Answer_ID"));
+                a.setDetail(rs.getString("Answer_Detail"));
+                a.setIsCorrect(rs.getBoolean("IsCorrect"));
+                a.setQuestion(questionDB.getQuestion(rs.getInt("Question_ID")));
+                answers.add(a);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return answers;
+    }
+
     public Answer getCorrectAnswer(Question q) {
         try {
             String sql = "select Answer_ID, Answer_Detail, Question_ID, isCorrect from Answer where Question_ID = ? and isCorrect = 1";
@@ -65,14 +90,14 @@ public class AnswerDBContext extends DBContext {
 
     public void addAnswer(String answer, int questionId, boolean correct) {
         try {
-            String sql="INSERT INTO [dbo].[Answer]\n" +
-                    "           ([Answer_Detail]\n" +
-                    "           ,[Question_ID]\n" +
-                    "           ,[IsCorrect])\n" +
-                    "     VALUES\n" +
-                    "           (?\n" +
-                    "           ,?\n" +
-                    "           ,?)";
+            String sql = "INSERT INTO [dbo].[Answer]\n"
+                    + "           ([Answer_Detail]\n"
+                    + "           ,[Question_ID]\n"
+                    + "           ,[IsCorrect])\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?\n"
+                    + "           ,?)";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, answer);
             stm.setInt(2, questionId);
@@ -82,5 +107,5 @@ public class AnswerDBContext extends DBContext {
             Logger.getLogger(AnswerDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }

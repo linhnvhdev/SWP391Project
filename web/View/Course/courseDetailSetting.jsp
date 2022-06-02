@@ -28,6 +28,9 @@
                 Description: <input type="text" name="description" value="<%=course.getDescription()%>"/> <br/>
                 <input type="submit" value="save">
             </form>
+            <a href="">Flashcards setting</a>
+            <a href="questionsetting?courseId=<%=course.getId()%>">Questions setting</a>
+            <a href="">Exam setting</a>
         </div>
     </body>
 </html>

@@ -78,7 +78,11 @@
     </servlet>
     <servlet>
         <servlet-name>CourseDetailSettingController</servlet-name>
-        <servlet-class>Controller.CourseDetailSettingController</servlet-class>
+        <servlet-class>Controller.Course.CourseDetailSettingController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>QuestionSettingController</servlet-name>
+        <servlet-class>Controller.Question.QuestionSettingController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -135,6 +139,10 @@
     <servlet-mapping>
         <servlet-name>CourseDetailSettingController</servlet-name>
         <url-pattern>/coursesetting</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>QuestionSettingController</servlet-name>
+        <url-pattern>/questionsetting</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
