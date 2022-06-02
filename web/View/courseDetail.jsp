@@ -34,6 +34,11 @@
                 <div>
                     <a class="button" href="exam?courseId=${course.id}" ><button class="button3">Boss fight</button></a>
                 </div>
+                <div>
+                    <c:if test="${sessionScope.account.user.role >= 2}">
+                            <td><a href="displayexamquestion?courseId=${course.id}"><button class="button5" >Exam List</button></a></td>
+                    </c:if>
+                </div>
             </div>            
         </div>
             <c:set var="course" value="${requestScope.course}"/>
@@ -55,6 +60,12 @@
                         <td>Question</td><td>${requestScope.numQuestion}</td>
                         <c:if test="${sessionScope.account.user.role >= 2}">
                             <td><a href="question/add?courseId=${course.id}"><button class="button5" >Add question</button></a></td>
+                        </c:if>
+                    </tr>
+                    <tr>
+                        <td>Question</td><td>${requestScope.numExam}</td>
+                        <c:if test="${sessionScope.account.user.role >= 2}">
+                            <td><a href="createexam?courseId=${course.id}"><button class="button5" >Create Exam</button></a></td>
                         </c:if>
                     </tr>
                 </table>

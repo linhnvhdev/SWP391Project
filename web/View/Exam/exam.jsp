@@ -50,6 +50,7 @@
                     <input type="hidden" name="eid" value="${requestScope.eid}"/>
                     <input type="hidden" name="maxScore" value="${requestScope.maxScore}"/>
                     <input type="hidden" name="passScore" value="${requestScope.passScore}"/>
+                    <input type="hidden" name="courseId" value="${requestScope.courseId}"/>
                 </tr>
                 <tr>
                     <td>
@@ -58,10 +59,7 @@
                     </c:if>
                     </td>
                 </tr>
-                <tr>
-                    <td>Question_detail</td>
-            <input type="hidden" name="courseId" value="${requestScope.courseId}"/>
-                </tr>
+                
                 <c:forEach items="${requestScope.questionList}" var="q">
                    
                     <tr >

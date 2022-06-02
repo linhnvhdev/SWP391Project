@@ -23,7 +23,7 @@ public class ExamDBContext extends DBContext {
 
     public Exam getExam(int courseId) {
         try {
-            String sql = "SELECT *\n"
+            String sql = "SELECT TOP 1 *\n"
                     + "FROM Exam\n"
                     + "Where Course_ID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -34,7 +34,7 @@ public class ExamDBContext extends DBContext {
                 Exam e = new Exam();
                 e.setId(rs.getInt("Exam_ID"));
                 e.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
-                e.setPassed(rs.getBoolean("Passed"));
+                e.setPassed(rs.getInt("Passed"));
                 return e;
             }
         } catch (SQLException ex) {
@@ -42,11 +42,30 @@ public class ExamDBContext extends DBContext {
         }
         return null;
     }
-    //take the exam in that course
 
-    // take exam ID that has not been taken
-    // take all question in one exam
-    // take all the answer for each question.
+    public Exam getLatestExam(int courseId) {
+        try {
+            String sql = " SELECT TOP 1 * \n"
+                    + "FROM Exam e\n"
+                    + "WHERE e.Course_ID = ?\n"
+                    + "ORDER BY e.Exam_ID DESC";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, courseId);
+            ResultSet rs = stm.executeQuery();
+            CourseDBContext courseDB = new CourseDBContext();
+            if (rs.next()) {
+                Exam e = new Exam();
+                e.setId(rs.getInt("Exam_ID"));
+                e.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
+                e.setPassed(rs.getInt("Passed"));
+                return e;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     public ArrayList<Question> getQuestions(int numExam) {
         ArrayList<Question> questionList = new ArrayList();
         try {
@@ -311,6 +330,88 @@ public class ExamDBContext extends DBContext {
             Logger.getLogger(ExamDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 10;
+    }
+
+    public ArrayList<Question> getQuestionsForExam(int course_id) {
+        ArrayList<Question> questions = new ArrayList<>();
+        try {
+            String sql = "  select Question_ID, Question_Detail, Course_ID,Exam_ID from [Question] \n"
+                    + "  WHERE Course_ID = ?\n"
+                    + "  AND Exam_ID IS NULL";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, course_id);
+            ResultSet rs = stm.executeQuery();
+            CourseDBContext courseDB = new CourseDBContext();
+            ExamDBContext examDB = new ExamDBContext();
+            while (rs.next()) {
+                Question q = new Question();
+                q.setId(rs.getInt("Question_ID"));
+                q.setDetail(rs.getString("Question_Detail"));
+                q.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
+                questions.add(q);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ExamDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return questions;
+    }
+
+    public void insertExam(int courseid, int passScore) {
+        try {
+            String sql = "INSERT INTO [dbo].[Exam]\n"
+                    + "           ([Course_ID]\n"
+                    + "           ,[Passed])\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, courseid);
+            stm.setInt(2, passScore);
+
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ExamDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void updateQuestionExam(int examid, int courseid, int question_id) {
+        try {
+            String sql = "UPDATE [dbo].[Question]\n"
+                    + "   SET [Exam_ID] = ?\n"
+                    + " WHERE Course_ID = ?\n"
+                    + " AND Question_ID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, examid);
+            stm.setInt(2, courseid);
+            stm.setInt(3, question_id);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ExamDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public ArrayList<Exam> getExamList(int course_id) {
+        ArrayList<Exam> exams = new ArrayList<>();
+        try {
+            String sql = "SELECT *\n"
+                    + "FROM Exam\n"
+                    + "Where Course_ID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, course_id);
+            ResultSet rs = stm.executeQuery();
+            CourseDBContext courseDB = new CourseDBContext();
+            ExamDBContext examDB = new ExamDBContext();
+            while (rs.next()) {
+                Exam e = new Exam();
+                e.setId(rs.getInt("Exam_ID"));
+                e.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
+                e.setPassed(rs.getInt("Passed"));
+                exams.add(e);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ExamDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return exams;
     }
 
 }
