@@ -84,6 +84,14 @@
         <servlet-name>QuestionSettingController</servlet-name>
         <servlet-class>Controller.Question.QuestionSettingController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateQuestionController</servlet-name>
+        <servlet-class>Controller.Question.UpdateQuestionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteAnswerController</servlet-name>
+        <servlet-class>AnswerController.DeleteAnswerController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -143,6 +151,14 @@
     <servlet-mapping>
         <servlet-name>QuestionSettingController</servlet-name>
         <url-pattern>/questionsetting</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateQuestionController</servlet-name>
+        <url-pattern>/questionupdate</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteAnswerController</servlet-name>
+        <url-pattern>/deleteanswer</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

@@ -7,9 +7,11 @@ package Controller.Question;
 
 import Dal.AnswerDBContext;
 import Dal.CourseDBContext;
+import Dal.DifficultyDBContext;
 import Dal.QuestionDBContext;
 import Model.Account;
 import Model.Course;
+import Model.Difficulty;
 import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -43,7 +45,11 @@ public class AddQuestionController extends HttpServlet {
         if(courseIdRaw != null) courseId = Integer.parseInt(courseIdRaw);
         User user = acc.getUser();
         CourseDBContext courseDB = new CourseDBContext();
+        DifficultyDBContext difficultyDB = new DifficultyDBContext();
+        
+        ArrayList<Difficulty> difficulties = difficultyDB.getDifficulties();
         ArrayList<Course> courseList = courseDB.getCourseListByCreator(user.getId());
+        request.setAttribute("difficulties", difficulties);
         request.setAttribute("courseId", courseId);
         request.setAttribute("courseList", courseList);
         request.getRequestDispatcher("../View/Question/addQuestion.jsp").forward(request, response);      
@@ -61,12 +67,13 @@ public class AddQuestionController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int courseId = Integer.parseInt(request.getParameter("courseId"));
+        int difficultyId = Integer.parseInt(request.getParameter("difficultyId"));
         String question = request.getParameter("question");
         String[] answers = request.getParameterValues("answer");
         QuestionDBContext questionDB = new QuestionDBContext();
         AnswerDBContext answerDB = new AnswerDBContext();
         // add question to database
-        int questionId = questionDB.addQuestion(question,courseId);
+        int questionId = questionDB.addQuestion(question,courseId, difficultyId);
         // add answer to that question in the database
         for(int i = 0;i < answers.length;i++){
             String answer = answers[i];

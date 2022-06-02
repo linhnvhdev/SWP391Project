@@ -108,4 +108,50 @@ public class AnswerDBContext extends DBContext {
         }
     }
 
+    public void updateAnswer(int Answer_ID, String answer, int questionId, boolean correct) {
+        try {
+            String sql = "UPDATE [dbo].[Answer]\n"
+                    + "   SET [Answer_Detail] = ?\n"
+                    + "      ,[Question_ID] = ?\n"
+                    + "      ,[IsCorrect] = ?\n"
+                    + " WHERE [Answer_ID] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, answer);
+            stm.setInt(2, questionId);
+            stm.setBoolean(3, correct);
+            stm.setInt(4, Answer_ID);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AnswerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void deleteAnswer(Answer a) {
+        String sql = "DELETE FROM [dbo].[Answer]\n"
+                + "      WHERE Answer_ID = ?";
+
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, a.getId());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AnswerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AnswerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AnswerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
 }
