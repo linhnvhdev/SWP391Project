@@ -12,17 +12,37 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Trang chủ</title>
-        <link href="css/cssforhomestyle.css" rel="stylesheet" type="text/css"/>
+        <link href="css/header.css?version=2" rel="stylesheet" type="text/css"/>
+        <link href="css/cssforhomestyle.css?version=2" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <div class="header">
-            <a  class="column" href="login">Log out</a>
-            <a  class="column" href="chgpwd">Change password</a>
+            <nav>
+                <div class="logo">No game no learn</div>
+                <ul class="navbar-item-list">
+                    <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="${pageContext.request.contextPath}/course/library">Course Library</a></li>
+                    <li class="dropdown">
+                        <a href="#">Setting</a>
+                        <div class="drop-down">
+                            <ul class="navbar-dropdown-item-list">
+                                <li><a href="${pageContext.request.contextPath}/profile">User profile</a></li>
+                                <c:if test="${requestScope.user.role == 3}">
+                                    <li><a href="${pageContext.request.contextPath}/auth">Authorization</a></li>
+                                </c:if>
+                                <li><a href="${pageContext.request.contextPath}/chgpwd">Change password</a></li>
+                                <li><a href="${pageContext.request.contextPath}/login">Log out</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
         </div>
         <div class="main-content">
             <div class="left">
 
-                <h3 style="  font-size: 30px;">Course list:</h3>
+                <h3 style="font-size: 30px;">Course list:</h3>
                 <table style="border-color: black; font-size:30px; margin-bottom: 20px;" border="solid 2px">
 
                     <c:forEach var="course" items="${requestScope.courseList}">

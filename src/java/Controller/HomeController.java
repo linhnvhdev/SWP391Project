@@ -40,7 +40,7 @@ public class HomeController extends HttpServlet {
         UserDBContext userDB = new UserDBContext();
         User user = userDB.getUser(acc.getUser().getId());
         CourseDBContext courseDB = new CourseDBContext();
-        ArrayList<Course> courseList = courseDB.getCourseList();
+        ArrayList<Course> courseList = courseDB.getCourseList(user.getId());
         request.setAttribute("courseList", courseList);
         request.setAttribute("user", user);
         request.getRequestDispatcher("View/home.jsp").forward(request, response);

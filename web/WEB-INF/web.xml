@@ -8,6 +8,14 @@
         <filter-name>CourseCreatorFilter</filter-name>
         <filter-class>Filter.CourseCreatorFilter</filter-class>
     </filter>
+    <filter>
+        <filter-name>AdminFilter</filter-name>
+        <filter-class>Filter.AdminFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <servlet-name>AuthorizationSettingController</servlet-name>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>LoginFilter</filter-name>
         <url-pattern>/*</url-pattern>
@@ -77,6 +85,18 @@
         <servlet-class>Controller.Exam.ResultController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>UserProfileController</servlet-name>
+        <servlet-class>Controller.User.UserProfileController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AuthorizationSettingController</servlet-name>
+        <servlet-class>Controller.AuthorizationSettingController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CourseLibraryController</servlet-name>
+        <servlet-class>Controller.Course.CourseLibraryController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ResetPasswordController</servlet-name>
         <servlet-class>Controller.ResetPasswordController</servlet-class>
     </servlet>
@@ -133,11 +153,23 @@
         <url-pattern>/flashcard</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>UserProfileController</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AuthorizationSettingController</servlet-name>
+        <url-pattern>/auth</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CourseLibraryController</servlet-name>
+        <url-pattern>/course/library</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ResetPasswordController</servlet-name>
         <url-pattern>/resetpassword</url-pattern>
     </servlet-mapping>
     <session-config>
-        <session-timeout>30</session-timeout>
+        <session-timeout>300</session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>home</welcome-file>
