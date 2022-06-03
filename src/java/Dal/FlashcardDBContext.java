@@ -86,6 +86,39 @@ public class FlashcardDBContext extends DBContext {
         return List;
     }
 
+        public ArrayList<Flashcard> getlistFCbyListCourseId(ArrayList<Course> courses) {
+        ArrayList<Flashcard> List = new ArrayList<>();
+        try {
+           String sql = "select Flashcard_ID,Flash_front,Flash_back,Course_ID from Flashcard\n";
+            for (int i = 0; i < courses.size(); i++) {
+                if(i==0){
+                sql+="Where Course_ID = ?\n";
+                }
+                else{
+                sql+="or Course_ID = ?\n";
+                }
+            }
+            
+            PreparedStatement stm=connection.prepareStatement(sql);
+            for (int i = 0; i < courses.size(); i++) {
+              stm.setInt(i+1,courses.get(i).getId());
+            }
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Flashcard f = new Flashcard();
+                Course c = new Course();
+                c.setId(rs.getInt("Course_ID"));
+                f.setId(rs.getInt("Flashcard_ID"));
+                f.setFront(rs.getString("Flash_front"));
+                f.setBack(rs.getString("Flash_back"));
+                f.setCourse(c);
+                List.add(f);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FlashcardDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return List;
+    }
     public boolean IsreadFC(Flashcard f, User u, Course c) {
         try {
             String sql = "select Flashcard_ID from User_FlashCard\n"
