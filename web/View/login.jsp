@@ -27,7 +27,8 @@
                     Password: <input type="password" name="password"><br>
                     <input style=" font-family:Lucida Handwriting;"id="login1" type="submit" value="LOGIN"><br>
                     <a href="register">Register</a><br>
-                    <a href="chgpwd">Change Password</a>
+                    <a href="chgpwd">Change Password</a><br>
+                    <a href="resetpassword">Reset Password</a>
                 </form>
             </div>
         </div>

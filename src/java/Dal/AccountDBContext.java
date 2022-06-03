@@ -45,7 +45,7 @@ public class AccountDBContext extends DBContext {
     
     public Account getAccount(String username){
         try {
-            String sql ="SELECT [Username],[Password]\n" +
+            String sql ="SELECT [Username],[Password],[User_ID]\n" +
             "FROM Account\n" +
             "WHERE [Username] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -55,6 +55,9 @@ public class AccountDBContext extends DBContext {
                 Account acc = new Account();
                 acc.setUsername(rs.getString("Username"));
                 acc.setPassword(rs.getString("Password"));
+                User u = new User();
+                u.setId(rs.getInt("User_ID"));
+                acc.setUser(u);
                 return acc;
             }
         } catch (SQLException ex) {
