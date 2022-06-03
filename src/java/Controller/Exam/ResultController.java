@@ -60,7 +60,7 @@ public class ResultController extends HttpServlet {
         request.setAttribute("currentScore", currentScore);
         request.setAttribute("experience", experience);
         
-        
+         session.removeAttribute("answerList");
          session.removeAttribute("score");
          session.removeAttribute("answeredQuestionList");
          session.removeAttribute("currentBossHP");
