@@ -11,6 +11,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>List Question Page</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <script>
             function submitForm()
             {
@@ -26,57 +29,70 @@
             }
         </script>
     </head>
-    <body>
-        <h1>Exam List</h1>
-        <div class="header">
-            <a class="column" href="home">Back to home</a>
-            <a class="column" href="login">Log out</a>
-            <a class="column" href="chgpwd">Change password</a>
+    <body style="background-color: #CFCED4">
+
+        <div class="header" style="height: 50px;">
+            <a style="float: left; width: 50%;text-align: center;font-size: 30px;" href="home">Back to home</a>
+            <a style="float: left; width: 50%;text-align: center;font-size: 30px;" href="login">Log out</a>
         </div>
-        <form action="displayexamquestion?courseId=${requestScope.courseId}" method="GET" id="frmSearch">
-            Exam ID: 
-            <select name="eid" onchange="submitForm();">
-                
-                <option value="-1">----SELECT An Exam----</option>
-                <c:forEach items="${requestScope.examList}" var="e">
-                <option
-                    ${(e.id==requestScope.eid)?"selected=\"selected\"":""}
-                    value="${e.id}">${e.id}</option>
-                </c:forEach>
-            </select>
-            <input type ="hidden" name="courseId" value ="${requestScope.courseId}">
-        </form>
-        
-            
-            <table border="1">
-                    <thead>
-                        <tr>
-                            <th>Question&Answer</th>
-                        </tr>
-                    </thead>
+
+
+        <div class="container" style=" width: 100%; padding: none;">
+            <h2 style="text-align: center;">Exam Detail</h2>    
+            <form action="displayexamquestion?courseId=${requestScope.courseId}" method="GET" id="frmSearch">
+                Exam ID: 
+                <select name="eid" onchange="submitForm();">
+
+                    <option value="-1">----SELECT An Exam----</option>
+                    <c:forEach items="${requestScope.examList}" var="e">
+                        <option
+                            ${(e.id==requestScope.eid)?"selected=\"selected\"":""}
+                            value="${e.id}">${e.id}</option>
+                    </c:forEach>
+                </select>
+                <input type ="hidden" name="courseId" value ="${requestScope.courseId}">
+            </form>
+            <table class="table table-hover" style="background-color: #BBC7EF">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Option</th>
+                        <th>Question</th>
+                        <th>Answer</th>
+                        <th>Answer</th>
+                        <th>Answer</th>
+                        <th>Answer</th>
+                    </tr>
+                </thead>
                 <tbody>
                     <c:forEach items="${requestScope.questionList}" var="q">
                         <tr>
-                            <td>Question number ${q.id} : "${q.detail}"</td>
+                            <td>${q.id}</td>
                             <td><a id="delete" href="#" onclick="removeQuestion(${q.id})" >Remove</a></td>
-                        </tr> 
-                        <c:forEach items = "${requestScope.answerList}" var="a">
+                            <td>${q.detail}</td>
 
-                            <c:if test="${q.id == a.question.id}">       
-                                <tr>
+                            <c:forEach items = "${requestScope.answerList}" var="a">
+
+                                <c:if test="${q.id == a.question.id}">       
+
                                     <c:if test="${a.isCorrect == true}">                               
-                                        <td style="color: green; font-weight: bold;">Answer : ${a.detail}</td>                       
+                                        <td style="color: green; font-weight: bold;">${a.detail}</td>                       
                                     </c:if>
                                     <c:if test="${a.isCorrect == false}">                               
-                                        <td style="color: red; " >Answer : ${a.detail}</td>                       
+                                        <td style="color: red; " >${a.detail}</td>                       
                                     </c:if>    
-                                </tr>
-                            </c:if>                         
-                        </c:forEach>   
-                               
+
+                                </c:if>                         
+                            </c:forEach> 
+                            
+                        </tr> 
+
+
                     </c:forEach>
+
                 </tbody>
             </table>
-        
+        </div>
+
     </body>
 </html>
