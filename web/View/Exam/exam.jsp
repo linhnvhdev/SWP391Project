@@ -22,71 +22,71 @@
                 USER HP              
             </div>
             <div class="boss">
-               <!--    -->
-               BOSS HP
-               <table border="1">
-                   
-                   <tbody>
-                       <tr>
-                           <td>BOSS NAME</td>
-                       </tr>
-                       <tr>
-                           <td>BOSS HP</td>
-                           <td>   ${requestScope.currentBossHP}   / ${requestScope.passScore} </td>
-                       </tr>
-                   </tbody>
-               </table>
+                <!--    -->
+                BOSS HP
+                <table border="1">
+
+                    <tbody>
+                        <tr>
+                            <td>BOSS NAME</td>
+                        </tr>
+                        <tr>
+                            <td>BOSS HP</td>
+                            <td>   ${requestScope.currentBossHP}   / ${requestScope.passScore} </td>
+                        </tr>
+                    </tbody>
+                </table>
 
             </div>
-        
+
         </div>
         <div class="bot">
-        <form action="exam" method="POST">
-        <table style="width: 75%" border="0">
-            <tbody>
-                <tr>
-                    <td>${requestScope.score} / ${requestScope.maxScore}</td>
+            <form action="exam" method="POST">
+                <table style="width: 75%" border="0">
+                    <tbody>
+                        <tr>
+                            <td>${requestScope.score} / ${requestScope.maxScore}</td>
                     <input type="hidden" name="score" value="${requestScope.score}"/>
                     <input type="hidden" name="eid" value="${requestScope.eid}"/>
                     <input type="hidden" name="maxScore" value="${requestScope.maxScore}"/>
                     <input type="hidden" name="passScore" value="${requestScope.passScore}"/>
                     <input type="hidden" name="courseId" value="${requestScope.courseId}"/>
-                </tr>
-                <tr>
-                    <td>
-                    <c:if test="${requestScope.answeredMessage != null}">
-                        <div style="color: green">${requestScope.answeredMessage}</div>
-                    </c:if>
-                    </td>
-                </tr>
-                
-                <c:forEach items="${requestScope.questionList}" var="q">
-                   
-                    <tr >
+                    </tr>
+                    <tr>
+                        <td>
+                            <c:if test="${requestScope.answeredMessage != null}">
+                                <div style="color: green">${requestScope.answeredMessage}</div>
+                            </c:if>
+                        </td>
+                    </tr>
+
+                    <c:forEach items="${requestScope.questionList}" var="q">
+
+                        <tr >
                         <input type="hidden" name="qid" value="${q.id}"/>
                         <input type="hidden" name="pageindex" value="${requestScope.pageindex}"/>
                         <td>Question: ${q.detail}</td>
-                    </tr>
+                        </tr>
 
-                    <c:forEach items = "${requestScope.answerList}" var="a">
-                        
-                            <c:if test="${q.id == a.question.id}">       
-                            <tr>    
-                                <input type="hidden" name="aid" value="${a.id}"/>
-                                <td><input type="submit" style="width: 100%;" value="${a.detail}" /></td>
-                            </tr>
+                        <c:forEach items = "${requestScope.answerList}" var="ans">
+
+                            <c:if test="${q.id == ans.question.id}">
+                                <tr>    
+<!--                                    <input type="hidden" name="ansid" value="${ans.id}"/>-->
+                                    <td><input style="color: #ECECEB;" type="submit" name="ansid" value="${ans.id}"/>   ${ans.detail}</td>
+                                </tr>
                             </c:if>                         
-                    </c:forEach>
+                        </c:forEach>
 
-                </c:forEach>
-            </tbody>
-        </table>
-        </form>
-        <div id ="containerbot" >        </div>
-        <script>
-            pagger("containerbot",${requestScope.courseId},${requestScope.pageindex},${requestScope.totalpage}, 1);
-        </script>
-        <a href="result?eid=${requestScope.eid}&courseId=${requestScope.courseId}"><button>FINISH</button></a>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </form>
+            <div id ="containerbot" >        </div>
+            <script>
+                pagger("containerbot",${requestScope.courseId},${requestScope.pageindex},${requestScope.totalpage}, 1);
+            </script>
+            <a href="result?eid=${requestScope.eid}&courseId=${requestScope.courseId}"><button>FINISH</button></a>
         </div>
-</body>
+    </body>
 </html>

@@ -36,17 +36,17 @@ public class CreateExamController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
-        int course_id = Integer.parseInt(request.getParameter("courseId"));
+        int courseId = Integer.parseInt(request.getParameter("courseId"));
         User user = acc.getUser();
         
         ExamDBContext examDB = new ExamDBContext();
         AnswerDBContext answerDB = new AnswerDBContext();
-        ArrayList<Question> questionList = examDB.getQuestionsForExam(course_id);
-        ArrayList<Answer> answerList = answerDB.getAnswersbyCourse(course_id);
+        ArrayList<Question> questionList = examDB.getQuestionsForExam(courseId);
+        ArrayList<Answer> answerList = answerDB.getAnswersbyCourse(courseId);
         
         request.setAttribute("questionList", questionList);
         request.setAttribute("answerList", answerList);
-        request.setAttribute("courseId", course_id);
+        request.setAttribute("courseId", courseId);
         
         request.getRequestDispatcher("View/Exam/createexam.jsp").forward(request, response);
     }
@@ -63,15 +63,15 @@ public class CreateExamController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int passScore = Integer.parseInt(request.getParameter("passScore"));
-        int courseid = Integer.parseInt(request.getParameter("courseId"));
+        int courseId = Integer.parseInt(request.getParameter("courseId"));
         ExamDBContext examDB = new ExamDBContext();
-        examDB.insertExam(courseid, passScore);
-        Exam latestExam = examDB.getLatestExam(courseid);
+        examDB.insertExam(courseId, passScore);
+        Exam latestExam = examDB.getLatestExam(courseId);
         String[] rawquestion_id = request.getParameterValues("questionid");
         //Update selected question for the exam
         for (int i = 0 ; i < rawquestion_id.length; i++) {
             int question_id = Integer.parseInt(rawquestion_id[i]);
-            examDB.updateQuestionExam( latestExam.getId(), courseid,question_id);
+            examDB.updateQuestionExam( latestExam.getId(), courseId,question_id);
         }
         
         request.setAttribute("createexamMessage", SystemMessage.CREATE_EXAM);
