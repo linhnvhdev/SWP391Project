@@ -52,6 +52,7 @@ public class CourseLibraryController extends HttpServlet {
         request.setAttribute("courseList", courseList);
         request.setAttribute("numFlashcard", numFlashcard);
         request.setAttribute("numQuestion", numQuestion);
+        request.setAttribute("user", user);
         request.getRequestDispatcher("../View/Course/courseLibrary.jsp").forward(request, response);
     }
 

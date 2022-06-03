@@ -36,11 +36,13 @@ public class AuthorizationSettingController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Account acc = (Account) request.getSession().getAttribute("account");
+        UserDBContext userDB = new UserDBContext();
+        User user = userDB.getUser(acc.getUser().getId());
         String searchId = request.getParameter("searchId");
         String searchName = request.getParameter("searchName");
         String searchRole = request.getParameter("searchRole");
         String searchStatus = request.getParameter("searchStatus");
-        UserDBContext userDB = new UserDBContext();
         AccountDBContext accountDB = new AccountDBContext();
         
         ArrayList<String> roleList = userDB.getRoleList();
@@ -52,6 +54,7 @@ public class AuthorizationSettingController extends HttpServlet {
         if(searchStatus != null) request.setAttribute("searchStatus", searchStatus);
         request.setAttribute("accountList", accountList);
         request.setAttribute("roleList", roleList);
+        request.setAttribute("user", user);
         request.getRequestDispatcher("View/authSetting.jsp").forward(request, response);
     }
 
