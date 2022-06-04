@@ -13,7 +13,7 @@
         <title>Exam Page</title>
         <link href="<%=application.getContextPath()%>/css/exam.css?version=1" rel="stylesheet" type="text/css"/>
         <!--        <link rel="icon" href="data:;base64,iVBORw0KGgo="> <!--    bug do browser-->
-  
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
         <script src="js/exam.js" type="text/javascript"></script>
         <style> 
@@ -27,7 +27,7 @@
                 25%  {left: 200px;}
                 50%  {left: 400px;}
                 75%  {left: 600px;}
-                100% {left: 800px;}
+                100% {left: 700px;}
             }
         </style>
     </head>
@@ -48,35 +48,35 @@
                                 </div>
 
 
-                            <div class="playermove">
-                                <img id="playerchar" src='${pageContext.request.contextPath}/img/iddle.gif'>
+                                <div class="playermove">
+                                    <img id="playerchar" src='${pageContext.request.contextPath}/img/iddle.gif'>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
 
-                    <div class="boss">
-                        <div class="column">
-                            <table id="table1" border="1">
-                                <tbody>
-                                    <tr>
-                                        <td>BOSS NAME</td>
-                                    </tr>
-                                    <tr>
-                                        <td>BOSS HP</td>
-                                        <td>   ${requestScope.currentBossHP}   / ${requestScope.passScore} </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <img id="Boss" src='${pageContext.request.contextPath}/img/boss.gif'>
+                        <div class="boss">
+                            <div class="column">
+                                <table id="table1">
+                                    <tbody>
+                                        <tr id="table2">
+                                            <td>BOSS NAME</td>
+                                        </tr>
+                                        <tr>
+                                            <td>BOSS HP</td>
+                                            <td>   ${requestScope.currentBossHP}   / ${requestScope.maxScore} </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <img id="Boss" src='${pageContext.request.contextPath}/img/boss.gif'>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="bot">
-            <form action="exam" method="POST">
-                <table style="width: 75%" border="0">
+            <div class="bot">
+                <form action="exam" method="POST">
+                    <table style="width: 75%" border="0">
                         <tbody>
                             <tr>
                                 <td id="question">${requestScope.score} / ${requestScope.maxScore}</td>
@@ -100,16 +100,18 @@
                             <input type="hidden" name="pageindex" value="${requestScope.pageindex}"/>
                             <td >Question: ${q.detail}</td>
                             </tr>
-                            
-                            <c:forEach items = "${requestScope.answerList}" var="a">
 
-                                <c:if test="${q.id == a.question.id}">          
-                                    <tr>
-                                    <input type="hidden" name="aid" value="${a.id}"/>
-                                    <td><input onclick="document.getElementById('playerchar').src = '${pageContext.request.contextPath}/img/attack.gif'" type="submit" value="${a.detail}" /></td>
+
+
+
+                            <c:forEach items = "${requestScope.answerList}" var="ans">
+                                <c:if test="${q.id == ans.question.id}">
+                                    <tr>    
+                                        <td id="answer"><input onclick="document.getElementById('playerchar').src = '${pageContext.request.contextPath}/img/attack.gif'" type="submit" name="ansid" value="${ans.id}"/>   ${ans.detail}</td>
                                     </tr>
-                                </c:if>                         
+                                </c:if> 
                             </c:forEach>
+
 
                         </c:forEach>
                         </tbody>
@@ -124,11 +126,11 @@
                 </div>
             </div>
         </div>
-            <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
-            <script>
-                var eid=${requestScope.eid};
-                var courseId=${requestScope.courseId};
-            </script>
-            <script src="js/progressbar.js" type="text/javascript"></script>
+        <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+        <script>
+                        var eid =${requestScope.eid};
+                        var courseId =${requestScope.courseId};
+        </script>
+        <script src="js/progressbar.js" type="text/javascript"></script>
     </body>
 </html>
