@@ -71,11 +71,12 @@ public class ExamController extends HttpServlet {
         }
 
         // load all answer in DB !!!        
-        
+
        if (answerList == null) {
             answerList = examDB.getAllAnswers(exam.getId());
             request.getSession().setAttribute("answerList", answerList);
         }
+
         int pagesize = 1;
         String page = request.getParameter("page");
         if (page == null || page.trim().length() == 0) {
