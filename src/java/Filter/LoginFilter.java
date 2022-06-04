@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LoginFilter implements Filter {
     
-    private static String[] nonLoginPath = {"/login","/register","/chgpwd","css","img","js"};
+    private static String[] nonLoginPath = {"/login","/register","/chgpwd","css","img","js","/resetpassword"};
     private static final boolean debug = true;
 
     // The filter configuration object we are associated with.  If
@@ -112,8 +112,7 @@ public class LoginFilter implements Filter {
                 return;
             }
         }
-        if(account == null || account.isActive() != true){
-            
+        if(account == null || account.isActive() == null || account.isActive() == false){
             httpResponse.sendRedirect(httpRequest.getContextPath()+"/login");
         }
         else{
