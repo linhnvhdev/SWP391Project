@@ -64,9 +64,9 @@ public class CourseDetailSettingController extends HttpServlet {
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
-        String creatorName = request.getParameter("creatorName");
+        String description = request.getParameter("description");
         CourseDBContext db = new CourseDBContext();
-        db.updateCourse(id, name, creatorName);
+        db.updateCourse(id, name, description);
         response.sendRedirect("course?courseId="+id);
     }
 

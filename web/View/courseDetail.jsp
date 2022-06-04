@@ -10,39 +10,45 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
+
         <title>Course</title>
-  
+
         <link href="css/cssforcoursedetail.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        
+
         <div class="header">
             <a class="column" href="home">Back to home</a>
             <a class="column" href="login">Log out</a>
             <a class="column" href="chgpwd">Change password</a>
-            <a class="column" href="coursesetting?courseId=${course.id}">Course setting</a>
+
         </div>
-         <div class="main-content">
-        <div class="left">
-            <div class="button1">
-                <div>
-                    <a class="button" href="flashcard?courseId=${course.id}"><button class="button4">Learn</button></a>
-                </div>
-                <div>
-                    <a class="button" href="revision?courseId=${course.id}"><button class="button2">Practice</button></a>
-                </div>
-                <div>
-                    <a class="button" href="exam?courseId=${course.id}" ><button class="button3">Boss fight</button></a>
-                </div>
-            </div>            
-        </div>
+        <div class="main-content">
+            <div class="left">
+                <div class="button1">
+                    <div>
+                        <a class="button" href="flashcard?courseId=${course.id}"><button class="button4">Learn</button></a>
+                    </div>
+                    <div>
+                        <a class="button" href="revision?courseId=${course.id}"><button class="button2">Practice</button></a>
+                    </div>
+                    <div>
+                        <a class="button" href="exam?courseId=${course.id}" ><button class="button3">Boss fight</button></a>
+                    </div>
+                </div>            
+            </div>
             <c:set var="course" value="${requestScope.course}"/>
             <div class="right">
                 <table>
                     <tr>
                         <td>Course name</td><td>${course.name}</td>
+                        <c:if test = "${course.creator.id==sessionScope.account.user.id}">
+                            <td>
+                                <a class="column" href="coursesetting?courseId=${course.id}">Course setting</a>
+                            </td>
+                        </c:if>
                     </tr>
+
                     <tr>
                         <td>Course creator</td><td>${course.creator.name}</td>
                     </tr>
@@ -60,7 +66,7 @@
                     </tr>
                 </table>
             </div>
-            
+
         </div>
         <div class="footer"></div>
     </body>

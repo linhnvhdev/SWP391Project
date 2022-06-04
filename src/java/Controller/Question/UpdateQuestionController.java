@@ -96,7 +96,7 @@ public class UpdateQuestionController extends HttpServlet {
         if (newAnswersDetail!=null &&newAnswersDetail.length != 0 ) {
             for (int i = 0; i < newAnswersDetail.length; i++) {
                 String newAnswerDetail = newAnswersDetail[i];
-                boolean isCorrect = Boolean.parseBoolean(request.getParameter("isCorrect" + (i + 1)));
+                boolean isCorrect = Boolean.parseBoolean(request.getParameter("isCorrectNew" + (i + 1)));
                 answerDB.addAnswer(newAnswerDetail, questionId, isCorrect);
             }
         }
