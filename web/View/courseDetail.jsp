@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
+
         <title>Course</title>
         <link href="css/cssforcoursedetail.css" rel="stylesheet" type="text/css"/>
         <link href="css/header.css?version=2" rel="stylesheet" type="text/css"/>
@@ -28,9 +28,9 @@
                         <div class="drop-down">
                             <ul class="navbar-dropdown-item-list">
                                 <li><a href="${pageContext.request.contextPath}/profile">User profile</a></li>
-                                <c:if test="${requestScope.user.role == 3}">
+                                    <c:if test="${requestScope.user.role == 3}">
                                     <li><a href="${pageContext.request.contextPath}/auth">Authorization</a></li>
-                                </c:if>
+                                    </c:if>
                                 <li><a href="${pageContext.request.contextPath}/chgpwd">Change password</a></li>
                                 <li><a href="${pageContext.request.contextPath}/login">Log out</a></li>
                             </ul>
@@ -39,35 +39,35 @@
                 </ul>
             </nav>
         </div>
-         <div class="main-content">
-        <div class="left">
-            <div class="button1">
-                <c:if test="${requestScope.isEnrolled == true}">
-                    <div>
-                        <a class="button" href="flashcard?courseId=${course.id}"><button class="button4">Learn</button></a>
-                    </div>
-                    <div>
-                        <a class="button" href="revision?courseId=${course.id}"><button class="button2">Practice</button></a>
-                    </div>
-                    <div>
-                        <a class="button" href="exam?courseId=${course.id}" ><button class="button3">Boss fight</button></a>
-                    </div>
-                    <div>
-                    <c:if test="${sessionScope.account.user.role >= 2}">
-                            <td><a href="displayexamquestion?courseId=${course.id}"><button class="button5" >Exam List</button></a></td>
+        <div class="main-content">
+            <div class="left">
+                <div class="button1">
+                    <c:if test="${requestScope.isEnrolled == true}">
+                        <div>
+                            <a class="button" href="flashcard?courseId=${course.id}"><button class="button4">Learn</button></a>
+                        </div>
+                        <div>
+                            <a class="button" href="revision?courseId=${course.id}"><button class="button2">Practice</button></a>
+                        </div>
+                        <div>
+                            <a class="button" href="exam?courseId=${course.id}" ><button class="button3">Boss fight</button></a>
+                        </div>
+                        <div>
+                            <c:if test="${sessionScope.account.user.id == requestScope.course.creator.id}">
+                                <td><a href="displayexamquestion?courseId=${course.id}"><button class="button5" >Exam List</button></a></td>
+                            </c:if>
+                        </div>
                     </c:if>
-                    </div>
-                </c:if>
-                <c:if test="${requestScope.isEnrolled == false}">
-                    <div>
-                        <form action="course" method="POST">
-                            <input type="hidden" name="courseId" value="${course.id}">
-                            <input class="button3" type="submit" value="Enroll course">
-                        </form>
-                    </div>
-                </c:if>
-            </div>            
-        </div>
+                    <c:if test="${requestScope.isEnrolled == false}">
+                        <div>
+                            <form action="course" method="POST">
+                                <input type="hidden" name="courseId" value="${course.id}">
+                                <input class="button3" type="submit" value="Enroll course">
+                            </form>
+                        </div>
+                    </c:if>
+                </div>            
+            </div>
             <c:set var="course" value="${requestScope.course}"/>
             <div class="right">
                 <table>
@@ -91,13 +91,13 @@
                     </tr>
                     <tr>
                         <td>Question</td><td>${requestScope.numExam}</td>
-                        <c:if test="${sessionScope.account.user.role >= 2}">
+                        <c:if test="${sessionScope.account.user.id == requestScope.course.creator.id}">
                             <td><a href="createexam?courseId=${course.id}"><button class="button5" >Create Exam</button></a></td>
                         </c:if>
                     </tr>
                 </table>
             </div>
-            
+
         </div>
         <div class="footer"></div>
     </body>

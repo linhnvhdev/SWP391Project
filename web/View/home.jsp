@@ -12,8 +12,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Trang chủ</title>
-        <link href="css/header.css?version=2" rel="stylesheet" type="text/css"/>
-        <link href="css/cssforhomestyle.css?version=2" rel="stylesheet" type="text/css"/>
+        <link href="css/cssforhomestyle.css" rel="stylesheet" type="text/css"/>
+        <link href="css/header.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <div class="header">
@@ -21,6 +21,7 @@
                 <div class="logo">No game no learn</div>
                 <ul class="navbar-item-list">
                     <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
+                    <li><a >Leaderboard</a></li>
                     <li><a href="#">About</a></li>
                     <li><a href="${pageContext.request.contextPath}/course/library">Course Library</a></li>
                     <li class="dropdown">
@@ -33,6 +34,7 @@
                                 </c:if>
                                 <li><a href="${pageContext.request.contextPath}/chgpwd">Change password</a></li>
                                 <li><a href="${pageContext.request.contextPath}/login">Log out</a></li>
+                                <li></li>
                             </ul>
                         </div>
                     </li>
@@ -54,7 +56,6 @@
                 <c:if test="${sessionScope.account.user.role >= 2}">
                     <a href="course/add"><button>Add new course</button></a>
                 </c:if>
-                <a href="leaderboard" style="  font-size: 30px;color: green">Leaderboard</a>
             </div>
             <div class="right">
                 <img style="width: 512px; height: 512px;"src="img/char.png" alt="avatar"/>

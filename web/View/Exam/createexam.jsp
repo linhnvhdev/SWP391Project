@@ -30,9 +30,9 @@
                         <div class="drop-down">
                             <ul class="navbar-dropdown-item-list">
                                 <li><a href="${pageContext.request.contextPath}/profile">User profile</a></li>
-                                <c:if test="${requestScope.user.role == 3}">
+                                    <c:if test="${requestScope.user.role == 3}">
                                     <li><a href="${pageContext.request.contextPath}/auth">Authorization</a></li>
-                                </c:if>
+                                    </c:if>
                                 <li><a href="${pageContext.request.contextPath}/chgpwd">Change password</a></li>
                                 <li><a href="${pageContext.request.contextPath}/login">Log out</a></li>
                             </ul>
@@ -45,52 +45,56 @@
 
         <div class="container" style=" width: 100%; padding: none;">
             <h2 style="text-align: center;">Create Exam</h2>    
-            
+
             <c:if test="${requestScope.createexamMessage != null}">
                 <div style="color: green">${requestScope.createexamMessage}</div>
             </c:if>
-                
-            <form action="createexam?courseId=${requestScope.courseId}" method="POST">
-                
-                <p>Score to pass the exam : 
-                <input type="number" name="passScore" value="0" min="0" max="100"> % 
-                </p>
-                <table class="table table-hover" style="background-color: #BBC7EF">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Add</th>
-                            <th>Question</th>
-                            <th>Answer</th>
-                            <th>Answer</th>
-                            <th>Answer</th>
-                            <th>Answer</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <c:if test="${requestScope.questionList.size() gt 0}">    
+                <form action="createexam?courseId=${requestScope.courseId}" method="POST">
+
+                    <p>Score to pass the exam : 
+                        <input type="number" name="passScore" value="0" min="0" max="100"> % 
+                    </p>
+                    <table class="table table-hover" style="background-color: #BBC7EF">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Add</th>
+                                <th>Question</th>
+                                <th>Answer</th>
+                                <th>Answer</th>
+                                <th>Answer</th>
+                                <th>Answer</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                         <input type ="hidden" name="courseId" value ="${requestScope.courseId}"/>
                         <c:forEach items="${requestScope.questionList}" var="q">
                             <tr>
                                 <td>${q.id}</td><input type ="hidden" value =" ${q.id}">                           
-                                <td><input type="checkbox" name="questionid" value="${q.id}"> Add to Exam</td>
-                                <td>${q.detail}</td>
-                                <c:forEach items = "${requestScope.answerList}" var="a">
-                                    <c:if test="${q.id == a.question.id}">       
-                                        <c:if test="${a.isCorrect == true}">                               
-                                            <td style="color: green; font-weight: bold;"> ${a.detail}</td>                       
-                                        </c:if>
-                                            
-                                        <c:if test="${a.isCorrect == false}">                               
-                                            <td style="color: red; " >${a.detail}</td>                       
-                                        </c:if>    
-                                    </c:if>                         
-                                </c:forEach>                    
+                            <td><input type="checkbox" name="questionid" value="${q.id}"> Add to Exam</td>
+                            <td>${q.detail}</td>
+                            <c:forEach items = "${requestScope.answerList}" var="a">
+                                <c:if test="${q.id == a.question.id}">       
+                                    <c:if test="${a.isCorrect == true}">                               
+                                        <td style="color: green; font-weight: bold;"> ${a.detail}</td>                       
+                                    </c:if>
+
+                                    <c:if test="${a.isCorrect == false}">                               
+                                        <td style="color: red; " >${a.detail}</td>                       
+                                    </c:if>    
+                                </c:if>                         
+                            </c:forEach>                    
                             </tr> 
-                    </c:forEach>
-                    </tbody>
-                </table>
-                <input type = "submit" value = "Create This Exam" />
-            </form>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                    <input type = "submit" value = "Create This Exam" />
+                </form>
+            </c:if>        
+            <c:if test="${requestScope.questionList.size() eq 0}">  
+                <div style="color: red;font-size: 20px;text-align: center;">${requestScope.noquestionMessage}</div>
+            </c:if>
         </div>
     </body>
 </html>

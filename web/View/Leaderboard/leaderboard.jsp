@@ -11,9 +11,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Leaderboard Page</title>
-        <link href="css/header.css" rel="stylesheet" type="text/css"/>
+        
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
         <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'><link href="css/leaderboard.css" rel="stylesheet"/>
+        <link href="css/header.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <div class="header">
