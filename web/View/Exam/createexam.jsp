@@ -52,9 +52,9 @@
                 
             <form action="createexam?courseId=${requestScope.courseId}" method="POST">
                 
-                Number of question needed to be answer correctly to pass the exam :
-                <input type="number" name="passScore" value="0" min="0" max="100">
-                
+                <p>Score to pass the exam : 
+                <input type="number" name="passScore" value="0" min="0" max="100"> % 
+                </p>
                 <table class="table table-hover" style="background-color: #BBC7EF">
                     <thead>
                         <tr>

@@ -11,13 +11,33 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Leaderboard Page</title>
+        <link href="css/header.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
         <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'><link href="css/leaderboard.css" rel="stylesheet"/>
     </head>
     <body>
         <div class="header">
-            <a  class="column" href="home">Back To Home</a>
-            <a  class="column" href="login">Log out</a>
+            <nav>
+                <div class="logo">No game no learn</div>
+                <ul class="navbar-item-list">
+                    <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="${pageContext.request.contextPath}/course/library">Course Library</a></li>
+                    <li class="dropdown">
+                        <a href="#">Setting</a>
+                        <div class="drop-down">
+                            <ul class="navbar-dropdown-item-list">
+                                <li><a href="${pageContext.request.contextPath}/profile">User profile</a></li>
+                                <c:if test="${requestScope.user.role == 3}">
+                                    <li><a href="${pageContext.request.contextPath}/auth">Authorization</a></li>
+                                </c:if>
+                                <li><a href="${pageContext.request.contextPath}/chgpwd">Change password</a></li>
+                                <li><a href="${pageContext.request.contextPath}/login">Log out</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
         </div>
         <div class="leaderboard">
             <h1>

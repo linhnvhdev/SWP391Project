@@ -101,7 +101,7 @@ public class ExamController extends HttpServlet {
         request.setAttribute("pageindex", pageindex);
 
         request.setAttribute("currentBossHP", currentBossHP);
-        request.setAttribute("passScore", passScore);
+    //    request.setAttribute("passScore", passScore);
         request.setAttribute("eid", exam.getId());
         request.setAttribute("courseId", courseId);
         request.setAttribute("maxScore", maxScore);

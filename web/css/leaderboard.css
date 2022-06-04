@@ -8,10 +8,6 @@ and open the template in the editor.
     Author     : LENOVO
 */
 
-.header{
-    background-color: #99ffff;
-    height: 100px;
-}
 .column {
     float: left;
     width: 50%;
