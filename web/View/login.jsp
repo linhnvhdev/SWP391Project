@@ -11,13 +11,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login</title>
-       
-      
-        <link href="css/cssforlogin.css" rel="stylesheet" type="text/css"/>
-
+        <link href="css/cssforlogin.css?version=1" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-
         <div id="tsparticles"></div>
         <div class="login-box">
             <h2>Login</h2>
@@ -48,16 +44,16 @@
                     <span></span>
                     Register
                 </a>
-                <a href="chgpwd">
+                <a href="resetpassword">
                     <span></span>
                     <span></span>
                     <span></span>
                     <span></span>
-                    Change Password
+                    Reset Password
                 </a>
                     </div>
             </form>
-        </div>
+            </div>
         
 <script src='https://cdn.jsdelivr.net/npm/tsparticles@1.18.3/dist/tsparticles.min.js'></script>
 <script src="js/backgroundparticles.js" type="text/javascript"></script>

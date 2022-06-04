@@ -3,12 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package Controller.Leaderboard;
 
-import Dal.CourseDBContext;
 import Dal.UserDBContext;
 import Model.Account;
-import Model.Course;
 import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,30 +18,24 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Linhnvhdev
+ * @author LENOVO
  */
-public class HomeController extends HttpServlet {
+public class LeaderboardController extends HttpServlet {
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
+
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
+        User user = acc.getUser();
         UserDBContext userDB = new UserDBContext();
-        User user = userDB.getUser(acc.getUser().getId());
-        CourseDBContext courseDB = new CourseDBContext();
-        ArrayList<Course> courseList = courseDB.getCourseList(user.getId());
-        request.setAttribute("courseList", courseList);
-        request.setAttribute("user", user);
-        request.getRequestDispatcher("View/home.jsp").forward(request, response);
+        ArrayList<User> userList = userDB.getAllUser();
+        
+        request.setAttribute("userList", userList);
+        
+        request.getRequestDispatcher("View/Leaderboard/leaderboard.jsp").forward(request, response);
     }
 
     /**

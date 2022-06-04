@@ -13,7 +13,7 @@ public class Account {
     private String username;
     private String password;
     private User user;
-    private boolean isActive;
+    private Boolean isActive;
 
     public Account() {
     }
@@ -25,7 +25,7 @@ public class Account {
         this.isActive = true;
     }
 
-    public Account(String username, String password, User user, boolean isActive) {
+    public Account(String username, String password, User user, Boolean isActive) {
         this.username = username;
         this.password = password;
         this.user = user;
@@ -56,11 +56,17 @@ public class Account {
         this.user = user;
     }
 
-    public boolean isActive() {
+    public Boolean isActive() {
         return isActive;
     }
 
-    public void setIsActive(boolean isActive) {
+    public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
+    }
+    
+    public String getStatus(){
+        if(isActive == null) return "Pending";
+        if(isActive == true) return "Active";
+        return "Inactive";
     }
 }

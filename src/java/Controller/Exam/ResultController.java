@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.lang.Math;
 
 /**
  *
@@ -43,10 +44,10 @@ public class ResultController extends HttpServlet {
         int numQues = examDB.countQuesPerExam(exam.getId());
         int maxScore = numQues * 10;
         int correctAnswered = currentScore / 10;
-        
+        int percentageScore = (int) Math.ceil(100* correctAnswered/numQues) ;
         int experience = 0;
         //condition to pass the course
-        if (currentScore >= passScore) {
+        if (percentageScore >= passScore) {
             experience = currentScore * 4;
         }
         else {

@@ -3,16 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package Controller.User;
 
-import Dal.CourseDBContext;
-import Dal.UserCourseDBContext;
+import Dal.UserDBContext;
 import Model.Account;
-import Model.Course;
 import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Linhnvhdev
  */
-public class CourseDetailController extends HttpServlet {
+public class UserProfileController extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -37,20 +35,10 @@ public class CourseDetailController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
-        int courseId = Integer.parseInt(request.getParameter("courseId"));
-        User user = acc.getUser();
-        CourseDBContext courseDB = new CourseDBContext();
-        UserCourseDBContext userCourseDB = new UserCourseDBContext();
-        
-        Course course = courseDB.getCourse(courseId);
-        int numFlashcard = courseDB.getNumFlashcard(courseId);
-        int numQuestion = courseDB.getNumQuestion(courseId);
-        boolean isEnrolled = userCourseDB.checkUserCourse(user.getId(),courseId);
-        request.setAttribute("course",course);
-        request.setAttribute("numFlashcard",numFlashcard);
-        request.setAttribute("numQuestion",numQuestion);
-        request.setAttribute("isEnrolled",isEnrolled);
-        request.getRequestDispatcher("View/courseDetail.jsp").forward(request, response);
+        UserDBContext userDB = new UserDBContext();
+        User user = userDB.getUser(acc.getUser().getId());
+        request.setAttribute("user", user);
+        request.getRequestDispatcher("View/userProfile.jsp").forward(request, response);
     }
 
     /**
@@ -65,11 +53,17 @@ public class CourseDetailController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
-        int courseId = Integer.parseInt(request.getParameter("courseId"));
-        User user = acc.getUser();
-        UserCourseDBContext userCourseDB = new UserCourseDBContext();
-        userCourseDB.insertUserCourse(user.getId(), courseId);
-        response.sendRedirect("course?courseId="+courseId);
+        String name = request.getParameter("name");
+        boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
+        Date dob = Date.valueOf(request.getParameter("dob"));
+        String gmail = request.getParameter("gmail");
+        int exp = Integer.parseInt(request.getParameter("exp"));
+        int level = Integer.parseInt(request.getParameter("level"));
+        UserDBContext userDB = new UserDBContext();
+        User user = userDB.getUser(acc.getUser().getId());
+        userDB.updateUser(user.getId(),name, gmail, gender, dob, exp,level);
+        request.setAttribute("SuccessMessage","Change profile success");
+        response.sendRedirect("profile");
     }
 
     /**

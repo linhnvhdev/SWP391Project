@@ -11,7 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login</title>
-        <link href="${pageContext.request.contextPath}/css/register.css" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.request.contextPath}/css/register.css?version=1" rel="stylesheet" type="text/css"/>
 
 
     </head>
@@ -35,11 +35,8 @@
                     <h3>Role:</h3> 
                     <div class="select-dropdown">
                     <select name="role">
-              
                     <option value="1">Learner</option>
-                    <option value="2">Course creator</option>
-                    <option value="3">text holder</option>  
-                    <option value="4">text holder</option>
+                    <option value="2">Course Creator</option>
                     </select> 
                         </div>
                 </div>
@@ -50,6 +47,13 @@
                         <span></span>
                         <span></span>
                         <input type="submit" value="Register"><br>
+                    </a>
+                    <a href="login">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <input type="submit" value="Back to login"><br>
                     </a>
                 </div>
             </form>

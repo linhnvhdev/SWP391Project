@@ -12,13 +12,13 @@ package Model;
 public class Exam {
     private int id;
     private Course course;
-    private boolean passed;
+    private int passed;
 
 
     public Exam() {
     }
 
-    public Exam(int id, Course course, boolean passed) {
+    public Exam(int id, Course course, int passed) {
         this.id = id;
         this.course = course;
         this.passed = passed;
@@ -41,13 +41,14 @@ public class Exam {
         this.course = course;
     }
 
-    public boolean isPassed() {
+    public int getPassed() {
         return passed;
     }
 
-    public void setPassed(boolean passed) {
+    public void setPassed(int passed) {
         this.passed = passed;
     }
 
+   
     
 }

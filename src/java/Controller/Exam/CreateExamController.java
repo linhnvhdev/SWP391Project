@@ -3,13 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package Controller.Exam;
 
-import Dal.CourseDBContext;
-import Dal.UserCourseDBContext;
+import Dal.AnswerDBContext;
+import Dal.ExamDBContext;
+import Dal.QuestionDBContext;
 import Model.Account;
-import Model.Course;
+import Model.Answer;
+import Model.Exam;
+import Model.Question;
 import Model.User;
+import Util.SystemMessage;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -20,37 +24,31 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Linhnvhdev
+ * @author LENOVO
  */
-public class CourseDetailController extends HttpServlet {
+public class CreateExamController extends HttpServlet {
+
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
         int courseId = Integer.parseInt(request.getParameter("courseId"));
         User user = acc.getUser();
-        CourseDBContext courseDB = new CourseDBContext();
-        UserCourseDBContext userCourseDB = new UserCourseDBContext();
         
-        Course course = courseDB.getCourse(courseId);
-        int numFlashcard = courseDB.getNumFlashcard(courseId);
-        int numQuestion = courseDB.getNumQuestion(courseId);
-        boolean isEnrolled = userCourseDB.checkUserCourse(user.getId(),courseId);
-        request.setAttribute("course",course);
-        request.setAttribute("numFlashcard",numFlashcard);
-        request.setAttribute("numQuestion",numQuestion);
-        request.setAttribute("isEnrolled",isEnrolled);
-        request.getRequestDispatcher("View/courseDetail.jsp").forward(request, response);
+        ExamDBContext examDB = new ExamDBContext();
+        AnswerDBContext answerDB = new AnswerDBContext();
+        ArrayList<Question> questionList = examDB.getQuestionsForExam(courseId);
+        ArrayList<Answer> answerList = answerDB.getAnswersbyCourse(courseId);
+        
+        request.setAttribute("questionList", questionList);
+        request.setAttribute("answerList", answerList);
+        request.setAttribute("courseId", courseId);
+        request.setAttribute("noquestionMessage", SystemMessage.NO_AVAILABLEQUESTION);
+        request.getRequestDispatcher("View/Exam/createexam.jsp").forward(request, response);
     }
 
     /**
@@ -64,12 +62,21 @@ public class CourseDetailController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Account acc = (Account) request.getSession().getAttribute("account");
+        int passScore = Integer.parseInt(request.getParameter("passScore"));
         int courseId = Integer.parseInt(request.getParameter("courseId"));
-        User user = acc.getUser();
-        UserCourseDBContext userCourseDB = new UserCourseDBContext();
-        userCourseDB.insertUserCourse(user.getId(), courseId);
-        response.sendRedirect("course?courseId="+courseId);
+        ExamDBContext examDB = new ExamDBContext();
+        examDB.insertExam(courseId, passScore);
+        Exam latestExam = examDB.getLatestExam(courseId);
+        String[] rawquestion_id = request.getParameterValues("questionid");
+        //Update selected question for the exam
+        for (int i = 0 ; i < rawquestion_id.length; i++) {
+            int question_id = Integer.parseInt(rawquestion_id[i]);
+            examDB.updateQuestionExam( latestExam.getId(), courseId,question_id);
+        }
+        
+        request.setAttribute("createexamMessage", SystemMessage.CREATE_EXAM);
+        
+        request.getRequestDispatcher("View/Exam/createexam.jsp").forward(request, response);
     }
 
     /**
