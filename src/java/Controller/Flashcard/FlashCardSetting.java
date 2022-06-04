@@ -7,8 +7,10 @@ package Controller.Flashcard;
 
 import Dal.CourseDBContext;
 import Dal.FlashcardDBContext;
+import Model.Account;
 import Model.Course;
 import Model.Flashcard;
+import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -38,6 +40,8 @@ public class FlashCardSetting extends HttpServlet {
         String removeid= request.getParameter("removeid");
         String updateid_raw= request.getParameter("updateid");
         String save = request.getParameter("save");
+        Account acc = (Account) request.getSession().getAttribute("account");
+        User user = acc.getUser();
         int updateid = 0;
         if(updateid_raw!=null)updateid=Integer.parseInt(updateid_raw);
         CourseDBContext cBD = new CourseDBContext();
@@ -51,7 +55,7 @@ public class FlashCardSetting extends HttpServlet {
         if("remove".equals(removeid)){
         fDB.RemoveFlashCard(updateid);
         }
-        ArrayList<Course> CourseList = cBD.getCourseListByCreator(9);
+        ArrayList<Course> CourseList = cBD.getCourseListByCreator(user.getId());
         ArrayList<Flashcard> FlashCardList = fDB.getlistFCbyListCourseId(CourseList);
         request.setAttribute("editid", editid);
         request.setAttribute("updateid", updateid);

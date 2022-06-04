@@ -36,6 +36,8 @@ public class FlashCardListController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Account acc = (Account) request.getSession().getAttribute("account");
+        User user = acc.getUser();
         String course_id_raw = request.getParameter("course_id");
         int course_id=0;
         if(course_id_raw==null){
@@ -44,7 +46,7 @@ public class FlashCardListController extends HttpServlet {
         course_id=Integer.parseInt(course_id_raw);
         }
         CourseDBContext cBD = new CourseDBContext();
-        ArrayList<Course> CourseList = cBD.getCourseListByCreator(9);
+        ArrayList<Course> CourseList = cBD.getCourseListByCreator(user.getId());
         FlashcardDBContext fDB = new FlashcardDBContext();
         ArrayList<Flashcard> FlashCardList = fDB.getlistFCbyListCourseId(CourseList);
         request.setAttribute("course_id", course_id);
@@ -65,8 +67,7 @@ public class FlashCardListController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //    Account acc = (Account) request.getSession().getAttribute("account");
-        //   User user = acc.getUser();
+
         processRequest(request, response);
     }
 

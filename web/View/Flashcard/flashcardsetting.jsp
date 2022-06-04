@@ -12,6 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link href="${pageContext.request.contextPath}/css/cssforflashcardsetting.css" rel="stylesheet" type="text/css"/>
         <%
             ArrayList<Flashcard> FlashCardList = (ArrayList<Flashcard>) request.getAttribute("FlashCardList");
             String editid = (String) request.getAttribute("editid");
@@ -19,15 +20,24 @@
         %>
     </head>
     <body>
-        <table border="1px">
-            <tr>
-                <td>FlashCard_ID</td>
-                <td>Course_ID</td>
-                <td>Front</td>
-                <td>Back</td>
-                <td></td>
-                <td></td>
-            </tr>
+        <div class="other-page">
+        <a href="${pageContext.request.contextPath}/home">Back to home</a>
+        <a href="${pageContext.request.contextPath}/login">Log out</a>
+        </div>
+        <div class="title">
+         <h5>Flashcard Setting </h5>
+        </div>
+        <table>
+            <thead>
+                <th>FlashCard_ID</th>
+                <th>Course_ID</th>
+                <th>Front</th>
+                <th>Back</th>
+                <th></th>
+                <th></th>
+            </thead>
+            <tbody>
+                
             <%for (Flashcard flashcard : FlashCardList) {
             %>
             <form action="setting" method="POST">
@@ -38,7 +48,7 @@
                     <td><input type="text" name="Front" value="<%=flashcard.getFront()%>"></td>
                     <td><input type="text" name="Back" value="<%=flashcard.getBack()%>"></td>
                 <input type="hidden" name="updateid" value="<%=flashcard.getId()%>">
-                <td><input type="submit" name="save" value="save">
+                <td><input type="submit" name="save" value="save" onclick="return Confirm(<%=flashcard.getId()%>,'save')">
                     <input type="submit" name="cancel" value="cancel">
                 </td>
                 <td><input type="submit" name="removeid" value="remove"></td>
@@ -51,12 +61,26 @@
                     <td><%=flashcard.getBack()%></td>
                 <input type="hidden" name="updateid" value="<%=flashcard.getId()%>">
                 <td><input type="submit" name="editid" value="edit"></td>
-                <td><input type="submit" name="removeid" value="remove"></td>
+                <td><input type="submit" name="removeid" value="remove" onclick="return Confirm(<%=flashcard.getId()%>,'delete')"></td>
                 </tr>
                 <%}%>
 
             </form>
             <%}%>
+        </tbody>
         </table>
+       
+        <script>
+            function Confirm(id,action)
+            {
+                var result = confirm("are you sure to "+action+" flashcard id ="+id);
+                if(result)
+                {
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        </script>
     </body>
 </html>

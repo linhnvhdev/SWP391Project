@@ -185,6 +185,7 @@ public class FlashcardDBContext extends DBContext {
     }
 
     public void RemoveFlashCard(int flashcard_id) {
+        RemoveFlashCardRelationship(flashcard_id);
         try {
             String sql = "DELETE FROM [Flashcard]\n"
                     + "WHERE [Flashcard_ID] = ?";
@@ -196,7 +197,7 @@ public class FlashcardDBContext extends DBContext {
         }
     }
 
-    public void UpdateFlashcard(int flashcard_id,String back,String front,int course_id) {
+    public void UpdateFlashcard(int flashcard_id, String back, String front, int course_id) {
         try {
             String sql = "UPDATE [Flashcard]\n"
                     + "   SET [Flash_Front] = ?\n"
@@ -205,9 +206,21 @@ public class FlashcardDBContext extends DBContext {
                     + " WHERE [Flashcard_ID]=?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, front);
-             stm.setString(2, back);
-              stm.setInt(3, course_id);
-               stm.setInt(4, flashcard_id);
+            stm.setString(2, back);
+            stm.setInt(3, course_id);
+            stm.setInt(4, flashcard_id);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(FlashcardDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void RemoveFlashCardRelationship(int flashcard_id) {
+        try {
+            String sql = "DELETE FROM [User_FlashCard]\n"
+                    + "      WHERE [Flashcard_ID] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, flashcard_id);
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(FlashcardDBContext.class.getName()).log(Level.SEVERE, null, ex);
