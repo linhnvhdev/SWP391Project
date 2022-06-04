@@ -6,11 +6,11 @@
 package Filter;
 
 import Model.Account;
+import Model.User;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import javax.jms.Session;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -24,9 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Linhnvhdev
  */
-public class LoginFilter implements Filter {
+public class AdminFilter implements Filter {
     
-    private static String[] nonLoginPath = {"/login","/register","/chgpwd","css","img","js","/resetpassword"};
     private static final boolean debug = true;
 
     // The filter configuration object we are associated with.  If
@@ -34,13 +33,13 @@ public class LoginFilter implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
     
-    public LoginFilter() {
+    public AdminFilter() {
     }    
     
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("LoginFilter:DoBeforeProcessing");
+            log("AdminFilter:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -68,7 +67,7 @@ public class LoginFilter implements Filter {
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("LoginFilter:DoAfterProcessing");
+            log("AdminFilter:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -102,20 +101,15 @@ public class LoginFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
+        
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         Account account = (Account) httpRequest.getSession().getAttribute("account");
-        String path = ((HttpServletRequest) request).getRequestURI();
-        for(String specialPath : nonLoginPath){
-            if(path.contains(specialPath)){
-                chain.doFilter(request, response);
-                return;
-            }
-        }
-        if(account == null || account.isActive() == null || account.isActive() == false){
-            httpResponse.sendRedirect(httpRequest.getContextPath()+"/login");
-        }
-        else{
+        User user = account.getUser();
+        if (user.getRole() < 3) {
+            String path = ((HttpServletRequest) request).getRequestURI();
+            httpResponse.sendRedirect(httpRequest.getContextPath()+"/View/accessdenided.jsp");
+        } else {
             chain.doFilter(request, response);
         }
     }
@@ -145,12 +139,11 @@ public class LoginFilter implements Filter {
     /**
      * Init method for this filter
      */
-    public void init(FilterConfig filterConfig) { 
-        
+    public void init(FilterConfig filterConfig) {        
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {                
-                log("LoginFilter:Initializing filter");
+                log("AdminFilter:Initializing filter");
             }
         }
     }
@@ -161,9 +154,9 @@ public class LoginFilter implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("LoginFilter()");
+            return ("AdminFilter()");
         }
-        StringBuffer sb = new StringBuffer("LoginFilter(");
+        StringBuffer sb = new StringBuffer("AdminFilter(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());

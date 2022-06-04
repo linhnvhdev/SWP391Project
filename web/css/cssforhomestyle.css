@@ -12,11 +12,6 @@ body{
     padding:0;
 }
 
-.header{
-    background-color: #99ffff;
-    height: 100px;
-}
-
 .main-content{
     display: flex;
 }
@@ -40,14 +35,6 @@ body{
 .table{
     margin-left: 35%;
     font-size: 130%;
-
-
-}
-.column {
-    float: left;
-    width: 50%;
-    text-align: center;
-    font-size: 30px;
 }
 
 .row:after {
@@ -55,7 +42,7 @@ body{
     display: table;
     clear: both;
 }
-
+/*
 a:link {
     color: white;
     background-color: transparent;
@@ -71,3 +58,4 @@ a:hover {
     background-color: transparent;
     text-decoration: underline;
 }
+*/

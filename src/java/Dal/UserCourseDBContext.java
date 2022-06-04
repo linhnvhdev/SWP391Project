@@ -6,6 +6,7 @@
 package Dal;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,5 +37,27 @@ public class UserCourseDBContext extends DBContext {
         } catch (SQLException ex) {
             Logger.getLogger(UserCourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public boolean checkUserCourse(int userId, int courseId) {
+        try {
+            String sql="SELECT [User_ID]\n" +
+                    "      ,[Course_ID]\n" +
+                    "      ,[Exp]\n" +
+                    "      ,[Level]\n" +
+                    "      ,[IsFinished]\n" +
+                    "  FROM [SWP391Project].[dbo].[User_Course]\n" +
+                    "  WHERE [User_ID] = ? AND Course_ID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, userId);
+            stm.setInt(2, courseId);
+            ResultSet rs = stm.executeQuery();
+            if(rs.next()){
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserCourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 }
