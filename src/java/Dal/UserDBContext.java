@@ -5,6 +5,7 @@
  */
 package Dal;
 
+import Model.Course;
 import Model.User;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -120,10 +121,44 @@ public class UserDBContext extends DBContext {
             stm.setInt(1, exp);
             stm.setInt(2, userId);
             stm.execute();
-           
+
         } catch (SQLException ex) {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public ArrayList<User> getAllUser() {
+        ArrayList<User> userList = new ArrayList<>();
+        try {
+            String sql = "SELECT  [User_ID]\n"
+                    + "      ,[Name]\n"
+                    + "      ,[Mail]\n"
+                    + "      ,[Gender]\n"
+                    + "      ,[Dob]\n"
+                    + "      ,[Exp]\n"
+                    + "      ,[Level]\n"
+                    + "      ,[Role_ID]\n"
+                    + "  FROM [User]\n"
+                    + "  Order By Exp Desc";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("User_ID"));
+                user.setName(rs.getString("Name"));
+                user.setGmail(rs.getString("Mail"));
+                user.setGender(rs.getBoolean("Gender"));
+                user.setDob(rs.getDate("Dob"));
+                user.setExp(rs.getInt("Exp"));
+                user.setLevel(rs.getInt("Level"));
+                user.setRole(rs.getInt("Role_ID"));
+                userList.add(user);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return userList;
     }
 
     public void updateUser(int id, String name, String gmail, boolean gender, Date dob, int exp, int level) {

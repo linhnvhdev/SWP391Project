@@ -85,6 +85,22 @@
         <servlet-class>Controller.Exam.ResultController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>CreateExamController</servlet-name>
+        <servlet-class>Controller.Exam.CreateExamController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DisplayExamQuestionController</servlet-name>
+        <servlet-class>Controller.Exam.DisplayExamQuestionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RemoveExamQuestionController</servlet-name>
+        <servlet-class>Controller.Exam.RemoveExamQuestionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LeaderboardController</servlet-name>
+        <servlet-class>Controller.Leaderboard.LeaderboardController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>UserProfileController</servlet-name>
         <servlet-class>Controller.User.UserProfileController</servlet-class>
     </servlet>
@@ -151,6 +167,22 @@
     <servlet-mapping>
         <servlet-name>FlashCardController</servlet-name>
         <url-pattern>/flashcard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateExamController</servlet-name>
+        <url-pattern>/createexam</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DisplayExamQuestionController</servlet-name>
+        <url-pattern>/displayexamquestion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemoveExamQuestionController</servlet-name>
+        <url-pattern>/removeexamquestion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LeaderboardController</servlet-name>
+        <url-pattern>/leaderboard</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserProfileController</servlet-name>
