@@ -44,7 +44,7 @@
         <div class="main-content">
             <div class="left">
 
-                <h3 style="  font-size: 30px;">Course list:</h3>
+                <h3 style="font-size: 30px;">Course list:</h3>
                 <table style="border-color: black; font-size:30px; margin-bottom: 20px;" border="solid 2px">
 
                     <c:forEach var="course" items="${requestScope.courseList}">
