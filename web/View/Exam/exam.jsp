@@ -64,7 +64,7 @@
                                         </tr>
                                         <tr>
                                             <td>BOSS HP</td>
-                                            <td>   ${requestScope.currentBossHP}   / ${requestScope.passScore} </td>
+                                            <td>   ${requestScope.currentBossHP}   / ${requestScope.maxScore}  </td>
                                         </tr>
                                     </tbody>
                                 </table>
