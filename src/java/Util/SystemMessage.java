@@ -18,4 +18,5 @@ public class SystemMessage {
     public static final String LOGIN_FAILED = "Login failed";
     public static final String QUESTION_ANSWERED = "Question has been answered";
     public static final String CREATE_EXAM = "The exam has been created successfully";
+    public static final String NO_AVAILABLEQUESTION = "There are no available question in the course to add the exam";
 }

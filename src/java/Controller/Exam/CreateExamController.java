@@ -47,7 +47,7 @@ public class CreateExamController extends HttpServlet {
         request.setAttribute("questionList", questionList);
         request.setAttribute("answerList", answerList);
         request.setAttribute("courseId", courseId);
-        
+        request.setAttribute("noquestionMessage", SystemMessage.NO_AVAILABLEQUESTION);
         request.getRequestDispatcher("View/Exam/createexam.jsp").forward(request, response);
     }
 
@@ -75,6 +75,7 @@ public class CreateExamController extends HttpServlet {
         }
         
         request.setAttribute("createexamMessage", SystemMessage.CREATE_EXAM);
+        
         request.getRequestDispatcher("View/Exam/createexam.jsp").forward(request, response);
     }
 

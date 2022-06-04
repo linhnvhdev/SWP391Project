@@ -12,10 +12,7 @@ body{
     padding:0;
 }
 
-.header{
-    background-color: #99ffff;
-    height: 100px;
-}
+
 
 .main-content{
     display: flex;
