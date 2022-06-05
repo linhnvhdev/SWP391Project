@@ -55,11 +55,7 @@ public class ExamController extends HttpServlet {
             score = 0;
             request.getSession().setAttribute("score", score);
         }
-        // When starting the exam
-//        if (currentBossHP == null) {
-//            currentBossHP = maxScore;
-//            request.getSession().setAttribute("currentBossHP", currentBossHP);
-//        }
+
         
         User user = acc.getUser();
         int courseId = Integer.parseInt(request.getParameter("courseId"));
@@ -75,11 +71,12 @@ public class ExamController extends HttpServlet {
         }
 
         // load all answer in DB !!!        
-        
+
        if (answerList == null) {
             answerList = examDB.getAllAnswers(exam.getId());
             request.getSession().setAttribute("answerList", answerList);
         }
+
         int pagesize = 1;
         String page = request.getParameter("page");
         if (page == null || page.trim().length() == 0) {
@@ -105,7 +102,7 @@ public class ExamController extends HttpServlet {
         request.setAttribute("pageindex", pageindex);
 
         request.setAttribute("currentBossHP", currentBossHP);
-        request.setAttribute("passScore", passScore);
+    //    request.setAttribute("passScore", passScore);
         request.setAttribute("eid", exam.getId());
         request.setAttribute("courseId", courseId);
         request.setAttribute("maxScore", maxScore);
@@ -138,7 +135,7 @@ public class ExamController extends HttpServlet {
 
         ExamDBContext examDB = new ExamDBContext();
         int page = Integer.parseInt(request.getParameter("pageindex"));
-        int answer_id = Integer.parseInt(request.getParameter("aid"));
+        int answer_id = Integer.parseInt(request.getParameter("ansid"));
         int question_id = Integer.parseInt(request.getParameter("qid"));
         int courseId = Integer.parseInt(request.getParameter("courseId"));
         int eid = Integer.parseInt(request.getParameter("eid"));

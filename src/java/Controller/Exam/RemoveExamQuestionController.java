@@ -3,16 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package Controller.Exam;
 
-import Dal.CourseDBContext;
-import Dal.UserDBContext;
+import Dal.QuestionDBContext;
 import Model.Account;
-import Model.Course;
 import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,30 +17,25 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Linhnvhdev
+ * @author LENOVO
  */
-public class HomeController extends HttpServlet {
+public class RemoveExamQuestionController extends HttpServlet {
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
-        UserDBContext userDB = new UserDBContext();
-        User user = userDB.getUser(acc.getUser().getId());
-        CourseDBContext courseDB = new CourseDBContext();
-        ArrayList<Course> courseList = courseDB.getCourseList(user.getId());
-        request.setAttribute("courseList", courseList);
-        request.setAttribute("user", user);
-        request.getRequestDispatcher("View/home.jsp").forward(request, response);
+        int courseId = Integer.parseInt(request.getParameter("courseId"));
+        int eid = Integer.parseInt(request.getParameter("eid"));
+        User user = acc.getUser();
+        
+        int question_id = Integer.parseInt(request.getParameter("qid"));
+        QuestionDBContext questionDB = new QuestionDBContext();
+        questionDB.removeQuestionfromExamm(question_id);
+        
+        request.setAttribute("eid", eid);
+        request.setAttribute("courseId", courseId);
+        response.sendRedirect("displayexamquestion?eid=" + (eid) + "&courseId=" + (courseId));
     }
 
     /**
