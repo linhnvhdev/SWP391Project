@@ -28,6 +28,7 @@
                 </div>
             </div>
             <div class="split test2">
+                <a href="home">Back to home</a>    
                 <div class="centered">
 
                     <h2>Total Question: ${requestScope.totalQuestion} </h2>
@@ -38,6 +39,7 @@
                     <a href="revision/question?id=${requestScope.randomID}&courseId=${requestScope.courseId}"/>start</a> 
                 </div>
             </div>
+            
         </div>
 
     </body>

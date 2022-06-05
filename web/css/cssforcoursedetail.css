@@ -1,0 +1,118 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : May 20, 2022, 1:07:17 AM
+    Author     : sioni
+*/
+body{
+    background-color: grey;
+}
+.header{
+
+   
+}
+
+.column {
+    float: left;
+    width: 33%;
+    text-align: center;
+    font-size: 30px;
+}
+a:link {
+    color: white;
+    background-color: transparent;
+   text-decoration: none;
+}
+a:visited {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
+}
+a:hover {
+    color: red;
+    background-color: transparent;
+    text-decoration: underline;
+}
+.left{
+    padding:100px;
+    flex:30%;
+    margin-top: 10px;
+    font-size:50px;
+    
+}
+
+.right{
+    padding:100px;
+    flex:70%;
+    font-size:40px;
+}
+.main-content{
+    display: flex;
+}
+.button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 50px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.button1{
+    font-size:50px;
+
+}
+.button4
+{    color: white;
+    font-size:50px;
+background-image: url("../img/study.gif");
+}
+.button4:hover{
+        color: blue;
+    background-color: transparent;
+}
+.button2
+{    color: white;
+    font-size:50px;
+background-image: url("../img/learn.gif");
+}
+.button2:hover{
+        color: green;
+    background-color: transparent;
+}
+.button3
+{
+    color: white;
+    font-size:50px;
+background-image: url("../img/lua.gif");
+}
+.button3:hover{
+        color:lightsalmon ;
+    background-color: transparent;
+}
+.button5
+{
+    font-size:50px;
+
+}
+.button5:hover{
+    color:white;
+    background-image: url("../img/lua.gif");
+}
+td {
+  padding-top:20px;
+  padding-bottom:20px;
+  padding-right:20px;   
+    padding-left:20px
+}
+
+td:first-child {
+  padding-left:20px;
+  padding-right:0;
+}
