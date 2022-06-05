@@ -31,7 +31,7 @@
                 <div class="logo">No game no learn</div>
                 <ul class="navbar-item-list">
                     <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
-                    <li><a >Leaderboard</a></li>
+                    <li><a href="${pageContext.request.contextPath}/leaderboard">Leaderboard</a></li>
                     <li><a href="#">About</a></li>
                     <li><a href="${pageContext.request.contextPath}/course/library">Course Library</a></li>
                     <li class="dropdown">

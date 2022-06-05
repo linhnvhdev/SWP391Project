@@ -149,23 +149,21 @@ public class CourseDBContext extends DBContext {
         return 0;
     }
 
-    public int addCourse(String courseName, int creatorId) {
+    public int addCourse(String courseName, int creatorId, String description) {
         try {
             String sql = "INSERT INTO [dbo].[Course]\n"
                     + "           ([Course_Name]\n"
-                    + "           ,[Creator_ID])\n"
-                    + "	OUTPUT INSERTED.Course_ID\n"
+                    + "           ,[Creator_ID]\n"
+                    + "           ,[Course_Description])\n"
                     + "     VALUES\n"
                     + "           (?\n"
+                    + "           ,?\n"
                     + "           ,?)";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, courseName);
             stm.setInt(2, creatorId);
+            stm.setString(3, description);
             stm.execute();
-            ResultSet rs = stm.getResultSet();
-            if (rs.next()) {
-                return rs.getInt(1);
-            }
         } catch (SQLException ex) {
             Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
