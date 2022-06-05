@@ -3,14 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller.User;
+package Controller.Flashcard;
 
-import Dal.UserDBContext;
+import Dal.CourseDBContext;
+import Dal.FlashcardDBContext;
 import Model.Account;
+import Model.Course;
+import Model.Flashcard;
 import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,9 +21,39 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Linhnvhdev
+ * @author Admin
  */
-public class UserProfileController extends HttpServlet {
+public class FlashCardListController extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        Account acc = (Account) request.getSession().getAttribute("account");
+        User user = acc.getUser();
+        String course_id_raw = request.getParameter("course_id");
+        int course_id=0;
+        if(course_id_raw==null){
+        course_id=-1;
+        }else{
+        course_id=Integer.parseInt(course_id_raw);
+        }
+        CourseDBContext cBD = new CourseDBContext();
+        ArrayList<Course> CourseList = cBD.getCourseListByCreator(user.getId());
+        FlashcardDBContext fDB = new FlashcardDBContext();
+        ArrayList<Flashcard> FlashCardList = fDB.getlistFCbyListCourseId(CourseList);
+        request.setAttribute("course_id", course_id);
+        request.setAttribute("CourseList", CourseList);
+        request.setAttribute("FlashCardList", FlashCardList);
+        request.getRequestDispatcher("/View/Flashcard/flashcardlist.jsp").forward(request, response);
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -34,11 +67,8 @@ public class UserProfileController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Account acc = (Account) request.getSession().getAttribute("account");
-        UserDBContext userDB = new UserDBContext();
-        User user = userDB.getUser(acc.getUser().getId());
-        request.setAttribute("user", user);
-        request.getRequestDispatcher("View/userProfile.jsp").forward(request, response);
+
+        processRequest(request, response);
     }
 
     /**
@@ -52,20 +82,7 @@ public class UserProfileController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Account acc = (Account) request.getSession().getAttribute("account");
-        String name = request.getParameter("name");
-        boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
-        Date dob = Date.valueOf(request.getParameter("dob"));
-        String gmail = request.getParameter("gmail");
-        int exp = Integer.parseInt(request.getParameter("exp"));
-        int level = Integer.parseInt(request.getParameter("level"));
-        UserDBContext userDB = new UserDBContext();
-        User user = userDB.getUser(acc.getUser().getId());
-        userDB.updateUser(user.getId(),name, gmail, gender, dob, exp,level);
-        request.setAttribute("SuccessMessage","Change profile success");
-        user = userDB.getUser(acc.getUser().getId());
-        request.setAttribute("user", user);
-        request.getRequestDispatcher("View/userProfile.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

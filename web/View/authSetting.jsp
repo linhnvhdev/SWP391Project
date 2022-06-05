@@ -11,7 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/header.css?version=2" rel="stylesheet" type="text/css"/>
-        <link href="css/authSetting.css?version=2" rel="stylesheet" type="text/css"/>
+        <link href="css/authSetting.css?version=1" rel="stylesheet" type="text/css"/>
         <title>JSP Page</title>
     </head>
     <body>
@@ -44,6 +44,7 @@
                 <form id="searchForm" action="auth" method="POST">
                     <div class="search">
                         Id: <input type="text" name="searchId" value="${requestScope.searchId}">
+                        Username <input type="text" name="searchUsername" value="${requestScope.searchUsername}">
                         Name: <input type="text" name="searchName" value="${requestScope.searchName}">
                         Role: <select name="searchRole">
                                 <option value="All" selected>All</option>
@@ -68,6 +69,7 @@
                 <table>
                     <tr>
                         <th>ID</th>
+                        <th>Username</th>
                         <th>Name</th>
                         <th>Gmail</th>
                         <th>Role</th>
@@ -81,9 +83,11 @@
                             <input type="hidden" name="searchName" value="${requestScope.searchName}">
                             <input type="hidden" name="searchRole" value="${requestScope.searchRole}">
                             <input type="hidden" name="searchStatus" value="${requestScope.searchStatus}">
+                            <input type="hidden" name="searchUsername" value="${requestScope.searchUsername}">
                             <input type="hidden" name="username" value="${account.username}">
                             <tr>
                                 <td>${account.user.id}</td>
+                                <td>${account.username}</td>
                                 <td>${account.user.name}</td>
                                 <td>${account.user.gmail}</td>
                                 <td>

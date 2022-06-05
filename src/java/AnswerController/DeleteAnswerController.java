@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller.User;
+package AnswerController;
 
-import Dal.UserDBContext;
-import Model.Account;
-import Model.User;
+import Dal.AnswerDBContext;
+import Model.Answer;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,9 +16,30 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Linhnvhdev
+ * @author Bi
  */
-public class UserProfileController extends HttpServlet {
+public class DeleteAnswerController extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        int courseId = Integer.parseInt(request.getParameter("courseId"));
+        AnswerDBContext db  = new AnswerDBContext();
+        Answer answer  = new Answer();
+        answer.setId(id);
+        db.deleteAnswer(answer);
+        response.sendRedirect("questionsetting?courseId="+courseId);
+        
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -34,11 +53,7 @@ public class UserProfileController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Account acc = (Account) request.getSession().getAttribute("account");
-        UserDBContext userDB = new UserDBContext();
-        User user = userDB.getUser(acc.getUser().getId());
-        request.setAttribute("user", user);
-        request.getRequestDispatcher("View/userProfile.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -52,20 +67,7 @@ public class UserProfileController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Account acc = (Account) request.getSession().getAttribute("account");
-        String name = request.getParameter("name");
-        boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
-        Date dob = Date.valueOf(request.getParameter("dob"));
-        String gmail = request.getParameter("gmail");
-        int exp = Integer.parseInt(request.getParameter("exp"));
-        int level = Integer.parseInt(request.getParameter("level"));
-        UserDBContext userDB = new UserDBContext();
-        User user = userDB.getUser(acc.getUser().getId());
-        userDB.updateUser(user.getId(),name, gmail, gender, dob, exp,level);
-        request.setAttribute("SuccessMessage","Change profile success");
-        user = userDB.getUser(acc.getUser().getId());
-        request.setAttribute("user", user);
-        request.getRequestDispatcher("View/userProfile.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

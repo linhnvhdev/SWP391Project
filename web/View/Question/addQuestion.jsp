@@ -4,6 +4,8 @@
     Author     : Linhnvhdev
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="Model.Difficulty"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -23,6 +25,9 @@
         </script>
     </head>
     <body>
+        <%
+        ArrayList<Difficulty> difficulties = (ArrayList<Difficulty>) request.getAttribute("difficulties");
+        %>
         <a href="../home">Back to home</a><br>
         <a href="../course?courseId=${requestScope.courseId}">Back to course</a><br>
         <form action="add" method="POST">
@@ -38,7 +43,13 @@
                     </c:forEach>
                 </select><br>
                 <div>
-                    Question:<textarea name="question"></textarea>
+                    Question:<textarea name="question"></textarea></br>
+                    Difficulty: <select name="difficultyId">
+                <%for (Difficulty d : difficulties) {%>
+                <option 
+                    value="<%=d.getId()%>"><%=d.getName()%></option>               
+                <%}%>
+            </select></br>
                     <input type="button" onclick="addAnswer()" value="Add an answer"><br>
                 </div>
                 <div id="answer">
