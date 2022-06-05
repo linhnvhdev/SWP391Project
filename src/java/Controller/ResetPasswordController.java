@@ -79,7 +79,7 @@ public class ResetPasswordController extends HttpServlet {
             String username = request.getParameter("username");
             AccountDBContext adb = new AccountDBContext();
             Account a = adb.getAccount(username);
-            //username do exits
+            //username exist
             if(a!=null){
             UserDBContext uDB = new UserDBContext();
             User u = uDB.getUser(a.getUser().getId());
@@ -87,7 +87,7 @@ public class ResetPasswordController extends HttpServlet {
             adb.updateAccount(username, newPassword);
             sendMail(u.getGmail(),newPassword);
             request.setAttribute("resetpassword_successful", SystemMessage.Reset_Successful);}
-            //username do not exits
+            //username do not exist
             else{
             request.setAttribute("Not_exit", SystemMessage.UserName_Donot_Exits);
             }
@@ -125,7 +125,7 @@ public class ResetPasswordController extends HttpServlet {
             });
             Message message = prepareMessage(session, recepient, Accountemail, mailcontent);
             Transport.send(message);
-            System.out.println("Message sent oke");
+            
         }
 
         private static Message prepareMessage(Session session, String recepient, String Accountemail, String mailcontent) {
