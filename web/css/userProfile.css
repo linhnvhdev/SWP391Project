@@ -8,6 +8,11 @@ and open the template in the editor.
     Author     : Linhnvhdev
 */
 
+body{
+    margin: 0;
+    padding: 0;
+}
+
 .main-content{
     background: linear-gradient(#141e30, #243b55);
     display: flex;
