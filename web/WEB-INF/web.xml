@@ -24,9 +24,17 @@
         <filter-name>CourseCreatorFilter</filter-name>
         <servlet-name>AddCourseController</servlet-name>
     </filter-mapping>
+        <filter-mapping>
+        <filter-name>CourseCreatorFilter</filter-name>
+        <servlet-name>AddCourseController</servlet-name>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>CourseCreatorFilter</filter-name>
-        <servlet-name>AddQuestionController</servlet-name>
+        <servlet-name>FlashCardListController</servlet-name>
+    </filter-mapping>
+        <filter-mapping>
+        <filter-name>CourseCreatorFilter</filter-name>
+        <servlet-name>FlashCardSetting</servlet-name>
     </filter-mapping>
     <filter-mapping>
         <filter-name>CourseCreatorFilter</filter-name>
