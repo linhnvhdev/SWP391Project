@@ -9,19 +9,19 @@ and open the template in the editor.
 */
 
 body, html {
-  height: 100%;
-  margin: 0;
+    height: 100%;
+    margin: 0;
 }
 
 .background-img  {
     background-image: url("../img/background5.png");
 
-  height: 100%; 
+    height: 100%; 
 
-  /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 
 }
 .top {
@@ -47,18 +47,17 @@ body, html {
 #playerchar{
     padding-top:50px;
 }
-#table1{
 
-    position:relative;
-    left:60%;
-
-}
 #Boss{
     position:relative;
     left:50%;
 
 }
-
+#table1{
+     position:relative;
+    left:60%;
+    font-size: 30px;
+}
 .playerhp{
     position:relative;
     left:20%;
@@ -82,48 +81,67 @@ input[type="submit"]
     text-transform: uppercase;
     overflow: hidden;
     transition: 0.5s;
-    margin-left:40%;
-    margin-right:auto;
-    width: 50%;
-   height: 25px;
+    margin-left:10%;
+    color:indigo;
+    width: 50PX;
+    height: 30px;
+    background-color:  indigo;
 
 }
-/* Set the style for the a tag */
 .pagination a {
-color: black;
-padding-top: 10px;
-padding-right: 16px;
-padding-left: 16px;
-font-size: 30px;
-text-decoration: none;
-transition: background-color .3s;
+    color: black;
+    padding-top: 10px;
+    padding-right: 16px;
+    padding-left: 16px;
+    font-size: 30px;
+    text-decoration: none;
+    transition: background-color .3s;
 }
 
 
-/* add background color when user hovers on inactive class */
 .pagination a:hover:not(.active) {
-background-color: mediumspringgreen;
+    background-color: mediumspringgreen;
 
 }
 span
 {
-   font-size: 30px; 
+    font-size: 30px; 
 }
 #progressBar {
-  width: 50%;
+    width: 50%;
 
-  background-color: #0a5f44;
+    background-color: #0a5f44;
 }
 
 #progressBar div {
-  height: 100%;
-  text-align: right;
-  padding: 0 10px;
-  line-height: 22px; 
-  width: 0;
-  background-color: #cbea00;
-  box-sizing: border-box;
+    height: 100%;
+    text-align: right;
+    padding: 0 10px;
+    line-height: 22px; 
+    width: 0;
+    background-color: #cbea00;
+    box-sizing: border-box;
 }
 
 
+#answer{
+    margin-top: 10px;
+    font-size: 40px;
+}
+
+input[type="submit"]:hover
+{   
+    color:white;
+    background-color: white;
+
+
+}
+#table2
+{
+
+font-family: “Open Sans”, sans-serif;
+color: #f2606f;
+text-shadow: 1px -3px 5px #fff, 1px -3px 11px #FF3, 1px -11px 21px         #F90, 1px -21px 41px #C33;
+
+}
 
