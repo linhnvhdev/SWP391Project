@@ -49,8 +49,9 @@ public class AddCourseController extends HttpServlet {
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
         String courseName = request.getParameter("courseName");
+        String description = request.getParameter("description");
         CourseDBContext courseDB = new CourseDBContext();
-        int courseId = courseDB.addCourse(courseName,acc.getUser().getId());
+        int courseId = courseDB.addCourse(courseName,acc.getUser().getId(),description);
         UserCourseDBContext userCourseDB = new UserCourseDBContext();
         userCourseDB.insertUserCourse(acc.getUser().getId(), courseId);
         response.sendRedirect("../course?courseId="+courseId);
