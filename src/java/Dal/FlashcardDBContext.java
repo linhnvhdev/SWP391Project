@@ -88,8 +88,10 @@ public class FlashcardDBContext extends DBContext {
 
     public ArrayList<Flashcard> getlistFCbyListCourseId(ArrayList<Course> courses) {
         ArrayList<Flashcard> List = new ArrayList<>();
+        if(courses.size()!=0){
         try {
             String sql = "select Flashcard_ID,Flash_front,Flash_back,Course_ID from Flashcard\n";
+
             for (int i = 0; i < courses.size(); i++) {
                 if (i == 0) {
                     sql += "Where Course_ID = ?\n";
@@ -115,6 +117,7 @@ public class FlashcardDBContext extends DBContext {
             }
         } catch (SQLException ex) {
             Logger.getLogger(FlashcardDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
         }
         return List;
     }

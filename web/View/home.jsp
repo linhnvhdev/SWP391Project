@@ -55,6 +55,8 @@
                 </table>
                 <c:if test="${sessionScope.account.user.role >= 2}">
                     <a href="course/add"><button>Add new course</button></a>
+                    <a href="flashcard/list"><button>Flashcard List</button></a>
+                    <a href="flashcard/setting"><button>Flashcard setting</button></a>
                 </c:if>
             </div>
             <div class="right">
