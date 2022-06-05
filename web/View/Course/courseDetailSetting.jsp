@@ -53,7 +53,7 @@
                     <form action="coursesetting" method="post">
                         <div class="mb-3">
                             <label class="form-label">Course ID</label>
-                            <input type="text" class="form-control" name="id" value="<%=course.getId()%>" disabled/>
+                            <input type="text" class="form-control" name="id" value="<%=course.getId()%>" readonly/>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Course Name</label>
@@ -62,7 +62,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Creator Name</label>
-                            <input type="text" class="form-control" name="creatorName" value="<%=course.getCreator().getName()%>"disabled/>
+                            <input type="text" class="form-control" name="creatorName" value="<%=course.getCreator().getName()%>" readonly/>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Description</label>
@@ -74,9 +74,9 @@
                 </div>
                 <div class="col-4">
                     <dl>
-                        <dt class="setting"><a class="btn btn-primary" href="#" role="button">Flashcards setting</a></dt>
+                        <dt class="setting"><a class="btn btn-primary" href="flashcard/setting" role="button">Flashcards setting</a></dt>
                         <dt class="setting"><a class="btn btn-primary" href="questionsetting?courseId=<%=course.getId()%>" role="button">Questions setting</a></dt>
-                        <dt class="setting"><a class="btn btn-primary" href="#" role="button">Exam setting</a></dt>
+                        <dt class="setting"><a class="btn btn-primary" href="displayexamquestion?courseId=<%=course.getId()%>" role="button">Exam setting</a></dt>
                     </dl>                                  
                 </div>
             </div>

@@ -53,6 +53,9 @@
                 </div>
             </div>
             <div class="right">
+                <c:if test="${requestScope.SuccessMessage != null}">
+                    <div style="color: green">${requestScope.SuccessMessage}</div>
+                </c:if>
                 <h2>User profile</h2>
                 <form action="profile" method="POST">
                     <input type="hidden" name="exp" value="${requestScope.user.exp}">
