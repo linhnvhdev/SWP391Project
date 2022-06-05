@@ -48,6 +48,7 @@ public class CourseDBContext extends DBContext {
             String sql = "SELECT [Course_ID]\n"
                     + "      ,[Course_Name]\n"
                     + "      ,[Creator_ID]\n"
+                    + "      ,[Course_Description]\n"
                     + "  FROM [dbo].[Course]"
                     + "WHERE [Course_ID] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -59,6 +60,7 @@ public class CourseDBContext extends DBContext {
                 course.setId(rs.getInt("Course_ID"));
                 course.setName(rs.getString("Course_Name"));
                 course.setCreator(userDB.getUser(rs.getInt("Creator_ID")));
+                course.setDescription(rs.getString("Course_Description"));
                 return course;
             }
         } catch (SQLException ex) {
@@ -112,7 +114,6 @@ public class CourseDBContext extends DBContext {
         }
         return courseList;
     }
-
 
     public int getNumFlashcard(int courseId) {
         try {
@@ -169,5 +170,21 @@ public class CourseDBContext extends DBContext {
             Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
+    }
+
+    public void updateCourse(int id, String name, String description) {
+        try {
+            String sql = "UPDATE [dbo].[Course]\n"
+                    + "   SET [Course_Name] = ?\n"
+                    + "      ,[Course_Description] = ?\n"
+                    + " WHERE [Course_ID] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, name);
+            stm.setString(2, description);
+            stm.setInt(3, id);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
