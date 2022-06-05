@@ -68,6 +68,7 @@
                 <table>
                     <tr>
                         <th>ID</th>
+                        <th>Username</th>
                         <th>Name</th>
                         <th>Gmail</th>
                         <th>Role</th>
@@ -84,6 +85,7 @@
                             <input type="hidden" name="username" value="${account.username}">
                             <tr>
                                 <td>${account.user.id}</td>
+                                <td>${account.username}</td>
                                 <td>${account.user.name}</td>
                                 <td>${account.user.gmail}</td>
                                 <td>
