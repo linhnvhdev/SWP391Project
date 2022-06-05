@@ -5,6 +5,7 @@
  */
 package Dal;
 
+import Model.Answer;
 import Model.Question;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -89,17 +90,21 @@ public class QuestionDBContext extends DBContext {
             String sql = "SELECT [Question_ID]\n"
                     + "      ,[Question_Detail]\n"
                     + "      ,[Course_ID]\n"
-                    + "  FROM [dbo].[Question]"
-                    + " WHERE [Question_ID] = ?";
+                    + "      ,[Exam_ID]\n"
+                    + "      ,[Difficulty_ID]\n"
+                    + "  FROM [dbo].[Question]\n"
+                    + "  WHERE [Question_ID] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, Question_ID);
             ResultSet rs = stm.executeQuery();
             CourseDBContext courseDB = new CourseDBContext();
+            DifficultyDBContext difficultyDB = new DifficultyDBContext();
             while (rs.next()) {
                 Question q = new Question();
                 q.setId(rs.getInt("Question_ID"));
                 q.setDetail(rs.getString("Question_Detail"));
                 q.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
+                q.setDifficulty(difficultyDB.getDifficulty(rs.getInt("Difficulty_ID")));
                 return q;
             }
         } catch (SQLException ex) {
@@ -123,18 +128,41 @@ public class QuestionDBContext extends DBContext {
         }
     }
 
-    public int addQuestion(String question, int courseId) {
+    public void updateQuestion(int Question_ID, String Question_Detail, int Course_ID, int Difficulty_ID) {
+        String sql = "UPDATE [dbo].[Question]\n"
+                + "   SET [Question_Detail] = ?\n"
+                + "      ,[Course_ID] = ?\n"
+                + "      ,[Exam_ID] = null\n"
+                + "      ,[Difficulty_ID] = ?\n"
+                + " WHERE [Question_ID] = ?";
+        PreparedStatement stm = null;          
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setString(1, Question_Detail);
+            stm.setInt(2, Course_ID);
+            stm.setInt(3, Difficulty_ID);
+            stm.setInt(4, Question_ID);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public int addQuestion(String question, int courseId, int Difficulty_ID) {
         try {
             String sql = "INSERT INTO [dbo].[Question]\n"
                     + "           ([Question_Detail]\n"
-                    + "           ,[Course_ID])\n"
+                    + "           ,[Course_ID]\n"
+                    + "           ,[Difficulty_ID])\n"
                     + "	OUTPUT INSERTED.Question_ID\n"
                     + "     VALUES\n"
                     + "           (?\n"
+                    + "           ,?\n"
                     + "           ,?)";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, question);
             stm.setInt(2, courseId);
+            stm.setInt(3, Difficulty_ID);
             stm.execute();
             ResultSet rs = stm.getResultSet();
             if (rs.next()) {

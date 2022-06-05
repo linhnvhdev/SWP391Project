@@ -85,6 +85,22 @@
         <servlet-class>Controller.Exam.ResultController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>CourseDetailSettingController</servlet-name>
+        <servlet-class>Controller.Course.CourseDetailSettingController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>QuestionSettingController</servlet-name>
+        <servlet-class>Controller.Question.QuestionSettingController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateQuestionController</servlet-name>
+        <servlet-class>Controller.Question.UpdateQuestionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteAnswerController</servlet-name>
+        <servlet-class>AnswerController.DeleteAnswerController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>CreateExamController</servlet-name>
         <servlet-class>Controller.Exam.CreateExamController</servlet-class>
     </servlet>
@@ -175,6 +191,22 @@
     <servlet-mapping>
         <servlet-name>FlashCardController</servlet-name>
         <url-pattern>/flashcard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CourseDetailSettingController</servlet-name>
+        <url-pattern>/coursesetting</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>QuestionSettingController</servlet-name>
+        <url-pattern>/questionsetting</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateQuestionController</servlet-name>
+        <url-pattern>/questionupdate</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteAnswerController</servlet-name>
+        <url-pattern>/deleteanswer</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CreateExamController</servlet-name>

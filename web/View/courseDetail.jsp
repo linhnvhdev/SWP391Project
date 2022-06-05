@@ -73,7 +73,13 @@
                 <table>
                     <tr>
                         <td>Course name</td><td>${course.name}</td>
+                        <c:if test = "${course.creator.id==sessionScope.account.user.id}">
+                            <td>
+                                <a class="column" href="coursesetting?courseId=${course.id}">Course setting</a>
+                            </td>
+                        </c:if>
                     </tr>
+
                     <tr>
                         <td>Course creator</td><td>${course.creator.name}</td>
                     </tr>
