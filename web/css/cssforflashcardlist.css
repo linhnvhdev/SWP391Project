@@ -8,18 +8,10 @@ and open the template in the editor.
     Author     : Admin
 */
 body{
-    background-color: #DDDDDD;
+    margin: 0;
+    background-color:#DDDDDD;
     display: flex;
     flex-direction: column;
-}
-.other-page{
-    display: flex;
-    justify-content: space-around ;
-}
-.other-page a{
-    text-decoration: none;
-    color: #00CCCC;
-    font-size: 30px;
 }
 .title{
     text-align: center;
