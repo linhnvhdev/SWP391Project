@@ -23,7 +23,7 @@ public class QuestionDBContext extends DBContext {
     public ArrayList<Question> getQuestions() {
         ArrayList<Question> questions = new ArrayList<>();
         try {
-            String sql = "select Question_ID, Question_Detail, Course_ID, isRead from [Question]";
+            String sql = "select Question_ID, Question_Detail, Course_ID from [Question]";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             CourseDBContext courseDB = new CourseDBContext();
@@ -172,5 +172,20 @@ public class QuestionDBContext extends DBContext {
             Logger.getLogger(QuestionDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
+    }
+
+    public void removeQuestionfromExamm(int question_id) {
+        String sql = "UPDATE [dbo].[Question]\n"
+                + "      SET Exam_ID = NULL \n"
+                + " WHERE Question_ID = ?";
+
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, question_id);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

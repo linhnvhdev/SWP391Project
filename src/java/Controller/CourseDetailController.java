@@ -6,6 +6,7 @@
 package Controller;
 
 import Dal.CourseDBContext;
+import Dal.UserCourseDBContext;
 import Model.Account;
 import Model.Course;
 import Model.User;
@@ -39,12 +40,16 @@ public class CourseDetailController extends HttpServlet {
         int courseId = Integer.parseInt(request.getParameter("courseId"));
         User user = acc.getUser();
         CourseDBContext courseDB = new CourseDBContext();
+        UserCourseDBContext userCourseDB = new UserCourseDBContext();
+        
         Course course = courseDB.getCourse(courseId);
         int numFlashcard = courseDB.getNumFlashcard(courseId);
         int numQuestion = courseDB.getNumQuestion(courseId);
+        boolean isEnrolled = userCourseDB.checkUserCourse(user.getId(),courseId);
         request.setAttribute("course",course);
         request.setAttribute("numFlashcard",numFlashcard);
         request.setAttribute("numQuestion",numQuestion);
+        request.setAttribute("isEnrolled",isEnrolled);
         request.getRequestDispatcher("View/courseDetail.jsp").forward(request, response);
     }
 
@@ -59,7 +64,12 @@ public class CourseDetailController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        Account acc = (Account) request.getSession().getAttribute("account");
+        int courseId = Integer.parseInt(request.getParameter("courseId"));
+        User user = acc.getUser();
+        UserCourseDBContext userCourseDB = new UserCourseDBContext();
+        userCourseDB.insertUserCourse(user.getId(), courseId);
+        response.sendRedirect("course?courseId="+courseId);
     }
 
     /**
