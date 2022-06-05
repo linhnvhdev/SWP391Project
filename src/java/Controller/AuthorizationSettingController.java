@@ -40,15 +40,17 @@ public class AuthorizationSettingController extends HttpServlet {
         UserDBContext userDB = new UserDBContext();
         User user = userDB.getUser(acc.getUser().getId());
         String searchId = request.getParameter("searchId");
+        String searchUsername = request.getParameter("searchUsername");
         String searchName = request.getParameter("searchName");
         String searchRole = request.getParameter("searchRole");
         String searchStatus = request.getParameter("searchStatus");
         AccountDBContext accountDB = new AccountDBContext();
         
         ArrayList<String> roleList = userDB.getRoleList();
-        ArrayList<Account> accountList = doSearch(searchId,searchName,searchRole,searchStatus);
+        ArrayList<Account> accountList = doSearch(searchId,searchUsername,searchName,searchRole,searchStatus);
         
         if(searchId != null) request.setAttribute("searchId", searchId);
+        if(searchUsername != null) request.setAttribute("searchUsername", searchUsername);
         if(searchName != null) request.setAttribute("searchName", searchName);
         if(searchRole != null) request.setAttribute("searchRole", searchRole);
         if(searchStatus != null) request.setAttribute("searchStatus", searchStatus);
@@ -70,6 +72,7 @@ public class AuthorizationSettingController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String searchId = request.getParameter("searchId");
+        String searchUsername = request.getParameter("searchUsername");
         String searchName = request.getParameter("searchName");
         String searchRole = request.getParameter("searchRole");
         String searchStatus = request.getParameter("searchStatus");
@@ -92,6 +95,8 @@ public class AuthorizationSettingController extends HttpServlet {
         if(isSearch.equals("Search")){
             if(searchId != null && !searchId.isEmpty() && Validation.isNumber(searchId))
                 url += "&searchId="+searchId;
+            if(searchUsername != null && !searchUsername.isEmpty())
+                url += "&searchUsername="+searchUsername;
             if(searchName != null && !searchName.isEmpty())
                 url += "&searchName="+searchName;
             if(searchRole != null && !searchRole.isEmpty() && !searchRole.equals("All"))
@@ -138,7 +143,7 @@ public class AuthorizationSettingController extends HttpServlet {
         userDB.updateRole(user.getId(),User.getRoleId(role));
     }
 
-    private ArrayList<Account> doSearch(String searchId, String searchName, String searchRole, String searchStatus) {
+    private ArrayList<Account> doSearch(String searchId, String searchUsername, String searchName, String searchRole, String searchStatus) {
         AccountDBContext accountDB = new AccountDBContext();
         //return accountDB.getAccountList(searchId, searchName, searchRole, searchStatus);
         ArrayList<Account> accountList = accountDB.getAccountList();
@@ -147,6 +152,12 @@ public class AuthorizationSettingController extends HttpServlet {
             User user = acc.getUser();
             if(searchId != null && !searchId.isEmpty() && Validation.isNumber(searchId)){
                 if(user.getId() != Integer.parseInt(searchId)){
+                    deleteList.add(acc);
+                    continue;
+                }
+            }
+            if(searchUsername != null && !searchUsername.isEmpty()){
+                if(!acc.getUsername().contains(searchUsername)){
                     deleteList.add(acc);
                     continue;
                 }

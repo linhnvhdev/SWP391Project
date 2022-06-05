@@ -63,7 +63,9 @@ public class UserProfileController extends HttpServlet {
         User user = userDB.getUser(acc.getUser().getId());
         userDB.updateUser(user.getId(),name, gmail, gender, dob, exp,level);
         request.setAttribute("SuccessMessage","Change profile success");
-        response.sendRedirect("profile");
+        user = userDB.getUser(acc.getUser().getId());
+        request.setAttribute("user", user);
+        request.getRequestDispatcher("View/userProfile.jsp").forward(request, response);
     }
 
     /**
