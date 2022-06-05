@@ -52,11 +52,6 @@
                         <div>
                             <a class="button" href="exam?courseId=${course.id}" ><button class="button3">Boss fight</button></a>
                         </div>
-                        <div>
-                            <c:if test="${sessionScope.account.user.id == requestScope.course.creator.id}">
-                                <td><a href="displayexamquestion?courseId=${course.id}"><button class="button5" >Exam List</button></a></td>
-                            </c:if>
-                        </div>
                     </c:if>
                     <c:if test="${requestScope.isEnrolled == false}">
                         <div>

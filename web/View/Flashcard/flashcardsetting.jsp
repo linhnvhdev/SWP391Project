@@ -63,10 +63,11 @@
             <%for (Flashcard flashcard : FlashCardList) {
             %>
         <form action="setting" method="POST">
+            <input type="hidden" name="Course_ID" value="<%=flashcard.getCourse().getId()%>">
             <%if (editid != null && flashcard.getId() == updateid) {%>
             <tr>
                 <td><%=flashcard.getId()%></td>
-                <td><input type="text" name="Course_ID" value="<%=flashcard.getCourse().getId()%>"></td>
+                <td><%=flashcard.getCourse().getId()%></td>
                 <td><input type="text" name="Front" value="<%=flashcard.getFront()%>"></td>
                 <td><input type="text" name="Back" value="<%=flashcard.getBack()%>"></td>
             <input type="hidden" name="updateid" value="<%=flashcard.getId()%>">
