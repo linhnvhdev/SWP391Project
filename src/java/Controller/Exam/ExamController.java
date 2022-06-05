@@ -135,7 +135,7 @@ public class ExamController extends HttpServlet {
 
         ExamDBContext examDB = new ExamDBContext();
         int page = Integer.parseInt(request.getParameter("pageindex"));
-        int answer_id = Integer.parseInt(request.getParameter("aid"));
+        int answer_id = Integer.parseInt(request.getParameter("ansid"));
         int question_id = Integer.parseInt(request.getParameter("qid"));
         int courseId = Integer.parseInt(request.getParameter("courseId"));
         int eid = Integer.parseInt(request.getParameter("eid"));
