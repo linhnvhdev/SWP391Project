@@ -14,6 +14,7 @@ public class Flashcard {
     private String front;
     private String back;
     private Course course;
+    private Difficulty difficulty;
 
     public Flashcard() {
     }
@@ -23,6 +24,14 @@ public class Flashcard {
         this.front = front;
         this.back = back;
         this.course = course;
+    }
+
+    public Flashcard(int id, String front, String back, Course course, Difficulty difficulty) {
+        this.id = id;
+        this.front = front;
+        this.back = back;
+        this.course = course;
+        this.difficulty = difficulty;
     }
 
     public int getId() {
@@ -56,4 +65,14 @@ public class Flashcard {
     public void setCourse(Course course) {
         this.course = course;
     }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+    
+    
 }

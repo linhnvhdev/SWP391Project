@@ -5,34 +5,27 @@
  */
 package Model;
 
-
-public class Course {
+/**
+ *
+ * @author Linhnvhdev
+ */
+public class Item {
     private int id;
     private String name;
-    private User creator;
     private String description;
-    private Difficulty difficulty;
+    private int duration;
+    private String image;
 
-    public Course() {
+    public Item() {
     }
-    
 
-    public Course(int id, String name, User creator, String description) {
+    public Item(int id, String name, String description, int duration, String image) {
         this.id = id;
         this.name = name;
-        this.creator = creator;
         this.description = description;
+        this.duration = duration;
+        this.image = image;
     }
-
-    public Course(int id, String name, User creator, String description, Difficulty difficulty) {
-        this.id = id;
-        this.name = name;
-        this.creator = creator;
-        this.description = description;
-        this.difficulty = difficulty;
-    }
-    
-    
 
     public int getId() {
         return id;
@@ -42,12 +35,16 @@ public class Course {
         return name;
     }
 
-    public User getCreator() {
-        return creator;
-    }
-
     public String getDescription() {
         return description;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     public void setId(int id) {
@@ -58,20 +55,15 @@ public class Course {
         this.name = name;
     }
 
-    public void setCreator(User creator) {
-        this.creator = creator;
-    }   
-
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public Difficulty getDifficulty() {
-        return difficulty;
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
-    public void setDifficulty(Difficulty difficulty) {
-        this.difficulty = difficulty;
+    public void setImage(String image) {
+        this.image = image;
     }
 }
-
