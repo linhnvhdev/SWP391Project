@@ -7,6 +7,7 @@ package Controller.Leaderboard;
 
 import Dal.UserDBContext;
 import Model.Account;
+import Model.Pagging.UserPagging;
 import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -31,8 +32,19 @@ public class LeaderboardController extends HttpServlet {
         Account acc = (Account) request.getSession().getAttribute("account");
         User user = acc.getUser();
         UserDBContext userDB = new UserDBContext();
-        ArrayList<User> userList = userDB.getAllUser();
         
+        int pagesize = 10;
+        String page = request.getParameter("page");
+        if (page == null || page.trim().length() == 0) {
+            page = "1";
+        }
+        int pageindex = Integer.parseInt(page);
+        int numberUser = userDB.countUsers();
+        int totalpage = (numberUser%pagesize==0)?(numberUser/pagesize):(numberUser/pagesize)+1;
+        request.setAttribute("totalpage", totalpage);
+        request.setAttribute("pageindex", pageindex);
+        
+        ArrayList<UserPagging> userList = userDB.getUsersbyPagging( pageindex, pagesize);
         request.setAttribute("userList", userList);
         
         request.getRequestDispatcher("View/Leaderboard/leaderboard.jsp").forward(request, response);
