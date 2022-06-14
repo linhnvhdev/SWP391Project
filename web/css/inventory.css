@@ -1,0 +1,86 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
+*/
+/* 
+    Created on : Jun 14, 2022, 8:24:35 PM
+    Author     : Linhnvhdev
+*/
+
+#inventory h3,h4{
+    padding: 0px;
+    margin: 0px;
+}
+
+#inventory{
+    width: 800px;
+    height: 450px;
+    left: 40vw;
+    top: 25vh;
+    position: absolute;
+    background-color: gray;
+    margin-left: -250px;
+    border: 3px solid #fff;
+    border-radius: 15px;
+    padding: 10px;
+    box-sizing: border-box;
+    padding: 10px;
+    display: none;
+}
+
+#inventory-head{
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.4);
+    padding-top: 10px;
+}
+
+#inventory-head h3{
+    font-size: 20px;
+    margin:0px;
+    padding: 0px;
+}
+
+#inventory-list{
+    width: 100%;
+    height: calc(100% - 80px);
+    font-size: 18px;
+    margin-top: 5px;
+}
+
+
+#inventory-list table{
+    border: 1px solid;
+    width: 100%;
+    text-align: center;
+}
+
+#inventory-list table tr td{
+    padding: 10px;
+    border: 1px solid;
+}
+
+.inventory-list-item-icon img{
+    width: 50px;
+    height: 50px;
+    border: 4px solid #6666ff;
+    border-radius: 5px;
+}
+
+.inventory-list-item-icon{
+    width: 10%;
+}
+
+.inventory-list-item-name{
+    width: 15%;
+}
+
+.inventory-list-item-description{
+}
+
+#inventory-foot{
+    width: 100%;
+    height: 40px;
+    border-top: 1px solid rgba(255,255,255,0.4);
+}

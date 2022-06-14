@@ -11,13 +11,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link href="${pageContext.request.contextPath}/css/inventory.css?version=1" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cssforflashcard.css" />
+        <link href="../css/header.css?version=1" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <div class="header">
-        <a class="column" href="../home">Back to home</a>
-        <a class="column" href="../course?courseId=${requestScope.courseId}">Back to course</a>
-        </div>
+        <%@ include file="../header.jsp" %>
       
         <form action="add" method="POST">
             <c:if test="${requestScope.courseList.size() == 0}">
@@ -36,6 +35,6 @@
                 <input type="submit" value="Add">
             </c:if>
         </form>
-
+<%@ include file="../inventory.jsp" %>
     </body>
 </html>

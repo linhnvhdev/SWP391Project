@@ -14,7 +14,7 @@
         <link href="css/cssforchgpwd.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-          <div class="background-img">
+         <div class="background-img">
         <form action="chgpwd" method="POST">
             <c:if test="${requestScope.errorMessage != null}">
                 <div style="color: red">${requestScope.errorMessage}</div>
