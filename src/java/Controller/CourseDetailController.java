@@ -50,6 +50,7 @@ public class CourseDetailController extends HttpServlet {
         request.setAttribute("numFlashcard",numFlashcard);
         request.setAttribute("numQuestion",numQuestion);
         request.setAttribute("isEnrolled",isEnrolled);
+        request.setAttribute("courseId", courseId);
         request.getRequestDispatcher("View/courseDetail.jsp").forward(request, response);
     }
 

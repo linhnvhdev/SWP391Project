@@ -4,6 +4,8 @@
     Author     : Linhnvhdev
 --%>
 
+<%@page import="Model.Difficulty"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -16,6 +18,11 @@
         <link href="css/header.css?version=2" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        
+                <%
+            ArrayList<Difficulty> difficulties = (ArrayList<Difficulty>) request.getAttribute("difficulties");
+        %>
+        
         <div class="header">
             <nav>
                 <div class="logo">No game no learn</div>
@@ -100,6 +107,7 @@
             </div>
 
         </div>
+                 
         <div class="footer"></div>
     </body>
 </html>
