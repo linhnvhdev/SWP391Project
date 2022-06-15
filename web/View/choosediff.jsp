@@ -12,6 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link href="css/choosediff.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
                 
@@ -21,10 +22,11 @@
         
         <form action="course" method="get" >
             <input type="hidden" name="courseId" value="${requestScope.courseId}">
+            <div class="frame">
             <%for (Difficulty d : difficulties) {%>
-            <button type="submit" name="diffid"
-                value="<%=d.getId()%>"></button>               
+            <button  type="submit" name="diffid" class="custom-btn btn-<%=d.getId()%>" value="<%=d.getId()%>"><%=d.getId()%></button>               
             <%}%>
+            </div>
         </form> 
     </body> 
 </html>
