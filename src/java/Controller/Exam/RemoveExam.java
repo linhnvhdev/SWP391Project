@@ -5,16 +5,12 @@
  */
 package Controller.Exam;
 
-import Dal.AnswerDBContext;
 import Dal.ExamDBContext;
+import Dal.QuestionDBContext;
 import Model.Account;
-import Model.Answer;
-import Model.Exam;
-import Model.Question;
 import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,43 +20,26 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author LENOVO
  */
-public class DisplayExamQuestionController extends HttpServlet {
+public class RemoveExam extends HttpServlet {
 
     
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
         int courseId = Integer.parseInt(request.getParameter("courseId"));
+        int eid = Integer.parseInt(request.getParameter("eid"));
         User user = acc.getUser();
         
-        String raw_eid = request.getParameter("eid");
-        if(raw_eid == null || raw_eid.trim().length()==0)
-            raw_eid = "-1";
-        int eid = Integer.parseInt(raw_eid);
-        
+       
         ExamDBContext examDB = new ExamDBContext();
-        ArrayList<Exam> examList = examDB.getExamList(courseId);
-        ArrayList<Question> questionList = examDB.getQuestions(eid);
-        ArrayList<Answer> answerList = examDB.getAnswers(eid);
+        examDB.deleteExam(eid);
         
-        request.setAttribute("examList",examList );
-        request.setAttribute("questionList", questionList);
-        request.setAttribute("answerList", answerList);
         request.setAttribute("eid", eid);
         request.setAttribute("courseId", courseId);
-        
-        request.getRequestDispatcher("View/Exam/questionList.jsp").forward(request, response);
+        response.sendRedirect("displayexamquestion?eid=-1&courseId=" + (courseId));
     }
 
     /**
@@ -74,7 +53,7 @@ public class DisplayExamQuestionController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     /**

@@ -90,7 +90,6 @@ public class QuestionDBContext extends DBContext {
             String sql = "SELECT [Question_ID]\n"
                     + "      ,[Question_Detail]\n"
                     + "      ,[Course_ID]\n"
-                    + "      ,[Exam_ID]\n"
                     + "      ,[Difficulty_ID]\n"
                     + "  FROM [dbo].[Question]\n"
                     + "  WHERE [Question_ID] = ?";

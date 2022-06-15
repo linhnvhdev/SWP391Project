@@ -5,6 +5,7 @@
  */
 package Controller.Exam;
 
+import Dal.DifficultyDBContext;
 import Dal.ExamDBContext;
 import Model.Account;
 import Model.Answer;
@@ -59,21 +60,21 @@ public class ExamController extends HttpServlet {
         
         User user = acc.getUser();
         int courseId = Integer.parseInt(request.getParameter("courseId"));
-        ExamDBContext examDB = new ExamDBContext();
+        ExamDBContext examDB = new ExamDBContext();         
         Exam exam = examDB.getExam(courseId);
         int passScore = examDB.getPassedScore(exam.getId());
         // int score = examDB.getScore(exam.getId(), acc.getUser().getId());
         int numQues = examDB.countQuesPerExam(exam.getId());
-        int maxScore = numQues * 10;
+        int maxScore = numQues * exam.getDifficulty().getDamageToBoss() ;
         if (currentBossHP == null) {
             currentBossHP = maxScore;
             request.getSession().setAttribute("currentBossHP", currentBossHP);
         }
 
-        // load all answer in DB !!!        
+        // load answer list for exam in DB !!!        
 
        if (answerList == null) {
-            answerList = examDB.getAllAnswers(exam.getId());
+            answerList = examDB.getAnswers(exam.getId());
             request.getSession().setAttribute("answerList", answerList);
         }
 

@@ -15,6 +15,7 @@
         <link href="css/header.css" rel="stylesheet" type="text/css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        
     </head>
     <body style="background-color: #E9E494">
 
@@ -51,10 +52,17 @@
             </c:if>
             <c:if test="${requestScope.questionList.size() gt 0}">    
                 <form action="createexam?courseId=${requestScope.courseId}" method="POST">
-
+                    <p>Name this exam: 
+                        <input type="text" name="examname">
+                    </p>
                     <p>Score to pass the exam : 
                         <input type="number" name="passScore" value="0" min="0" max="100"> % 
                     </p>
+                    <br>
+                    <p>Time to complete the exam (by second): 
+                        <input type="number" name="examtime">
+                    </p>
+
                     <table class="table table-hover" style="background-color: #BBC7EF">
                         <thead>
                             <tr>
@@ -85,16 +93,24 @@
                                     </c:if>    
                                 </c:if>                         
                             </c:forEach>                    
-                            </tr> 
+
                         </c:forEach>
+
                         </tbody>
                     </table>
+                        <div>Number of questions selected:
+                            <span id="checkNum"></span>
+                        </div>
+                   
                     <input type = "submit" value = "Create This Exam" />
                 </form>
             </c:if>        
             <c:if test="${requestScope.questionList.size() eq 0}">  
                 <div style="color: red;font-size: 20px;text-align: center;">${requestScope.noquestionMessage}</div>
             </c:if>
+
         </div>
+         <script src="js/checkbox.js" type="text/javascript"></script>
     </body>
+    
 </html>
