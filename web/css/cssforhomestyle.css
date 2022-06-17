@@ -7,9 +7,12 @@ and open the template in the editor.
     Created on : May 17, 2022, 10:26:10 PM
     Author     : Linhnvhdev
 */
+html {
+  height: 100%;
+}
 body{
-    margin:0;
-    padding:0;
+      margin: 0;
+  padding: 0;
 }
 
 
@@ -19,13 +22,13 @@ body{
 }
 
 .left{
-    padding:100px;
+    padding:310px;
     background-color: darkgray;
     flex:50%;
 }
 
 .right{
-    padding:100px;
+    padding:310px;
     background-color: grey;
     flex:50%;
 }
@@ -52,7 +55,7 @@ body{
     display: table;
     clear: both;
 }
-/*
+
 a:link {
     color: white;
     background-color: transparent;
@@ -68,4 +71,90 @@ a:hover {
     background-color: transparent;
     text-decoration: underline;
 }
-*/
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 60%;
+background-color: grey;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+h1 {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  color: #fff;
+  font-family: sans-serif;
+}
+
+.img_container {
+  width: 70vw;
+  height: 80vh;
+  margin: 20px auto;
+  display: flex;
+}
+
+.main-img {
+  width: 50%;
+  height: 100%;
+  margin-right: 10px;
+
+}
+
+@media (max-width: 991px) {
+  .main-img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.stacked-div {
+  width: 50%;
+  height: 100%;
+}
+
+@media (max-width: 1000px) {
+  .stacked-div {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: all .4s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-img:hover .overlay,
+.bottom-img:hover .overlay {
+  opacity: 5;
+}
+
+.bottom-img {
+  width: 10%;
+  height: 10%;
+  height: calc(50% - 5px);
+  background-color: orangered;
+}
+.top-img {
+  width: 100%;
+  height: calc(50% - 5px);
+  background-color: white;
+}
+
+hr.new1 {
+  border-top: 3px solid white;
+}
+.center{
+    margin-left:10%;
+}

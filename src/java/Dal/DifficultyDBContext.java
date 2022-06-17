@@ -69,4 +69,40 @@ public class DifficultyDBContext extends DBContext {
         }
         return null;
     }
+       public ArrayList<Difficulty> chooseDifficulties() {
+        ArrayList<Difficulty> difficulties = new ArrayList<>();
+        try {
+            String sql = "SELECT [Difficulty_ID]\n"
+                    + "  FROM [dbo].[Difficulty]";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Difficulty d = new Difficulty();
+                d.setId(rs.getInt("Difficulty_ID"));
+                difficulties.add(d);
+            }
+            return difficulties;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+       public Difficulty chooseDifficulty(int Difficulty_ID) {
+        try {
+            String sql = "SELECT [Difficulty_ID]\n"
+                    + "  WHERE Difficulty_ID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, Difficulty_ID);
+            ResultSet rs = stm.executeQuery();
+            
+            while (rs.next()) {
+                Difficulty d = new Difficulty();
+                d.setId(rs.getInt("Difficulty_ID"));
+                return d;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }
