@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package AnswerController;
+package Controller.Question;
 
-import Dal.AnswerDBContext;
-import Model.Answer;
+import Dal.QuestionDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -18,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Bi
  */
-public class DeleteAnswerController extends HttpServlet {
+public class DeleteQuestionController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,18 +28,6 @@ public class DeleteAnswerController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        int courseId = Integer.parseInt(request.getParameter("courseId"));
-        AnswerDBContext db  = new AnswerDBContext();
-        Answer answer  = new Answer();
-        answer.setId(id);
-        db.deleteAnswer(answer);
-        response.sendRedirect("questionsetting?courseId="+courseId);
-        
-    }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -53,7 +40,7 @@ public class DeleteAnswerController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
     }
 
     /**
@@ -67,7 +54,18 @@ public class DeleteAnswerController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        int courseId = Integer.parseInt(request.getParameter("courseId"));
+        if (request.getParameterValues("id") != null) {
+            String[] ids = request.getParameterValues("id");
+            QuestionDBContext db = new QuestionDBContext();
+            if (ids.length != 0) {
+                for (String id : ids) {
+                    int questionId = Integer.parseInt(id);
+                    db.deleteQuestion(questionId);
+                }
+            }
+        }
+        response.sendRedirect("questionsetting?courseId=" + courseId);
     }
 
     /**

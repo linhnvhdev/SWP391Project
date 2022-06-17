@@ -56,13 +56,16 @@ public class RevisionController extends HttpServlet {
         QuestionDBContext questionDb = new QuestionDBContext();
         
         int courseId = Integer.parseInt(request.getParameter("courseId"));
-        ArrayList<Question> questions = questionDb.getQuestions(courseId);
-        ArrayList<Question> remainingQuestions = questionDb.getRemainingQuestions(userId, courseId);
+        int difficultyId = Integer.parseInt(request.getParameter("difficultyId"));
+        
+        ArrayList<Question> questions = questionDb.getQuestions(courseId, difficultyId);
+        ArrayList<Question> remainingQuestions = questionDb.getRemainingQuestions(userId, courseId, difficultyId);
         request.setAttribute("questions", questions);
         int totalQuestion = questions.size();
         int remainingQuestion = remainingQuestions.size();
-        int randomID = getRandomID(userId, courseId);
+        int randomID = getRandomID(userId, courseId, difficultyId);
         
+        request.setAttribute("difficultyId", difficultyId);
         request.setAttribute("courseId", courseId);
         request.setAttribute("randomID", randomID);
         request.setAttribute("totalQuestion", totalQuestion);
@@ -85,6 +88,7 @@ public class RevisionController extends HttpServlet {
         int userId = account.getUser().getId();
         int id = Integer.parseInt(request.getParameter("id"));
         int courseId = Integer.parseInt(request.getParameter("courseId"));
+        int difficultyId = Integer.parseInt(request.getParameter("difficultyId"));
         QuestionDBContext questionDB = new QuestionDBContext();
         Question q = questionDB.getQuestion(id);
         UserDBContext userDb = new UserDBContext();
@@ -94,7 +98,7 @@ public class RevisionController extends HttpServlet {
         ArrayList<Answer> answers = answerDB.getAnswers(id);
         request.setAttribute("answers", answers);
         request.setAttribute("q", q);
-        int randomID = getRandomID(userId, courseId);
+        int randomID = getRandomID(userId, courseId, difficultyId);
         request.setAttribute("randomID", randomID);
         request.getRequestDispatcher("View/revision_question.jsp").forward(request, response);
     }
@@ -109,9 +113,9 @@ public class RevisionController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
     
-    public int getRandomID(int userId, int courseId){
+    public int getRandomID(int userId, int courseId, int difficultyId){
         QuestionDBContext db = new QuestionDBContext();
-        ArrayList<Question> remainingQuestion = db.getRemainingQuestions(userId, courseId);
+        ArrayList<Question> remainingQuestion = db.getRemainingQuestions(userId, courseId, difficultyId);
         int randomID =0;   
         int index = (int)(Math.random() * remainingQuestion.size());
         for (int i = 0; i < remainingQuestion.size();i++) {    

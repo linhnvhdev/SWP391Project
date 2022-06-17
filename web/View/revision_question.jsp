@@ -53,7 +53,7 @@
                       </div>
                     <div class="column">
                         <div class="question">
-                        <form method="post" action="question?id=${requestScope.id}&courseId=${requestScope.courseId}">
+                            <form method="post" action="question?id=${requestScope.id}&courseId=${requestScope.courseId}&difficultyId=${requestScope.difficultyId}">
                             <%for (Answer answer : answers) {%>
                             <input onclick="document.getElementById('playerchar').src = '${pageContext.request.contextPath}/img/attack.gif'" type="submit" name="answer" value="<%=answer.getId()%>"/><%=answer.getDetail()%></br>
                             <%}%>       

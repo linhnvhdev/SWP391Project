@@ -75,6 +75,8 @@ public class UpdateQuestionController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
         int courseId = Integer.parseInt(request.getParameter("courseId"));
         int questionId = Integer.parseInt(request.getParameter("questionId"));
         String[] raw_answerId = request.getParameterValues("answerId");
@@ -82,26 +84,49 @@ public class UpdateQuestionController extends HttpServlet {
         String[] answersDetail = request.getParameterValues("answerDetail");
         String[] newAnswersDetail = request.getParameterValues("newAnswerDetail");
         int difficultyId = Integer.parseInt(request.getParameter("difficultyId"));
-
         QuestionDBContext questionDB = new QuestionDBContext();
         AnswerDBContext answerDB = new AnswerDBContext();
         questionDB.updateQuestion(questionId, questionDetail, courseId, difficultyId);
-
+        int numberOfCorrect = 0;
+        
         for (int i = 0; i < answersDetail.length; i++) {
-            String answerDetail = answersDetail[i];
-            int answerId = Integer.parseInt(raw_answerId[i]);
             boolean isCorrect = Boolean.parseBoolean(request.getParameter("isCorrect" + (i + 1)));
-            answerDB.updateAnswer(answerId, answerDetail, questionId, isCorrect);
-        }
-        if (newAnswersDetail!=null &&newAnswersDetail.length != 0 ) {
-            for (int i = 0; i < newAnswersDetail.length; i++) {
-                String newAnswerDetail = newAnswersDetail[i];
-                boolean isCorrect = Boolean.parseBoolean(request.getParameter("isCorrectNew" + (i + 1)));
-                answerDB.addAnswer(newAnswerDetail, questionId, isCorrect);
+            if (isCorrect == true) {
+                numberOfCorrect++;
             }
         }
+        if (newAnswersDetail.length != 0) {
+            for (int i = 0; i < newAnswersDetail.length; i++) {
+                boolean isCorrect = Boolean.parseBoolean(request.getParameter("isCorrectNew" + (i + 1)));
+                if (isCorrect == true) {
+                    numberOfCorrect++;
+                }
+            }
+        }
+              
+        
+        if (numberOfCorrect == 1) {
+            for (int i = 0; i < answersDetail.length; i++) {
+                String answerDetail = answersDetail[i];
+                int answerId = Integer.parseInt(raw_answerId[i]);
+                boolean isCorrect = Boolean.parseBoolean(request.getParameter("isCorrect" + (i + 1)));
+                answerDB.updateAnswer(answerId, answerDetail, questionId, isCorrect);
+            }
+            if (newAnswersDetail.length != 0) {
+                for (int i = 0; i < newAnswersDetail.length; i++) {
+                    String newAnswerDetail = newAnswersDetail[i];
+                    boolean isCorrect = Boolean.parseBoolean(request.getParameter("isCorrectNew" + (i + 1)));
+                    answerDB.addAnswer(newAnswerDetail, questionId, isCorrect);
+                }
+            }
+            response.sendRedirect("questionsetting?courseId=" + courseId);
+        } else {
+            out.println("<script type=\"text/javascript\">");
+            out.println("alert('The question have more than 1 correct answer or have none correct answer');");
+            out.println("</script>");
+            response.sendRedirect("questionsetting?courseId=" + courseId);
+        }
 
-        response.sendRedirect("questionsetting?courseId="+courseId);
     }
 
     /**

@@ -58,7 +58,7 @@
                 </c:if>
             </div>
             <div class="right">
-                <img style="width: 512px; height: 512px;"src="img/char.png" alt="avatar"/>
+                <img style="width: 512px; height: 512px;" src="img/char.png" alt="avatar"/>
                 <div class="table">
                     <table style="border-color: black;" border="solid 2px">
                         <tr>

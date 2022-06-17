@@ -24,7 +24,7 @@
         <filter-name>CourseCreatorFilter</filter-name>
         <servlet-name>AddCourseController</servlet-name>
     </filter-mapping>
-        <filter-mapping>
+    <filter-mapping>
         <filter-name>CourseCreatorFilter</filter-name>
         <servlet-name>AddCourseController</servlet-name>
     </filter-mapping>
@@ -32,7 +32,7 @@
         <filter-name>CourseCreatorFilter</filter-name>
         <servlet-name>FlashCardListController</servlet-name>
     </filter-mapping>
-        <filter-mapping>
+    <filter-mapping>
         <filter-name>CourseCreatorFilter</filter-name>
         <servlet-name>FlashCardSetting</servlet-name>
     </filter-mapping>
@@ -106,7 +106,7 @@
     </servlet>
     <servlet>
         <servlet-name>DeleteAnswerController</servlet-name>
-        <servlet-class>AnswerController.DeleteAnswerController</servlet-class>
+        <servlet-class>Controller.Answer.DeleteAnswerController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CreateExamController</servlet-name>
@@ -147,6 +147,10 @@
     <servlet>
         <servlet-name>FlashCardSetting</servlet-name>
         <servlet-class>Controller.Flashcard.FlashCardSetting</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteQuestionController</servlet-name>
+        <servlet-class>Controller.Question.DeleteQuestionController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -255,6 +259,10 @@
     <servlet-mapping>
         <servlet-name>FlashCardSetting</servlet-name>
         <url-pattern>/flashcard/setting</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteQuestionController</servlet-name>
+        <url-pattern>/deletequestion</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>300</session-timeout>
