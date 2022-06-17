@@ -4,7 +4,7 @@
         <ul class="navbar-item-list">
             <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
             <li><a href="${pageContext.request.contextPath}/leaderboard">Leaderboard</a></li>
-            <li><a onclick="inventory()">Inventory</a></li>
+            <li><a id="btnInventory">Inventory</a></li>
             <li><a href="#">About</a></li>
             <li><a href="${pageContext.request.contextPath}/course/library">Course Library</a></li>
             <li class="dropdown">

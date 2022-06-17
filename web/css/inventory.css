@@ -18,9 +18,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this t
     left: 40vw;
     top: 25vh;
     position: absolute;
-    background-color: gray;
+    background-color: gray !important;
     margin-left: -250px;
-    border: 3px solid #fff;
+    border: 3px solid #fff !important;
     border-radius: 15px;
     padding: 10px;
     box-sizing: border-box;
@@ -32,7 +32,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this t
     width: 100%;
     height: 40px;
     text-align: center;
-    border-bottom: 1px solid rgba(255,255,255,0.4);
+    border-bottom: 1px solid rgba(255,255,255,0.4) !important;
     padding-top: 10px;
 }
 
@@ -64,7 +64,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this t
 .inventory-list-item-icon img{
     width: 50px;
     height: 50px;
-    border: 4px solid #6666ff;
+    border: 4px solid #6666ff !important; 
     border-radius: 5px;
 }
 
@@ -82,5 +82,5 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this t
 #inventory-foot{
     width: 100%;
     height: 40px;
-    border-top: 1px solid rgba(255,255,255,0.4);
+    border-top: 1px solid rgba(255,255,255,0.4) !important;
 }
