@@ -36,8 +36,6 @@ public class ChooseDifficultyController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-   
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -52,15 +50,13 @@ public class ChooseDifficultyController extends HttpServlet {
             throws ServletException, IOException {
 
         DifficultyDBContext difficultyDb = new DifficultyDBContext();
-
         ArrayList<Difficulty> difficulties = difficultyDb.getDifficulties();
-       
-   
         int courseId = Integer.parseInt(request.getParameter("courseId"));
-         request.setAttribute("difficulties", difficulties);
-          request.setAttribute("courseId", courseId);
+        request.setAttribute("difficulties", difficulties);
+        request.setAttribute("courseId", courseId);
         request.getRequestDispatcher("View/choosediff.jsp").forward(request, response);
     }
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *
