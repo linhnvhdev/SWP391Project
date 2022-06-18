@@ -5,6 +5,7 @@
  */
 package Controller.Exam;
 
+import Dal.ExamDBContext;
 import Dal.QuestionDBContext;
 import Model.Account;
 import Model.User;
@@ -29,9 +30,14 @@ public class RemoveExamQuestionController extends HttpServlet {
         int eid = Integer.parseInt(request.getParameter("eid"));
         User user = acc.getUser();
         
-        int question_id = Integer.parseInt(request.getParameter("qid"));
         QuestionDBContext questionDB = new QuestionDBContext();
-        questionDB.removeQuestionfromExamm(question_id);
+        ExamDBContext examDB = new ExamDBContext();
+        String[] rawquestion_id = request.getParameterValues("questionid");
+        //Remove selected question for the exam
+        for (int i = 0; i < rawquestion_id.length; i++) {
+            int question_id = Integer.parseInt(rawquestion_id[i]);
+            examDB.removeExamQuestion(question_id,eid);
+        }
         
         request.setAttribute("eid", eid);
         request.setAttribute("courseId", courseId);

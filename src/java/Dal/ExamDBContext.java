@@ -486,13 +486,13 @@ public class ExamDBContext extends DBContext {
                 + "      WHERE Exam_ID = ?";
         try {
             connection.setAutoCommit(false);
-            PreparedStatement stm_delete_exam = connection.prepareStatement(sql_delete_exam);
-            stm_delete_exam.setInt(1, eid);
-            stm_delete_exam.executeUpdate();
-
             PreparedStatement stm_delete_question = connection.prepareStatement(sql_delete_question_exam);
             stm_delete_question.setInt(1, eid);
             stm_delete_question.executeUpdate();
+            
+            PreparedStatement stm_delete_exam = connection.prepareStatement(sql_delete_exam);
+            stm_delete_exam.setInt(1, eid);
+            stm_delete_exam.executeUpdate();
 
             connection.commit();
         } catch (SQLException ex) {
@@ -508,6 +508,107 @@ public class ExamDBContext extends DBContext {
             } catch (SQLException ex) {
                 Logger.getLogger(ExamDBContext.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+    }
+
+    public ArrayList<Question> getQuestionsByDiff(int eid, int difficultyId, int courseId) {
+        ArrayList<Question> questions = new ArrayList<>();
+        try {
+            String sql = "select  q.Question_ID, q.Question_Detail,q.Difficulty_ID,q.Course_ID \n"
+                    + "from Question q\n"
+                    + "where not exists (select qe.Exam_ID from Question_Exam qe \n"
+                    + "where q.Question_ID = qe.Question_ID\n"
+                    + "AND qe.Exam_ID = ?)\n"
+                    + "And q.Difficulty_ID = ? \n"
+                    + "AND q.Course_ID= ?";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, eid);
+            stm.setInt(2, difficultyId);
+            stm.setInt(3, courseId);
+            ResultSet rs = stm.executeQuery();
+            CourseDBContext courseDB = new CourseDBContext();
+            DifficultyDBContext difficultyDB = new DifficultyDBContext();
+            ExamDBContext examDB = new ExamDBContext();
+            while (rs.next()) {
+                Question q = new Question();
+                q.setId(rs.getInt("Question_ID"));
+                q.setDetail(rs.getString("Question_Detail"));
+                q.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
+                q.setDifficulty(difficultyDB.getDifficulty(rs.getInt("Difficulty_ID")));
+                questions.add(q);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ExamDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return questions;
+    }
+
+    public ArrayList<Answer> getAnswersByDiff(int eid, int difficultyId, int courseId) {
+        ArrayList<Answer> answers = new ArrayList();
+        try {
+            String sql = "select  a.Answer_Detail,a.Answer_ID,a.IsCorrect,a.Question_ID\n"
+                    + "from Question q INNER JOIN Answer a\n"
+                    + "ON q.Question_ID = a.Question_ID\n"
+                    + "where not exists (select qe.Exam_ID from Question_Exam qe \n"
+                    + "where q.Question_ID = qe.Question_ID\n"
+                    + "AND qe.Exam_ID = ?)\n"
+                    + "And q.Difficulty_ID = ? \n"
+                    + "AND q.Course_ID= ?";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, eid);
+            stm.setInt(2, difficultyId);
+            stm.setInt(3, courseId);
+            ResultSet rs = stm.executeQuery();
+            ExamDBContext examDB = new ExamDBContext();
+            while (rs.next()) {
+                Answer a = new Answer();
+                a.setId(rs.getInt("Answer_ID"));
+                a.setDetail(rs.getString("Answer_Detail"));
+                a.setQuestion(examDB.getQuestion(rs.getInt("Question_ID")));
+                a.setIsCorrect(rs.getBoolean("IsCorrect"));
+                answers.add(a);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ExamDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return answers;
+    }
+
+    public void removeExamQuestion(int question_id, int eid) {
+        String sql = "DELETE FROM [dbo].[Question_Exam]\n"
+                + "      WHERE Question_ID = ? \n"
+                + "	  AND Exam_ID = ? ";
+
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, question_id);
+            stm.setInt(2, eid);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void editExam(int passScore, String examname, int examtime, int examId) {
+        String sql = "UPDATE [dbo].[Exam]\n"
+                + "   SET [Passed] = ?\n"
+                + "      ,[Exam_Name] = ?\n"
+                + "      ,[Time] = ?\n"
+                + " WHERE Exam_ID = ?";
+
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, passScore);
+            stm.setString(2, examname);
+            stm.setInt(3, examtime);
+            stm.setInt(4, examId);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

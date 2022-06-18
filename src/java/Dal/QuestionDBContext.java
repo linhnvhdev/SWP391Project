@@ -173,18 +173,5 @@ public class QuestionDBContext extends DBContext {
         return 0;
     }
 
-    public void removeQuestionfromExamm(int question_id) {
-        String sql = "UPDATE [dbo].[Question]\n"
-                + "      SET Exam_ID = NULL \n"
-                + " WHERE Question_ID = ?";
-
-        PreparedStatement stm = null;
-        try {
-            stm = connection.prepareStatement(sql);
-            stm.setInt(1, question_id);
-            stm.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(QuestionDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    
 }

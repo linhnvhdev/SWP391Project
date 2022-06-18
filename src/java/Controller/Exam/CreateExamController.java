@@ -38,6 +38,7 @@ public class CreateExamController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
+        //    Integer difficulty = (Integer) request.getSession().getAttribute("difficulty");
         int courseId = Integer.parseInt(request.getParameter("courseId"));
         User user = acc.getUser();
         
@@ -91,7 +92,7 @@ public class CreateExamController extends HttpServlet {
         }
         
         request.setAttribute("createexamMessage", SystemMessage.CREATE_EXAM);
-        
+        request.setAttribute("courseId", courseId);
         request.getRequestDispatcher("View/Exam/createexam.jsp").forward(request, response);
     }
 

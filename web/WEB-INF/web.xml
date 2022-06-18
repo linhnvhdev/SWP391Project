@@ -152,6 +152,14 @@
         <servlet-name>RemoveExam</servlet-name>
         <servlet-class>Controller.Exam.RemoveExam</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddExamQuestionController</servlet-name>
+        <servlet-class>Controller.Exam.AddExamQuestionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditExamController</servlet-name>
+        <servlet-class>Controller.Exam.EditExamController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -263,6 +271,14 @@
     <servlet-mapping>
         <servlet-name>RemoveExam</servlet-name>
         <url-pattern>/removeexam</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddExamQuestionController</servlet-name>
+        <url-pattern>/addexamquestion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditExamController</servlet-name>
+        <url-pattern>/editexam</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>300</session-timeout>

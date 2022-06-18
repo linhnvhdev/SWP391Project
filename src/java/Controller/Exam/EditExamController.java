@@ -5,16 +5,9 @@
  */
 package Controller.Exam;
 
-import Dal.AnswerDBContext;
 import Dal.ExamDBContext;
-import Model.Account;
-import Model.Answer;
-import Model.Exam;
-import Model.Question;
-import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author LENOVO
  */
-public class DisplayExamQuestionController extends HttpServlet {
+public class EditExamController extends HttpServlet {
 
     
 
@@ -40,28 +33,18 @@ public class DisplayExamQuestionController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Account acc = (Account) request.getSession().getAttribute("account");
-    //    Integer difficulty = (Integer) request.getSession().getAttribute("difficulty");
+        int passScore = Integer.parseInt(request.getParameter("escore"));
         int courseId = Integer.parseInt(request.getParameter("courseId"));
-        User user = acc.getUser();
-        
-        String raw_eid = request.getParameter("eid");
-        if(raw_eid == null || raw_eid.trim().length()==0)
-            raw_eid = "-1";
-        int eid = Integer.parseInt(raw_eid);
+        int examtime = Integer.parseInt(request.getParameter("etime"));
+        int examId = Integer.parseInt(request.getParameter("eid"));
+       // int difficulty = Integer.parseInt(request.getParameter("difficulty"));
+        int difficulty = 1; //hardcode
+        String examname = request.getParameter("ename");
         
         ExamDBContext examDB = new ExamDBContext();
-        ArrayList<Exam> examList = examDB.getExamList(courseId);
-        ArrayList<Question> questionList = examDB.getQuestions(eid);
-        ArrayList<Answer> answerList = examDB.getAnswers(eid);
-        Exam exam = examDB.getExamByEid(eid);
-        request.setAttribute("examList",examList );
-        request.setAttribute("questionList", questionList);
-        request.setAttribute("answerList", answerList);
-        request.setAttribute("eid", eid);
-        request.setAttribute("courseId", courseId);
-        request.setAttribute("exam", exam);
-        request.getRequestDispatcher("View/Exam/questionList.jsp").forward(request, response);
+        examDB.editExam(passScore, examname,examtime,examId);
+        
+        response.sendRedirect("displayexamquestion?eid=" + (examId) + "&courseId=" + (courseId));
     }
 
     /**
