@@ -149,6 +149,10 @@
         <servlet-class>Controller.Flashcard.FlashCardSetting</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ItemController</servlet-name>
+        <servlet-class>Controller.ItemController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ChooseDifficultyController</servlet-name>
         <servlet-class>Controller.ChooseDifficultyController</servlet-class>
     </servlet>
@@ -259,6 +263,10 @@
     <servlet-mapping>
         <servlet-name>FlashCardSetting</servlet-name>
         <url-pattern>/flashcard/setting</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ItemController</servlet-name>
+        <url-pattern>/item</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ChooseDifficultyController</servlet-name>

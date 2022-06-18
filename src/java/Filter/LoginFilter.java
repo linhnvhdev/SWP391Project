@@ -5,6 +5,8 @@
  */
 package Filter;
 
+import Dal.AccountDBContext;
+import Dal.UserDBContext;
 import Model.Account;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -105,6 +107,9 @@ public class LoginFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         Account account = (Account) httpRequest.getSession().getAttribute("account");
+//        AccountDBContext accountdb = new AccountDBContext();
+//        Account account = accountdb.getAccount("linhnvh");
+//        httpRequest.getSession().setAttribute("account", account);
         String path = ((HttpServletRequest) request).getRequestURI();
         for(String specialPath : nonLoginPath){
             if(path.contains(specialPath)){

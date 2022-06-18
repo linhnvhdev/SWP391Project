@@ -14,6 +14,7 @@
         <title>JSP Page</title>
         <link href="${pageContext.request.contextPath}/css/cssforflashcardsetting.css" rel="stylesheet" type="text/css"/>
         <link href="${pageContext.request.contextPath}/css/header.css" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.request.contextPath}/css/inventory.css?version=1" rel="stylesheet" type="text/css"/>
         <%
             ArrayList<Flashcard> FlashCardList = (ArrayList<Flashcard>) request.getAttribute("FlashCardList");
             String editid = (String) request.getAttribute("editid");
@@ -21,31 +22,7 @@
         %>
     </head>
     <body>
-        <div class="header">
-            <nav>
-                <div class="logo">No game no learn</div>
-                <ul class="navbar-item-list">
-                    <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
-                    <li><a href="${pageContext.request.contextPath}/leaderboard">Leaderboard</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="${pageContext.request.contextPath}/course/library">Course Library</a></li>
-                    <li class="dropdown">
-                        <a href="#">Setting</a>
-                        <div class="drop-down">
-                            <ul class="navbar-dropdown-item-list">
-                                <li><a href="${pageContext.request.contextPath}/profile">User profile</a></li>
-                                <c:if test="${requestScope.user.role == 3}">
-                                    <li><a href="${pageContext.request.contextPath}/auth">Authorization</a></li>
-                                </c:if>
-                                <li><a href="${pageContext.request.contextPath}/chgpwd">Change password</a></li>
-                                <li><a href="${pageContext.request.contextPath}/login">Log out</a></li>
-                                <li></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+        <%@ include file="../header.jsp" %>
         <div class="title">
             <h5>Flashcard Setting </h5>
         </div>
@@ -92,7 +69,7 @@
         <%}%>
     </tbody>
 </table>
-
+<%@ include file="../inventory.jsp" %>
 <script>
     function Confirm(id, action)
     {

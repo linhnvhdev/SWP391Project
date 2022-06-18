@@ -11,6 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>List Question Page</title>
+        <link href="${pageContext.request.contextPath}/css/inventory.css?version=1" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <link href="css/header.css" rel="stylesheet" type="text/css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -32,29 +33,7 @@
     </head>
     <body style="background-color: #CFCED4">
 
-        <div class="header">
-            <nav>
-                <div class="logo">No game no learn</div>
-                <ul class="navbar-item-list">
-                    <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="${pageContext.request.contextPath}/course/library">Course Library</a></li>
-                    <li class="dropdown">
-                        <a href="#">Setting</a>
-                        <div class="drop-down">
-                            <ul class="navbar-dropdown-item-list">
-                                <li><a href="${pageContext.request.contextPath}/profile">User profile</a></li>
-                                <c:if test="${requestScope.user.role == 3}">
-                                    <li><a href="${pageContext.request.contextPath}/auth">Authorization</a></li>
-                                </c:if>
-                                <li><a href="${pageContext.request.contextPath}/chgpwd">Change password</a></li>
-                                <li><a href="${pageContext.request.contextPath}/login">Log out</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+        <%@ include file="../header.jsp" %>
 
 
         <div class="container" style=" width: 100%; padding: none;">
@@ -113,6 +92,6 @@
                 </tbody>
             </table>
         </div>
-
+        <%@ include file="../inventory.jsp" %>
     </body>
 </html>
