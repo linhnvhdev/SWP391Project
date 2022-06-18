@@ -1,10 +1,11 @@
 <div id="inventory">
+    <input type="hidden" name="health-potion-active" value="0">
     <div id="inventory-head">
         <h3>Inventory</h3>
     </div>
     <div id="inventory-list">
         <table id="inventory-table">
-            <tr class="inventory-list-item">
+            <tr class="inventory-list-item inventory-table-header">
                 <td class="inventory-list-item-icon">
                 </td>
                 <td class="inventory-list-item-name">

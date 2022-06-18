@@ -145,6 +145,6 @@
                         var courseId =${requestScope.courseId};
         </script>
         <%@ include file="../inventory.jsp" %>
-        <script src="js/progressbar.js" type="text/javascript"></script>
+        <script src="js/progressbar.js?ver=1" type="text/javascript"></script>
     </body>
 </html>

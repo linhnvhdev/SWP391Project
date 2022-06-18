@@ -13,14 +13,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this t
 }
 
 #inventory{
+    font-family: Mukta, sans-serif;
     width: 800px;
     height: 450px;
     left: 40vw;
     top: 25vh;
-    position: absolute;
-    background-color: gray !important;
+    position: fixed !important;
+    background-color: rgb(191, 191, 191) !important;
     margin-left: -250px;
-    border: 3px solid #fff !important;
+    border: 3px solid !important;
     border-radius: 15px;
     padding: 10px;
     box-sizing: border-box;
@@ -44,9 +45,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this t
 
 #inventory-list{
     width: 100%;
-    height: calc(100% - 80px);
+    max-height: calc(100% - 80px);
     font-size: 18px;
     margin-top: 5px;
+    position: relative;
+    overflow: auto;
 }
 
 
@@ -54,6 +57,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this t
     border: 1px solid;
     width: 100%;
     text-align: center;
+    border-collapse: collapse;
+    
+    .inventory-table-header{
+        box-shadow: 0 5px 10px;
+        letter-spacing: 0.1 rem;
+    }
 }
 
 #inventory-list table tr td{
@@ -79,8 +88,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this t
 .inventory-list-item-description{
 }
 
+.inventory-list-item-use button{
+    border-radius: 4px;
+    background-color: #7FFFD4;
+    width: 100%;
+    height: 40%;
+    font-size: 18px;
+    
+}
+
 #inventory-foot{
     width: 100%;
     height: 40px;
+    text-align: center;
     border-top: 1px solid rgba(255,255,255,0.4) !important;
+    padding-top: 10px;
 }
