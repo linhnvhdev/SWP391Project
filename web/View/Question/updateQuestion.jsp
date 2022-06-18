@@ -15,17 +15,30 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <link href="css/header.css" rel="stylesheet" type="text/css"/>
-        <link href="css/updatequestion.css" rel="stylesheet" type="text/css"/>
+        <link href="css/updatequestion.css?ver=2" rel="stylesheet" type="text/css"/>
         <link href="${pageContext.request.contextPath}/css/inventory.css?version=1" rel="stylesheet" type="text/css"/>
         <title>JSP Page</title>
         <script>
-            var answerNumber = 0;
             function addAnswer() {
-                answerNumber++;
-                answerField = document.getElementById('answer');
-                answerField.innerHTML += 'New Answer ' + answerNumber + ': <input type="text" name="newAnswerDetail">'
-                answerField.innerHTML += '<input type="radio" name="isCorrectNew' + answerNumber + '" value="true">Correct'
-                answerField.innerHTML += '<input type="radio" name="isCorrectNew' + answerNumber + '" value="false">Incorrect<br>'
+                console.log(totalAnswer);
+                console.log(curAnswerNumber);
+                if (totalAnswer < 4) {
+                    answerNumber++;
+                    answerField = document.getElementById('answer');
+                    answerField.innerHTML += 'New Answer ' + answerNumber + ': <input type="text" name="newAnswerDetail">'
+                    answerField.innerHTML += '<input type="radio" name="isCorrectNew' + answerNumber + '" value="true">Correct'
+                    answerField.innerHTML += '<input type="radio" name="isCorrectNew' + answerNumber + '" value="false">Incorrect<br>'
+                    totalAnswer++;
+                }else{
+                    answerField = document.getElementById('noti');
+                    answerField.innerHTML = 'Max number of answers reached'
+                }
+            }
+            function deleteAnswer(id, questionId) {
+                var result = confirm("Are you sure?");
+                if (result) {
+                    window.location.href = 'deleteanswer?id=' + id + '&courseId=' +${requestScope.courseId} + '&questionId=' + questionId;
+                }
             }
         </script>
 
@@ -49,11 +62,11 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Question Detail</label>
-                    <input type="text" class="form-control" name="questionDetail" value="<%=question.getDetail()%>"/>
+                    <textarea class="form-control" name="questionDetail" value="<%=question.getDetail()%>"></textarea>
                 </div>
                 <%for (Answer answer : answers) {%>
                 <input type="hidden" name="answerId" value="<%=answer.getId()%>"/>
-                Answer: <input type="text" name="answerDetail" value="<%=answer.getDetail()%>"/>
+                Answer: <input type="text" class="curAnswer" name="answerDetail" value="<%=answer.getDetail()%>"/>
                 <input type="radio" name="isCorrect<%=i%>" value="true"
                        <%if (answer.isIsCorrect()) {%>
                        checked ="checked"
@@ -62,8 +75,9 @@
                        <%if (!answer.isIsCorrect()) {%>
                        checked="checked"
                        <%}%>/>Incorrect
-                <%i++;%>
-                </br>   
+                <%i++;%>    
+                <a href="#" onclick="deleteAnswer(<%=answer.getId()%>, <%=question.getId()%>)">Delete</a>
+                </br>               
                 <%}%>
                 <div id="answer">
                 </div>
@@ -76,11 +90,23 @@
                         value="<%=d.getId()%>"><%=d.getName()%></option>               
                     <%}%>
                 </select></br>
-                <input type="button" onclick="addAnswer()" value="Add an answer"><br>                 
+                <input type="button" onclick="addAnswer()" value="Add an answer">
+                <span id="noti"></span>
+                </br>
                 <button type="submit" class="btn btn-primary">Update Question</button>
             </form>
         </div>
+<<<<<<< web/View/Question/updateQuestion.jsp
+        <script>
+            var answerNumber = 0;
+            var curAnswerNumber = document.getElementsByClassName("curAnswer").length;
+            var totalAnswer = answerNumber + curAnswerNumber;
+            console.log(totalAnswer);
+            console.log(curAnswerNumber);
+        </script>
+=======
         <%@ include file="../inventory.jsp" %>      
+>>>>>>> web/View/Question/updateQuestion.jsp
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     </body>
 </html>

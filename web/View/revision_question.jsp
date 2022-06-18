@@ -56,7 +56,7 @@
                         <div class="question">
                         <input type="hidden" name="thisQuestionID" value="${requestScope.id}">
                         <input type="hidden" name="thisCourseID" value="${requestScope.courseId}">    
-                        <form method="post" action="question?id=${requestScope.id}&courseId=${requestScope.courseId}">
+                        <form method="post" action="question?id=${requestScope.id}&courseId=${requestScope.courseId}&difficultyId=${requestScope.difficultyId}">
                             <%for (Answer answer : answers) {%>
                             <div class="answer">
                                 <input onclick="document.getElementById('playerchar').src = '${pageContext.request.contextPath}/img/attack.gif'" type="submit" name="answer" value="<%=answer.getId()%>"/><%=answer.getDetail()%></br>

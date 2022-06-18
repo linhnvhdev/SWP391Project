@@ -69,18 +69,28 @@ public class AddQuestionController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int courseId = Integer.parseInt(request.getParameter("courseId"));
-        int difficultyId = Integer.parseInt(request.getParameter("difficultyId"));
-        String question = request.getParameter("question");
-        String[] answers = request.getParameterValues("answer");
+        String[] raw_difficultyId = request.getParameterValues("difficultyId");
+        String[] questions = request.getParameterValues("questionDetail");
+        String[] answers = request.getParameterValues("newAnswerDetail");
+        ArrayList<Integer> questionIds = new ArrayList<>();
         QuestionDBContext questionDB = new QuestionDBContext();
         AnswerDBContext answerDB = new AnswerDBContext();
         // add question to database
-        int questionId = questionDB.addQuestion(question, courseId, difficultyId);
+        for (int i = 0; i < questions.length; i++) {
+            int difficultyId = Integer.parseInt(raw_difficultyId[i]);
+            int questionId = questionDB.addQuestion(questions[i], courseId, difficultyId);
+            questionIds.add(questionId);
+        }
         // add answer to that question in the database
-        for (int i = 0; i < answers.length; i++) {
-            String answer = answers[i];
-            boolean isCorrect = Boolean.parseBoolean(request.getParameter("isCorrect" + (i + 1)));
-            answerDB.addAnswer(answer, questionId, isCorrect);
+        int index = 0;
+        for (int i = 0; i < questions.length; i++) {
+            for (int j = 0; j < 4; j++) {
+                String answer = answers[index];
+                int questionId = questionIds.get(i);
+                boolean isCorrect = Boolean.parseBoolean(request.getParameter("isCorrect" + (index + 1)));
+                answerDB.addAnswer(answer, questionId, isCorrect);
+                index++;
+            }
         }
         response.sendRedirect("../question/add?courseId=" + courseId);
     }
