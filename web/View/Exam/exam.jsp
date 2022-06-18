@@ -13,21 +13,31 @@
         <title>Exam Page</title>
         <link href="<%=application.getContextPath()%>/css/exam.css?version=1" rel="stylesheet" type="text/css"/>
         <!--        <link rel="icon" href="data:;base64,iVBORw0KGgo="> <!--    bug do browser-->
-
+        <link href="${pageContext.request.contextPath}/css/inventory.css?version=1" rel="stylesheet" type="text/css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
         <script src="js/exam.js" type="text/javascript"></script>
-        <style> 
+        <style>
             .playermove {
                 position: relative;
                 animation: playermove 5s infinite;
             }
 
             @keyframes playermove {
-                0%   {left: 0px;}
-                25%  {left: 200px;}
-                50%  {left: 400px;}
-                75%  {left: 600px;}
-                100% {left: 700px;}
+                0%   {
+                    left: 0px;
+                }
+                25%  {
+                    left: 200px;
+                }
+                50%  {
+                    left: 400px;
+                }
+                75%  {
+                    left: 600px;
+                }
+                100% {
+                    left: 700px;
+                }
             }
         </style>
     </head>
@@ -96,6 +106,8 @@
                         <c:forEach items="${requestScope.questionList}" var="q">
 
                             <tr  id="question">
+                            <input type="hidden" name="thisQuestionID" value="${q.id}">
+                            <input type="hidden" name="thisCourseID" value="${requestScope.courseId}"> 
                             <input type="hidden" name="qid" value="${q.id}"/>
                             <input type="hidden" name="pageindex" value="${requestScope.pageindex}"/>
                             <td >Question: ${q.detail}</td>
@@ -124,6 +136,7 @@
                     </script>
                     <a class="active" href="result?eid=${requestScope.eid}&courseId=${requestScope.courseId}"><button>FINISH</button></a>
                 </div>
+                <a id="btnInventory">Inventory</a>
             </div>
         </div>
         <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
@@ -131,6 +144,7 @@
                         var eid =${requestScope.eid};
                         var courseId =${requestScope.courseId};
         </script>
+        <%@ include file="../inventory.jsp" %>
         <script src="js/progressbar.js" type="text/javascript"></script>
     </body>
 </html>

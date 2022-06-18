@@ -71,9 +71,15 @@ public class RevisionQuestionController extends HttpServlet {
         request.setAttribute("exp", exp);
         Question question = db.getQuestion(questionId);
         Answer correctAnswer = answerDB.getCorrectAnswer(question);
+        
+        int expGet = 10;
+        Boolean isExpBoost = (Boolean) request.getSession().getAttribute("expBoost");
+        if(isExpBoost != null && isExpBoost){
+            expGet *= 2;
+        }
         if (answerID == correctAnswer.getId()) {
             userQuestionDB.insertUserQuestion(userId, questionId, true);
-            userDb.updateUserExp(userId, exp+10);
+            userDb.updateUserExp(userId, exp+expGet);
         }
         if (!db.getRemainingQuestions(userId, courseId).isEmpty()) {
             request.setAttribute("courseId", courseId);

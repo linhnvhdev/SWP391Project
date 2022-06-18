@@ -14,16 +14,17 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link href="${pageContext.request.contextPath}/css/revision_question.css" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.request.contextPath}/css/inventory.css?version=1" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-
+        
         <div class="background-img">
             <div class="top">
 
                 <div class="header">
                     <a class="column1" href="../home">Back to home</a>
                     <a class="column1"href="../login">Log out</a>
-                    <a class="column1" href="../chgpwd">Change password</a>
+                    <a class="column1" id="btnInventory">Inventory</a>
                 </div>
                 <div class="player">
                     <div class="column">
@@ -53,9 +54,13 @@
                       </div>
                     <div class="column">
                         <div class="question">
+                        <input type="hidden" name="thisQuestionID" value="${requestScope.id}">
+                        <input type="hidden" name="thisCourseID" value="${requestScope.courseId}">    
                         <form method="post" action="question?id=${requestScope.id}&courseId=${requestScope.courseId}">
                             <%for (Answer answer : answers) {%>
-                            <input onclick="document.getElementById('playerchar').src = '${pageContext.request.contextPath}/img/attack.gif'" type="submit" name="answer" value="<%=answer.getId()%>"/><%=answer.getDetail()%></br>
+                            <div class="answer">
+                                <input onclick="document.getElementById('playerchar').src = '${pageContext.request.contextPath}/img/attack.gif'" type="submit" name="answer" value="<%=answer.getId()%>"/><%=answer.getDetail()%></br>
+                            </div>
                             <%}%>       
                             <%//=correctAns.getAnswer_ID()%>
                             <button type="submit">Next</button>
@@ -66,5 +71,6 @@
               
             </div>
         </div>
+        <%@ include file="inventory.jsp" %>
     </body>
 </html>

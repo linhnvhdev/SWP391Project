@@ -7,6 +7,7 @@ package Controller;
 import Dal.ItemDBContext;
 import Model.Account;
 import Model.Item;
+import Util.ItemHandler;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -56,7 +57,20 @@ public class ItemController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        String raw_itemID = request.getParameter("itemID");
+        String raw_questionID = request.getParameter("questionID");
+        String raw_courseID = request.getParameter("courseID");
+        int itemID = Integer.parseInt(raw_itemID);
+        Account account = (Account) request.getSession().getAttribute("account");
+        ItemDBContext itemDB = new ItemDBContext();
+        Integer newNumItem = itemDB.getNumItem(account.getUser().getId(),itemID);
+        itemDB.useItem(account.getUser().getId(),itemID,1);
+        String responseData = "";
+        if(itemID == ItemHandler.EXP_BOOSTER){
+            request.getSession().setAttribute("expBoost",true);
+        }
+        else responseData = useItem(itemID,raw_questionID,raw_courseID);
+        response.getWriter().write(newNumItem.toString()+"|"+responseData);
     }
 
     /**
@@ -69,4 +83,20 @@ public class ItemController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private String useItem(int itemID, String raw_questionID, String raw_courseID) {
+        int questionID = (raw_questionID != null || raw_questionID.length() > 0)
+                        ? Integer.parseInt(raw_questionID)
+                        : -1;
+        int courseID = (raw_courseID != null || raw_courseID.length() > 0)
+                        ? Integer.parseInt(raw_courseID)
+                        : -1;
+        switch(itemID){
+            case ItemHandler.ANSWER_CHECKER:
+                return ItemHandler.useAnswerChecker(itemID,questionID);
+            case ItemHandler.WRONG_QUESTION_DETECTOR:
+                return ItemHandler.useWrongQuestionDetector(itemID,questionID);
+            default:
+                return "";
+        }   
+    }
 }

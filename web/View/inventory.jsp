@@ -16,7 +16,7 @@
                 <td class="inventory-list-item-description">
                     Description
                 </td>
-                <td>
+                <td class="inventory-list-item-use">
                     Action
                 </td>
             </tr>
@@ -24,8 +24,5 @@
     </div>
     <div id="inventory-foot"></div>
 </div>
-<script
-  src="https://code.jquery.com/jquery-3.6.0.js"
-  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-  crossorigin="anonymous"></script> 
-<script src="${pageContext.request.contextPath}/js/inventory.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/inventory.js?version=2"></script>
