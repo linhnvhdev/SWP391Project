@@ -53,6 +53,10 @@ public class ResultController extends HttpServlet {
         else {
             experience = currentScore / 10;
         }
+        Boolean isExpBoost = (Boolean) request.getSession().getAttribute("expBoost");
+        if(isExpBoost != null && isExpBoost){
+            experience *= 2;
+        }
         int oldexperience = userDB.getUserExp(account.getUser().getId());
         int newexperience = experience + oldexperience;
         userDB.updateUserExp(account.getUser().getId(), newexperience);

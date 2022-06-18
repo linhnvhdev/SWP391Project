@@ -13,13 +13,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Trang chủ</title>
         <link href="css/cssforhomestyle.css" rel="stylesheet" type="text/css"/>
+        <link href="css/header.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <div class="header">
-            <a href="../home">Back to home</a>
-            <a  class="column" href="login">Log out</a>
-            <a  class="column" href="chgpwd">Change password</a>
-        </div>
+        <%@ include file="header.jsp" %>
         <div class="main-content">
             <h1>You don't have the right to access this page</h1>
         </div>
