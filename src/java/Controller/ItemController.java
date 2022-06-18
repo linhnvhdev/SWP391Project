@@ -59,7 +59,7 @@ public class ItemController extends HttpServlet {
             throws ServletException, IOException {
         String raw_itemID = request.getParameter("itemID");
         String raw_questionID = request.getParameter("questionID");
-        String raw_courseID = request.getParameter("courseID");
+        //String raw_courseID = request.getParameter("courseID");
         int itemID = Integer.parseInt(raw_itemID);
         Account account = (Account) request.getSession().getAttribute("account");
         ItemDBContext itemDB = new ItemDBContext();
@@ -69,7 +69,7 @@ public class ItemController extends HttpServlet {
         if(itemID == ItemHandler.EXP_BOOSTER){
             request.getSession().setAttribute("expBoost",true);
         }
-        else responseData = useItem(itemID,raw_questionID,raw_courseID);
+        else responseData = useItem(itemID,raw_questionID);
         response.getWriter().write(newNumItem.toString()+"|"+responseData);
     }
 
@@ -83,12 +83,9 @@ public class ItemController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private String useItem(int itemID, String raw_questionID, String raw_courseID) {
+    private String useItem(int itemID, String raw_questionID) {
         int questionID = (raw_questionID != null || raw_questionID.length() > 0)
                         ? Integer.parseInt(raw_questionID)
-                        : -1;
-        int courseID = (raw_courseID != null || raw_courseID.length() > 0)
-                        ? Integer.parseInt(raw_courseID)
                         : -1;
         switch(itemID){
             case ItemHandler.ANSWER_CHECKER:

@@ -41,7 +41,9 @@ $(document).ready(function(){
     $(document).on("click",".inventory-list-item-use > .use-item",function(){
         var itemID = $(this).attr('id');
         var questionID = $('input[name="thisQuestionID"]').attr("value");
-        var courseID = $('input[name="thisCourseID"]').attr("value");
+        //var courseID = $('input[name="thisCourseID"]').attr("value");
+        var playerHealth = $('.playerhp').length;
+        console.log("player health: " + playerHealth);
         //console.log(itemID);
         //console.log(questionID);
         //console.log(courseID);
@@ -52,21 +54,27 @@ $(document).ready(function(){
         switch(itemID){
             case "2":
                 if(questionID == null){ 
-                    alert("You need to be in the exam or practice to use this question");
+                    alert("You need to be in the exam or practice to use this item");
                     return;
                 }
                 break;
             case "3":
                 if(questionID == null){
-                    alert("You need to be in the exam or practice to use this question");
+                    alert("You need to be in the exam or practice to use this item");
                     return;
                 }
                 break;
+            case "4":
+                if(playerHealth == 0){
+                    alert("You need to be in the exam to use this item");
+                    return;
+                }
+                break;
+                
         }
         var data = {
             itemID: itemID,
-            questionID: questionID,
-            courseID: courseID
+            questionID: questionID
         };
         $.post("/SWP391Project/item",$.param(data),function(response){
             var data = response.split("|");
@@ -85,6 +93,10 @@ $(document).ready(function(){
                     $('input[name="answer"][value="'+data[1]+'"]').parent().css("text-decoration","line-through");
                     $('input[name="ansid"][value="'+data[1]+'"]').parent().css("text-decoration","line-through");
                     break;
+                // Health potion
+                case "4":
+                    $('input[name = "health-potion-active"]').attr("value",60);
+                    
             }
         });
     });
