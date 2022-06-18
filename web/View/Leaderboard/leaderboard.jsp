@@ -43,6 +43,7 @@
         </div>
         <div class ="content">
             <div class="leaderboard">
+                <h1>My Ranks: ${requestScope.myrank} </h1>
                 <h1>
                     <svg class="ico-cup">
                     <use xlink:href="#cup"></use>

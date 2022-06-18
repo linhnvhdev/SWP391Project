@@ -30,9 +30,9 @@ public class LeaderboardController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
-        User user = acc.getUser();
+        User currentuser = acc.getUser();
         UserDBContext userDB = new UserDBContext();
-        
+        int currentuserId = currentuser.getId();
         int pagesize = 10;
         String page = request.getParameter("page");
         if (page == null || page.trim().length() == 0) {
@@ -43,9 +43,17 @@ public class LeaderboardController extends HttpServlet {
         int totalpage = (numberUser%pagesize==0)?(numberUser/pagesize):(numberUser/pagesize)+1;
         request.setAttribute("totalpage", totalpage);
         request.setAttribute("pageindex", pageindex);
-        
+        int myrank = 0;
         ArrayList<UserPagging> userList = userDB.getUsersbyPagging( pageindex, pagesize);
+        for (UserPagging user : userList) {
+            int uid = user.getId();
+            if (currentuserId == uid) {
+                myrank = user.getRow_index();
+                break;
+            }
+        }
         request.setAttribute("userList", userList);
+        request.setAttribute("myrank", myrank);
         
         request.getRequestDispatcher("View/Leaderboard/leaderboard.jsp").forward(request, response);
     }
