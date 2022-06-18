@@ -96,7 +96,6 @@
                 <button type="submit" class="btn btn-primary">Update Question</button>
             </form>
         </div>
-<<<<<<< web/View/Question/updateQuestion.jsp
         <script>
             var answerNumber = 0;
             var curAnswerNumber = document.getElementsByClassName("curAnswer").length;
@@ -104,9 +103,7 @@
             console.log(totalAnswer);
             console.log(curAnswerNumber);
         </script>
-=======
-        <%@ include file="../inventory.jsp" %>      
->>>>>>> web/View/Question/updateQuestion.jsp
+        <%@ include file="../inventory.jsp" %>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     </body>
 </html>
