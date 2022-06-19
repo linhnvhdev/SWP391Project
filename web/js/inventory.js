@@ -43,9 +43,14 @@ $(document).ready(function(){
         var questionID = $('input[name="thisQuestionID"]').attr("value");
         //var courseID = $('input[name="thisCourseID"]').attr("value");
         var playerHealth = $('.playerhp').length;
-        console.log("player health: " + playerHealth);
-        //console.log(itemID);
-        //console.log(questionID);
+        var amount = parseInt($('.inventory-list-item-number.item'+itemID).html());
+        if(amount == 0){
+            alert("You currently don't have this item");
+            return;
+        }
+//        console.log("player health: " + playerHealth);
+//        console.log(itemID);
+//        console.log(questionID);
         //console.log(courseID);
         // Check condition for using the item
         if(!confirm("Do you want to use this item now?")){
@@ -78,7 +83,9 @@ $(document).ready(function(){
         };
         $.post("/SWP391Project/item",$.param(data),function(response){
             var data = response.split("|");
-            console.log($('.inventory-list-item-number.item'+itemID).html());
+//            console.log($('.inventory-list-item-number.item'+itemID).html());
+//            console.log(data);
+//            console.log((data[0]));
             $('.inventory-list-item-number.item'+itemID).html(data[0]);
             switch(itemID){
                 // Answer_tracker item
