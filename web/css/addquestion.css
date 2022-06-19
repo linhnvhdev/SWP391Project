@@ -10,11 +10,24 @@ and open the template in the editor.
 
 .container{
     margin-top: 30px;
+
 }
 .form-label{
     font-weight: bold;
+    font-size: 20px;
 }
 .description{
     text-align: center;
     margin-bottom: 30px;
+}
+#noti{
+    color: red;
+}
+
+.form-control{
+    background-color: rgb(212, 227, 250);
+}
+
+body{
+    background-color: rgb(138, 165, 209); 
 }

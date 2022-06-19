@@ -10,10 +10,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <link href="css/cssforresetpassword.css" rel="stylesheet" type="text/css"/>
-        <%  
+        <!--        <link href="css/cssforresetpassword.css" rel="stylesheet" type="text/css"/>-->
+        <%
             String reset_success = (String) request.getAttribute("resetpassword_successful");
-            String Not_exit = (String) request.getAttribute("Not_exit");
+            String user_exist = (String) request.getAttribute("user_exist");
+            String email_valid = (String) request.getAttribute("email_valid");
+            String success = (String) request.getAttribute("success");
+            String usernamehidden = (String) request.getAttribute("username");
         %>
     </head>
     <body>

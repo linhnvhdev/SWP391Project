@@ -106,7 +106,7 @@
     </servlet>
     <servlet>
         <servlet-name>DeleteAnswerController</servlet-name>
-        <servlet-class>AnswerController.DeleteAnswerController</servlet-class>
+        <servlet-class>Controller.Answer.DeleteAnswerController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CreateExamController</servlet-name>
@@ -149,8 +149,32 @@
         <servlet-class>Controller.Flashcard.FlashCardSetting</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>DeleteQuestionController</servlet-name>
+        <servlet-class>Controller.Question.DeleteQuestionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ItemController</servlet-name>
+        <servlet-class>Controller.ItemController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ChooseDifficultyController</servlet-name>
         <servlet-class>Controller.ChooseDifficultyController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RemoveExam</servlet-name>
+        <servlet-class>Controller.Exam.RemoveExam</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddExamQuestionController</servlet-name>
+        <servlet-class>Controller.Exam.AddExamQuestionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditExamController</servlet-name>
+        <servlet-class>Controller.Exam.EditExamController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateExamQuestionController</servlet-name>
+        <servlet-class>Controller.Exam.UpdateExamQuestionController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -261,8 +285,32 @@
         <url-pattern>/flashcard/setting</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>RemoveExam</servlet-name>
+        <url-pattern>/removeexam</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddExamQuestionController</servlet-name>
+        <url-pattern>/addexamquestion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditExamController</servlet-name>
+        <url-pattern>/editexam</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteQuestionController</servlet-name>
+        <url-pattern>/deletequestion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ItemController</servlet-name>
+        <url-pattern>/item</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ChooseDifficultyController</servlet-name>
         <url-pattern>/choosediff</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateExamQuestionController</servlet-name>
+        <url-pattern>/updateexamquestion</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>300</session-timeout>

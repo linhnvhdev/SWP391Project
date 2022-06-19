@@ -21,20 +21,23 @@ import java.util.logging.Logger;
  */
 public class FlashcardDBContext extends DBContext {
 
-    public void addFlashcard(String front, String back, int courseId) {
+    public void addFlashcard(String front, String back, int courseId,String difficulty) {
         try {
             String sql = "INSERT INTO [dbo].[Flashcard]\n"
                     + "           ([Flash_Front]\n"
                     + "           ,[Flash_Back]\n"
-                    + "           ,[Course_ID])\n"
+                    + "           ,[Course_ID]\n"
+                    + "           ,[Difficulty_ID])\n"
                     + "     VALUES\n"
                     + "           (?\n"
+                    + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?)";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, front);
             stm.setString(2, back);
             stm.setInt(3, courseId);
+            stm.setInt(4, Integer.parseInt(difficulty));
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(FlashcardDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -63,12 +66,13 @@ public class FlashcardDBContext extends DBContext {
         return List;
     }
 
-    public ArrayList<Flashcard> getlistFC(int courseId) {
+    public ArrayList<Flashcard> getlistFC(int courseId, int difficulty) {
         ArrayList<Flashcard> List = new ArrayList<>();
         try {
-            String sql = "select Flashcard_ID,Flash_front,Flash_back,Course_ID from Flashcard WHERE Course_ID = ?";
+            String sql = "select Flashcard_ID,Flash_front,Flash_back,Course_ID from Flashcard WHERE Course_ID = ? and Difficulty_ID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, courseId);
+            stm.setInt(2, difficulty);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Flashcard f = new Flashcard();
@@ -88,36 +92,92 @@ public class FlashcardDBContext extends DBContext {
 
     public ArrayList<Flashcard> getlistFCbyListCourseId(ArrayList<Course> courses) {
         ArrayList<Flashcard> List = new ArrayList<>();
-        if(courses.size()!=0){
-        try {
-            String sql = "select Flashcard_ID,Flash_front,Flash_back,Course_ID from Flashcard\n";
+        if (courses.size() != 0) {
+            try {
+                String sql = "select Flashcard_ID,Flash_front,Flash_back,Course_ID from Flashcard\n";
 
-            for (int i = 0; i < courses.size(); i++) {
-                if (i == 0) {
-                    sql += "Where Course_ID = ?\n";
-                } else {
-                    sql += "or Course_ID = ?\n";
+                for (int i = 0; i < courses.size(); i++) {
+                    if (i == 0) {
+                        sql += "Where Course_ID = ?\n";
+                    } else {
+                        sql += "or Course_ID = ?\n";
+                    }
                 }
+                PreparedStatement stm = connection.prepareStatement(sql);
+                for (int i = 0; i < courses.size(); i++) {
+                    stm.setInt(i + 1, courses.get(i).getId());
+                }
+                ResultSet rs = stm.executeQuery();
+                while (rs.next()) {
+                    Flashcard f = new Flashcard();
+                    Course c = new Course();
+                    c.setId(rs.getInt("Course_ID"));
+                    f.setId(rs.getInt("Flashcard_ID"));
+                    f.setFront(rs.getString("Flash_front"));
+                    f.setBack(rs.getString("Flash_back"));
+                    f.setCourse(c);
+                    List.add(f);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(FlashcardDBContext.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            PreparedStatement stm = connection.prepareStatement(sql);
-            for (int i = 0; i < courses.size(); i++) {
-                stm.setInt(i + 1, courses.get(i).getId());
-            }
-            ResultSet rs = stm.executeQuery();
-            while (rs.next()) {
-                Flashcard f = new Flashcard();
-                Course c = new Course();
-                c.setId(rs.getInt("Course_ID"));
-                f.setId(rs.getInt("Flashcard_ID"));
-                f.setFront(rs.getString("Flash_front"));
-                f.setBack(rs.getString("Flash_back"));
-                f.setCourse(c);
-                List.add(f);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(FlashcardDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return List;
+    }
+
+    public ArrayList<Flashcard> getlistFCbyListCourseId(ArrayList<Course> courses, String waytofind, String flashcardcontent) {
+        ArrayList<Flashcard> List = new ArrayList<>();
+        if (courses.size() != 0) {
+            try {
+                String sql = "select Flashcard_ID,Flash_front,Flash_back,Course_ID from Flashcard\n";
+
+                for (int i = 0; i < courses.size(); i++) {
+                    if (i == 0) {
+                        sql += "Where (Course_ID = ?\n";
+                    } else {
+                        sql += "or Course_ID = ?\n";
+                    }
+                    if (i == courses.size() - 1) {
+                        sql += ")\n";
+                    }
+                }
+                if (flashcardcontent != null) {
+                    if (waytofind.equals("Flashcard_ID")) {
+                        sql += "and " + waytofind + " = ?\n";
+                    } else {
+                        sql += "and " + waytofind + " like '%'+?+'%'\n";
+                    }
+                }
+
+                PreparedStatement stm = connection.prepareStatement(sql);
+                for (int i = 0; i < courses.size(); i++) {
+                    stm.setInt(i + 1, courses.get(i).getId());
+                }
+                if (flashcardcontent != null) {
+                    if (waytofind.equals("Flashcard_ID")) {
+                        if (isDigit(flashcardcontent) == true) {
+                            stm.setInt(courses.size() + 1, Integer.parseInt(flashcardcontent));
+                        } else {
+                            stm.setInt(courses.size() + 1, -1);
+                        }
+                    } else {
+                        stm.setString(courses.size() + 1, flashcardcontent);
+                    }
+                }
+                ResultSet rs = stm.executeQuery();
+                while (rs.next()) {
+                    Flashcard f = new Flashcard();
+                    Course c = new Course();
+                    c.setId(rs.getInt("Course_ID"));
+                    f.setId(rs.getInt("Flashcard_ID"));
+                    f.setFront(rs.getString("Flash_front"));
+                    f.setBack(rs.getString("Flash_back"));
+                    f.setCourse(c);
+                    List.add(f);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(FlashcardDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return List;
     }
@@ -228,6 +288,17 @@ public class FlashcardDBContext extends DBContext {
         } catch (SQLException ex) {
             Logger.getLogger(FlashcardDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private boolean isDigit(String flashcardcontent) {
+        try {
+            int iVal = Integer.parseInt(flashcardcontent);
+            return true;
+        } catch (NumberFormatException e) {
+
+        }
+
+        return false;
     }
 
 }

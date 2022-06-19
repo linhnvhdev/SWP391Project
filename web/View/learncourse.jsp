@@ -23,7 +23,9 @@
         %>
     </head>
     <body>
-        
+        <%if(ListFC.size()==0){%>
+        <g5>List of FLashcards are empty</g5>
+        <%}else{%>
         <form action="flashcard" method="POST">
             <input type="hidden" value="${requestScope.courseId}" name="courseId">
             <div class="flip-card-container">
@@ -47,6 +49,7 @@
             <a href="home" >Back to home</a> 
             <a href="course?courseId=${requestScope.courseId}">Back to course</a>
         </form>
+        <%}%>
         
         
         <script>

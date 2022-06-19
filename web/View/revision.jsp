@@ -36,7 +36,7 @@
                     <!--        <form method="get" action="">
                                 <button type="submit">Let the hunt begin!</button>
                             </form>-->
-                    <a href="revision/question?id=${requestScope.randomID}&courseId=${requestScope.courseId}"/>start</a> 
+                    <a href="revision/question?id=${requestScope.randomID}&courseId=${requestScope.courseId}&difficultyId=${requestScope.difficultyId}"/>start</a> 
                 </div>
             </div>
             

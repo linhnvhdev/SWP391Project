@@ -30,7 +30,7 @@ public class ResultController extends HttpServlet {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
         Integer currentScore = (Integer) session.getAttribute("score");
-        //bugs: still null when back to exam after finish
+        int diffid = (Integer) request.getSession().getAttribute("diffid");
         if (currentScore == null) {
             response.sendRedirect("home");
         }
@@ -39,7 +39,7 @@ public class ResultController extends HttpServlet {
         
         UserDBContext userDB = new UserDBContext();
         ExamDBContext examDB = new ExamDBContext();
-        Exam exam = examDB.getExam(courseId);
+        Exam exam = examDB.getExamByDiff(courseId,diffid);
         int passScore = examDB.getPassedScore(exam.getId());
         int numQues = examDB.countQuesPerExam(exam.getId());
         int maxScore = numQues * 10;
@@ -52,6 +52,10 @@ public class ResultController extends HttpServlet {
         }
         else {
             experience = currentScore / 10;
+        }
+        Boolean isExpBoost = (Boolean) request.getSession().getAttribute("expBoost");
+        if(isExpBoost != null && isExpBoost){
+            experience *= 2;
         }
         int oldexperience = userDB.getUserExp(account.getUser().getId());
         int newexperience = experience + oldexperience;

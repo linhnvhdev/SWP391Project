@@ -14,42 +14,34 @@
         <title>JSP Page</title>
         <link href="${pageContext.request.contextPath}/css/cssforflashcardsetting.css" rel="stylesheet" type="text/css"/>
         <link href="${pageContext.request.contextPath}/css/header.css" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.request.contextPath}/css/inventory.css?version=1" rel="stylesheet" type="text/css"/>
         <%
             ArrayList<Flashcard> FlashCardList = (ArrayList<Flashcard>) request.getAttribute("FlashCardList");
             String editid = (String) request.getAttribute("editid");
+            String waytofind = (String) request.getAttribute("waytofind");
+            String flashcardcontent = (String) request.getAttribute("flashcardcontent");
             int updateid = (Integer) request.getAttribute("updateid");
         %>
     </head>
     <body>
-        <div class="header">
-            <nav>
-                <div class="logo">No game no learn</div>
-                <ul class="navbar-item-list">
-                    <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
-                    <li><a href="${pageContext.request.contextPath}/leaderboard">Leaderboard</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="${pageContext.request.contextPath}/course/library">Course Library</a></li>
-                    <li class="dropdown">
-                        <a href="#">Setting</a>
-                        <div class="drop-down">
-                            <ul class="navbar-dropdown-item-list">
-                                <li><a href="${pageContext.request.contextPath}/profile">User profile</a></li>
-                                <c:if test="${requestScope.user.role == 3}">
-                                    <li><a href="${pageContext.request.contextPath}/auth">Authorization</a></li>
-                                </c:if>
-                                <li><a href="${pageContext.request.contextPath}/chgpwd">Change password</a></li>
-                                <li><a href="${pageContext.request.contextPath}/login">Log out</a></li>
-                                <li></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+        <%@ include file="../header.jsp" %>
         <div class="title">
+
             <h5>Flashcard Setting </h5>
+            
         </div>
-        <table>
+        <form action="setting" method="POST">
+            Find Flashcard:<input type="text" name="flashcardcontent" <%if(flashcardcontent!=null)%>value="<%=flashcardcontent%>">
+            <input type="submit" value="Search">
+            <input type="submit" value="Reset" name ="reset"><br/>
+            <input type="radio" name="waytofind" value="Flashcard_ID" checked>by ID
+            <input type="radio" name="waytofind" value="Flash_front" <%if("Flash_front".equals(waytofind)){%>checked<%}%>>by Content
+            
+        </form>
+           <%if(FlashCardList.size()==0){%>
+            <h5>No records found!</h5>
+           <%}else{%>        
+            <table>
             <thead>
             <th>FlashCard_ID</th>
             <th>Course_ID</th>
@@ -62,7 +54,7 @@
 
             <%for (Flashcard flashcard : FlashCardList) {
             %>
-        <form action="setting" method="POST">
+        <form action="setting"  method="POST">
             <input type="hidden" name="Course_ID" value="<%=flashcard.getCourse().getId()%>">
             <%if (editid != null && flashcard.getId() == updateid) {%>
             <tr>
@@ -87,12 +79,14 @@
             <td><input type="submit" name="removeid" value="remove" onclick="return Confirm(<%=flashcard.getId()%>, 'delete')"></td>
             </tr>
             <%}%>
-
+            <input type="hidden" name="flashcardcontent" value="<%=flashcardcontent%>">
+            <input type="hidden" name="waytofind" value="<%=waytofind%>">
         </form>
+        <%}%>
         <%}%>
     </tbody>
 </table>
-
+<%@ include file="../inventory.jsp" %>
 <script>
     function Confirm(id, action)
     {
