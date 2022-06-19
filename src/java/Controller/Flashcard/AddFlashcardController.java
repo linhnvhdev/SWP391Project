@@ -38,13 +38,15 @@ public class AddFlashcardController extends HttpServlet {
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
         String courseIdRaw = request.getParameter("courseId");
-        String Difficulty = request.getParameter("diffid");
+        String difficulties = request.getParameter("difficultyId");
+        String Difficulty = request.getParameter("difficultyId");
+        if(difficulties==null)difficulties=Difficulty;
         int courseId = -1;
         if(courseIdRaw != null) courseId = Integer.parseInt(courseIdRaw);
         User user = acc.getUser();
         CourseDBContext courseDB = new CourseDBContext();
         ArrayList<Course> courseList = courseDB.getCourseListByCreator(user.getId());
-        request.setAttribute("Difficulty",Difficulty);
+        request.setAttribute("difficulties",difficulties);
         request.setAttribute("courseId", courseId);
         request.setAttribute("courseList", courseList);
         request.getRequestDispatcher("../View/Flashcard/addFlashcard.jsp").forward(request, response);        
@@ -61,13 +63,13 @@ public class AddFlashcardController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String Difficulty = request.getParameter("Difficulty");
+        String Difficulty = request.getParameter("difficultyId");
         int courseId = Integer.parseInt(request.getParameter("courseId"));
         String front = request.getParameter("front");
         String back = request.getParameter("back");
         FlashcardDBContext flashcardDB = new FlashcardDBContext();
         flashcardDB.addFlashcard(front,back,courseId,Difficulty);
-        response.sendRedirect("../flashcard/add?courseId="+courseId);
+        response.sendRedirect("../flashcard/add?courseId="+courseId+"&difficultyId="+Difficulty);
     }
 
     /**
