@@ -9,6 +9,7 @@ import Dal.DifficultyDBContext;
 import Dal.ExamDBContext;
 import Model.Account;
 import Model.Answer;
+import Model.Difficulty;
 import Model.Exam;
 import Model.Question;
 import Model.User;
@@ -28,15 +29,7 @@ import javax.servlet.http.HttpSession;
  */
 public class ExamController extends HttpServlet {
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -46,6 +39,7 @@ public class ExamController extends HttpServlet {
         ArrayList<Integer> answeredQuestionList = (ArrayList<Integer>) request.getSession().getAttribute("answeredQuestionList");
         ArrayList<Answer> answerList =(ArrayList<Answer> ) request.getSession().getAttribute("answerList");
         Integer currentBossHP = (Integer) request.getSession().getAttribute("currentBossHP");
+        int diffid = (Integer) request.getSession().getAttribute("diffid");
         //    create a list to store question have answered
         if (answeredQuestionList == null) {
             answeredQuestionList = new ArrayList<>();
@@ -57,13 +51,11 @@ public class ExamController extends HttpServlet {
             request.getSession().setAttribute("score", score);
         }
 
-        
         User user = acc.getUser();
         int courseId = Integer.parseInt(request.getParameter("courseId"));
         ExamDBContext examDB = new ExamDBContext();         
-        Exam exam = examDB.getExam(courseId);
+        Exam exam = examDB.getExamByDiff(courseId, diffid);
         int passScore = examDB.getPassedScore(exam.getId());
-        // int score = examDB.getScore(exam.getId(), acc.getUser().getId());
         int numQues = examDB.countQuesPerExam(exam.getId());
         int maxScore = numQues * exam.getDifficulty().getDamageToBoss() ;
         if (currentBossHP == null) {
@@ -130,6 +122,9 @@ public class ExamController extends HttpServlet {
         ArrayList<Integer> answeredQuestionList = (ArrayList<Integer>) session.getAttribute("answeredQuestionList");
         Integer bossHP = (Integer) session.getAttribute("currentBossHP");
         Integer currentScore = (Integer) session.getAttribute("score");
+        int diffid = (Integer) request.getSession().getAttribute("diffid");
+        DifficultyDBContext diffDB = new DifficultyDBContext();
+        Difficulty diff = diffDB.getDifficulty(diffid);
         if (bossHP == 0) {
             session.removeAttribute("currentBossHP");
         }
@@ -151,9 +146,9 @@ public class ExamController extends HttpServlet {
         // neu tra loi lan dau tien thi add vao list  
         answeredQuestionList.add(question_id);
         if (correct.isIsCorrect()) {
-            int score = currentScore + 10;
+            int score = currentScore + diff.getDamageToBoss();
             examDB.updateScore(eid, account.getUser().getId(), score);
-            int currentBossHP = bossHP - 10;
+            int currentBossHP = bossHP - diff.getDamageToBoss();
             session.setAttribute("currentBossHP", currentBossHP);
             session.setAttribute("score", score);
         }

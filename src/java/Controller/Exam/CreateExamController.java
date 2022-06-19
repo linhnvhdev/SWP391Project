@@ -62,9 +62,9 @@ public class CreateExamController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int passScore = Integer.parseInt(request.getParameter("passScore"));
-        int courseId = Integer.parseInt(request.getParameter("courseId"));
-        int examtime = Integer.parseInt(request.getParameter("examtime"));
+        Integer passScore = Integer.parseInt(request.getParameter("passScore"));
+        Integer courseId = Integer.parseInt(request.getParameter("courseId"));
+        Integer examtime = Integer.parseInt(request.getParameter("examtime"));
         int diffid = (Integer) request.getSession().getAttribute("diffid");
 
         String examname = request.getParameter("examname");
@@ -82,6 +82,10 @@ public class CreateExamController extends HttpServlet {
         Exam latestExam = examDB.getLatestExam(courseId);
 
         String[] rawquestion_id = request.getParameterValues("questionid");
+        if ( rawquestion_id == null ) {
+            request.getRequestDispatcher("View/Exam/createexam.jsp").forward(request, response);
+        }
+        else {
         //Update selected question for the exam
         for (int i = 0; i < rawquestion_id.length; i++) {
             int question_id = Integer.parseInt(rawquestion_id[i]);
@@ -91,6 +95,7 @@ public class CreateExamController extends HttpServlet {
         request.setAttribute("createexamMessage", SystemMessage.CREATE_EXAM);
         request.setAttribute("courseId", courseId);
         request.getRequestDispatcher("View/Exam/createexam.jsp").forward(request, response);
+        }
     }
 
     /**

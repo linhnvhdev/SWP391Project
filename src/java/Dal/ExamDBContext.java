@@ -204,7 +204,7 @@ public class ExamDBContext extends DBContext {
             String sql = "SELECT COUNT(*) as Total  FROM Question q\n"
                     + "INNER JOIN Question_Exam qe\n"
                     + "ON q.Question_ID = qe.Question_ID\n"
-                    + "              Where Exam_ID = ?";
+                    + "              Where qe.Exam_ID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, eid);
             ResultSet rs = stm.executeQuery();
@@ -690,6 +690,33 @@ public class ExamDBContext extends DBContext {
         } catch (SQLException ex) {
             Logger.getLogger(QuestionDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public Exam getExamByDiff(int courseId, int diffid) {
+        try {
+            String sql = "SELECT TOP 1 *\n"
+                    + "FROM EXAM\n"
+                    + "WHERE Course_ID = ?\n"
+                    + "AND Difficulty_ID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, courseId);
+            stm.setInt(2, diffid);
+            ResultSet rs = stm.executeQuery();
+            CourseDBContext courseDB = new CourseDBContext();
+            DifficultyDBContext diffDB = new DifficultyDBContext();
+            if (rs.next()) {
+                Exam e = new Exam();
+                e.setId(rs.getInt("Exam_ID"));
+                e.setName(rs.getString("Exam_Name"));
+                e.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
+                e.setPassed(rs.getInt("Passed"));
+                e.setDifficulty(diffDB.getDifficulty(rs.getInt("Difficulty_ID")));
+                return e;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
 }

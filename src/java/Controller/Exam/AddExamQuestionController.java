@@ -25,35 +25,32 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class AddExamQuestionController extends HttpServlet {
 
-    
-
-    
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
         Integer difficultyId = (Integer) request.getSession().getAttribute("diffid");
-        
+
         int courseId = Integer.parseInt(request.getParameter("courseId"));
         User user = acc.getUser();
-        
+
         String raw_eid = request.getParameter("eid");
-        if(raw_eid == null || raw_eid.trim().length()==0)
+        if (raw_eid == null || raw_eid.trim().length() == 0) {
             raw_eid = "-1";
+        }
         int eid = Integer.parseInt(raw_eid);
-        
+
         ExamDBContext examDB = new ExamDBContext();
         Exam exam = examDB.getExamByEid(eid);
         ArrayList<Question> questionList = examDB.getQuestionsExamByDiff(eid, difficultyId, courseId);
         ArrayList<Answer> answerList = examDB.getAnswersExamByDiff(eid, difficultyId, courseId);
-        
-        
+
         request.setAttribute("questionList", questionList);
         request.setAttribute("answerList", answerList);
         request.setAttribute("eid", eid);
         request.setAttribute("courseId", courseId);
         request.setAttribute("difficultyId", difficultyId);
         request.setAttribute("exam", exam);
-        
+
         request.getRequestDispatcher("View/Exam/addexamquestion.jsp").forward(request, response);
     }
 
@@ -69,16 +66,19 @@ public class AddExamQuestionController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int eid = Integer.parseInt(request.getParameter("eid"));
-        String[] rawquestion_id = request.getParameterValues("questionId");
         int courseId = Integer.parseInt(request.getParameter("courseId"));
-        //Update selected question for the exam
-        ExamDBContext examDB = new ExamDBContext();
-        for (int i = 0 ; i < rawquestion_id.length; i++) {
-            int question_id = Integer.parseInt(rawquestion_id[i]);
-            examDB.insertQuestionExam( question_id, eid);
+        String[] rawquestion_id = request.getParameterValues("questionId");
+        if (rawquestion_id == null) {
+            response.sendRedirect("displayexamquestion?eid=" + (eid) + "&courseId=" + (courseId));
+        } else {
+            //Update selected question for the exam
+            ExamDBContext examDB = new ExamDBContext();
+            for (int i = 0; i < rawquestion_id.length; i++) {
+                int question_id = Integer.parseInt(rawquestion_id[i]);
+                examDB.insertQuestionExam(question_id, eid);
+            }
+            response.sendRedirect("displayexamquestion?eid=" + (eid) + "&courseId=" + (courseId));
         }
-        
-        response.sendRedirect("displayexamquestion?eid=" + (eid) + "&courseId=" + (courseId));
     }
 
     /**

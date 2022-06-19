@@ -62,7 +62,7 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Question Detail</label>
-                    <textarea class="form-control" name="questionDetail" value="<%=question.getDetail()%>"></textarea>
+                    <textarea class="form-control" name="questionDetail" > <%=question.getDetail()%> </textarea>
                 </div>
                 <%for (Answer answer : answers) {%>
                 <input type="hidden" name="answerId" value="<%=answer.getId()%>"/>

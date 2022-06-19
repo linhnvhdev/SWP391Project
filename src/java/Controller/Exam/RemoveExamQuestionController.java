@@ -33,6 +33,11 @@ public class RemoveExamQuestionController extends HttpServlet {
         QuestionDBContext questionDB = new QuestionDBContext();
         ExamDBContext examDB = new ExamDBContext();
         String[] rawquestion_id = request.getParameterValues("questionid");
+        if (rawquestion_id == null ) {
+            response.sendRedirect("displayexamquestion?eid=" + (eid) + "&courseId=" + (courseId));
+        }
+        else {
+        
         //Remove selected question for the exam
         for (int i = 0; i < rawquestion_id.length; i++) {
             int question_id = Integer.parseInt(rawquestion_id[i]);
@@ -42,6 +47,7 @@ public class RemoveExamQuestionController extends HttpServlet {
         request.setAttribute("eid", eid);
         request.setAttribute("courseId", courseId);
         response.sendRedirect("displayexamquestion?eid=" + (eid) + "&courseId=" + (courseId));
+        }
     }
 
     /**
