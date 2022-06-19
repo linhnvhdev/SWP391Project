@@ -295,4 +295,31 @@ public class UserDBContext extends DBContext {
         }
         return -1;
     }
+
+    public ArrayList<UserPagging> getUsersByRow() {
+        ArrayList<UserPagging> userList = new ArrayList<>();
+        try {
+            String sql = " SELECT * FROM\n"
+                    + " (SELECT *, ROW_NUMBER() OVER (ORDER BY Exp DESC) as row_index FROM [User]) tbl";
+            PreparedStatement stm = connection.prepareStatement(sql);
+
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                UserPagging user = new UserPagging();
+                user.setId(rs.getInt("User_ID"));
+                user.setName(rs.getString("Name"));
+                user.setGmail(rs.getString("Mail"));
+                user.setGender(rs.getBoolean("Gender"));
+                user.setDob(rs.getDate("Dob"));
+                user.setExp(rs.getInt("Exp"));
+                user.setLevel(rs.getInt("Level"));
+                user.setRole(rs.getInt("Role_ID"));
+                user.setRow_index(rs.getInt("row_index"));
+                userList.add(user);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return userList;
+    }
 }
