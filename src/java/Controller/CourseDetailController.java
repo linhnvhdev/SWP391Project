@@ -39,24 +39,25 @@ public class CourseDetailController extends HttpServlet {
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
         int courseId = Integer.parseInt(request.getParameter("courseId"));
-        int diffId = Integer.parseInt(request.getParameter("diffid"));
+        Integer diffid = Integer.parseInt(request.getParameter("diffid"));
+
+        request.getSession().setAttribute("diffid", diffid);
+
         User user = acc.getUser();
         CourseDBContext courseDB = new CourseDBContext();
         UserCourseDBContext userCourseDB = new UserCourseDBContext();
-        QuestionDBContext questionDB = new QuestionDBContext();
 
         Course course = courseDB.getCourse(courseId);
         int numFlashcard = courseDB.getNumFlashcard(courseId);
-        int numQuestion = questionDB.getQuestions(courseId, diffId).size();
+        int numQuestion = courseDB.getNumQuestion(courseId);
         boolean isEnrolled = userCourseDB.checkUserCourse(user.getId(), courseId);
-
-        request.setAttribute("difficultyId", diffId);
         request.setAttribute("course", course);
         request.setAttribute("numFlashcard", numFlashcard);
         request.setAttribute("numQuestion", numQuestion);
         request.setAttribute("isEnrolled", isEnrolled);
         request.setAttribute("courseId", courseId);
         request.getRequestDispatcher("View/courseDetail.jsp").forward(request, response);
+
     }
 
     /**
