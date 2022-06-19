@@ -84,6 +84,7 @@
                 </form>
             </div>
             <div>
+                <h2 style="text-align: center;">Question List</h2>    
                 <form action="editexam" method="GET">
                     <div class="form-row">
                         <input type ="hidden" name="courseId" value ="${requestScope.courseId}">
@@ -140,7 +141,7 @@
                                     <tr>
                                         <td>${q.id}</td>
                                         <td><input type="checkbox" name="questionid" value="${q.id}"></td>
-                                        <td> <a class="btn btn-primary" id="add" href="#" role="button" >Edit</a></td>
+                                        <td><a class="btn btn-primary" role="button" href="updateexamquestion?courseId=${requestScope.courseId}&questionId=${q.id}&eid=${requestScope.eid}">Edit</a></td>
                                         <td>${q.detail}</td>
 
                                         <c:forEach items = "${requestScope.answerList}" var="a">

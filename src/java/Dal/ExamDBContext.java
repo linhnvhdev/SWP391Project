@@ -673,4 +673,23 @@ public class ExamDBContext extends DBContext {
         return questions;
     }
 
+    public void updateExamQuestion(int Question_ID, String Question_Detail, int Course_ID, int Difficulty_ID) {
+        String sql = "UPDATE [dbo].[Question]\n"
+                + "   SET [Question_Detail] = ?\n"
+                + "      ,[Course_ID] = ?\n"
+                + "      ,[Difficulty_ID] = ?\n"
+                + " WHERE [Question_ID] = ?";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setString(1, Question_Detail);
+            stm.setInt(2, Course_ID);
+            stm.setInt(3, Difficulty_ID);
+            stm.setInt(4, Question_ID);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }
