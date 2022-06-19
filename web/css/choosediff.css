@@ -4,7 +4,7 @@ body{
 .custom-btn {
   width: 130px;
   height: 40px;
-  color: #fff;
+  color: black;
   border-radius: 5px;
   padding: 10px 25px;
   margin-right: 40px;
@@ -30,7 +30,7 @@ body{
 background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 }
 .btn-1:hover {
-  color: #f0094a;
+  color: #FFFEE8;
   background: transparent;
    box-shadow:none;
 }
@@ -42,7 +42,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
   right:0;
   height:2px;
   width:0;
-  background: #f0094a;
+  background: #FFFEE8;
   box-shadow:
    -1px -1px 5px 0px #fff,
    7px 7px 20px 0px #0003,
@@ -71,7 +71,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 }
 .btn-2:hover {
-  color: #f0094a;
+  color: #FFFEE8;
   background: transparent;
    box-shadow:none;
 }
@@ -83,7 +83,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
   right:0;
   height:2px;
   width:0;
-  background: #f0094a;
+  background: #FFFEE8;
   box-shadow:
    -1px -1px 5px 0px #fff,
    7px 7px 20px 0px #0003,
@@ -111,7 +111,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 }
 .btn-3:hover {
-  color: #f0094a;
+  color: #FFFEE8;
   background: transparent;
    box-shadow:none;
 }
@@ -123,7 +123,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
   right:0;
   height:2px;
   width:0;
-  background: #f0094a;
+  background: #FFFEE8;
   box-shadow:
    -1px -1px 5px 0px #fff,
    7px 7px 20px 0px #0003,
@@ -152,7 +152,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 }
 .btn-4:hover {
-  color: #f0094a;
+  color: #FFFEE8;
   background: transparent;
    box-shadow:none;
 }
@@ -164,7 +164,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
   right:0;
   height:2px;
   width:0;
-  background: #f0094a;
+  background: #FFFEE8;
   box-shadow:
    -1px -1px 5px 0px #fff,
    7px 7px 20px 0px #0003,
