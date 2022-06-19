@@ -46,7 +46,52 @@ public class ResetPasswordController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+//    try {
+        String username = request.getParameter("username");
+        String email = request.getParameter("email");
+        AccountDBContext adb = new AccountDBContext();
+        Account a = adb.getAccount(username);
+        String success=null;
+        String user_exist;
+        String email_valid="No";
+        if (a == null && username != null) {
+            user_exist = "No";
+        } else if (username == null) {
+            user_exist = "Unknown";
+        } else {
+            user_exist = "Yes";
+        }
+        if (email != null) {
+            UserDBContext uDB = new UserDBContext();
+            User u = uDB.getUser(a.getUser().getId());
+            if (email.equals(u.getGmail())) {
+                try {
+                    email_valid = "Yes";
+                    String newPassword = RandomPassword();
+                    adb.updateAccount(username, newPassword);
+                    sendMail(u.getGmail(),newPassword);
+                    success="ok";
+                } catch (MessagingException ex) {
+                    Logger.getLogger(ResetPasswordController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                email_valid = "No";
+            }
+        }else{
+        email_valid = "Unknown";
+        }
+//            String newPassword = RandomPassword();
+//            adb.updateAccount(username, newPassword);
+//            sendMail(u.getGmail(),newPassword);
+//            request.setAttribute("resetpassword_successful", SystemMessage.Reset_Successful);
+        request.setAttribute("username", username);
+        request.setAttribute("success", success);
+        request.setAttribute("email_valid", email_valid);
+        request.setAttribute("user_exist", user_exist);
+        request.getRequestDispatcher("/View/resetpassword.jsp").forward(request, response);
+//        } catch (MessagingException ex) {
+//            Logger.getLogger(ResetPasswordController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -61,7 +106,9 @@ public class ResetPasswordController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/View/resetpassword.jsp").forward(request, response);
+
+             processRequest(request, response);
+
     }
 
     /**
@@ -75,26 +122,7 @@ public class ResetPasswordController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            String username = request.getParameter("username");
-            AccountDBContext adb = new AccountDBContext();
-            Account a = adb.getAccount(username);
-            //username exist
-            if(a!=null){
-            UserDBContext uDB = new UserDBContext();
-            User u = uDB.getUser(a.getUser().getId());
-            String newPassword = RandomPassword();
-            adb.updateAccount(username, newPassword);
-            sendMail(u.getGmail(),newPassword);
-            request.setAttribute("resetpassword_successful", SystemMessage.Reset_Successful);}
-            //username do not exist
-            else{
-            request.setAttribute("Not_exit", SystemMessage.UserName_Donot_Exits);
-            }
-            request.getRequestDispatcher("/View/resetpassword.jsp").forward(request, response);
-        } catch (MessagingException ex) {
-            Logger.getLogger(ResetPasswordController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -107,40 +135,40 @@ public class ResetPasswordController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    
+    public static void sendMail(String recepient, String mailcontent) throws MessagingException {
+        Properties properties = new Properties();
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
 
-        public static void sendMail(String recepient, String mailcontent) throws MessagingException {
-            Properties properties = new Properties();
-            properties.put("mail.smtp.auth", "true");
-            properties.put("mail.smtp.starttls.enable", "true");
-            properties.put("mail.smtp.host", "smtp.gmail.com");
-            properties.put("mail.smtp.port", "587");
-
-            String Accountemail = "dungtq123123@gmail.com";
-            String password = "dung123@";
-            Session session = Session.getInstance(properties, new Authenticator() {
-                @Override
-                protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(Accountemail, password);
-                }
-            });
-            Message message = prepareMessage(session, recepient, Accountemail, mailcontent);
-            Transport.send(message);
-            
-        }
-
-        private static Message prepareMessage(Session session, String recepient, String Accountemail, String mailcontent) {
-            try {
-                Message message = new MimeMessage(session);
-                message.setFrom(new InternetAddress(Accountemail));
-                message.setRecipient(Message.RecipientType.TO, new InternetAddress(recepient));
-                message.setSubject("email from java app1");
-                message.setText("Your password:"+mailcontent);
-                return message;
-            } catch (MessagingException ex) {
-                Logger.getLogger(ResetPasswordController.class.getName()).log(Level.SEVERE, null, ex);
+        String Accountemail = "dungtqhe160134@fpt.edu.vn";
+        String password = "dung123123@";
+        Session session = Session.getInstance(properties, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(Accountemail, password);
             }
-            return null;
+        });
+        Message message = prepareMessage(session, recepient, Accountemail, mailcontent);
+        Transport.send(message);
+
+    }
+
+    private static Message prepareMessage(Session session, String recepient, String Accountemail, String mailcontent) {
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(Accountemail));
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(recepient));
+            message.setSubject("resetpassword request");
+            message.setText("Your password : " + mailcontent);
+            return message;
+        } catch (MessagingException ex) {
+            Logger.getLogger(ResetPasswordController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
+    }
 
     private String RandomPassword() {
         String charac = "abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*<>?:";
@@ -148,10 +176,9 @@ public class ResetPasswordController extends HttpServlet {
         for (int i = 0; i <= 5; i++) {
             Random r = new Random();
             char character = charac.charAt(r.nextInt(74));
-            newpassword+=character;
+            newpassword += character;
         }
-         return newpassword;
+        return newpassword;
     }
 
-    
 }

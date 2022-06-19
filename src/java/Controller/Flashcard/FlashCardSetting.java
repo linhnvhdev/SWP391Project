@@ -36,27 +36,36 @@ public class FlashCardSetting extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String editid= request.getParameter("editid");
-        String removeid= request.getParameter("removeid");
-        String updateid_raw= request.getParameter("updateid");
+        String flashcardcontent = request.getParameter("flashcardcontent");
+        String waytofind = request.getParameter("waytofind");
+        String editid = request.getParameter("editid");
+        String removeid = request.getParameter("removeid");
+        String updateid_raw = request.getParameter("updateid");
         String save = request.getParameter("save");
+        String reset = request.getParameter("reset");
+        if(reset!=null)flashcardcontent=null;
+        
         Account acc = (Account) request.getSession().getAttribute("account");
         User user = acc.getUser();
         int updateid = 0;
-        if(updateid_raw!=null)updateid=Integer.parseInt(updateid_raw);
+        if (updateid_raw != null) {
+            updateid = Integer.parseInt(updateid_raw);
+        }
         CourseDBContext cBD = new CourseDBContext();
         FlashcardDBContext fDB = new FlashcardDBContext();
-        if(save!=null){
-            int Course_ID= Integer.parseInt(request.getParameter("Course_ID"));
-            String Back= request.getParameter("Back");
-            String Front= request.getParameter("Front");
-        fDB.UpdateFlashcard(Integer.parseInt(updateid_raw),Back,Front,Course_ID);
+        if (save != null) {
+            int Course_ID = Integer.parseInt(request.getParameter("Course_ID"));
+            String Back = request.getParameter("Back");
+            String Front = request.getParameter("Front");
+            fDB.UpdateFlashcard(Integer.parseInt(updateid_raw), Back, Front, Course_ID);
         }
-        if("remove".equals(removeid)){
-        fDB.RemoveFlashCard(updateid);
+        if ("remove".equals(removeid)) {
+            fDB.RemoveFlashCard(updateid);
         }
         ArrayList<Course> CourseList = cBD.getCourseListByCreator(user.getId());
-        ArrayList<Flashcard> FlashCardList = fDB.getlistFCbyListCourseId(CourseList);
+        ArrayList<Flashcard> FlashCardList= fDB.getlistFCbyListCourseId(CourseList,waytofind,flashcardcontent);  
+         request.setAttribute("flashcardcontent", flashcardcontent);
+         request.setAttribute("waytofind", waytofind);
         request.setAttribute("editid", editid);
         request.setAttribute("updateid", updateid);
         request.setAttribute("FlashCardList", FlashCardList);
@@ -76,19 +85,31 @@ public class FlashCardSetting extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-//        String editid= request.getParameter("editid");
-//        String removeid= request.getParameter("removeid");
-//        String updateid_raw= request.getParameter("updateid");
+//        String editid = request.getParameter("editid");
+//        String removeid = request.getParameter("removeid");
+//        String updateid_raw = request.getParameter("updateid");
+//        String save = request.getParameter("save");
+//        Account acc = (Account) request.getSession().getAttribute("account");
+//        User user = acc.getUser();
 //        int updateid = 0;
-//        if(updateid_raw!=null)updateid=Integer.parseInt(updateid_raw);
+//        if (updateid_raw != null) {
+//            updateid = Integer.parseInt(updateid_raw);
+//        }
 //        CourseDBContext cBD = new CourseDBContext();
 //        FlashcardDBContext fDB = new FlashcardDBContext();
-//        if("remove".equals(removeid)){
-//        //fDB.RemoveFlashCard(updateid);
+//        if (save != null) {
+//            int Course_ID = Integer.parseInt(request.getParameter("Course_ID"));
+//            String Back = request.getParameter("Back");
+//            String Front = request.getParameter("Front");
+//            fDB.UpdateFlashcard(Integer.parseInt(updateid_raw), Back, Front, Course_ID);
 //        }
-//        ArrayList<Course> CourseList = cBD.getCourseListByCreator(9);
+//        if ("remove".equals(removeid)) {
+//            fDB.RemoveFlashCard(updateid);
+//        }
+//        ArrayList<Course> CourseList = cBD.getCourseListByCreator(user.getId());
 //        ArrayList<Flashcard> FlashCardList = fDB.getlistFCbyListCourseId(CourseList);
 //        request.setAttribute("editid", editid);
+//        request.setAttribute("updateid", updateid);
 //        request.setAttribute("FlashCardList", FlashCardList);
 //        request.getRequestDispatcher("/View/Flashcard/flashcardsetting.jsp").forward(request, response);
     }
@@ -104,16 +125,36 @@ public class FlashCardSetting extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-//                String editid= request.getParameter("editid");
-//        String removeid= request.getParameter("removeid");
-//        String updateid= request.getParameter("updateid");
-//          if("remove".equals(removeid)){
-//        //fDB.RemoveFlashCard(updateid);
-//        response.getWriter().print(editid+"."+removeid+"."+updateid);
+            processRequest(request, response);
+//        String editid = request.getParameter("editid");
+//        String removeid = request.getParameter("removeid");
+//        String updateid_raw = request.getParameter("updateid");
+//        String save = request.getParameter("save");
+//        Account acc = (Account) request.getSession().getAttribute("account");
+//        User user = acc.getUser();
+//        int updateid = 0;
+//        if (updateid_raw != null) {
+//            updateid = Integer.parseInt(updateid_raw);
 //        }
-      //    response.getWriter().print(editid+"."+removeid+"."+updateid);
-        
+//        CourseDBContext cBD = new CourseDBContext();
+//        FlashcardDBContext fDB = new FlashcardDBContext();
+//        if (save != null) {
+//            int Course_ID = Integer.parseInt(request.getParameter("Course_ID"));
+//            String Back = request.getParameter("Back");
+//            String Front = request.getParameter("Front");
+//            fDB.UpdateFlashcard(Integer.parseInt(updateid_raw), Back, Front, Course_ID);
+//        }
+//        if ("remove".equals(removeid)) {
+//            fDB.RemoveFlashCard(updateid);
+//        }
+//        ArrayList<Course> CourseList = cBD.getCourseListByCreator(user.getId());
+//        ArrayList<Flashcard> FlashCardList = fDB.getlistFCbyListCourseId(CourseList, flashcardcontent, waytofind);
+//        request.setAttribute("flashcardcontent", flashcardcontent);
+//        request.setAttribute("editid", editid);
+//        request.setAttribute("updateid", updateid);
+//        request.setAttribute("FlashCardList", FlashCardList);
+//        request.getRequestDispatcher("/View/Flashcard/flashcardsetting.jsp").forward(request, response);
+
     }
 
     /**
