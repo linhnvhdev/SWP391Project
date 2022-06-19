@@ -6,6 +6,8 @@
 package Controller.Exam;
 
 import Dal.AnswerDBContext;
+import Dal.CourseDBContext;
+import Dal.DifficultyDBContext;
 import Dal.ExamDBContext;
 import Dal.QuestionDBContext;
 import Model.Account;
@@ -28,22 +30,20 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class CreateExamController extends HttpServlet {
 
-    
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
+        int diffid = (Integer) request.getSession().getAttribute("diffid");
         int courseId = Integer.parseInt(request.getParameter("courseId"));
         User user = acc.getUser();
-        
+
         ExamDBContext examDB = new ExamDBContext();
         AnswerDBContext answerDB = new AnswerDBContext();
-        ArrayList<Question> questionList = examDB.getQuestionsForExam(courseId);
-        ArrayList<Answer> answerList = answerDB.getAnswersbyCourse(courseId);
-        
+        ArrayList<Question> questionList = examDB.getQuestionsByDiff(courseId, diffid);
+        ArrayList<Answer> answerList = answerDB.getAnswersByDiff(courseId,diffid);
+
         request.setAttribute("questionList", questionList);
         request.setAttribute("answerList", answerList);
         request.setAttribute("courseId", courseId);
@@ -62,21 +62,40 @@ public class CreateExamController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int passScore = Integer.parseInt(request.getParameter("passScore"));
-        int courseId = Integer.parseInt(request.getParameter("courseId"));
+        Integer passScore = Integer.parseInt(request.getParameter("passScore"));
+        Integer courseId = Integer.parseInt(request.getParameter("courseId"));
+        Integer examtime = Integer.parseInt(request.getParameter("examtime"));
+        int diffid = (Integer) request.getSession().getAttribute("diffid");
+
+        String examname = request.getParameter("examname");
+
         ExamDBContext examDB = new ExamDBContext();
-        examDB.insertExam(courseId, passScore);
+        DifficultyDBContext difficultyDB = new DifficultyDBContext();
+        CourseDBContext courseDB = new CourseDBContext();
+        Exam newExam = new Exam();
+        newExam.setCourse(courseDB.getCourse(courseId));
+        newExam.setDifficulty(difficultyDB.getDifficulty(diffid));
+        newExam.setName(examname);
+        newExam.setTime(examtime);
+        newExam.setPassed(passScore);
+        examDB.insertExam(newExam);
         Exam latestExam = examDB.getLatestExam(courseId);
+
         String[] rawquestion_id = request.getParameterValues("questionid");
-        //Update selected question for the exam
-        for (int i = 0 ; i < rawquestion_id.length; i++) {
-            int question_id = Integer.parseInt(rawquestion_id[i]);
-            examDB.updateQuestionExam( latestExam.getId(), courseId,question_id);
+        if ( rawquestion_id == null ) {
+            request.getRequestDispatcher("View/Exam/createexam.jsp").forward(request, response);
         }
-        
+        else {
+        //Update selected question for the exam
+        for (int i = 0; i < rawquestion_id.length; i++) {
+            int question_id = Integer.parseInt(rawquestion_id[i]);
+            examDB.insertQuestionExam(question_id, latestExam.getId());
+        }
+
         request.setAttribute("createexamMessage", SystemMessage.CREATE_EXAM);
-        
+        request.setAttribute("courseId", courseId);
         request.getRequestDispatcher("View/Exam/createexam.jsp").forward(request, response);
+        }
     }
 
     /**

@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller.Question;
+package Controller.Exam;
 
 import Dal.AnswerDBContext;
-import Dal.DifficultyDBContext;
 import Dal.ExamDBContext;
 import Dal.QuestionDBContext;
+import Model.Account;
 import Model.Answer;
-import Model.Difficulty;
 import Model.Question;
+import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -22,47 +22,31 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Bi
+ * @author LENOVO
  */
-public class UpdateQuestionController extends HttpServlet {
+public class UpdateExamQuestionController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
+    
+
+    
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Account acc = (Account) request.getSession().getAttribute("account");
+        Integer difficultyId = (Integer) request.getSession().getAttribute("diffid");
         int courseId = Integer.parseInt(request.getParameter("courseId"));
+        int eid = Integer.parseInt(request.getParameter("eid"));
+        User user = acc.getUser();
         int questionId = Integer.parseInt(request.getParameter("questionId"));
         QuestionDBContext questionDb = new QuestionDBContext();
         AnswerDBContext answerDb = new AnswerDBContext();
-        DifficultyDBContext difficultyDb = new DifficultyDBContext();
-
-        ArrayList<Difficulty> difficulties = difficultyDb.getDifficulties();
         Question question = questionDb.getQuestion(questionId);
         ArrayList<Answer> answers = answerDb.getAnswers(questionId);
-
-        request.setAttribute("difficulties", difficulties);
+        request.setAttribute("difficultyId", difficultyId);
         request.setAttribute("question", question);
         request.setAttribute("answers", answers);
         request.setAttribute("courseId", courseId);
-
-        request.getRequestDispatcher("View/Question/updateQuestion.jsp").forward(request, response);
+        request.setAttribute("eid", eid);
+        request.getRequestDispatcher("View/Exam/updateexamquestion.jsp").forward(request, response);
     }
 
     /**
@@ -79,55 +63,41 @@ public class UpdateQuestionController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         int courseId = Integer.parseInt(request.getParameter("courseId"));
-        int questionId = Integer.parseInt(request.getParameter("questionId"));
+        int eid = Integer.parseInt(request.getParameter("eid"));
+        int questionId = Integer.parseInt(request.getParameter("qid"));
         String[] raw_answerId = request.getParameterValues("answerId");
-        String questionDetail = request.getParameter("questionDetail");
-        String[] answersDetail = request.getParameterValues("answerDetail");
-        String[] newAnswersDetail = request.getParameterValues("newAnswerDetail");
-        int difficultyId = Integer.parseInt(request.getParameter("difficultyId"));
+        String questionDetail = request.getParameter("questiondetail");
+        String[] answersDetail = request.getParameterValues("answerdetail");
+        
+        Integer difficultyId = (Integer) request.getSession().getAttribute("diffid");
         QuestionDBContext questionDB = new QuestionDBContext();
+        ExamDBContext examDB = new ExamDBContext();
         AnswerDBContext answerDB = new AnswerDBContext();
-        questionDB.updateQuestion(questionId, questionDetail, courseId, difficultyId);
+        examDB.updateExamQuestion(questionId, questionDetail, courseId, difficultyId);
         int numberOfCorrect = 0;
         
-        for (int i = 0; i < answersDetail.length; i++) {
-            boolean isCorrect = Boolean.parseBoolean(request.getParameter("isCorrect" + (i + 1)));
+        for (int i = 0; i < raw_answerId.length; i++) {
+            boolean isCorrect = Boolean.parseBoolean(request.getParameter("isCorrect" + ( Integer.parseInt(raw_answerId[i]))));
             if (isCorrect == true) {
                 numberOfCorrect++;
             }
         }
-        if (newAnswersDetail.length != 0) {
-            for (int i = 0; i < newAnswersDetail.length; i++) {
-                boolean isCorrect = Boolean.parseBoolean(request.getParameter("isCorrectNew" + (i + 1)));
-                if (isCorrect == true) {
-                    numberOfCorrect++;
-                }
-            }
-        }
-              
         
         if (numberOfCorrect == 1) {
-            for (int i = 0; i < answersDetail.length; i++) {
+            for (int i = 0; i < raw_answerId.length; i++) {
                 String answerDetail = answersDetail[i];
                 int answerId = Integer.parseInt(raw_answerId[i]);
-                boolean isCorrect = Boolean.parseBoolean(request.getParameter("isCorrect" + (i + 1)));
+                boolean isCorrect = Boolean.parseBoolean(request.getParameter("isCorrect" + ( Integer.parseInt(raw_answerId[i]))));
                 answerDB.updateAnswer(answerId, answerDetail, questionId, isCorrect);
             }
-            if (newAnswersDetail.length != 0) {
-                for (int i = 0; i < newAnswersDetail.length; i++) {
-                    String newAnswerDetail = newAnswersDetail[i];
-                    boolean isCorrect = Boolean.parseBoolean(request.getParameter("isCorrectNew" + (i + 1)));
-                    answerDB.addAnswer(newAnswerDetail, questionId, isCorrect);
-                }
-            }
-            response.sendRedirect("questionsetting?courseId=" + courseId);
+            
+            response.sendRedirect("displayexamquestion?eid="+eid+"&courseId=" + courseId);
         } else {
             out.println("<script type=\"text/javascript\">");
             out.println("alert('The question have more than 1 correct answer or have none correct answer');");
             out.println("</script>");
-            response.sendRedirect("questionsetting?courseId=" + courseId);
+            response.sendRedirect("displayexamquestion?eid="+eid+"&courseId=" + courseId);
         }
-
     }
 
     /**

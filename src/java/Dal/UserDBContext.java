@@ -7,6 +7,7 @@ package Dal;
 
 import Model.Course;
 import Model.User;
+import Model.Pagging.UserPagging;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -163,14 +164,14 @@ public class UserDBContext extends DBContext {
 
     public void updateUser(int id, String name, String gmail, boolean gender, Date dob, int exp, int level) {
         try {
-            String sql = "UPDATE [dbo].[User]\n" +
-            "   SET [Name] = ?\n" +
-            "      ,[Mail] = ?\n" +
-            "      ,[Gender] = ?\n" +
-            "      ,[Dob] = ?\n" +
-            "      ,[Exp] = ?\n" +
-            "      ,[Level] = ?\n" +
-            "WHERE [User_ID] = ?";
+            String sql = "UPDATE [dbo].[User]\n"
+                    + "   SET [Name] = ?\n"
+                    + "      ,[Mail] = ?\n"
+                    + "      ,[Gender] = ?\n"
+                    + "      ,[Dob] = ?\n"
+                    + "      ,[Exp] = ?\n"
+                    + "      ,[Level] = ?\n"
+                    + "WHERE [User_ID] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, name);
             stm.setString(2, gmail);
@@ -188,16 +189,16 @@ public class UserDBContext extends DBContext {
     public ArrayList<User> getUserList() {
         ArrayList<User> userList = new ArrayList<>();
         try {
-            String sql = "SELECT u.[User_ID]\n" +
-            ",[Name]\n" +
-            ",[Mail]\n" +
-            ",[Gender]\n" +
-            ",[Dob]\n" +
-            ",[Exp]\n" +
-            ",[Level]\n" +
-            ",[Role_ID]\n" +
-            ",a.IsActive\n" +
-            "FROM [User] u INNER JOIN Account a ON u.[User_ID] = a.[User_ID]";
+            String sql = "SELECT u.[User_ID]\n"
+                    + ",[Name]\n"
+                    + ",[Mail]\n"
+                    + ",[Gender]\n"
+                    + ",[Dob]\n"
+                    + ",[Exp]\n"
+                    + ",[Level]\n"
+                    + ",[Role_ID]\n"
+                    + ",a.IsActive\n"
+                    + "FROM [User] u INNER JOIN Account a ON u.[User_ID] = a.[User_ID]";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
@@ -217,15 +218,15 @@ public class UserDBContext extends DBContext {
         }
         return userList;
     }
-    
-    public ArrayList<String> getRoleList(){
+
+    public ArrayList<String> getRoleList() {
         ArrayList<String> roleList = new ArrayList<>();
         try {
-            String sql="SELECT Role_Name\n" +
-                    "FROM [role]";
+            String sql = "SELECT Role_Name\n"
+                    + "FROM [role]";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 roleList.add(rs.getString("Role_Name"));
             }
         } catch (SQLException ex) {
@@ -236,9 +237,9 @@ public class UserDBContext extends DBContext {
 
     public void updateRole(int userId, int roleId) {
         try {
-            String sql = "UPDATE [dbo].[User]\n" +
-            "   SET [Role_ID] = ?\n" +
-            "WHERE [User_ID] = ?";
+            String sql = "UPDATE [dbo].[User]\n"
+                    + "   SET [Role_ID] = ?\n"
+                    + "WHERE [User_ID] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, roleId);
             stm.setInt(2, userId);
@@ -246,5 +247,52 @@ public class UserDBContext extends DBContext {
         } catch (SQLException ex) {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public ArrayList<UserPagging> getUsersbyPagging(int pageindex, int pagesize) {
+        ArrayList<UserPagging> userList = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM\n"
+                    + "(SELECT *, ROW_NUMBER() OVER (ORDER BY Exp DESC) as row_index FROM [User]) tbl\n"
+                    + "WHERE row_index >= (?-1)*?+ 1\n"
+                    + "AND row_index <= ? * ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, pageindex);
+            stm.setInt(2, pagesize);
+            stm.setInt(3, pageindex);
+            stm.setInt(4, pagesize);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                UserPagging user = new UserPagging();
+                user.setId(rs.getInt("User_ID"));
+                user.setName(rs.getString("Name"));
+                user.setGmail(rs.getString("Mail"));
+                user.setGender(rs.getBoolean("Gender"));
+                user.setDob(rs.getDate("Dob"));
+                user.setExp(rs.getInt("Exp"));
+                user.setLevel(rs.getInt("Level"));
+                user.setRole(rs.getInt("Role_ID"));
+                user.setRow_index(rs.getInt("row_index"));
+                userList.add(user);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return userList;
+    }
+
+    public int countUsers() {
+        try {
+            String sql = "SELECT COUNT(*) as Total  FROM [User] ";
+            PreparedStatement stm = connection.prepareStatement(sql);
+
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("Total");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
     }
 }

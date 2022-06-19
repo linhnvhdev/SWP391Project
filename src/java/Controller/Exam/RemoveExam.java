@@ -3,61 +3,43 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package Controller.Exam;
 
-import Dal.AnswerDBContext;
-import Dal.CourseDBContext;
-import Dal.DifficultyDBContext;
+import Dal.ExamDBContext;
 import Dal.QuestionDBContext;
 import Model.Account;
-import Model.Course;
-import Model.Difficulty;
 import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author sioni
+ * @author LENOVO
  */
-public class ChooseDifficultyController extends HttpServlet {
+public class RemoveExam extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
+
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        DifficultyDBContext difficultyDb = new DifficultyDBContext();
-
-        ArrayList<Difficulty> difficulties = difficultyDb.getDifficulties();
-        session.removeAttribute("diffid");
+        Account acc = (Account) request.getSession().getAttribute("account");
         int courseId = Integer.parseInt(request.getParameter("courseId"));
-        request.setAttribute("difficulties", difficulties);
+        int eid = Integer.parseInt(request.getParameter("eid"));
+        User user = acc.getUser();
+        
+       
+        ExamDBContext examDB = new ExamDBContext();
+        examDB.deleteExam(eid);
+        
+        request.setAttribute("eid", eid);
         request.setAttribute("courseId", courseId);
-        request.getRequestDispatcher("View/choosediff.jsp").forward(request, response);
+        response.sendRedirect("displayexamquestion?eid=-1&courseId=" + (courseId));
     }
 
     /**
