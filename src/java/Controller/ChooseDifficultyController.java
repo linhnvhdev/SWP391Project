@@ -51,9 +51,7 @@ public class ChooseDifficultyController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         DifficultyDBContext difficultyDb = new DifficultyDBContext();
-
         ArrayList<Difficulty> difficulties = difficultyDb.getDifficulties();
-        session.removeAttribute("diffid");
         int courseId = Integer.parseInt(request.getParameter("courseId"));
         request.setAttribute("difficulties", difficulties);
         request.setAttribute("courseId", courseId);

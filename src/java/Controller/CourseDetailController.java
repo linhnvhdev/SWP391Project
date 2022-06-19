@@ -6,6 +6,7 @@
 package Controller;
 
 import Dal.CourseDBContext;
+import Dal.QuestionDBContext;
 import Dal.UserCourseDBContext;
 import Model.Account;
 import Model.Course;
@@ -38,18 +39,18 @@ public class CourseDetailController extends HttpServlet {
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
         int courseId = Integer.parseInt(request.getParameter("courseId"));
-        Integer diffid = Integer.parseInt(request.getParameter("diffid"));
-
-        request.getSession().setAttribute("diffid", diffid);
-
+        int diffId = Integer.parseInt(request.getParameter("diffid"));
         User user = acc.getUser();
         CourseDBContext courseDB = new CourseDBContext();
         UserCourseDBContext userCourseDB = new UserCourseDBContext();
+        QuestionDBContext questionDB = new QuestionDBContext();
 
         Course course = courseDB.getCourse(courseId);
         int numFlashcard = courseDB.getNumFlashcard(courseId);
-        int numQuestion = courseDB.getNumQuestion(courseId);
+        int numQuestion = questionDB.getQuestions(courseId, diffId).size();
         boolean isEnrolled = userCourseDB.checkUserCourse(user.getId(), courseId);
+
+        request.setAttribute("difficultyId", diffId);
         request.setAttribute("course", course);
         request.setAttribute("numFlashcard", numFlashcard);
         request.setAttribute("numQuestion", numQuestion);
@@ -70,11 +71,13 @@ public class CourseDetailController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
+        int diffId = Integer.parseInt(request.getParameter("diffId"));
         int courseId = Integer.parseInt(request.getParameter("courseId"));
         User user = acc.getUser();
         UserCourseDBContext userCourseDB = new UserCourseDBContext();
         userCourseDB.insertUserCourse(user.getId(), courseId);
-        response.sendRedirect("course?courseId=" + courseId);
+        request.setAttribute("difficultyId", diffId);
+        response.sendRedirect("course?courseId=" + courseId + "&difficultyId=" + diffId);
     }
 
     /**
