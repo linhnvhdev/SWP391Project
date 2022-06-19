@@ -29,13 +29,13 @@
                 <div class="button1">
                     <c:if test="${requestScope.isEnrolled == true}">
                         <div>
-                            <a class="button" href="flashcard?courseId=${course.id}"><button class="button4">Learn</button></a>
+                            <a class="button" href="flashcard?courseId=${course.id}&difficultyId=${requestScope.difficultyId}"><button class="button4">Learn</button></a>
                         </div>
                         <div>
-                            <a class="button" href="revision?courseId=${course.id}"><button class="button2">Practice</button></a>
+                            <a class="button" href="revision?courseId=${course.id}&difficultyId=${requestScope.difficultyId}"><button class="button2">Practice</button></a>
                         </div>
                         <div>
-                            <a class="button" href="exam?courseId=${course.id}" ><button class="button3">Boss fight</button></a>
+                            <a class="button" href="exam?courseId=${course.id}&difficultyId=${requestScope.difficultyId}" ><button class="button3">Boss fight</button></a>
                         </div>
                     </c:if>
                     <c:if test="${requestScope.isEnrolled == false}">

@@ -3,40 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package Controller.Exam;
 
-import Dal.AnswerDBContext;
-import Dal.CourseDBContext;
-import Dal.DifficultyDBContext;
-import Dal.QuestionDBContext;
-import Model.Account;
-import Model.Course;
-import Model.Difficulty;
-import Model.User;
+import Dal.ExamDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author sioni
+ * @author LENOVO
  */
-public class ChooseDifficultyController extends HttpServlet {
+public class EditExamController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -49,13 +33,18 @@ public class ChooseDifficultyController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        DifficultyDBContext difficultyDb = new DifficultyDBContext();
-        ArrayList<Difficulty> difficulties = difficultyDb.getDifficulties();
+        int passScore = Integer.parseInt(request.getParameter("escore"));
         int courseId = Integer.parseInt(request.getParameter("courseId"));
-        request.setAttribute("difficulties", difficulties);
-        request.setAttribute("courseId", courseId);
-        request.getRequestDispatcher("View/choosediff.jsp").forward(request, response);
+        int examtime = Integer.parseInt(request.getParameter("etime"));
+        int examId = Integer.parseInt(request.getParameter("eid"));
+       // int difficulty = Integer.parseInt(request.getParameter("difficulty"));
+        int difficulty = 1; //hardcode
+        String examname = request.getParameter("ename");
+        
+        ExamDBContext examDB = new ExamDBContext();
+        examDB.editExam(passScore, examname,examtime,examId);
+        
+        response.sendRedirect("displayexamquestion?eid=" + (examId) + "&courseId=" + (courseId));
     }
 
     /**
@@ -69,7 +58,7 @@ public class ChooseDifficultyController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
     }
 
     /**

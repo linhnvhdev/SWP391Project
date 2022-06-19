@@ -16,9 +16,34 @@
         <link href="css/header.css" rel="stylesheet" type="text/css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
     </head>
     <body style="background-color: #E9E494">
-        <%@ include file="../header.jsp" %>
+
+        <div class="header">
+            <nav>
+                <div class="logo">No game no learn</div>
+                <ul class="navbar-item-list">
+                    <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
+                    <li><a href="${pageContext.request.contextPath}/course/library">Course Library</a></li>
+                    <li class="dropdown">
+                        <a href="#">Setting</a>
+                        <div class="drop-down">
+                            <ul class="navbar-dropdown-item-list">
+                                <li><a href="${pageContext.request.contextPath}/profile">User profile</a></li>
+                                    <c:if test="${requestScope.user.role == 3}">
+                                    <li><a href="${pageContext.request.contextPath}/auth">Authorization</a></li>
+                                    </c:if>
+                                <li><a href="${pageContext.request.contextPath}/chgpwd">Change password</a></li>
+                                <li><a href="${pageContext.request.contextPath}/login">Log out</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+
         <div class="container" style=" width: 100%; padding: none;">
             <h2 style="text-align: center;">Create Exam</h2>    
 
@@ -27,10 +52,23 @@
             </c:if>
             <c:if test="${requestScope.questionList.size() gt 0}">    
                 <form action="createexam?courseId=${requestScope.courseId}" method="POST">
-
-                    <p>Score to pass the exam : 
-                        <input type="number" name="passScore" value="0" min="0" max="100"> % 
-                    </p>
+                    <div class="form-row">
+                        <div class="form-group col-md-3" >
+                            <label class="form-label">Exam Name</label>
+                            <input type="text" class="form-control" name="examname"  />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label class="form-label">Time to Complete</label>
+                            <input type="text" class="form-control" name="examtime" />
+                        </div>
+                        <div class="form-group col-md-3" >
+                            <label class="form-label">Score to pass the Exam</label>
+                            <input type="number" class="form-control" name="passScore" min="0" max="100" />
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <h2 style="text-align: center;">Questions available</h2>
+                    </div>
                     <table class="table table-hover" style="background-color: #BBC7EF">
                         <thead>
                             <tr>
@@ -61,17 +99,27 @@
                                     </c:if>    
                                 </c:if>                         
                             </c:forEach>                    
-                            </tr> 
+
                         </c:forEach>
+
                         </tbody>
                     </table>
-                    <input type = "submit" value = "Create This Exam" />
+                    <div>
+                        <label class="form-label ">Number of questions selected:</label>
+                        <span id="checkNum"></span>
+                    </div>
+                        <div class="col-md-12" style="text-align: center;">
+                        <input class="btn btn-primary" type = "submit" value = "Create This Exam" role="button"/>
+                    </div>
                 </form>
             </c:if>        
             <c:if test="${requestScope.questionList.size() eq 0}">  
                 <div style="color: red;font-size: 20px;text-align: center;">${requestScope.noquestionMessage}</div>
             </c:if>
+
         </div>
+        <script src="js/checkbox.js" type="text/javascript"></script>
         <%@ include file="../inventory.jsp" %>
     </body>
+
 </html>

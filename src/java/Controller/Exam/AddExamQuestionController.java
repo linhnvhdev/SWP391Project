@@ -5,7 +5,6 @@
  */
 package Controller.Exam;
 
-import Dal.AnswerDBContext;
 import Dal.ExamDBContext;
 import Model.Account;
 import Model.Answer;
@@ -24,35 +23,35 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author LENOVO
  */
-public class DisplayExamQuestionController extends HttpServlet {
+public class AddExamQuestionController extends HttpServlet {
 
-    
-
-    
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
-        int diffid = (Integer) request.getSession().getAttribute("diffid");
+        Integer difficultyId = (Integer) request.getSession().getAttribute("diffid");
+
         int courseId = Integer.parseInt(request.getParameter("courseId"));
         User user = acc.getUser();
-        
+
         String raw_eid = request.getParameter("eid");
-        if(raw_eid == null || raw_eid.trim().length()==0)
+        if (raw_eid == null || raw_eid.trim().length() == 0) {
             raw_eid = "-1";
+        }
         int eid = Integer.parseInt(raw_eid);
-        
+
         ExamDBContext examDB = new ExamDBContext();
-        ArrayList<Exam> examList = examDB.getExamsByDiff(courseId,diffid);
-        ArrayList<Question> questionList = examDB.getQuestions(eid);
-        ArrayList<Answer> answerList = examDB.getAnswers(eid);
         Exam exam = examDB.getExamByEid(eid);
-        request.setAttribute("examList",examList );
+        ArrayList<Question> questionList = examDB.getQuestionsExamByDiff(eid, difficultyId, courseId);
+        ArrayList<Answer> answerList = examDB.getAnswersExamByDiff(eid, difficultyId, courseId);
+
         request.setAttribute("questionList", questionList);
         request.setAttribute("answerList", answerList);
         request.setAttribute("eid", eid);
         request.setAttribute("courseId", courseId);
+        request.setAttribute("difficultyId", difficultyId);
         request.setAttribute("exam", exam);
-        request.getRequestDispatcher("View/Exam/questionList.jsp").forward(request, response);
+
+        request.getRequestDispatcher("View/Exam/addexamquestion.jsp").forward(request, response);
     }
 
     /**
@@ -66,7 +65,20 @@ public class DisplayExamQuestionController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        int eid = Integer.parseInt(request.getParameter("eid"));
+        int courseId = Integer.parseInt(request.getParameter("courseId"));
+        String[] rawquestion_id = request.getParameterValues("questionId");
+        if (rawquestion_id == null) {
+            response.sendRedirect("displayexamquestion?eid=" + (eid) + "&courseId=" + (courseId));
+        } else {
+            //Update selected question for the exam
+            ExamDBContext examDB = new ExamDBContext();
+            for (int i = 0; i < rawquestion_id.length; i++) {
+                int question_id = Integer.parseInt(rawquestion_id[i]);
+                examDB.insertQuestionExam(question_id, eid);
+            }
+            response.sendRedirect("displayexamquestion?eid=" + (eid) + "&courseId=" + (courseId));
+        }
     }
 
     /**
