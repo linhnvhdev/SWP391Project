@@ -21,20 +21,23 @@ import java.util.logging.Logger;
  */
 public class FlashcardDBContext extends DBContext {
 
-    public void addFlashcard(String front, String back, int courseId) {
+    public void addFlashcard(String front, String back, int courseId,String difficulty) {
         try {
             String sql = "INSERT INTO [dbo].[Flashcard]\n"
                     + "           ([Flash_Front]\n"
                     + "           ,[Flash_Back]\n"
-                    + "           ,[Course_ID])\n"
+                    + "           ,[Course_ID]\n"
+                    + "           ,[Difficulty_ID])\n"
                     + "     VALUES\n"
                     + "           (?\n"
+                    + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?)";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, front);
             stm.setString(2, back);
             stm.setInt(3, courseId);
+            stm.setInt(4, Integer.parseInt(difficulty));
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(FlashcardDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -152,10 +155,10 @@ public class FlashcardDBContext extends DBContext {
                 }
                 if (flashcardcontent != null) {
                     if (waytofind.equals("Flashcard_ID")) {
-                        if(isDigit(flashcardcontent) == true){
-                        stm.setInt(courses.size() + 1, Integer.parseInt(flashcardcontent));}
-                        else{
-                            stm.setInt(courses.size() + 1,-1);
+                        if (isDigit(flashcardcontent) == true) {
+                            stm.setInt(courses.size() + 1, Integer.parseInt(flashcardcontent));
+                        } else {
+                            stm.setInt(courses.size() + 1, -1);
                         }
                     } else {
                         stm.setString(courses.size() + 1, flashcardcontent);
@@ -288,14 +291,14 @@ public class FlashcardDBContext extends DBContext {
     }
 
     private boolean isDigit(String flashcardcontent) {
-            try {
-                int iVal = Integer.parseInt(flashcardcontent);
-                return true;
-            }catch(NumberFormatException e){
-               
-            }
-            
-            return false;
+        try {
+            int iVal = Integer.parseInt(flashcardcontent);
+            return true;
+        } catch (NumberFormatException e) {
+
+        }
+
+        return false;
     }
 
 }

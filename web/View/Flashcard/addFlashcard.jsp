@@ -14,15 +14,18 @@
         <link href="${pageContext.request.contextPath}/css/inventory.css?version=1" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cssforflashcard.css" />
         <link href="../css/header.css?version=1" rel="stylesheet" type="text/css"/>
+        <%  
+            String Difficulty = (String)request.getAttribute("Difficulty");
+        %>
     </head>
     <body>
         <%@ include file="../header.jsp" %>
-      
         <form action="add" method="POST">
             <c:if test="${requestScope.courseList.size() == 0}">
                 <h1>You don't have any course to create flashcard</h1>
             </c:if>
             <c:if test="${requestScope.courseList.size() != 0}">  
+                <input type="hidden" name="Difficulty" value="<%=Difficulty%>" >
                 Course:
                 <select name="courseId">
                     <c:forEach items="${requestScope.courseList}" var="course">
