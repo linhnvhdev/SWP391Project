@@ -19,7 +19,6 @@
         %>
     </head>
     <body>
-        <h5><%=difficultyId%></h5>
         <%@ include file="../header.jsp" %>
         <form action="add" method="POST">
             <c:if test="${requestScope.courseList.size() == 0}">
