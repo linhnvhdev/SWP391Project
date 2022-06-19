@@ -51,7 +51,7 @@
         <div class="back">
             
                <h3 style="font-size: 30px;">Course list:</h3>
-                    <table style="border-color: black; font-size:30px; margin-bottom: 20px;" border="solid 2px">
+                    <table style="border-color: black; font-size:30px; margin-left:90px;" border="solid 2px">
 
                         <c:forEach var="course" items="${requestScope.courseList}">
                             <tr>

@@ -17,7 +17,9 @@
         %>
     </head>
     <body>
-        <div class="container">
+            
+        <div class="container d-flex justify-content-center align-items-center vh-100">
+            <div class="bg-white text-center p-5 mt-3 center">
         <%if(reset_success!=null){%>
         <span class="success"><p>Reset Password successfully! Please check new password in your mail!</p></span>
         <span class="login"><a href="login"><button>Login</button></a></span>
@@ -25,12 +27,14 @@
         <%if(Not_exit!=null){%>
          <span class="fail"><p>Username do not exits!Please try again</p></span>
         <%}%>
-        <form class="box" action="resetpassword" method="POST">
-        <input type="text" name="username" placeholder="enter your username"><br/>
-        <input type="submit" value="Continue">
+        <form class="pb-3" action="resetpassword" method="POST">
+        <input type="text" name="username" placeholder="enter your username">
+        <input type="submit"  class="btn" value="Continue">
         </form>
         <%}%>
       </div>
     </body>
-
+        
+            
+        
 </html>

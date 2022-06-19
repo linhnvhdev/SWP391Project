@@ -21,8 +21,8 @@ body{
   outline: none;
 }
 .btn-1{
-  width: 130px;
-  height: 40px;
+  width: 200px;
+  height: 80px;
   line-height: 42px;
   padding: 0;
   border: none;
@@ -62,8 +62,8 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 }
 
 .btn-2{
-  width: 130px;
-  height: 40px;
+  width: 200px;
+  height: 80px;
   line-height: 42px;
   padding: 0;
   border: none;
@@ -102,8 +102,8 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
   transition:800ms ease all;
 }
 .btn-3{
-  width: 130px;
-  height: 40px;
+  width: 200px;
+  height: 80px;
   line-height: 42px;
   padding: 0;
   border: none;
@@ -143,8 +143,8 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 }
 
 .btn-4{
-  width: 130px;
-  height: 40px;
+    width: 200px;
+  height: 80px;
   line-height: 42px;
   padding: 0;
   border: none;
@@ -192,7 +192,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 .center {
   margin: auto;
   width: 60%;
-padding-left: 500px;
+padding-left: 200px;
 padding-top: 400px;
 }
 

@@ -13,6 +13,7 @@ html {
 body{
       margin: 0;
   padding: 0;
+  background-color: #000e2a;
 }
 
 
@@ -160,11 +161,12 @@ hr.new1 {
     margin-left:10%;
 }
 .card-container, .front, .back {
-	width: 30rem;
+	width: 40rem;
 	height: 40rem;
 }
 .card-container {
-	margin: 5rem;
+	margin-right: 5rem;
+        margin-top:5rem;
 }
 .front, .back {
 	box-sizing: border-box;
@@ -209,4 +211,8 @@ hr.new1 {
 
 .card-container {
 	perspective: 75rem;
+}
+.top-img{
+    background-color: #000e2a;
+    margin-left: 200px;
 }
