@@ -45,7 +45,8 @@ public class LeaderboardController extends HttpServlet {
         request.setAttribute("pageindex", pageindex);
         int myrank = 0;
         ArrayList<UserPagging> userList = userDB.getUsersbyPagging( pageindex, pagesize);
-        for (UserPagging user : userList) {
+        ArrayList<UserPagging> users = userDB.getUsersByRow();
+        for (UserPagging user : users) {
             int uid = user.getId();
             if (currentuserId == uid) {
                 myrank = user.getRow_index();
