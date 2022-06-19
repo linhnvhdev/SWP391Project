@@ -66,7 +66,7 @@
                     <tr>
                         <td>Flashcard</td><td>${requestScope.numFlashcard}</td>
                         <c:if test="${sessionScope.account.user.role >= 2}">
-                            <td ><a href="flashcard/add?courseId=${course.id}"><button class="button5" >Add flashcard</button></a></td>
+                            <td ><a href="flashcard/add?courseId=${course.id}&difficultyId=${requestScope.difficultyId}"><button class="button5" >Add flashcard</button></a></td>
                         </c:if>
                     </tr>
                     <tr>

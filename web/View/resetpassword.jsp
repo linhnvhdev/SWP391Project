@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <!--        <link href="css/cssforresetpassword.css" rel="stylesheet" type="text/css"/>-->
+                <link href="css/cssforresetpassword.css" rel="stylesheet" type="text/css"/>
         <%
             String reset_success = (String) request.getAttribute("resetpassword_successful");
             String user_exist = (String) request.getAttribute("user_exist");
@@ -19,25 +19,33 @@
             String usernamehidden = (String) request.getAttribute("username");
         %>
     </head>
-    <body>
-            
+    <body>  
         <div class="container d-flex justify-content-center align-items-center vh-100">
             <div class="bg-white text-center p-5 mt-3 center">
-        <%if(reset_success!=null){%>
-        <span class="success"><p>Reset Password successfully! Please check new password in your mail!</p></span>
-        <span class="login"><a href="login"><button>Login</button></a></span>
-        <%}else{%>
-        <%if(Not_exit!=null){%>
-         <span class="fail"><p>Username do not exits!Please try again</p></span>
-        <%}%>
+        <%if(success==null){%>
         <form class="pb-3" action="resetpassword" method="POST">
-        <input type="text" name="username" placeholder="enter your username">
-        <input type="submit"  class="btn" value="Continue">
-        </form>
-        <%}%>
-      </div>
+            <%if (user_exist.equals("Unknown") || user_exist.equals("No")) {%>
+            <%if (user_exist.equals("No")) {%>
+            <p>username does not exist</p>
+            <%}%>
+            <input type="text" name="username" placeholder="enter your username"><br/>
+            <input type="submit" value="Continue">
+            <%} else {%>
+            <%if (email_valid.equals("Unknown") || email_valid.equals("No")) {%>
+            <%if (email_valid.equals("No")) {%>
+            <p>incorrect email</p>
+            <%}%>
+            <input type="hidden" name="username" value="<%=usernamehidden%>"><br/>
+            <input type="text" name="email" placeholder="enter your email"><br/>
+            <input type="submit" class="btn" value="Continue">
+            <%}%>
+            <%}%>
+        </form> 
+          <%}else{%>
+          <p>Reset Password successful!Please Check New password in your email!</p>
+            <%}%>
+            </div>
+<!--            </div>-->
     </body>
-        
-            
-        
+
 </html>
