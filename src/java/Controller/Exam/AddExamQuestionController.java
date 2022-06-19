@@ -31,8 +31,8 @@ public class AddExamQuestionController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
-    //    Integer difficulty = (Integer) request.getSession().getAttribute("difficulty");
-        int difficultyId = 1;
+        Integer difficultyId = (Integer) request.getSession().getAttribute("diffid");
+        
         int courseId = Integer.parseInt(request.getParameter("courseId"));
         User user = acc.getUser();
         
@@ -43,8 +43,8 @@ public class AddExamQuestionController extends HttpServlet {
         
         ExamDBContext examDB = new ExamDBContext();
         Exam exam = examDB.getExamByEid(eid);
-        ArrayList<Question> questionList = examDB.getQuestionsByDiff(eid, difficultyId, courseId);
-        ArrayList<Answer> answerList = examDB.getAnswersByDiff(eid, difficultyId, courseId);
+        ArrayList<Question> questionList = examDB.getQuestionsExamByDiff(eid, difficultyId, courseId);
+        ArrayList<Answer> answerList = examDB.getAnswersExamByDiff(eid, difficultyId, courseId);
         
         
         request.setAttribute("questionList", questionList);

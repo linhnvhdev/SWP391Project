@@ -154,7 +154,7 @@ public class AnswerDBContext extends DBContext {
             }
         }
     }
-    
+
     public ArrayList<Answer> getAnswersbyCourse(int course_id) {
         ArrayList<Answer> answers = new ArrayList<>();
         try {
@@ -164,7 +164,7 @@ public class AnswerDBContext extends DBContext {
                     + "  INNER JOIN Course c ON c.Course_ID = q.Course_ID\n"
                     + "  WHERE c.Course_ID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1,course_id);
+            stm.setInt(1, course_id);
             ResultSet rs = stm.executeQuery();
             QuestionDBContext questionDB = new QuestionDBContext();
             while (rs.next()) {
@@ -172,6 +172,34 @@ public class AnswerDBContext extends DBContext {
                 a.setId(rs.getInt("Answer_ID"));
                 a.setDetail(rs.getString("Answer_Detail"));
                 a.setIsCorrect(rs.getBoolean("isCorrect"));
+                a.setQuestion(questionDB.getQuestion(rs.getInt("Question_ID")));
+                answers.add(a);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return answers;
+    }
+
+    public ArrayList<Answer> getAnswersByDiff(int courseId, int diffid) {
+
+        ArrayList<Answer> answers = new ArrayList<>();
+        try {
+            String sql = "select  a.Answer_Detail,a.Answer_ID,a.IsCorrect,a.Question_ID\n"
+                    + "from Question q INNER JOIN Answer a\n"
+                    + "ON q.Question_ID = a.Question_ID\n"
+                    + "And q.Difficulty_ID = ? \n"
+                    + "AND q.Course_ID= ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(2, courseId);
+            stm.setInt(1, diffid);
+            ResultSet rs = stm.executeQuery();
+            QuestionDBContext questionDB = new QuestionDBContext();
+            while (rs.next()) {
+                Answer a = new Answer();
+                a.setId(rs.getInt("Answer_ID"));
+                a.setDetail(rs.getString("Answer_Detail"));
+                a.setIsCorrect(rs.getBoolean("IsCorrect"));
                 a.setQuestion(questionDB.getQuestion(rs.getInt("Question_ID")));
                 answers.add(a);
             }

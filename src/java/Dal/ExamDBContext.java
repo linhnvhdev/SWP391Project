@@ -437,7 +437,7 @@ public class ExamDBContext extends DBContext {
         }
     }
 
-    public ArrayList<Exam> getExamList(int course_id) {
+    public ArrayList<Exam> getExamListByCourse(int course_id) {
         ArrayList<Exam> exams = new ArrayList<>();
         try {
             String sql = "SELECT *\n"
@@ -489,7 +489,7 @@ public class ExamDBContext extends DBContext {
             PreparedStatement stm_delete_question = connection.prepareStatement(sql_delete_question_exam);
             stm_delete_question.setInt(1, eid);
             stm_delete_question.executeUpdate();
-            
+
             PreparedStatement stm_delete_exam = connection.prepareStatement(sql_delete_exam);
             stm_delete_exam.setInt(1, eid);
             stm_delete_exam.executeUpdate();
@@ -511,7 +511,7 @@ public class ExamDBContext extends DBContext {
         }
     }
 
-    public ArrayList<Question> getQuestionsByDiff(int eid, int difficultyId, int courseId) {
+    public ArrayList<Question> getQuestionsExamByDiff(int eid, int difficultyId, int courseId) {
         ArrayList<Question> questions = new ArrayList<>();
         try {
             String sql = "select  q.Question_ID, q.Question_Detail,q.Difficulty_ID,q.Course_ID \n"
@@ -544,7 +544,7 @@ public class ExamDBContext extends DBContext {
         return questions;
     }
 
-    public ArrayList<Answer> getAnswersByDiff(int eid, int difficultyId, int courseId) {
+    public ArrayList<Answer> getAnswersExamByDiff(int eid, int difficultyId, int courseId) {
         ArrayList<Answer> answers = new ArrayList();
         try {
             String sql = "select  a.Answer_Detail,a.Answer_ID,a.IsCorrect,a.Question_ID\n"
@@ -610,6 +610,67 @@ public class ExamDBContext extends DBContext {
         } catch (SQLException ex) {
             Logger.getLogger(QuestionDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public ArrayList<Exam> getExamsByDiff(int courseId, int diffid) {
+        ArrayList<Exam> exams = new ArrayList<>();
+        try {
+            String sql = "Select e.Course_ID,e.Difficulty_ID,e.Exam_ID,e.Exam_Name,e.Passed,e.[Time]\n"
+                    + "FROM EXAM e\n"
+                    + "WHERE e.Course_ID = ?\n"
+                    + "AND e.Difficulty_ID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, courseId);
+            stm.setInt(2, diffid);
+            ResultSet rs = stm.executeQuery();
+            CourseDBContext courseDB = new CourseDBContext();
+            ExamDBContext examDB = new ExamDBContext();
+            DifficultyDBContext diffDB = new DifficultyDBContext();
+            while (rs.next()) {
+                Exam e = new Exam();
+                e.setId(rs.getInt("Exam_ID"));
+                e.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
+                e.setPassed(rs.getInt("Passed"));
+                e.setName(rs.getString("Exam_Name"));
+                e.setTime(rs.getInt("Time"));
+                e.setDifficulty(diffDB.getDifficulty(rs.getInt("Difficulty_ID")));
+                exams.add(e);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ExamDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return exams;
+    }
+
+    public ArrayList<Question> getQuestionsByDiff(int courseId, int diffid) {
+        ArrayList<Question> questions = new ArrayList<>();
+        try {
+            String sql = "select  q.Question_ID, q.Question_Detail,q.Difficulty_ID,q.Course_ID \n"
+                    + "from Question q\n"
+                    + "WHERE \n"
+                    + "q.Difficulty_ID = ? \n"
+                    + "AND q.Course_ID= ?";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+
+            stm.setInt(1, diffid);
+            stm.setInt(2, courseId);
+            ResultSet rs = stm.executeQuery();
+            CourseDBContext courseDB = new CourseDBContext();
+            DifficultyDBContext difficultyDB = new DifficultyDBContext();
+            ExamDBContext examDB = new ExamDBContext();
+            while (rs.next()) {
+                Question q = new Question();
+                q.setId(rs.getInt("Question_ID"));
+                q.setDetail(rs.getString("Question_Detail"));
+                q.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
+                q.setDifficulty(difficultyDB.getDifficulty(rs.getInt("Difficulty_ID")));
+                questions.add(q);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ExamDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return questions;
     }
 
 }

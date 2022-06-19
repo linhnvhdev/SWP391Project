@@ -25,7 +25,6 @@
                 <div class="logo">No game no learn</div>
                 <ul class="navbar-item-list">
                     <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
-                    <li><a href="${pageContext.request.contextPath}/course?courseId=${requestScope.courseId}">Course Detail</a></li>
                     <li><a href="${pageContext.request.contextPath}/course/library">Course Library</a></li>
                     <li class="dropdown">
                         <a href="#">Setting</a>
