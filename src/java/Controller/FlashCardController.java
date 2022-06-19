@@ -41,8 +41,8 @@ public class FlashCardController extends HttpServlet {
         String back = request.getParameter("back");
         String index_raw = request.getParameter("index_raw");
         int courseId = Integer.parseInt(request.getParameter("courseId"));
-//        int difficulties = Integer.parseInt(request.getParameter("diffid"));
-        int difficulties=1;
+        int difficulties = Integer.parseInt(request.getParameter("diffid"));
+
         //getData
         FlashcardDBContext fcDB = new FlashcardDBContext();
         CourseDBContext courseDB = new CourseDBContext();
@@ -54,9 +54,10 @@ public class FlashCardController extends HttpServlet {
         if (index_raw == null) {
             index_raw = "0";
         }
+             
         int index = Integer.parseInt(index_raw);
         //isRead
-        fcDB.IsreadFC(ListFC.get(index), user, course);
+        if(ListFC.size()!=0)fcDB.IsreadFC(ListFC.get(index), user, course);
         //if next
         if (next != null) {
             index = index + 1;
@@ -71,6 +72,7 @@ public class FlashCardController extends HttpServlet {
         request.setAttribute("index", index);
         request.setAttribute("ListFC", ListFC);
         request.setAttribute("courseId", courseId);
+        response.getWriter().print("ok");
         request.getRequestDispatcher("/View/learncourse.jsp").forward(request, response);
 
     }
