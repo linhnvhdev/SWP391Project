@@ -44,25 +44,32 @@
         </div>
         <div class="img_container">
             <!-- top level image container START-->
-            <div class="main-img">
             
+            <div class="main-img">
+                <div class="card-container">
+	<div class="front">Hover To Start Studying</div>
+        <div class="back">
+            
+               <h3 style="font-size: 30px;">Course list:</h3>
+                    <table style="border-color: black; font-size:30px; margin-bottom: 20px;" border="solid 2px">
 
-                <div class="overlay">
-                       <h3 style="font-size: 30px;">Course list:</h3>
-                <table style="border-color: black; font-size:30px; margin-bottom: 20px;" border="solid 2px">
+                        <c:forEach var="course" items="${requestScope.courseList}">
+                            <tr>
+                                <td> <a href="choosediff?courseId=${course.id}">${course.name}</a><br>
+                                </c:forEach></td>
+                        </tr>
+                    </table>
+                    <c:if test="${sessionScope.account.user.role >= 2}">
+                        <a href="course/add"><button>Add new course</button></a>
+                    </c:if>
 
-                    <c:forEach var="course" items="${requestScope.courseList}">
-                        <tr>
-                            <td> <a href="choosediff?courseId=${course.id}">${course.name}</a><br>
-                            </c:forEach></td>
-                    </tr>
-                </table>
-                <c:if test="${sessionScope.account.user.role >= 2}">
-                    <a href="course/add"><button>Add new course</button></a>
-                </c:if>
-                </div>
+        </div>
+</div>
+               
             </div>
 
+            
+            
 
             <div class="stacked-div">
                 <!--stacked img container -->
