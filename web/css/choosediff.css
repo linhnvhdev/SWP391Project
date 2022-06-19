@@ -1,9 +1,13 @@
+body{
+    background-color: #000e2a;
+}
 .custom-btn {
   width: 130px;
   height: 40px;
-  color: #fff;
+  color: black;
   border-radius: 5px;
   padding: 10px 25px;
+  margin-right: 40px;
   font-family: 'Lato', sans-serif;
   font-weight: 500;
   background: transparent;
@@ -17,8 +21,8 @@
   outline: none;
 }
 .btn-1{
-  width: 130px;
-  height: 40px;
+  width: 200px;
+  height: 80px;
   line-height: 42px;
   padding: 0;
   border: none;
@@ -26,7 +30,7 @@
 background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 }
 .btn-1:hover {
-  color: #f0094a;
+  color: #FFFEE8;
   background: transparent;
    box-shadow:none;
 }
@@ -38,7 +42,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
   right:0;
   height:2px;
   width:0;
-  background: #f0094a;
+  background: #FFFEE8;
   box-shadow:
    -1px -1px 5px 0px #fff,
    7px 7px 20px 0px #0003,
@@ -58,8 +62,8 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 }
 
 .btn-2{
-  width: 130px;
-  height: 40px;
+  width: 200px;
+  height: 80px;
   line-height: 42px;
   padding: 0;
   border: none;
@@ -67,7 +71,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 }
 .btn-2:hover {
-  color: #f0094a;
+  color: #FFFEE8;
   background: transparent;
    box-shadow:none;
 }
@@ -79,7 +83,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
   right:0;
   height:2px;
   width:0;
-  background: #f0094a;
+  background: #FFFEE8;
   box-shadow:
    -1px -1px 5px 0px #fff,
    7px 7px 20px 0px #0003,
@@ -98,8 +102,8 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
   transition:800ms ease all;
 }
 .btn-3{
-  width: 130px;
-  height: 40px;
+  width: 200px;
+  height: 80px;
   line-height: 42px;
   padding: 0;
   border: none;
@@ -107,7 +111,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 }
 .btn-3:hover {
-  color: #f0094a;
+  color: #FFFEE8;
   background: transparent;
    box-shadow:none;
 }
@@ -119,7 +123,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
   right:0;
   height:2px;
   width:0;
-  background: #f0094a;
+  background: #FFFEE8;
   box-shadow:
    -1px -1px 5px 0px #fff,
    7px 7px 20px 0px #0003,
@@ -139,8 +143,8 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 }
 
 .btn-4{
-  width: 130px;
-  height: 40px;
+    width: 200px;
+  height: 80px;
   line-height: 42px;
   padding: 0;
   border: none;
@@ -148,7 +152,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 }
 .btn-4:hover {
-  color: #f0094a;
+  color: #FFFEE8;
   background: transparent;
    box-shadow:none;
 }
@@ -160,7 +164,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
   right:0;
   height:2px;
   width:0;
-  background: #f0094a;
+  background: #FFFEE8;
   box-shadow:
    -1px -1px 5px 0px #fff,
    7px 7px 20px 0px #0003,
@@ -184,3 +188,17 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
     top:-50;
 }
 
+
+.center {
+  margin: auto;
+  width: 60%;
+padding-left: 200px;
+padding-top: 400px;
+}
+
+#tsparticles {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+}

@@ -15,18 +15,25 @@
         <link href="css/choosediff.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-                
+                <div id="tsparticles"></div>
                 <%
             ArrayList<Difficulty> difficulties = (ArrayList<Difficulty>) request.getAttribute("difficulties");
         %>
         
         <form action="course" method="get" >
             <input type="hidden" name="courseId" value="${requestScope.courseId}">
+            <div class="center">
             <div class="frame">
             <%for (Difficulty d : difficulties) {%>
-            <button  type="submit" name="diffid" class="custom-btn btn-<%=d.getId()%>" value="<%=d.getId()%>"><%=d.getId()%></button>               
+            <button  type="submit" name="diffid" class="custom-btn btn-<%=d.getId()%>" value="<%=d.getId()%>"><%=d.getName()%></button>  
+            
             <%}%>
             </div>
+            </div>
         </form> 
+            
+            <script src='https://cdn.jsdelivr.net/npm/tsparticles@1.18.3/dist/tsparticles.min.js'></script>
+<script src="js/backgroundparticles.js" type="text/javascript"></script>
+
     </body> 
 </html>
