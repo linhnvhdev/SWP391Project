@@ -60,6 +60,13 @@ public class Exam {
         this.passed = passed;
     }
 
+    public Exam(int id, Course course, int passed, Difficulty difficulty) {
+        this.id = id;
+        this.course = course;
+        this.passed = passed;
+        this.difficulty = difficulty;
+    }
+
     
     public int getId() {
         return id;
@@ -84,6 +91,8 @@ public class Exam {
     public void setPassed(int passed) {
         this.passed = passed;
     }
+
+    
 
    
     

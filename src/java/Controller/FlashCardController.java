@@ -41,11 +41,13 @@ public class FlashCardController extends HttpServlet {
         String back = request.getParameter("back");
         String index_raw = request.getParameter("index_raw");
         int courseId = Integer.parseInt(request.getParameter("courseId"));
+//        int difficulties = Integer.parseInt(request.getParameter("diffid"));
+        int difficulties=1;
         //getData
         FlashcardDBContext fcDB = new FlashcardDBContext();
         CourseDBContext courseDB = new CourseDBContext();
         
-        ArrayList<Flashcard> ListFC = fcDB.getlistFC(courseId);
+        ArrayList<Flashcard> ListFC = fcDB.getlistFC(courseId,difficulties);
         Account acc = (Account) request.getSession().getAttribute("account");
         User user = acc.getUser();
         Course course = courseDB.getCourse(courseId);

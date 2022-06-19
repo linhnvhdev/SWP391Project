@@ -12,77 +12,51 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Trang chủ</title>
-        <link href="css/cssforhomestyle.css" rel="stylesheet" type="text/css"/>
+        <link href="css/cssforhomestyle.css?version=1" rel="stylesheet" type="text/css"/>
         <link href="css/header.css" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.request.contextPath}/css/inventory.css?version=1" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <div class="header">
-            <nav>
-                <div class="logo">No game no learn</div>
-                <ul class="navbar-item-list">
-                    <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
-                    <li><a href="${pageContext.request.contextPath}/leaderboard">Leaderboard</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="${pageContext.request.contextPath}/course/library">Course Library</a></li>
-                    <li class="dropdown">
-                        <a href="#">Setting</a>
-                        <div class="drop-down">
-                            <ul class="navbar-dropdown-item-list">
-                                <li><a href="${pageContext.request.contextPath}/profile">User profile</a></li>
-                                <c:if test="${requestScope.user.role == 3}">
-                                    <li><a href="${pageContext.request.contextPath}/auth">Authorization</a></li>
-                                </c:if>
-                                <li><a href="${pageContext.request.contextPath}/chgpwd">Change password</a></li>
-                                <li><a href="${pageContext.request.contextPath}/login">Log out</a></li>
-                                <li></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-        <div class="main-content">
-            <div class="left">
+        <%@ include file="header.jsp" %>
+        <div class="img_container">
+            <!-- top level image container START-->
+            <div class="main-img">
+                <div class="overlay">
+                    <h3 style="font-size: 30px;">Course list:</h3>
+                    <table style="border-color: black; font-size:30px; margin-bottom: 20px;" border="solid 2px">
 
-                <h3 style="font-size: 30px;">Course list:</h3>
-                <table style="border-color: black; font-size:30px; margin-bottom: 20px;" border="solid 2px">
-
-                    <c:forEach var="course" items="${requestScope.courseList}">
-                        <tr>
-                            <td> <a href="course?courseId=${course.id}">${course.name}</a><br>
-                            </c:forEach></td>
-                    </tr>
-                </table>
-                <c:if test="${sessionScope.account.user.role >= 2}">
-                    <a href="course/add"><button>Add new course</button></a>
-                </c:if>
-            </div>
-            <div class="right">
-                <img style="width: 512px; height: 512px;"src="img/char.png" alt="avatar"/>
-                <div class="table">
-                    <table style="border-color: black;" border="solid 2px">
-                        <tr>
-                            <td>Name</td><td>${requestScope.user.name}</td>
-                        </tr>
-                        <tr>
-                            <td>Gmail</td><td>${requestScope.user.gmail}</td>
-                        </tr>    
-                        <tr>    
-                            <td>Gender</td><td>${requestScope.user.gender ? "Male":"Female"}</td>
-                        </tr>    
-                        <tr>
-                            <td>Dob</td><td>${requestScope.user.dob}</td>
-                        </tr>
-                        <tr>
-                            <td>Exp</td><td>${requestScope.user.exp}</td>
-                        </tr>
-                        <tr>
-                            <td>Level</td><td>${requestScope.user.level}</td>
+                        <c:forEach var="course" items="${requestScope.courseList}">
+                            <tr>
+                                <td> <a href="choosediff?courseId=${course.id}">${course.name}</a><br>
+                                </c:forEach></td>
                         </tr>
                     </table>
+                    <c:if test="${sessionScope.account.user.role >= 2}">
+                        <a href="course/add"><button>Add new course</button></a>
+                    </c:if>
                 </div>
             </div>
-        </div>
+            <div class="stacked-div">
+                <!--stacked img container -->
+                <div class="top-img">
+                    <!--top image -->
+                    <div class="card">
+                        <img id="ava" src="img/char.png" alt="Avatar" style="width:100%">
 
+                        <div class="center">
+                            <p><b>${requestScope.user.name}</b></p>
+                            <p>Exp: <b>${requestScope.user.exp}</b></p> 
+                            <p>Level: <b>${requestScope.user.level}</b></p> 
+                        </div>    
+                    </div>
+                    <div class="overlay">
+
+                    </div>
+                    <!--overlay -->
+                </div>
+
+            </div>
+        </div>
+        <%@ include file="inventory.jsp" %>
     </body>
 </html>

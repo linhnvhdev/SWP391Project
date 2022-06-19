@@ -134,7 +134,7 @@ public class QuestionDBContext extends DBContext {
                 + "      ,[Exam_ID] = null\n"
                 + "      ,[Difficulty_ID] = ?\n"
                 + " WHERE [Question_ID] = ?";
-        PreparedStatement stm = null;          
+        PreparedStatement stm = null;
         try {
             stm = connection.prepareStatement(sql);
             stm.setString(1, Question_Detail);
@@ -173,5 +173,93 @@ public class QuestionDBContext extends DBContext {
         return 0;
     }
 
-    
+    public void removeQuestionfromExamm(int question_id) {
+        String sql = "UPDATE [dbo].[Question]\n"
+                + "      SET Exam_ID = NULL \n"
+                + " WHERE Question_ID = ?";
+
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, question_id);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public ArrayList<Question> getQuestions(int courseId, int difficultyId) {
+        ArrayList<Question> questions = new ArrayList<>();
+        try {
+            String sql = "SELECT [Question_ID]\n"
+                    + "      ,[Question_Detail]\n"
+                    + "      ,[Course_ID]\n"
+                    + "      ,[Exam_ID]\n"
+                    + "      ,[Difficulty_ID]\n"
+                    + "  FROM [dbo].[Question]\n"
+                    + "  WHERE Course_ID = ? AND Difficulty_ID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, courseId);
+            stm.setInt(2, difficultyId);
+            ResultSet rs = stm.executeQuery();
+            CourseDBContext courseDB = new CourseDBContext();
+            //DifficultyDBContext difficultyDB = new DifficultyDBContext();
+            while (rs.next()) {
+                Question q = new Question();
+                q.setId(rs.getInt("Question_ID"));
+                q.setDetail(rs.getString("Question_Detail"));
+                q.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
+                //q.setDifficulty(difficultyDB.getDifficulty(rs.getInt("Difficulty_ID")));
+                questions.add(q);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return questions;
+    }
+
+    public ArrayList<Question> getRemainingQuestions(int userId, int courseId, int difficultyId) {
+        ArrayList<Question> questions = new ArrayList<>();
+        try {
+            String sql = "SELECT Question_ID, Question_Detail, Course_ID, Exam_ID, [Difficulty_ID]\n"
+                    + "FROM Question\n"
+                    + "WHERE Question_ID NOT IN (SELECT Question_ID FROM User_Question\n"
+                    + "WHERE [User_ID] = ? AND IsRead = 1) AND [Course_ID] = ? AND Difficulty_ID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, userId);
+            stm.setInt(2, courseId);
+            stm.setInt(3, difficultyId);
+            ResultSet rs = stm.executeQuery();
+            CourseDBContext courseDB = new CourseDBContext();
+            while (rs.next()) {
+                Question q = new Question();
+                q.setId(rs.getInt("Question_ID"));
+                q.setDetail(rs.getString("Question_Detail"));
+                q.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
+                questions.add(q);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return questions;
+    }
+
+    public void deleteQuestion(int question_id) {
+        String sql = "DELETE FROM [dbo].[User_Question]\n"
+                + "      WHERE Question_ID = ?\n"
+                + "DELETE FROM [dbo].[Answer]\n"
+                + "      WHERE Question_ID = ?\n"
+                + "DELETE FROM [dbo].[Question]\n"
+                + "      WHERE Question_ID = ?";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, question_id);
+            stm.setInt(2, question_id);
+            stm.setInt(3, question_id);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

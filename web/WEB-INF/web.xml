@@ -106,7 +106,7 @@
     </servlet>
     <servlet>
         <servlet-name>DeleteAnswerController</servlet-name>
-        <servlet-class>AnswerController.DeleteAnswerController</servlet-class>
+        <servlet-class>Controller.Answer.DeleteAnswerController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CreateExamController</servlet-name>
@@ -147,6 +147,18 @@
     <servlet>
         <servlet-name>FlashCardSetting</servlet-name>
         <servlet-class>Controller.Flashcard.FlashCardSetting</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteQuestionController</servlet-name>
+        <servlet-class>Controller.Question.DeleteQuestionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ItemController</servlet-name>
+        <servlet-class>Controller.ItemController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChooseDifficultyController</servlet-name>
+        <servlet-class>Controller.ChooseDifficultyController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RemoveExam</servlet-name>
@@ -279,6 +291,18 @@
     <servlet-mapping>
         <servlet-name>EditExamController</servlet-name>
         <url-pattern>/editexam</url-pattern>
+    </servlet-mapping>    
+    <servlet-mapping>
+        <servlet-name>DeleteQuestionController</servlet-name>
+        <url-pattern>/deletequestion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ItemController</servlet-name>
+        <url-pattern>/item</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChooseDifficultyController</servlet-name>
+        <url-pattern>/choosediff</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>300</session-timeout>

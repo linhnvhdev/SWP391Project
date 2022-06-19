@@ -11,6 +11,7 @@ public class Course {
     private String name;
     private User creator;
     private String description;
+    private Difficulty difficulty;
 
     public Course() {
     }
@@ -22,6 +23,16 @@ public class Course {
         this.creator = creator;
         this.description = description;
     }
+
+    public Course(int id, String name, User creator, String description, Difficulty difficulty) {
+        this.id = id;
+        this.name = name;
+        this.creator = creator;
+        this.description = description;
+        this.difficulty = difficulty;
+    }
+    
+    
 
     public int getId() {
         return id;
@@ -53,6 +64,14 @@ public class Course {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
     }
 }
 
