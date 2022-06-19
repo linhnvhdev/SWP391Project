@@ -59,7 +59,7 @@
                         </div>
                         <div class="form-group col-md-3">
                             <label class="form-label">Time to Complete</label>
-                            <input type="text" class="form-control" name="examtime" />
+                            <input type="number" class="form-control" name="examtime" />
                         </div>
                         <div class="form-group col-md-3" >
                             <label class="form-label">Score to pass the Exam</label>

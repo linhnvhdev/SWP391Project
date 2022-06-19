@@ -65,6 +65,7 @@ public class ItemController extends HttpServlet {
         ItemDBContext itemDB = new ItemDBContext();
         Integer newNumItem = itemDB.getNumItem(account.getUser().getId(),itemID);
         itemDB.useItem(account.getUser().getId(),itemID,1);
+        newNumItem--;
         String responseData = "";
         if(itemID == ItemHandler.EXP_BOOSTER){
             request.getSession().setAttribute("expBoost",true);
