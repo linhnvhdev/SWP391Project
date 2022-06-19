@@ -28,19 +28,11 @@ public class DisplayExamQuestionController extends HttpServlet {
 
     
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
+    
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
+        int diffid = (Integer) request.getSession().getAttribute("diffid");
         int courseId = Integer.parseInt(request.getParameter("courseId"));
         User user = acc.getUser();
         
@@ -50,17 +42,16 @@ public class DisplayExamQuestionController extends HttpServlet {
         int eid = Integer.parseInt(raw_eid);
         
         ExamDBContext examDB = new ExamDBContext();
-        AnswerDBContext answerDB = new AnswerDBContext();
-        ArrayList<Exam> examList = examDB.getExamList(courseId);
+        ArrayList<Exam> examList = examDB.getExamsByDiff(courseId,diffid);
         ArrayList<Question> questionList = examDB.getQuestions(eid);
-        ArrayList<Answer> answerList = answerDB.getAnswersbyCourse(courseId);
-        
+        ArrayList<Answer> answerList = examDB.getAnswers(eid);
+        Exam exam = examDB.getExamByEid(eid);
         request.setAttribute("examList",examList );
         request.setAttribute("questionList", questionList);
         request.setAttribute("answerList", answerList);
         request.setAttribute("eid", eid);
         request.setAttribute("courseId", courseId);
-        
+        request.setAttribute("exam", exam);
         request.getRequestDispatcher("View/Exam/questionList.jsp").forward(request, response);
     }
 
