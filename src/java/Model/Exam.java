@@ -13,6 +13,7 @@ public class Exam {
     private int id;
     private Course course;
     private int passed;
+    private Difficulty difficulty;
 
 
     public Exam() {
@@ -22,6 +23,13 @@ public class Exam {
         this.id = id;
         this.course = course;
         this.passed = passed;
+    }
+
+    public Exam(int id, Course course, int passed, Difficulty difficulty) {
+        this.id = id;
+        this.course = course;
+        this.passed = passed;
+        this.difficulty = difficulty;
     }
 
     
@@ -47,6 +55,14 @@ public class Exam {
 
     public void setPassed(int passed) {
         this.passed = passed;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
     }
 
    
