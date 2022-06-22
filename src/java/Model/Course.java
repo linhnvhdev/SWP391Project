@@ -12,6 +12,7 @@ public class Course {
     private User creator;
     private String description;
     private Difficulty difficulty;
+    private String image;
 
     public Course() {
     }
@@ -31,7 +32,23 @@ public class Course {
         this.description = description;
         this.difficulty = difficulty;
     }
-    
+
+    public Course(int id, String name, User creator, String description, Difficulty difficulty, String image) {
+        this.id = id;
+        this.name = name;
+        this.creator = creator;
+        this.description = description;
+        this.difficulty = difficulty;
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
     
 
     public int getId() {

@@ -15,6 +15,7 @@ public class Item {
     private String description;
     private int duration;
     private String image;
+    private int price;
 
     public Item() {
     }
@@ -25,6 +26,23 @@ public class Item {
         this.description = description;
         this.duration = duration;
         this.image = image;
+    }
+
+    public Item(int id, String name, String description, int duration, String image, int price) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.duration = duration;
+        this.image = image;
+        this.price = price;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public int getId() {
