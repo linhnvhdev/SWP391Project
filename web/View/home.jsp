@@ -18,56 +18,61 @@
     </head>
     <body>
         <%@ include file="header.jsp" %>
-        <div class="img_container">
-            <!-- top level image container START-->
-            
-            <div class="main-img">
-                <div class="card-container">
-	<div class="front">Hover To Start Studying</div>
-        <div class="back">
-            
-               <h3 style="font-size: 30px;">Course list:</h3>
-                    <table style="border-color: black; font-size:30px; margin-left:90px;" border="solid 2px">
 
-                        <c:forEach var="course" items="${requestScope.courseList}">
-                            <tr>
-                                <td> <a href="choosediff?courseId=${course.id}">${course.name}</a><br>
-                                </c:forEach></td>
-                        </tr>
-                    </table>
-                    <c:if test="${sessionScope.account.user.role >= 2}">
-                        <a href="course/add"><button>Add new course</button></a>
-                    </c:if>
 
-        </div>
-</div>
-               
+        <div class="left">
+
+            <div class="middle-left">
+                <img id="img1" src="${pageContext.request.contextPath}/img/pix.png" alt=""/>
+
             </div>
+            <div class="left-corner-l">
+                <p id="space">Name: <b>${requestScope.user.name}</b></p>
+                <p id="space">Level: <b>${requestScope.user.level}</b></p>
+                <p id="space">Exp: <b>${requestScope.user.exp}</b></p> 
+            </div>
+            <div class="left-corner-r">
+                <p id="space"> List of trophies:</p>
+                <p id="space">Exp: <b>${requestScope.user.exp}</b></p>
+                <p id="space">Exp: <b>${requestScope.user.exp}</b></p>
+                <p id="space">Exp: <b>${requestScope.user.exp}</b></p>
+                <p id="space">Exp: <b>${requestScope.user.exp}</b></p>
+            </div>
+        </div>
+        <div class="right">
+            <h1>List of enrolled</h1>
+            <div class="box">
 
-            
-            
+                <c:forEach var="course" items="${requestScope.courseList}">
 
-            <div class="stacked-div">
-                <!--stacked img container -->
-                <div class="top-img">
-                    <!--top image -->
-                    <div class="card">
-                        <img id="ava" src="img/char.png" alt="Avatar" style="width:100%">
-
-                        <div class="center">
-                            <p><b>${requestScope.user.name}</b></p>
-                            <p>Exp: <b>${requestScope.user.exp}</b></p> 
-                            <p>Level: <b>${requestScope.user.level}</b></p> 
-                        </div>    
+                    <div class="course"> 
+                        <img id="img2" src="${pageContext.request.contextPath}/img/pix.png" alt=""/>
+                        <div class="link">
+                            <a  href="choosediff?courseId=${course.id}" >${course.name}</a>
+                            enroll: 1000+?
+                        </div>
                     </div>
-                    <div class="overlay">
+                </c:forEach>
 
-                    </div>
-                    <!--overlay -->
+
+                <div class="pagination">
+                    <a href="#">&laquo;</a>
+                    <a href="#">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                    <a href="#">5</a>
+                    <a href="#">6</a>
+                    <a href="#">&raquo;</a>
                 </div>
-
             </div>
         </div>
         <%@ include file="inventory.jsp" %>
+
+        <c:if test="${sessionScope.account.user.role >= 2}">
+            <a href="course/add"><button>Add new course</button></a>
+        </c:if>
+
+
     </body>
 </html>
