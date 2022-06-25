@@ -27,8 +27,11 @@
             <div class="columns">
                 <%for (Difficulty d : difficulties) {%>
                 <div class="column">
+             
                 <button  class="block<%=d.getId()%>" type="submit" name="diffid"  value="<%=d.getId()%>"><%=d.getName()%></button>  
-                
+                <div class="img<%=d.getId()%>">
+                    
+                </div>
                 </div>
                 
                 <%}%>

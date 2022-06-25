@@ -1,8 +1,10 @@
 body{
     text-align: center;
+    background-color: white;
+    opacity: 2;
 }
 .columns{
-    margin-top: 50px;
+    margin-top: 150px;
     margin-left:10px;
     display: flex;
     flex-wrap: wrap;
@@ -12,86 +14,109 @@ body{
 
     flex: 1 0 20%; 
     margin: 10px;
-    height: 500px;
+    height: 600px;
     border-radius: 25px;
     opacity: 0.7;
     box-shadow: 2px 2px 20px grey;
 }
 
-#img2{
-    max-height: 500px;
-    max-width: 200px;
-    
-   
-}
+
 .block1 {
-    border-radius: 12px;
-  display: block;
-  width: 100%;
-  border: none;
-  background-color: green;
-  color: white;
-  padding: 14px 28px;
-  font-size: 16px;
-  cursor: pointer;
-  text-align: center;
+  
+    display: block;
+    width: 100%;
+    border: none;
+    background-color: green;
+    color: white;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
 }
 
 .block1:hover {
- background-color: black;
-  color: white;
+    background-color: black;
+    color: white;
 }
 .block2 {
-    border-radius: 12px;
-  display: block;
-  width: 100%;
-  border: none;
-  background-color: yellow;
-  color: white;
-  padding: 14px 28px;
-  font-size: 16px;
-  cursor: pointer;
-  text-align: center;
-  opacity: 0.9;
+   
+    display: block;
+    width: 100%;
+    border: none;
+    background-color: yellow;
+    color: white;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    opacity: 0.9;
 }
 
 .block2:hover {
-  background-color: black;
-  color: white;
+    background-color: black;
+    color: white;
 }
 .block3 {
-    border-radius: 12px;
-  display: block;
-  width: 100%;
-  border: none;
-  background-color: orange;
-  color: white;
-  padding: 14px 28px;
-  font-size: 16px;
-  cursor: pointer;
-  text-align: center;
+
+    display: block;
+    width: 100%;
+    border: none;
+    background-color: orange;
+    color: white;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
 }
 
 .block3:hover {
-  background-color: black;
-  color: white;
-  
+    background-color: black;
+    color: white;
+
 }
 .block4 {
-  
-    border-radius: 12px;
-  display: block;
-  width: 100%;
-  border: none;
-  background-color: red;
-  color: white;
-  padding: 14px 28px;
-  font-size: 16px;
-  cursor: pointer;
-  text-align: center;
+
+   
+    display: block;
+    width: 100%;
+    border: none;
+    background-color: red;
+    color: white;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
 }
 
 .block4:hover {
-  background-color: black;
-  color: white;
+    background-color: black;
+    color: white;
+}
+.img1{
+display: flex;
+
+    height: 100%;
+    width: 100%;
+    background-image: url("../img/es1.png");
+}
+.img2{
+display: flex;
+
+    height: 100%;
+    width: 100%;
+    background-image: url("../img/es.jpg");
+}
+.img3{
+display: flex;
+  
+    height: 100%;
+    width: 100%;
+    background-image: url("../img/es3.jpg");
+}
+.img4{
+display: flex;
+   
+    height: 100%;
+    width: 100%;
+    background-image: url("../img/ex.jpg");
 }

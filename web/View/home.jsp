@@ -48,6 +48,7 @@
                     <div class="course"> 
                         <img id="img2" src="${pageContext.request.contextPath}/img/pix.png" alt=""/>
                         <div class="link">
+                            
                             <a  href="choosediff?courseId=${course.id}" >${course.name}</a>
                             enroll: 1000+?
                         </div>
