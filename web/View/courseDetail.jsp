@@ -35,7 +35,7 @@
                             <a class="button" href="revision?courseId=${course.id}&difficultyId=${requestScope.difficultyId}"><button class="button2">Practice</button></a>
                         </div>
                         <div>
-                            <a class="button" href="exam?courseId=${course.id}&difficultyId=${requestScope.difficultyId}" ><button class="button3">Boss fight</button></a>
+                            <a class="button" href="chooseexam?courseId=${course.id}&difficultyId=${requestScope.difficultyId}" ><button class="button3">Boss fight</button></a>
                         </div>
                     </c:if>
                     <c:if test="${requestScope.isEnrolled == false}">

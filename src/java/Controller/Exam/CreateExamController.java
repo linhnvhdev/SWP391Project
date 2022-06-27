@@ -63,7 +63,6 @@ public class CreateExamController extends HttpServlet {
         Integer passScore = Integer.parseInt(request.getParameter("passScore"));
         Integer courseId = Integer.parseInt(request.getParameter("courseId"));
         Integer examtime = Integer.parseInt(request.getParameter("examtime"));
-        int diffid = (Integer) request.getSession().getAttribute("diffid");
 
         String examname = request.getParameter("examname");
 
@@ -72,7 +71,6 @@ public class CreateExamController extends HttpServlet {
         CourseDBContext courseDB = new CourseDBContext();
         Exam newExam = new Exam();
         newExam.setCourse(courseDB.getCourse(courseId));
-        newExam.setDifficulty(difficultyDB.getDifficulty(diffid));
         newExam.setName(examname);
         newExam.setTime(examtime);
         newExam.setPassed(passScore);

@@ -57,7 +57,7 @@ public class ExamController extends HttpServlet {
         Exam exam = examDB.getExamByDiff(courseId, diffid);
         int passScore = examDB.getPassedScore(exam.getId());
         int numQues = examDB.countQuesPerExam(exam.getId());
-        int maxScore = numQues * exam.getDifficulty().getDamageToBoss() ;
+        int maxScore = numQues * 10 ;
         if (currentBossHP == null) {
             currentBossHP = maxScore;
             request.getSession().setAttribute("currentBossHP", currentBossHP);
