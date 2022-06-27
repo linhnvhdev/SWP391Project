@@ -45,7 +45,7 @@
 
                 <c:forEach var="course" items="${requestScope.courseList}">
                     <div class="card">
-                        <div class="content">
+                        <div onclick="location.href='choosediff?courseId=${course.id}';" class="content">
                             <div class="course"> 
                                 <div class="back"> <!-- back -->
                                 aaaaaaaaaaasdasdgasdh
@@ -56,7 +56,7 @@
                                 <div class="front"><!-- front -->
                                 <img id="img2" src="${pageContext.request.contextPath}/img/pix.png" alt=""/>
                                 <div class="link">
-                                    <a  href="choosediff?courseId=${course.id}" >${course.name}</a>
+                                    rating 10/10
                                     enroll: 1000+?
                                 </div>
                                </div>             
