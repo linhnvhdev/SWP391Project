@@ -1,7 +1,7 @@
 body
 {
     background-color: white;
-    cursor: crosshair;
+
 }
 .left {
     position: fixed; /* or absolute */
@@ -77,7 +77,7 @@ body
     height:50px;
 }
 .course{
-   background: rgba(178,178,178,0.3);
+    background: rgba(178,178,178,0.3);
     border-radius: 25px;
     opacity: 0.7;
     box-shadow: 5px 10px 18px black;
@@ -90,41 +90,92 @@ body
     text-align: center;
 }
 .pagination {
-  display: inline-block;
-  margin-left: 10%;
+    display: inline-block;
+    margin-left: 10%;
 }
 
 .pagination a {
-  color: black;
-  float: left;
-  padding: 8px 16px;
-  text-decoration: none;
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
 }
 .content {
-  transition: transform 0.3s;
-  transform-style: preserve-3d;
+    transition: transform 0.3s;
+    transform-style: preserve-3d;
 }
 
 .card:hover .content{
-        transform: rotateY( 180deg ) ;
-  transition: transform 0.3s;
-  
+    transform: rotateY( 180deg ) ;
+    transition: transform 0.3s;
+
 }
 .back {
-transform: rotateY( 90deg );
-   backface-visibility: hidden ;
+    transform: rotateY( 90deg );
+    backface-visibility: hidden ;
 }
 .card:hover .back{
-transform: rotateY( 180deg );
-       backface-visibility: visible ;
+    transform: rotateY( 180deg );
+    backface-visibility: visible ;
 }
 .card:hover .front{
-         transform: rotateY( 90deg ) ;
-     transition: transform 0.1s;
-       backface-visibility: hidden ;
+    transform: rotateY( 90deg ) ;
+    transition: transform 0.1s;
+    backface-visibility: hidden ;
 }
 .card:hover .course{
     box-shadow: 5px 10px 18px red;
-  
+
 }
-    
+
+
+.dropbtn {
+  background-image: url("../img/menu.png");
+  max-height: 50px;
+    max-width: 50px;
+  color: white;
+ width: 50px;
+ height: 50px;
+position: absolute;
+  border: none;
+ margin-top: 40px;
+ margin-left: 20px;
+ z-index: 1;
+
+}
+.dropbtn:hover
+{
+    box-shadow:  5px 5px 5px 5px grey;
+}
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top:30px;
+  left:70px;
+  z-index: 2;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 10px 10px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {
+    display: inline-flex;
+}
+.coursename{
+ margin-right: 120px;
+}
