@@ -35,14 +35,12 @@ public class CreateExamController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
-        int diffid = (Integer) request.getSession().getAttribute("diffid");
         int courseId = Integer.parseInt(request.getParameter("courseId"));
-        User user = acc.getUser();
 
         ExamDBContext examDB = new ExamDBContext();
         AnswerDBContext answerDB = new AnswerDBContext();
-        ArrayList<Question> questionList = examDB.getQuestionsByDiff(courseId, diffid);
-        ArrayList<Answer> answerList = answerDB.getAnswersByDiff(courseId,diffid);
+        ArrayList<Question> questionList = examDB.getQuestionsForExam(courseId);
+        ArrayList<Answer> answerList = answerDB.getAnswersCourse(courseId);
 
         request.setAttribute("questionList", questionList);
         request.setAttribute("answerList", answerList);

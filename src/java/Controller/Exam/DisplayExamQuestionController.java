@@ -42,7 +42,7 @@ public class DisplayExamQuestionController extends HttpServlet {
         int eid = Integer.parseInt(raw_eid);
         
         ExamDBContext examDB = new ExamDBContext();
-        ArrayList<Exam> examList = examDB.getExamsByDiff(courseId,diffid);
+        ArrayList<Exam> examList = examDB.getExamListByCourse(courseId);
         ArrayList<Question> questionList = examDB.getQuestions(eid);
         ArrayList<Answer> answerList = examDB.getAnswers(eid);
         Exam exam = examDB.getExamByEid(eid);
