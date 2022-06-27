@@ -44,15 +44,27 @@
             <div class="box">
 
                 <c:forEach var="course" items="${requestScope.courseList}">
-
-                    <div class="course"> 
-                        <img id="img2" src="${pageContext.request.contextPath}/img/pix.png" alt=""/>
-                        <div class="link">
-                            
-                            <a  href="choosediff?courseId=${course.id}" >${course.name}</a>
-                            enroll: 1000+?
-                        </div>
+                    <div class="card">
+                        <div class="content">
+                            <div class="course"> 
+                                <div class="back"> <!-- back -->
+                                aaaaaaaaaaasdasdgasdh
+                                ashdash
+                                ajsdfj
+                                aaaaaaaaaaaa
+                            </div>   
+                                <div class="front"><!-- front -->
+                                <img id="img2" src="${pageContext.request.contextPath}/img/pix.png" alt=""/>
+                                <div class="link">
+                                    <a  href="choosediff?courseId=${course.id}" >${course.name}</a>
+                                    enroll: 1000+?
+                                </div>
+                               </div>             
+                            </div>
+                           
+                        </div>  
                     </div>
+
                 </c:forEach>
 
 
@@ -65,6 +77,7 @@
                     <a href="#">5</a>
                     <a href="#">6</a>
                     <a href="#">&raquo;</a>
+
                 </div>
             </div>
         </div>
