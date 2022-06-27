@@ -511,7 +511,7 @@ public class ExamDBContext extends DBContext {
         }
     }
 
-    public ArrayList<Question> getQuestionsExamByDiff(int eid, int difficultyId, int courseId) {
+    public ArrayList<Question> getQuestionsRemain(int eid, int courseId) {
         ArrayList<Question> questions = new ArrayList<>();
         try {
             String sql = "select  q.Question_ID, q.Question_Detail,q.Difficulty_ID,q.Course_ID \n"
@@ -519,13 +519,11 @@ public class ExamDBContext extends DBContext {
                     + "where not exists (select qe.Exam_ID from Question_Exam qe \n"
                     + "where q.Question_ID = qe.Question_ID\n"
                     + "AND qe.Exam_ID = ?)\n"
-                    + "And q.Difficulty_ID = ? \n"
                     + "AND q.Course_ID= ?";
 
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, eid);
-            stm.setInt(2, difficultyId);
-            stm.setInt(3, courseId);
+            stm.setInt(2, courseId);
             ResultSet rs = stm.executeQuery();
             CourseDBContext courseDB = new CourseDBContext();
             DifficultyDBContext difficultyDB = new DifficultyDBContext();
@@ -544,7 +542,7 @@ public class ExamDBContext extends DBContext {
         return questions;
     }
 
-    public ArrayList<Answer> getAnswersExamByDiff(int eid, int difficultyId, int courseId) {
+    public ArrayList<Answer> getAnswersRemain(int eid,  int courseId) {
         ArrayList<Answer> answers = new ArrayList();
         try {
             String sql = "select  a.Answer_Detail,a.Answer_ID,a.IsCorrect,a.Question_ID\n"
@@ -553,13 +551,11 @@ public class ExamDBContext extends DBContext {
                     + "where not exists (select qe.Exam_ID from Question_Exam qe \n"
                     + "where q.Question_ID = qe.Question_ID\n"
                     + "AND qe.Exam_ID = ?)\n"
-                    + "And q.Difficulty_ID = ? \n"
                     + "AND q.Course_ID= ?";
 
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, eid);
-            stm.setInt(2, difficultyId);
-            stm.setInt(3, courseId);
+            stm.setInt(2, courseId);
             ResultSet rs = stm.executeQuery();
             ExamDBContext examDB = new ExamDBContext();
             while (rs.next()) {
