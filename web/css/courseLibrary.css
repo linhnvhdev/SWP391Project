@@ -8,11 +8,98 @@ and open the template in the editor.
     Author     : Linhnvhdev
 */
 
-h2{
-    margin-left: 580px;
+.heading{
+    margin-top: 30px;
+    text-align: center;
+    font-family:"courseName";
+    color:white;
+}
+body{
+    background-image: url(../img/backgroundnight.png);
+    background-color: #cccccc;
+    background-attachment: fixed;
 }
 
-.search{
+@font-face {
+    font-family: "courseName";
+    src: url('../font/Game Of Squids.woff2') format('woff2');
+}
+
+.card {
+    flex-direction: row;
+    background-color: rgba(255, 255, 255,.6);
+}
+.top-right {
+    margin-top: 16px;
+    margin-right: 16px;
+    width: 65px;
+    height: 65px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translate(0%,0%);
+    z-index: 100;
+}
+.top-right-star {
+    margin-top: 20px;
+    margin-right: 16px;
+    width: 85px;
+    height: 65px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translate(0%,0%);
+    z-index: 100;
+}
+.card img {
+    margin: 10px;
+    width: 45%;
+}
+
+.creator{
+    color:gray;
+    font-size: 15px;
+}
+.enroll{
+    color:gray;
+    font-size: 14px;
+}
+.fa.fa-star.checked{
+    color: yellow;
+}
+input.text-search{
+    border: none;
+    background: transparent;
+    border-radius: 2px;
+    border-bottom: 1px solid black;
+    width: 100%;
+}
+input.text-search:hover{
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
+    background-color: rgba(194, 219, 255, .3);
+}
+.search-title{
+    text-align: center;
+}
+.search-button{
+    margin-top: 15px;
+    text-align: center;
+}
+.card.search{
+    position: fixed;
+    border-radius: 25px;
+    opacity: 0.5;
+}
+.card.search:hover{
+    opacity:1;
+}
+.col-9.content{
+    margin-top: 50px;
+    text-align: center;
+    font-size: 30px;
+    color: white;
+}
+/*.search{
     height: 70px;
     background-color: lightgrey;
 }
@@ -94,4 +181,4 @@ table th {
 
 .button a:active {
   
-}
+}*/

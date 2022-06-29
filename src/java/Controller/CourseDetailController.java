@@ -11,6 +11,7 @@ import Dal.UserCourseDBContext;
 import Model.Account;
 import Model.Course;
 import Model.User;
+import Model.UserCourse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -46,11 +47,23 @@ public class CourseDetailController extends HttpServlet {
         User user = acc.getUser();
         CourseDBContext courseDB = new CourseDBContext();
         UserCourseDBContext userCourseDB = new UserCourseDBContext();
-
+        boolean hasReview = userCourseDB.checkUserReview(user.getId(), courseId);
+        ArrayList<UserCourse> reviews = userCourseDB.getReviews(courseId);
+        UserCourse review = userCourseDB.getReview(courseId, user.getId());
+        int reviewNum = userCourseDB.getNumReview(courseId);
+        int avgScore = userCourseDB.getAvgReview(courseId);
+        
         Course course = courseDB.getCourse(courseId);
         int numFlashcard = courseDB.getNumFlashcard(courseId);
         int numQuestion = courseDB.getNumQuestion(courseId);
         boolean isEnrolled = userCourseDB.checkUserCourse(user.getId(), courseId);
+        
+        request.setAttribute("avgScore", avgScore);
+        request.setAttribute("reviewNum", reviewNum);
+        request.setAttribute("user", user);
+        request.setAttribute("review", review);
+        request.setAttribute("reviews", reviews);
+        request.setAttribute("hasReview", hasReview);
         request.setAttribute("course", course);
         request.setAttribute("numFlashcard", numFlashcard);
         request.setAttribute("numQuestion", numQuestion);

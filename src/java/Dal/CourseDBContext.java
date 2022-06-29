@@ -72,17 +72,21 @@ public class CourseDBContext extends DBContext {
     public ArrayList<Course> getCourseList() {
         ArrayList<Course> courseList = new ArrayList<>();
         try {
-            String sql = "SELECT Course_ID,Course_Name,Creator_ID\n"
-                    + "FROM Course";
+            String sql = "SELECT [Course_ID]\n"
+                    + "      ,[Course_Name]\n"
+                    + "      ,[Creator_ID]\n"
+                    + "      ,[Course_Description]\n"
+                    + "  FROM [dbo].[Course]";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             UserDBContext userDB = new UserDBContext();
             while (rs.next()) {
-                Course c = new Course();
-                c.setId(rs.getInt("Course_ID"));
-                c.setName(rs.getString("Course_Name"));
-                c.setCreator(userDB.getUser(rs.getInt("Creator_ID")));
-                courseList.add(c);
+                Course course = new Course();
+                course.setId(rs.getInt("Course_ID"));
+                course.setName(rs.getString("Course_Name"));
+                course.setCreator(userDB.getUser(rs.getInt("Creator_ID")));
+                course.setDescription(rs.getString("Course_Description"));
+                courseList.add(course);
             }
         } catch (SQLException ex) {
             Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);

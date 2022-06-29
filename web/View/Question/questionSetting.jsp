@@ -12,8 +12,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-        <link href="css/cssquestionsetting.css?ver=2" rel="stylesheet" type="text/css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css?ver=1" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <link href="css/cssquestionsetting.css?ver=1" rel="stylesheet" type="text/css"/>
         <link href="css/header.css" rel="stylesheet" type="text/css"/>
         <link href="${pageContext.request.contextPath}/css/inventory.css?version=1" rel="stylesheet" type="text/css"/>
         <title>JSP Page</title>
@@ -27,7 +27,9 @@
             ArrayList<Answer> answers = (ArrayList<Answer>) request.getAttribute("answers");
         %>
         <div class="container">
-            <h1 class="description">Question List</h1>  
+            <div class="heading">
+                <h1>Question List</h1>
+            </div>
             <form action="deletequestion" method="post" class="form">
                 <input type="hidden" name="courseId" value="${requestScope.courseId}"/>
                 <table class="table table-hover" id="checkboxTable">
@@ -54,7 +56,7 @@
                             <td>           
                                 <table>
                                     <tr>
-                                        <td><%=answer.getDetail()%></td>
+                                        <td><i <%if(answer.isIsCorrect()){%>style="color:green"<%}%>><%=answer.getDetail()%></i></td>
                                     </tr>
                                 </table>                                      
                             </td>                      
@@ -66,7 +68,7 @@
                 </table>
 
                 <div class="button-delete d-none">
-                    <button type="submit" class="btn btn-outline-danger btn-lg">Delete</button> 
+                    <button type="submit" class="btn btn-danger btn-lg">Delete</button> 
                 </div>
             </form>
         </div>
