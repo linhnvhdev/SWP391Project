@@ -59,7 +59,6 @@
                 <td >Question: ${q.detail}</td>
             </tr>
 
-
             <div class="footer">
                 <div class="row">
                     <c:forEach items = "${requestScope.answerList}" var="ans">
@@ -67,7 +66,7 @@
                         <c:if test="${q.id == ans.question.id}">
                             <div class="column">
                               <div class="answer">  
-                                  <input class="noText" type="submit" name="ansid" value="${ans.id}"/><div class="ans">${ans.detail}</div>
+                                  <input class="noText"  type="submit" name="ansid" value="${ans.id}"/><div class="ans">${ans.detail}</div>
                               </div>
                             </div>
                         </c:if> 
