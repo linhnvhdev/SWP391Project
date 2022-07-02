@@ -11,16 +11,18 @@ body
     height: 70%;
     opacity: 0.7;
     box-shadow: 0 3px 10px rgba(0 ,0, 0,  0.2);
+
 }
 .right {
     background:rgb(237,237,237);
     text-align: center;
     position: fixed; /* or absolute */
     top: 10%;
-    right: 10%;
+    right: 15%;
     width: 20%;
     height: 85%;
     box-shadow: 0 3px 10px rgba(0 ,0, 0,  0.2);
+        
 }
 .middle-left{
     position: fixed; /* or absolute */
@@ -178,4 +180,17 @@ position: absolute;
 }
 .coursename{
  margin-right: 120px;
+}
+.arrow {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  position: relative;
+  right:40px;
+  top:-15px;
+}
+.down {
+  transform: rotate(45deg);
+
 }

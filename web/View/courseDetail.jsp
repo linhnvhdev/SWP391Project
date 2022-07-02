@@ -19,7 +19,7 @@
         <link href="${pageContext.request.contextPath}/css/inventory.css?version=1" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <%@ include file="header.jsp" %>
+  <%@ include file="header.jsp" %>
         
                 <%
             ArrayList<Difficulty> difficulties = (ArrayList<Difficulty>) request.getAttribute("difficulties");

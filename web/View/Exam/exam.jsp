@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-       
+
 
         <title>Exam Page</title>
         <link href="<%=application.getContextPath()%>/css/exam.css?version=1" rel="stylesheet" type="text/css"/>
@@ -59,40 +59,49 @@
                 <td >Question: ${q.detail}</td>
             </tr>
 
-<div class="footer">
-    <div class="row">
-     <c:forEach items = "${requestScope.answerList}" var="ans">
-             
-                <c:if test="${q.id == ans.question.id}">
-                    <div class="column">
-                      <td id="answer"><input  type="submit" name="ansid" value="${ans.id}"/>${ans.detail}</td>
-                    </div>
-                </c:if> 
-                     
-                     </c:forEach>
-    </div>
-            
- </div>
+            <div class="footer">
+                <div class="row">
+                    <c:forEach items = "${requestScope.answerList}" var="ans">
 
-           
+                        <c:if test="${q.id == ans.question.id}">
+                            <div class="column">
+                              <div class="answer">  
+                                  <input   type="submit" name="ansid" value="${ans.id}"/><div class="ans">${ans.detail}</div>
+                              </div>
+                            </div>
+                        </c:if> 
+
+                    </c:forEach>
+                </div>
+                
+
+            </div>
+
+ 
 
 
         </c:forEach>
     </div>
-   
 
 
 
+<a href="result?eid=${requestScope.eid}&courseId=${requestScope.courseId}">
+     
+     <img id="finish" src="${pageContext.request.contextPath}/img/finish.png" alt=""/>
+ 
+ </a>
 
-
+     <a id="btnInventory">
+      <img id="inv" src="${pageContext.request.contextPath}/img/invent.jpg" alt=""/>
+     </a>
 
 
 
 
     <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
     <script>
-                            var eid =${requestScope.eid};
-                            var courseId =${requestScope.courseId};
+        var eid =${requestScope.eid};
+        var courseId =${requestScope.courseId};
     </script>
     <%@ include file="../inventory.jsp" %>
     <script src="js/progressbar.js?ver=1" type="text/javascript"></script>

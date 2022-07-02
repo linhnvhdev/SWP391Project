@@ -9,7 +9,7 @@ and open the template in the editor.
 */
 
 nav{
-    background-color: black;
+    background-color: blue ;
     color: white;
     width: 100%;
     display: flex;
@@ -18,7 +18,7 @@ nav{
 
 nav > ul{
     margin:0;
-    paddding:0;
+
     list-style-type:none;
     display:flex;
     position:absolute;
@@ -93,4 +93,12 @@ nav > ul > li > a{
     width:40%;
     letter-spacing:2px;
     text-shadow:2px 2px 5px;
+}
+.avatar{
+    margin-top:10px;
+    position: relative;
+    margin-right: 50px;
+    max-height: 40px;
+    border-radius: 20px;
+    max-width: 60px;
 }
