@@ -14,7 +14,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <link href="${pageContext.request.contextPath}/css/revision_question.css?ver=2" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.request.contextPath}/css/revision_question.css?ver=1" rel="stylesheet" type="text/css"/>
         <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css?ver=1" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <link href="${pageContext.request.contextPath}/css/inventory.css?version=1" rel="stylesheet" type="text/css"/>
@@ -36,9 +36,9 @@
                 </div>
             </div>
             <div id="myModal" class="modal">
-                <div class="modal-content">
+                <div class="modal-content" style="color: #ff6699">
                     <span class="close">&times;</span>
-                    <p>${requestScope.lvupMessage}</p>
+                    <p id="modal-detail"></p>
                 </div>
             </div>
             <div class="question">              
@@ -217,10 +217,47 @@
                                     $(".col.answer.two").attr("condition", data[6]);
                                     $(".col.answer.three").attr("condition", data[7]);
                                     $(".col.answer.four").attr("condition", data[8]);
-                                    $("input[name=questionId]").val(data[9]);
+                                    $(".col.answer.one").attr("value", data[9]);
+                                    $(".col.answer.two").attr("value", data[10]);
+                                    $(".col.answer.three").attr("value", data[11]);
+                                    $(".col.answer.four").attr("value", data[12]);
+                                    $("input[name=questionId]").val(data[13]);
+                                    
                                 }, 1500);
                             }
-
+                            var levelupMessage = data[14];
+                            console.log(data[14]);
+                            console.log(levelupMessage);
+                            console.log(isEmpty(levelupMessage));
+                            var modal = document.getElementById("myModal");
+// Get the <span> element that closes the modal
+                            var span = document.getElementsByClassName("close")[0];
+                            function isEmpty(levelupMessage) {
+                                return  (!levelupMessage || levelupMessage.length === 0);
+                            }
+//                            if (!isEmpty(levelupMessage)) {
+                            if (levelupMessage != "null") {
+                                LevelUpAlert();
+                                console.log("message not null");
+                            } else {
+                                console.log("message null");
+                            }
+                            function LevelUpAlert() {
+                                // alert(levelupMessage);
+                                console.log("Level Up alert");
+                                modal.style.display = "block";
+                                $('#modal-detail').html(data[14]);
+                            }
+// When the user clicks on <span> (x), close the modal
+                            span.onclick = function () {
+                                modal.style.display = "none";
+                            }
+// When the user clicks anywhere outside of the modal, close it
+                            window.onclick = function (event) {
+                                if (event.target == modal) {
+                                    modal.style.display = "none";
+                                }
+                            }
                         }
                         ,
                         error: function (xhr) {
@@ -231,36 +268,7 @@
                 });
 
             });
-            var levelupMessage = "${requestScope.lvupMessage}";
-                    console.log(levelupMessage);
-                    console.log(isEmpty(levelupMessage));
-                    var modal = document.getElementById("myModal");
-// Get the <span> element that closes the modal
-                    var span = document.getElementsByClassName("close")[0];
-                    function isEmpty(levelupMessage) {
-                        return  (!levelupMessage || levelupMessage.length === 0);
-                    }
-                    if (!isEmpty(levelupMessage)) {
-                        LevelUpAlert();
-                        console.log("message not null");
-                    } else {
-                        console.log("message null");
-                    }
-                    function LevelUpAlert() {
-                        // alert(levelupMessage);
-                        console.log("Level Up alert");
-                        modal.style.display = "block";
-                    }
-// When the user clicks on <span> (x), close the modal
-                    span.onclick = function () {
-                        modal.style.display = "none";
-                    }
-// When the user clicks anywhere outside of the modal, close it
-                    window.onclick = function (event) {
-                        if (event.target == modal) {
-                            modal.style.display = "none";
-                        }
-                    }
+
 
         </script>
         <%@ include file="inventory.jsp" %>

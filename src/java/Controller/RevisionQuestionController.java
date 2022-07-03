@@ -43,7 +43,7 @@ public class RevisionQuestionController extends HttpServlet {
         QuestionDBContext questionDB = new QuestionDBContext();
         int courseId = Integer.parseInt(request.getParameter("courseId"));
         int difficultyId = Integer.parseInt(request.getParameter("difficultyId"));
-        
+
         if (!questionDB.getRemainingQuestions(userId, courseId, difficultyId).isEmpty()) {
             Question q = questionDB.getQuestion(id);
             AnswerDBContext answerDB = new AnswerDBContext();
@@ -56,11 +56,6 @@ public class RevisionQuestionController extends HttpServlet {
             request.setAttribute("difficultyId", difficultyId);
             request.setAttribute("id", id);
             request.setAttribute("courseId", courseId);
-            String levelupMessage = String.valueOf(request.getSession().getAttribute("levelupMessage"));
-            if (levelupMessage != "null") {
-                request.setAttribute("lvupMessage", levelupMessage);
-            }
-            session.removeAttribute("levelupMessage");
             request.getRequestDispatcher("../View/revision_question.jsp").forward(request, response);
         } else {
             response.sendRedirect("../revision?courseId=" + courseId + "&difficultyId=" + difficultyId);
@@ -92,7 +87,7 @@ public class RevisionQuestionController extends HttpServlet {
         if (isExpBoost != null && isExpBoost) {
             expGet *= 2;
         }
-        String levelupMessage ="LEVEL UP";
+        String levelupMessage = "LEVEL UP";
         if (answerID == correctAnswer.getId()) {
             userQuestionDB.insertUserQuestion(userId, questionId, true);
             userDb.updateUserExp(userId, exp + expGet);
@@ -108,36 +103,49 @@ public class RevisionQuestionController extends HttpServlet {
                         levelDB.updateUserLevel(userId, level.getId());
                         account.getUser().setLevel(level.getId());
                         itemDB.updateUserItem(userId, level.getItem().getId(), 1);
-                        levelupMessage += "<br>" +"You have reached level " + account.getUser().getLevel()+"!<br>" +
-                                                "You have earned 1 "+level.getItem().getName()+"<br>";
-                        request.getSession().setAttribute("levelupMessage", levelupMessage);
+                        levelupMessage += "<br>" + "You have reached level " + account.getUser().getLevel() + "!<br>"
+                                + "You have earned 1 " + level.getItem().getName() + "<br>";
                         countLevelUp++;
-                    }
+                    } else {
+                        break;
+                    } 
                 }
             }
         }
-       
+
         if (!db.getRemainingQuestions(userId, courseId, difficultyId).isEmpty()) {
             Question newQuestion = db.getQuestion(getRandomID(userId, courseId, difficultyId));
             String newQuestionDetail = newQuestion.getDetail();
             int newQuestionId = newQuestion.getId();
             ArrayList<Answer> newAnswers = answerDB.getAnswers(newQuestionId);
-            response.getWriter().write(newQuestionDetail+"|"
-                    +newAnswers.get(0).getDetail()+"|"
-                    +newAnswers.get(1).getDetail()+"|"
-                    +newAnswers.get(2).getDetail()+"|"
-                    +newAnswers.get(3).getDetail()+"|"
-                    +newAnswers.get(0).isIsCorrect()+"|"
-                    +newAnswers.get(1).isIsCorrect()+"|"
-                    +newAnswers.get(2).isIsCorrect()+"|"
-                    +newAnswers.get(3).isIsCorrect()+"|"
-                    +newQuestionId);
-            
+            String lvUMessage ="";
+            if (!levelupMessage.equalsIgnoreCase("LEVEL UP")) {
+                lvUMessage = levelupMessage;
+            } else {
+                lvUMessage = "null";
+            }
+                    
+            response.getWriter().write(newQuestionDetail + "|"
+                    + newAnswers.get(0).getDetail() + "|"
+                    + newAnswers.get(1).getDetail() + "|"
+                    + newAnswers.get(2).getDetail() + "|"
+                    + newAnswers.get(3).getDetail() + "|"
+                    + newAnswers.get(0).isIsCorrect() + "|"
+                    + newAnswers.get(1).isIsCorrect() + "|"
+                    + newAnswers.get(2).isIsCorrect() + "|"
+                    + newAnswers.get(3).isIsCorrect() + "|"
+                    + newAnswers.get(0).getId() + "|"
+                    + newAnswers.get(1).getId() + "|"
+                    + newAnswers.get(2).getId() + "|"
+                    + newAnswers.get(3).getId() + "|"
+                    + newQuestionId + "|"
+                    + lvUMessage);
+
 //            request.setAttribute("courseId", courseId);
 //            request.setAttribute("difficultyId", difficultyId);
 //            response.sendRedirect("question?id=" + getRandomID(userId, courseId, difficultyId) + "&courseId=" + courseId + "&difficultyId=" + difficultyId);
         } else {
-            response.getWriter().write("end" +"|"+courseId+"|"+difficultyId);
+            response.getWriter().write("end" + "|" + courseId + "|" + difficultyId);
         }
 
     }
