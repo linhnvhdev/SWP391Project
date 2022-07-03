@@ -116,6 +116,7 @@ img.course_image{
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    margin : 0 !important;
 }
 .rate-person{
     color:gray;
@@ -125,6 +126,9 @@ img.course_image{
     margin-top: 10px;
 }
 
+.col-11.username{
+    padding-top: 10px;
+}
 .line{
     width: 100%;
     position: inherit;

@@ -1,7 +1,8 @@
-body
-{
-    background-color: white;
-
+body{
+    background-image: url(../img/home.jpg);
+    background-color: #cccccc;
+    background-attachment: fixed;
+    
 }
 .left {
     position: fixed; /* or absolute */

@@ -21,13 +21,16 @@
         <%
             ArrayList<Difficulty> difficulties = (ArrayList<Difficulty>) request.getAttribute("difficulties");
         %>
-        <h1>LETS THE HUNT BEGIN</h1>
+        <div class="title">
+            <h1 class="title-main">Let's the journey begin</h1>
+            <h4 class="title-sub">Choose wisely...</h4>
+        </div>
+        
         <form action="course" method="get" >
             <input type="hidden" name="courseId" value="${requestScope.courseId}">
             <div class="columns">
                 <%for (Difficulty d : difficulties) {%>
-                <div class="column">
-             
+                <div class="column">           
                 <button  class="block<%=d.getId()%>" type="submit" name="diffid"  value="<%=d.getId()%>"><%=d.getName()%></button>  
                 <div class="img<%=d.getId()%>">
                     

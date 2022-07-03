@@ -18,7 +18,7 @@
 
         <title>Course</title>
         <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-        <link href="css/cssforcoursedetail.css?ver=2" rel="stylesheet" type="text/css"/>
+        <link href="css/cssforcoursedetail.css?ver=1" rel="stylesheet" type="text/css"/>
         <link href="css/header.css?version=2" rel="stylesheet" type="text/css"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <link href="${pageContext.request.contextPath}/css/inventory.css?version=1" rel="stylesheet" type="text/css"/>
@@ -92,7 +92,12 @@
                                     <div id="post-review" class="card review-content" style="width: auto;">
                                         <!--FORM-->
                                         <div class="card-body post">                                                                  
-                                            <h5 id="name" class="card-title"><img src="https://i.pinimg.com/236x/93/a0/0a/93a00a3684652031a0c398c5d54d3d10.jpg" alt="Avatar" class="avatar"> ${sessionScope.account.user.name}</h5>
+                                            <h5 id="name" class="card-title">
+                                                <div class="row">
+                                                    <div class="col-1"><img src="https://i.pinimg.com/236x/93/a0/0a/93a00a3684652031a0c398c5d54d3d10.jpg" alt="Avatar" class="avatar"></div>
+                                                    <div class="col-11 username">${sessionScope.account.user.name}</div>
+                                                </div>        
+                                                </h5>
                                             <div class="input-group">
                                                 <textarea name="reviewContent" class="form-control" aria-label="With textarea"></textarea>
                                             </div>
@@ -120,7 +125,16 @@
                                     <c:if test="${requestScope.hasReview == true}">
                                         <div class="card review-content" style="width: auto;">                      
                                             <div class="card-body">          
-                                                <h5 class="card-title"><img src="https://i.pinimg.com/236x/93/a0/0a/93a00a3684652031a0c398c5d54d3d10.jpg" alt="Avatar" class="avatar"> Your review | <i class="rate-person">Rated: <%=review.getRating()%></i></h5>
+                                                <h5 class="card-title">
+                                                    <div class="row">
+                                                        <div class="col-1">
+                                                             <img src="https://i.pinimg.com/236x/93/a0/0a/93a00a3684652031a0c398c5d54d3d10.jpg" alt="Avatar" class="avatar">
+                                                        </div>
+                                                        <div class="col-11">
+                                                            Your review | <i class="rate-person">Rated: <%=review.getRating()%></i>
+                                                        </div>
+                                                    </div>           
+                                                </h5>
                                                 <div class="row">
                                                     <div class="col-10"><input class="card-text review" name="userReview" readonly value="<%=review.getDetail()%>"></div>
                                                     <div class="col-2 edit-button" id="review-button"><input type="button" class="btn btn-outline-primary" id="edit" onclick="edit()" value="Edit"></div>
