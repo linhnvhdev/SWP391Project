@@ -20,20 +20,12 @@ public class User {
     private int exp;
     private int level;
     private int role;
+    private String image;
 
     public User() {
     }
-
-    public User(int id, String name, String gmail, boolean gender, Date dob, int exp, int level, int role) {
-        this.id = id;
-        this.name = name;
-        this.gmail = gmail;
-        this.gender = gender;
-        this.dob = dob;
-        this.exp = exp;
-        this.level = level;
-        this.role = role;
-    }
+    
+    
 
     public User(int id, String name, String gmail, boolean gender, Date dob, int role) {
         this.id = id;
@@ -108,6 +100,14 @@ public class User {
 
     public void setRole(int role) {
         this.role = role;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
     
     public String getRoleName() {
