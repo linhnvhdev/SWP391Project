@@ -12,28 +12,32 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <link href="css/choosediff.css" rel="stylesheet" type="text/css"/>
+        <link href="css/header.css" rel="stylesheet" type="text/css"/>
+
+        <link href="${pageContext.request.contextPath}/css/choosediff.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-                <div id="tsparticles"></div>
-                <%
+<%@ include file="header.jsp" %>
+        <%
             ArrayList<Difficulty> difficulties = (ArrayList<Difficulty>) request.getAttribute("difficulties");
         %>
-        
+        <h1>LETS THE HUNT BEGIN</h1>
         <form action="course" method="get" >
             <input type="hidden" name="courseId" value="${requestScope.courseId}">
-            <div class="center">
-            <div class="frame">
-            <%for (Difficulty d : difficulties) {%>
-            <button  type="submit" name="diffid" class="custom-btn btn-<%=d.getId()%>" value="<%=d.getId()%>"><%=d.getName()%></button>  
-            
-            <%}%>
+            <div class="columns">
+                <%for (Difficulty d : difficulties) {%>
+                <div class="column">
+             
+                <button  class="block<%=d.getId()%>" type="submit" name="diffid"  value="<%=d.getId()%>"><%=d.getName()%></button>  
+                <div class="img<%=d.getId()%>">
+                    
+                </div>
+                </div>
+                
+                <%}%>
             </div>
-            </div>
-        </form> 
-            
-            <script src='https://cdn.jsdelivr.net/npm/tsparticles@1.18.3/dist/tsparticles.min.js'></script>
-<script src="js/backgroundparticles.js" type="text/javascript"></script>
+        </form>
 
     </body> 
 </html>
+ 

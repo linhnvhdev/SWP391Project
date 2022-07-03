@@ -64,7 +64,7 @@ public class CommunityController extends HttpServlet {
         postSearch(posts, searchTitle, category, courseID, sortBy, results);
         request.getSession().setAttribute("curPosts", posts);
         int postNum = posts.size();
-        posts = new ArrayList<>(posts.subList(0, postPerPage));
+        if(postNum > 0) posts = new ArrayList<>(posts.subList(0, postPerPage));
         request.setAttribute("posts", posts);
         request.setAttribute("maxPostNum",postNum);
         request.setAttribute("postPerPage",postPerPage);

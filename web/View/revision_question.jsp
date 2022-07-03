@@ -13,64 +13,217 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <link href="${pageContext.request.contextPath}/css/revision_question.css" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.request.contextPath}/css/revision_question.css?ver=2" rel="stylesheet" type="text/css"/>
+        <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css?ver=1" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <link href="${pageContext.request.contextPath}/css/inventory.css?version=1" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        
-        <div class="background-img">
-            <div class="top">
-
-                <div class="header">
-                    <a class="column1" href="../home">Back to home</a>
-                    <a class="column1"href="../login">Log out</a>
-                    <a class="column1" id="btnInventory">Inventory</a>
+        <% Question question = (Question) request.getAttribute("q");
+            ArrayList<Answer> answers = (ArrayList<Answer>) request.getAttribute("answers");
+            // Answer correctAns = (Answer) request.getAttribute("answer");
+            int index = 1;
+            String isCorrect = "false";
+        %>
+        <div class="container">
+            <div class="row above">
+                <div class="col">
+                    <img id="player" class="player" src="../img/player (1).png" alt=""/>
                 </div>
-                <div class="player">
-                    <div class="column">
-                        <!--phan nay hien thi user -->
-                        <div class="playermove">
-                            <img id="playerchar" src='${pageContext.request.contextPath}/img/iddle.gif'>
+                <div class="col">
+                    <img id="monster" class="monster" src="../img/monster.png" alt=""/>
+                </div>
+            </div>
+            <div class="question">              
+                <%=question.getDetail()%>
+            </div>
+            <div class="row bottom">
+                <%for (Answer a : answers) {%>  
+                <%if (a.isIsCorrect()) {
+                        isCorrect = "true";
+                    } else {
+                        isCorrect = "false";
+                    }%>
+                <%if (index == 1) {%>               
+                <div class="col answer one" condition="<%=isCorrect%>" value="<%=a.getId()%>" style="background-color: red">
+                    <div class="skill">
+                        PARRRLEY
+                    </div>
+                    <div class="answer-detail one">
+                        <%=a.getDetail()%>                       
+                    </div>                   
+                </div>
+                <%} else if (index == 2) {%>
+                <div class="col answer two" condition="<%=isCorrect%>" value="<%=a.getId()%>" style="background-color: rgb(89, 123, 247)">
+                    <div class="skill">
+                        REMOVE SCURVY
+                    </div>
+                    <div class="answer-detail two">
+                        <%=a.getDetail()%>  
+                    </div>                   
+                </div>
+                <%} else if (index == 3) {%>
+                <div class="col answer three" condition="<%=isCorrect%>" value="<%=a.getId()%>" style="background-color: rgb(161, 98, 98)">
+                    <div class="skill">
+                        POWDER KEG
+                    </div>
+                    <div class="answer-detail three">
+                        <%=a.getDetail()%>  
+                    </div>                   
+                </div>
+                <%} else {%>
+                <div class="col answer four" condition="<%=isCorrect%>" value="<%=a.getId()%>"  style="background-color: graytext">
+                    <div class="skill">
+                        CANNON BARRAGE
+                    </div>
+                    <div class="answer-detail four">
+                        <%=a.getDetail()%>  
+                    </div>                   
+                </div>
+                <%}%>             
+                <%index++;%>
+                <%}%>
+                <div class="col-4 function">
+                    <div class="row">
+                        <div class="col-6 function">
+                            <a id="btnInventory">
+                                <img src="../img/Backpack 1.png" alt="Italian Trulli"> 
+                            </a>                           
+                        </div>
+                        <div class="col-6 function">
+                            <a href="../home">
+                                <img src="../img/Directions run 1.png" alt="Italian Trulli"> 
+                            </a>                           
                         </div>
                     </div>
                 </div>
-                          <div class="boss">
-                        <div class="column">
-
-             
-                            <img id="Boss" src='${pageContext.request.contextPath}/img/amogus2.gif'>
-                        </div>
-                    </div>
             </div>
-
-            <div class="bot">
-
-                <% Question question = (Question) request.getAttribute("q");
-                    ArrayList<Answer> answers = (ArrayList<Answer>) request.getAttribute("answers");
-                    // Answer correctAns = (Answer) request.getAttribute("answer");%>
-                <div class="detail">
-                    <p><%=question.getDetail()%></p>
-                    <p>Exp:${requestScope.exp}</p>
-                      </div>
-                    <div class="column">
-                        <div class="question">
-                        <input type="hidden" name="thisQuestionID" value="${requestScope.id}">
-                        <input type="hidden" name="thisCourseID" value="${requestScope.courseId}">    
-                        <form method="post" action="question?id=${requestScope.id}&courseId=${requestScope.courseId}&difficultyId=${requestScope.difficultyId}">
-                            <%for (Answer answer : answers) {%>
-                            <div class="answer">
-                                <input onclick="document.getElementById('playerchar').src = '${pageContext.request.contextPath}/img/attack.gif'" type="submit" name="answer" value="<%=answer.getId()%>"/><%=answer.getDetail()%></br>
-                            </div>
-                            <%}%>       
-                            <%//=correctAns.getAnswer_ID()%>
-                            <button type="submit">Next</button>
-                        </form>
-                        </div>
-                    </div>
-
-              
-            </div>
+            <div class="hit"><i>HIT</i></div>
+            <div class="miss"><i>MISS</i></div>
+            <div class="exp"><i>+EXP</i></div>
+            <input type="hidden" name="questionId" value="${requestScope.id}">
+            <input type="hidden" name="courseId" value="${requestScope.courseId}">
+            <input type="hidden" name="difficultyId" value="${requestScope.difficultyId}">
         </div>
-        <%@ include file="inventory.jsp" %>
+        <script>
+
+            $(document).ready(function ()
+            {
+                $(".col.answer").click(function ()
+                {
+                    $("#player").css("animation-name", "attack");
+                    console.log($("input[name='questionId']").val());
+                    console.log($(this).attr('value'));
+                    console.log($(this).attr('condition'));
+                    if ($(this).attr('condition') === 'true') {
+
+                        setTimeout(
+                                function () {
+                                    $("#monster").css("animation-name", "hit");
+                                    $("#monster").css("animation-duration", "0.15s");
+                                }, 130);
+                        setTimeout(
+                                function () {
+                                    $("#monster").css("animation-name", "");
+                                }, 280);
+                        setTimeout(
+                                function () {
+                                    $(".hit").css("animation-name", "noti");
+                                    $(".hit").css("animation-duration", "2s");
+                                    $(".exp").css("animation-name", "noti");
+                                    $(".exp").css("animation-duration", "2s");
+                                }, 130);
+                        setTimeout(
+                                function () {
+                                    $(".hit").css("animation-name", "");
+                                    $(".exp").css("animation-name", "");
+                                }, 3000);
+                        setTimeout(
+                                function () {
+                                    $("#monster").css("animation-name", "disappear");
+                                    $("#monster").css("animation-duration", "2s");
+                                }, 300);
+                        setTimeout(
+                                function () {
+                                    $("#monster").css("animation-name", "");
+                                }, 1500);
+                    } else {
+                        setTimeout(
+                                function () {
+                                    $("#monster").css("animation-name", "dodge");
+                                    $("#monster").css("animation-duration", "0.5s");
+                                }, 50);
+                        setTimeout(
+                                function () {
+                                    $("#monster").css("animation-name", "");
+                                }, 500);
+                        setTimeout(
+                                function () {
+                                    $(".miss").css("animation-name", "noti");
+                                    $(".miss").css("animation-duration", "1.5s");
+                                }, 130);
+                        setTimeout(
+                                function () {
+                                    $(".miss").css("animation-name", "");
+                                }, 1500);
+                    }
+
+                    setTimeout(
+                            function () {
+                                $("#player").css("animation-name", "");
+                            }, 500);
+
+                    var questionId = $("input[name='questionId']").val();
+                    var courseId = $("input[name='courseId']").val();
+                    var difficultyId = $("input[name='difficultyId']").val();
+                    var answerId = $(this).attr('value');
+                    $.ajax({
+                        url: "/swp391project/revision/question",
+                        type: "post", //send it through get method
+
+                        data: {
+                            id: questionId,
+                            courseId: courseId,
+                            difficultyId: difficultyId,
+                            answer: answerId
+                        }
+                        ,
+                        success: function (response) {
+                            var data = response.split("|");
+                            console.log(data[1]);
+                            console.log(data[2]);
+                            if (data[0] === "end") {
+                                setTimeout(function () {
+                                    location.href = "../revision?courseId=" + data[1] + "&difficultyId=" + data[2];
+                                }, 1500);
+                            } else {
+                                setTimeout(function () {
+                                    $(".question").text(data[0]);
+                                    $(".answer-detail.one").text(data[1]);
+                                    $(".answer-detail.two").text(data[2]);
+                                    $(".answer-detail.three").text(data[3]);
+                                    $(".answer-detail.four").text(data[4]);
+                                    $(".col.answer.one").attr("condition", data[5]);
+                                    $(".col.answer.two").attr("condition", data[6]);
+                                    $(".col.answer.three").attr("condition", data[7]);
+                                    $(".col.answer.four").attr("condition", data[8]);
+                                    $("input[name=questionId]").val(data[9]);
+                                }, 1500);
+                            }
+
+                        }
+                        ,
+                        error: function (xhr) {
+                            //Do Something to handle error
+                        }
+                    }
+                    );
+                });
+
+            });
+        </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     </body>
 </html>

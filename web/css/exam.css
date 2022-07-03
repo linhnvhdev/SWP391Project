@@ -9,10 +9,13 @@ and open the template in the editor.
 */
 
 
+body,html{
+    width: 100%;
+}
 
 #progressBar {
-    
-   margin-left:100px;
+
+    margin-left:100px;
     width: 60%;
     background-color: #0a5f44;
 }
@@ -48,8 +51,6 @@ and open the template in the editor.
     color: black;
     width: 30%;
     height: 45%;
-    
-
 }
 .creep
 {
@@ -65,9 +66,9 @@ and open the template in the editor.
 .question
 {
     position: absolute;
-   left: 3%;
-  bottom:30%;
-width: 30vh;
+    left: 3%;
+    bottom:30%;
+    width: 100vh;
     height: 15vh;
     background-color: brown;
     margin-bottom: 10px;
@@ -86,42 +87,83 @@ width: 30vh;
 #table1{
     position: relative;
     margin-left: 30%;
-    
+
 }
 #name
 {
-   margin-left:19%; 
-   
+    margin-left:19%; 
 }
-
 /* Create four equal columns that floats next to each other */
 .column {
-  float: left;
-  width: 15%;
-  height: 300px;
-  padding: 10px;
+    float: left;
+    width: 15%;
+    height: 300px;
+    padding: 10px;
 
 }
 
 /* Clear floats after the columns */
 .row:after {
-  content: "";
-  display: table;
-  clear: both;
+    content: "";
+    display: table;
+    clear: both;
 }
 .column:nth-child(1){
+    color:black;
     background-color: rgb(242,33,40);
-    
+
 }
 .column:nth-child(2){
+    color:black;
     background-color: rgb(33,46,225);
-    
+
 }
 .column:nth-child(3){
+    color:black;
     background-color: rgb(172,98,14);
-    
+
 }
 .column:nth-child(4){
-    background-color: rgb(241,242,244);
-    
+    color:black;
+    background-color: rgb(252,242,244);
+
+}
+input[type="submit"]
+{   
+    position: relative;
+    font-size: 16px;
+    width: 230px;
+    height: 200px;
+    bottom: -50px;
+
+}
+#finish
+{
+    position: absolute;
+    right:10%;
+    bottom:3%;
+    max-height: 100px;
+    max-width: 100px;
+
+}
+#inv{
+    position: absolute;
+    right:20%;
+    bottom:3%;
+    max-height: 100px;
+    max-width: 100px;
+
+}
+input.a {
+    visibility: hidden;
+}
+.ans{
+    position: relative;
+    top:-130px;
+    left:-50px;
+    word-wrap: break-word;
+}input.noText {
+    text-indent: -9999px;
+    font-size: 0px;
+
 }

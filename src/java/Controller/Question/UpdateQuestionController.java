@@ -100,9 +100,7 @@ public class UpdateQuestionController extends HttpServlet {
 
         if (newAnswersDetail == null) {
             newAnswersNum = 0;
-        }
-
-        if (newAnswersNum != 0) {
+        }else {
             for (int i = 0; i < newAnswersDetail.length; i++) {
                 boolean isCorrect = Boolean.parseBoolean(request.getParameter("isCorrectNew" + (i + 1)));
                 if (isCorrect == true) {
