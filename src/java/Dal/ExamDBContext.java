@@ -36,7 +36,6 @@ public class ExamDBContext extends DBContext {
                 e.setId(rs.getInt("Exam_ID"));
                 e.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
                 e.setPassed(rs.getInt("Passed"));
-                e.setDifficulty(diffDB.getDifficulty(rs.getInt("Difficulty_ID")));
                 return e;
             }
         } catch (SQLException ex) {
@@ -53,7 +52,6 @@ public class ExamDBContext extends DBContext {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, eId);
             ResultSet rs = stm.executeQuery();
-            DifficultyDBContext difficultyDB = new DifficultyDBContext();
             CourseDBContext courseDB = new CourseDBContext();
             if (rs.next()) {
                 Exam e = new Exam();
@@ -62,7 +60,6 @@ public class ExamDBContext extends DBContext {
                 e.setPassed(rs.getInt("Passed"));
                 e.setName(rs.getString("Exam_Name"));
                 e.setTime(rs.getInt("Time"));
-                e.setDifficulty(difficultyDB.getDifficulty(rs.getInt("Difficulty_ID")));
                 return e;
             }
         } catch (SQLException ex) {
@@ -399,21 +396,18 @@ public class ExamDBContext extends DBContext {
             String sql = "INSERT INTO [dbo].[Exam]\n"
                     + "           ([Course_ID]\n"
                     + "           ,[Passed]\n"
-                    + "           ,[Difficulty_ID]\n"
                     + "           ,[Exam_name]\n"
                     + "           ,[Time])\n"
                     + "     VALUES\n"
                     + "           (?\n"
                     + "           ,?\n"
                     + "           ,?\n"
-                    + "           ,?\n"
                     + "           ,?)";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, e.getCourse().getId());
             stm.setInt(2, e.getPassed());
-            stm.setInt(3, e.getDifficulty().getId());
-            stm.setString(4, e.getName());
-            stm.setInt(5, e.getTime());
+            stm.setString(3, e.getName());
+            stm.setInt(4, e.getTime());
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ExamDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -511,7 +505,7 @@ public class ExamDBContext extends DBContext {
         }
     }
 
-    public ArrayList<Question> getQuestionsExamByDiff(int eid, int difficultyId, int courseId) {
+    public ArrayList<Question> getQuestionsRemain(int eid, int courseId) {
         ArrayList<Question> questions = new ArrayList<>();
         try {
             String sql = "select  q.Question_ID, q.Question_Detail,q.Difficulty_ID,q.Course_ID \n"
@@ -519,13 +513,11 @@ public class ExamDBContext extends DBContext {
                     + "where not exists (select qe.Exam_ID from Question_Exam qe \n"
                     + "where q.Question_ID = qe.Question_ID\n"
                     + "AND qe.Exam_ID = ?)\n"
-                    + "And q.Difficulty_ID = ? \n"
                     + "AND q.Course_ID= ?";
 
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, eid);
-            stm.setInt(2, difficultyId);
-            stm.setInt(3, courseId);
+            stm.setInt(2, courseId);
             ResultSet rs = stm.executeQuery();
             CourseDBContext courseDB = new CourseDBContext();
             DifficultyDBContext difficultyDB = new DifficultyDBContext();
@@ -544,7 +536,7 @@ public class ExamDBContext extends DBContext {
         return questions;
     }
 
-    public ArrayList<Answer> getAnswersExamByDiff(int eid, int difficultyId, int courseId) {
+    public ArrayList<Answer> getAnswersRemain(int eid,  int courseId) {
         ArrayList<Answer> answers = new ArrayList();
         try {
             String sql = "select  a.Answer_Detail,a.Answer_ID,a.IsCorrect,a.Question_ID\n"
@@ -553,13 +545,11 @@ public class ExamDBContext extends DBContext {
                     + "where not exists (select qe.Exam_ID from Question_Exam qe \n"
                     + "where q.Question_ID = qe.Question_ID\n"
                     + "AND qe.Exam_ID = ?)\n"
-                    + "And q.Difficulty_ID = ? \n"
                     + "AND q.Course_ID= ?";
 
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, eid);
-            stm.setInt(2, difficultyId);
-            stm.setInt(3, courseId);
+            stm.setInt(2, courseId);
             ResultSet rs = stm.executeQuery();
             ExamDBContext examDB = new ExamDBContext();
             while (rs.next()) {
@@ -625,7 +615,6 @@ public class ExamDBContext extends DBContext {
             ResultSet rs = stm.executeQuery();
             CourseDBContext courseDB = new CourseDBContext();
             ExamDBContext examDB = new ExamDBContext();
-            DifficultyDBContext diffDB = new DifficultyDBContext();
             while (rs.next()) {
                 Exam e = new Exam();
                 e.setId(rs.getInt("Exam_ID"));
@@ -633,7 +622,6 @@ public class ExamDBContext extends DBContext {
                 e.setPassed(rs.getInt("Passed"));
                 e.setName(rs.getString("Exam_Name"));
                 e.setTime(rs.getInt("Time"));
-                e.setDifficulty(diffDB.getDifficulty(rs.getInt("Difficulty_ID")));
                 exams.add(e);
             }
         } catch (SQLException ex) {
@@ -710,7 +698,6 @@ public class ExamDBContext extends DBContext {
                 e.setName(rs.getString("Exam_Name"));
                 e.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
                 e.setPassed(rs.getInt("Passed"));
-                e.setDifficulty(diffDB.getDifficulty(rs.getInt("Difficulty_ID")));
                 return e;
             }
         } catch (SQLException ex) {

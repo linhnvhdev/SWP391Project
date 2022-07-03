@@ -1,6 +1,6 @@
 <div class="header">
     <nav>
-        <div class="logo">No game no learn</div>
+        <div class="logo"><a style="text-decoration: none;" href="home">No Game No Learn</a></div>
         <ul class="navbar-item-list">
             <li><a href="${pageContext.request.contextPath}/course/library">Course Library</a></li>
             <li><a href="${pageContext.request.contextPath}/course/add">Create Course</a></li>

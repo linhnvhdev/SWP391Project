@@ -9,7 +9,7 @@ $(document).ready(function(){
         console.log("get");
         $.ajax({
            type: 'GET',
-           url: '/SWP391Project/item',
+           url: '/swp391project/item',
            success: function(data){
                $('#testajax').add(data);
                // Add each item the the inventory table
@@ -84,7 +84,7 @@ $(document).ready(function(){
             itemID: itemID,
             questionID: questionID
         };
-        $.post("/SWP391Project/item",$.param(data),function(response){
+        $.post("/swp391project/item",$.param(data),function(response){
             var data = response.split("|");
 //            console.log($('.inventory-list-item-number.item'+itemID).html());
 //            console.log(data);

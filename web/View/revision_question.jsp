@@ -8,6 +8,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="Model.Question"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -32,6 +33,12 @@
                 </div>
                 <div class="col">
                     <img id="monster" class="monster" src="../img/monster.png" alt=""/>
+                </div>
+            </div>
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p>${requestScope.lvupMessage}</p>
                 </div>
             </div>
             <div class="question">              
@@ -106,7 +113,6 @@
             <input type="hidden" name="difficultyId" value="${requestScope.difficultyId}">
         </div>
         <script>
-
             $(document).ready(function ()
             {
                 console.log("ready");
@@ -181,7 +187,7 @@
                     var answerId = $(this).attr('value');
                     console.log(answerId);
                     $.ajax({
-                        url: "/SWP391Project/revision/question",
+                        url: "/swp391project/revision/question",
                         type: "post", //send it through get method
 
                         data: {
@@ -225,6 +231,37 @@
                 });
 
             });
+            var levelupMessage = "${requestScope.lvupMessage}";
+                    console.log(levelupMessage);
+                    console.log(isEmpty(levelupMessage));
+                    var modal = document.getElementById("myModal");
+// Get the <span> element that closes the modal
+                    var span = document.getElementsByClassName("close")[0];
+                    function isEmpty(levelupMessage) {
+                        return  (!levelupMessage || levelupMessage.length === 0);
+                    }
+                    if (!isEmpty(levelupMessage)) {
+                        LevelUpAlert();
+                        console.log("message not null");
+                    } else {
+                        console.log("message null");
+                    }
+                    function LevelUpAlert() {
+                        // alert(levelupMessage);
+                        console.log("Level Up alert");
+                        modal.style.display = "block";
+                    }
+// When the user clicks on <span> (x), close the modal
+                    span.onclick = function () {
+                        modal.style.display = "none";
+                    }
+// When the user clicks anywhere outside of the modal, close it
+                    window.onclick = function (event) {
+                        if (event.target == modal) {
+                            modal.style.display = "none";
+                        }
+                    }
+
         </script>
         <%@ include file="inventory.jsp" %>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>

@@ -28,9 +28,7 @@ public class RemoveExamQuestionController extends HttpServlet {
         Account acc = (Account) request.getSession().getAttribute("account");
         int courseId = Integer.parseInt(request.getParameter("courseId"));
         int eid = Integer.parseInt(request.getParameter("eid"));
-        User user = acc.getUser();
         
-        QuestionDBContext questionDB = new QuestionDBContext();
         ExamDBContext examDB = new ExamDBContext();
         String[] rawquestion_id = request.getParameterValues("questionid");
         if (rawquestion_id == null ) {

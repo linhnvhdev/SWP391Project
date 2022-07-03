@@ -111,6 +111,23 @@ public class UserDBContext extends DBContext {
         }
         return 0;
     }
+    public int getUserLevel(int userId) {
+        try {
+            String sql = "SELECT [Level]\n"
+                    + "FROM [User] \n"
+                    + "WHERE [User_ID] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, userId);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                int level = rs.getInt("Level");
+                return level;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
 
     public void updateUserExp(int userId, int exp) {
         try {

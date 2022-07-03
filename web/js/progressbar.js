@@ -25,7 +25,7 @@ function progress(timeleft, timetotal, $element) {
         redirect();
     }
 };
-progress(500, 500, $('#progressBar'));
+progress($('input[name="time"]').attr("value"), 600, $('#progressBar'));
 
 
 function redirect() {

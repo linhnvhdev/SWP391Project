@@ -88,23 +88,19 @@
                 <form action="editexam" method="GET">
                     <div class="form-row">
                         <input type ="hidden" name="courseId" value ="${requestScope.courseId}">
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-3">
                             <label class="form-label ">Exam ID</label>
                             <input type="text" class="form-control" name="eid" value="${requestScope.exam.id}" readonly />
                         </div>
-                        <div class="form-group col-md-2" >
-                            <label class="form-label">Difficulty</label>
-                            <input type="text" class="form-control" name="difficulty" value="${requestScope.exam.difficulty.name}" readonly />
-                        </div>
-                        <div class="form-group col-md-2" >
+                        <div class="form-group col-md-3" >
                             <label class="form-label">Exam Name</label>
                             <input type="text" class="form-control" name="ename" value="${requestScope.exam.name}" />
                         </div>
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-3">
                             <label class="form-label">Time to Complete</label>
                             <input type="text" class="form-control" name="etime" value="${requestScope.exam.time}" />
                         </div>
-                        <div class="form-group col-md-2" >
+                        <div class="form-group col-md-3" >
                             <label class="form-label">Score to pass the Exam</label>
                             <input type="number" class="form-control" name="escore" value="${requestScope.exam.passed}" min="0" max="100" />
                         </div>

@@ -41,8 +41,8 @@ public class AddExamQuestionController extends HttpServlet {
 
         ExamDBContext examDB = new ExamDBContext();
         Exam exam = examDB.getExamByEid(eid);
-        ArrayList<Question> questionList = examDB.getQuestionsExamByDiff(eid, difficultyId, courseId);
-        ArrayList<Answer> answerList = examDB.getAnswersExamByDiff(eid, difficultyId, courseId);
+        ArrayList<Question> questionList = examDB.getQuestionsRemain(eid, courseId);
+        ArrayList<Answer> answerList = examDB.getAnswersRemain(eid, courseId);
 
         request.setAttribute("questionList", questionList);
         request.setAttribute("answerList", answerList);

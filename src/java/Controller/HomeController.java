@@ -6,9 +6,11 @@
 package Controller;
 
 import Dal.CourseDBContext;
+import Dal.LevelDBContext;
 import Dal.UserDBContext;
 import Model.Account;
 import Model.Course;
+import Model.LevelSetUp;
 import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -41,6 +43,12 @@ public class HomeController extends HttpServlet {
         User user = userDB.getUser(acc.getUser().getId());
         CourseDBContext courseDB = new CourseDBContext();
         ArrayList<Course> courseList = courseDB.getCourseList(user.getId());
+        LevelDBContext levelDB = new LevelDBContext();
+        ArrayList<LevelSetUp> levelList =(ArrayList<LevelSetUp> ) request.getSession().getAttribute("levelList");
+        if (levelList == null) {
+            levelList = levelDB.getLevelList();
+            request.getSession().setAttribute("levelList", levelList);
+        }
         request.setAttribute("courseList", courseList);
         request.setAttribute("user", user);
         request.getRequestDispatcher("View/home.jsp").forward(request, response);

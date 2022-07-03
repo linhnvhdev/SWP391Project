@@ -177,6 +177,14 @@
         <servlet-class>Controller.Exam.UpdateExamQuestionController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ChooseExamController</servlet-name>
+        <servlet-class>Controller.Exam.ChooseExamController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserLevelController</servlet-name>
+        <servlet-class>Controller.User.UserLevelController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>CommunityController</servlet-name>
         <servlet-class>Controller.Community.CommunityController</servlet-class>
     </servlet>
@@ -339,6 +347,14 @@
     <servlet-mapping>
         <servlet-name>UpdateExamQuestionController</servlet-name>
         <url-pattern>/updateexamquestion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChooseExamController</servlet-name>
+        <url-pattern>/chooseexam</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserLevelController</servlet-name>
+        <url-pattern>/levelup</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CommunityController</servlet-name>

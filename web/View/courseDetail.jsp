@@ -164,7 +164,7 @@
                                 <a class="button" href="revision?courseId=${course.id}&difficultyId=${requestScope.difficultyId}"><button type="submit" class="btn btn-primary btn-lg"><b class="button-content">PRACTICE</b></button></a>
                             </div>
                             <div>
-                                <a class="button" href="exam?courseId=${course.id}&difficultyId=${requestScope.difficultyId}" ><button type="submit" class="btn btn-primary btn-lg"><b class="button-content">EXAM</b></button></a>
+                                <a class="button" href="chooseexam?courseId=${course.id}&difficultyId=${requestScope.difficultyId}" ><button type="submit" class="btn btn-primary btn-lg"><b class="button-content">EXAM</b></button></a>
                             </div>
 
                             <div>

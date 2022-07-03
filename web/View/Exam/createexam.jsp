@@ -86,7 +86,7 @@
                         <c:forEach items="${requestScope.questionList}" var="q">
                             <tr>
                                 <td>${q.id}</td><input type ="hidden" value =" ${q.id}">                           
-                            <td><input type="checkbox" name="questionid" value="${q.id}"> Add to Exam</td>
+                            <td><input type="checkbox" name="questionid" value="${q.id}"></td>
                             <td>${q.detail}</td>
                             <c:forEach items = "${requestScope.answerList}" var="a">
                                 <c:if test="${q.id == a.question.id}">       
