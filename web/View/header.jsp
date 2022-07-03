@@ -3,7 +3,7 @@
         <div class="logo">No game no learn</div>
         <ul class="navbar-item-list">
             <li><a href="${pageContext.request.contextPath}/course/library">Course Library</a></li>
-            <li><a href="${pageContext.request.contextPath}/course/addCourse">Create Course</a></li>
+            <li><a href="${pageContext.request.contextPath}/course/add">Create Course</a></li>
             <li><a href="${pageContext.request.contextPath}/leaderboard">Leaderboard</a></li>
             <li><a id="btnInventory">Inventory</a></li>
            
