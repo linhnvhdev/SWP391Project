@@ -99,6 +99,10 @@ public class RevisionQuestionController extends HttpServlet {
                     +newAnswers.get(1).isIsCorrect()+"|"
                     +newAnswers.get(2).isIsCorrect()+"|"
                     +newAnswers.get(3).isIsCorrect()+"|"
+                    +newAnswers.get(0).getId()+"|"
+                    +newAnswers.get(1).getId()+"|"
+                    +newAnswers.get(2).getId()+"|"
+                    +newAnswers.get(3).getId()+"|"
                     +newQuestionId);
             
 //            request.setAttribute("courseId", courseId);

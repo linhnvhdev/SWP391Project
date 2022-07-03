@@ -207,7 +207,11 @@
                                     $(".col.answer.two").attr("condition", data[6]);
                                     $(".col.answer.three").attr("condition", data[7]);
                                     $(".col.answer.four").attr("condition", data[8]);
-                                    $("input[name=questionId]").val(data[9]);
+                                    $(".col.answer.one").attr("value", data[9]);
+                                    $(".col.answer.two").attr("value", data[10]);
+                                    $(".col.answer.three").attr("value", data[11]);
+                                    $(".col.answer.four").attr("value", data[12]);
+                                    $("input[name=questionId]").val(data[13]);
                                 }, 1500);
                             }
 
