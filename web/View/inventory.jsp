@@ -23,7 +23,9 @@
             </tr>
         </table>
     </div>
-    <div id="inventory-foot"></div>
+    <div id="inventory-foot">
+        <button id="closeInventory">Close</button>
+    </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/inventory.js?version=1"></script>
+<script src="${pageContext.request.contextPath}/js/inventory.js?version=2"></script>

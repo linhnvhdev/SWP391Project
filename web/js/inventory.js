@@ -38,6 +38,9 @@ $(document).ready(function(){
     $('#btnInventory').click(function(){
         $('#inventory').toggle();
     });
+    $('#closeInventory').click(function(){
+        $('#inventory').toggle();
+    });
     $(document).on("click",".inventory-list-item-use > .use-item",function(){
         var itemID = $(this).attr('id');
         var questionID = $('input[name="thisQuestionID"]').attr("value");

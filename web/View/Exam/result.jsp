@@ -42,6 +42,5 @@
                 </tbody>
             </table>
         </div>
-        <%@ include file="../inventory.jsp" %>
     </body>
 </html>

@@ -109,8 +109,10 @@
 
             $(document).ready(function ()
             {
+                console.log("ready");
                 $(".col.answer").click(function ()
                 {
+                    console.log("col answer");
                     $("#player").css("animation-name", "attack");
                     console.log($("input[name='questionId']").val());
                     console.log($(this).attr('value'));
@@ -177,8 +179,9 @@
                     var courseId = $("input[name='courseId']").val();
                     var difficultyId = $("input[name='difficultyId']").val();
                     var answerId = $(this).attr('value');
+                    console.log(answerId);
                     $.ajax({
-                        url: "/swp391project/revision/question",
+                        url: "/SWP391Project/revision/question",
                         type: "post", //send it through get method
 
                         data: {
@@ -190,6 +193,7 @@
                         ,
                         success: function (response) {
                             var data = response.split("|");
+                            console.log(data[1]);
                             console.log(data[1]);
                             console.log(data[2]);
                             if (data[0] === "end") {
@@ -222,7 +226,7 @@
 
             });
         </script>
-
+        <%@ include file="inventory.jsp" %>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     </body>
