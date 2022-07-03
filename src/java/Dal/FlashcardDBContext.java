@@ -8,9 +8,17 @@ package Dal;
 import Model.Course;
 import Model.Flashcard;
 import Model.User;
+import Model.User_Flashcard;
+import java.sql.Date;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +29,7 @@ import java.util.logging.Logger;
  */
 public class FlashcardDBContext extends DBContext {
 
-    public void addFlashcard(String front, String back, int courseId,String difficulty) {
+    public void addFlashcard(String front, String back, int courseId, String difficulty) {
         try {
             String sql = "INSERT INTO [dbo].[Flashcard]\n"
                     + "           ([Flash_Front]\n"
@@ -194,7 +202,7 @@ public class FlashcardDBContext extends DBContext {
                 return true;
             } else {
                 addFlashCardRead(f, u);
-                addExpFc(u, c);
+                addExpFc(u, c, "1");
             }
 
         } catch (SQLException ex) {
@@ -203,11 +211,11 @@ public class FlashcardDBContext extends DBContext {
         return false;
     }
 
-    private void addExpFc(User u, Course c) {
+    private void addExpFc(User u, Course c, String exp) {
         try {
             String sql = "UPDATE [User_Course]\n"
                     + "   SET \n"
-                    + "       [Exp] = [Exp] + 1\n"
+                    + "       [Exp] = [Exp] +" + exp + "\n"
                     + " WHERE [User_ID] = ? and [Course_ID] = ?\n";
 
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -219,7 +227,7 @@ public class FlashcardDBContext extends DBContext {
         }
         try {
             String sql = "UPDATE [User]\n"
-                    + "   SET [Exp] =[Exp]+1 \n"
+                    + "   SET [Exp] =[Exp]+" + exp + "\n"
                     + " WHERE [User_ID] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, u.getId());
@@ -230,16 +238,30 @@ public class FlashcardDBContext extends DBContext {
     }
 
     private void addFlashCardRead(Flashcard f, User u) {
+        java.util.Date date = new java.util.Date();
         try {
-            String sql = "INSERT INTO [User_FlashCard]\n"
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            date = dateFormat.parse(getExpBonusDate());
+        } catch (ParseException ex) {
+            Logger.getLogger(FlashcardDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+        try {
+            String sql = "INSERT INTO [dbo].[User_FlashCard]\n"
                     + "           ([User_ID]\n"
-                    + "           ,[Flashcard_ID])\n"
+                    + "           ,[Flashcard_ID]\n"
+                    + "           ,[Exp_Bonus]\n"
+                    + "           ,[Due_Date])\n"
                     + "     VALUES\n"
                     + "           (?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
                     + "           ,?)";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, u.getId());
             stm.setInt(2, f.getId());
+            stm.setInt(3, 1);
+            stm.setDate(4, sqlDate);
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(FlashcardDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -299,6 +321,129 @@ public class FlashcardDBContext extends DBContext {
         }
 
         return false;
+    }
+
+    private String getExpBonusDate() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        LocalDateTime now = LocalDateTime.now();
+        return dtf.format(now.plusDays(2));
+    }
+
+    public void ExpBonus(Flashcard flashcard, User user, Course c) {
+        User_Flashcard uf = ExpbonusInfor(flashcard, user);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        LocalDateTime now = LocalDateTime.now();
+
+        DateFormat sdfr = new SimpleDateFormat("yyyy/MM/dd");
+        String date = sdfr.format(uf.getDue_date());
+        String exp_bonus = String.valueOf(uf.getExp_bonus());
+        boolean isContinuous;
+        if (dtf.format(now).compareTo(date) == 0) {
+            addExpFc(user, c, exp_bonus);
+            isContinuous = true;
+            updateExpAndDateBonus(uf, isContinuous);
+        } else if (dtf.format(now).compareTo(date) > 0) {
+            isContinuous = false;
+            updateExpAndDateBonus(uf, isContinuous);
+        }
+    }
+
+    public void updateExpAndDateBonus(User_Flashcard uf, boolean isContinuous) {
+        try {
+            String sql = "UPDATE [User_FlashCard]\n"
+                    + "   SET [Exp_Bonus] = ?\n"
+                    + "      ,[Due_Date] = ?\n"
+                    + " WHERE [User_ID] = ? and [Flashcard_ID] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+            LocalDateTime now = LocalDateTime.now();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+            java.util.Date date = new java.util.Date();
+            if (isContinuous == true) {
+                try {
+                    int t1 = (int)((Math.log(uf.getExp_bonus())/Math.log(1.2)+0.001));
+                    int dayplus;
+                    if(t1!=0){
+                    dayplus= calculate_Continuity(1,-1,-t1)+1;}
+                    else{
+                    dayplus=1; 
+                    }
+                    date = formatter.parse(dtf.format(now.plusDays(dayplus+1)));
+                } catch (ParseException ex) {
+                    Logger.getLogger(FlashcardDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+                stm.setFloat(1, (float) (uf.getExp_bonus() * 1.2));
+                stm.setDate(2, sqlDate);
+
+            } else {
+                try {
+                    date = formatter.parse(dtf.format(now.plusDays(2)));
+                } catch (ParseException ex) {
+                    Logger.getLogger(FlashcardDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+                stm.setFloat(1, 1);
+                stm.setDate(2, sqlDate);
+            }
+            stm.setInt(3, uf.getUser_ID());
+            stm.setInt(4, uf.getFlashcard_ID());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(FlashcardDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public int calculate_Continuity(float a, float b, float c) {
+        int x=0;
+        if (a == 0) {
+            if (b == 0) {
+            } else {
+                x=(int)(-c / b);
+                return x;
+            }
+        }
+        float delta = (float) (Math.pow(b, 2) - 4 * a * c);
+        float x1;
+        float x2;
+        if (delta > 0) {
+            x1 = (float) ((-b + Math.sqrt(delta)) / (2*a));
+            x2 = (float) ((-b - Math.sqrt(delta)) / (2*a));
+            if(x1>0){
+            x=(int)x1;
+            }
+            if(x2>0){
+            x=(int)x2;
+            }
+        } else if (delta == 0) {
+            x = (int)(-b / (2 * a));
+        }
+        return x;
+    }
+    public User_Flashcard ExpbonusInfor(Flashcard flashcard, User user) {
+        try {
+            String sql = "SELECT [User_ID]\n"
+                    + "      ,[Flashcard_ID]\n"
+                    + "      ,[Exp_Bonus]\n"
+                    + "      ,[Due_Date]\n"
+                    + "  FROM [User_FlashCard]\n"
+                    + "  Where [Flashcard_ID] = ? and  [User_ID]=?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, flashcard.getId());
+            stm.setInt(2, user.getId());
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                User_Flashcard uf = new User_Flashcard();
+                uf.setUser_ID(rs.getInt("User_ID"));
+                uf.setFlashcard_ID(rs.getInt("Flashcard_ID"));
+                uf.setExp_bonus(rs.getFloat("Exp_Bonus"));
+                uf.setDue_date(rs.getDate("Due_Date"));
+                return uf;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FlashcardDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
 }
