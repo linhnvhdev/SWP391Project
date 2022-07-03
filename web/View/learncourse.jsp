@@ -23,15 +23,18 @@
             ArrayList<Flashcard> ListFC =(ArrayList<Flashcard>) request.getAttribute("ListFC");
             int index = (Integer) request.getAttribute("index");
             User_Flashcard UserFlashcard=(User_Flashcard)request.getAttribute("ExpbonusInfor");
-            DecimalFormat decimalFormat = new DecimalFormat("#.##");
-            float exp_bonus = Float.valueOf(decimalFormat.format(UserFlashcard.getExp_bonus()));
+            float exp_bonus=0;
+            if(UserFlashcard!=null){
+                DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                exp_bonus = Float.valueOf(decimalFormat.format(UserFlashcard.getExp_bonus()));
+            }
         %>
     </head>
     <body>
-        
+        <%if(UserFlashcard!=null){%>
         <g5>Exp bonus:<%=exp_bonus%></g5><br/>
         <g5>Date:<%=UserFlashcard.getDue_date()%></g5>
-        
+        <%}%>
         <div class="aaa">
         <%if(ListFC.size()==0){%>
         <g5>List of FLashcards are empty</g5>
