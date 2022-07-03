@@ -286,17 +286,16 @@ button{
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 20vw;
-  color: #ff6699;
-  font-size: 22px;
+  width: 40vw;
+  font-size: 30px;
   font-style: oblique;
   text-align: center;
   height: 30vh;
   overflow: hidden;
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
-/* The Close Button */
+ The Close Button 
 .close {
   color: #aaaaaa;
   float: right;

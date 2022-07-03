@@ -119,7 +119,6 @@ public class ResultController extends HttpServlet {
             }
         }
         request.setAttribute("lvupMessage", levelupMessage);
-        session.removeAttribute("levelupMessage");
         
         request.setAttribute("numQues", numQues);
         request.setAttribute("exam", exam);

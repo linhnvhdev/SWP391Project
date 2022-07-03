@@ -19,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -49,6 +50,8 @@ public class HomeController extends HttpServlet {
             levelList = levelDB.getLevelList();
             request.getSession().setAttribute("levelList", levelList);
         }
+        HttpSession session = request.getSession();
+        session.removeAttribute("lvUMessage");
         request.setAttribute("courseList", courseList);
         request.setAttribute("user", user);
         request.getRequestDispatcher("View/home.jsp").forward(request, response);
