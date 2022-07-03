@@ -17,57 +17,104 @@
         <link href="${pageContext.request.contextPath}/css/inventory.css?version=1" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        <script>
+   function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+        </script>
+
         <%@ include file="header.jsp" %>
-        <div class="img_container">
-            <!-- top level image container START-->
-            
-            <div class="main-img">
-                <div class="card-container">
-	<div class="front">Hover To Start Studying</div>
-        <div class="back">
-            
-               <h3 style="font-size: 30px;">Course list:</h3>
-                    <table style="border-color: black; font-size:30px; margin-left:90px;" border="solid 2px">
 
-                        <c:forEach var="course" items="${requestScope.courseList}">
-                            <tr>
-                                <td> <a href="choosediff?courseId=${course.id}">${course.name}</a><br>
-                                </c:forEach></td>
-                        </tr>
-                    </table>
-                    <c:if test="${sessionScope.account.user.role >= 2}">
-                        <a href="course/add"><button>Add new course</button></a>
-                    </c:if>
-
-        </div>
+     <div class="dropdown">
+  <button onclick="myFunction()" class="dropbtn"></button>
+  <div id="myDropdown" class="dropdown-content">
+      <a href="home"> <img src="${pageContext.request.contextPath}/img/menu.png"/></a>
+   <a href="home"> <img src="${pageContext.request.contextPath}/img/menu.png"/></a>
+    <a href="home"> <img src="${pageContext.request.contextPath}/img/menu.png"/></a>
+  </div>
 </div>
-               
+
+        <div class="left">
+
+            <div class="middle-left">
+                <img id="img1" src="${pageContext.request.contextPath}/img/pix.png" alt=""/>
+
             </div>
+            <div class="left-corner-l">
+                <p id="space">Name: <b>${requestScope.user.name}</b></p>
+                <p id="space">Level: <b>${requestScope.user.level}</b></p>
+                <p id="space">Exp: <b>${requestScope.user.exp}</b></p> 
+            </div>
+            <div class="left-corner-r">
+                <p id="space"> List of trophies:</p>
+                <p id="space">Exp: <b>${requestScope.user.exp}</b></p>
+                <p id="space">Exp: <b>${requestScope.user.exp}</b></p>
+                <p id="space">Exp: <b>${requestScope.user.exp}</b></p>
+                <p id="space">Exp: <b>${requestScope.user.exp}</b></p>
+            </div>
+        </div>
+        <div class="right">
 
-            
-            
+            <h1>List of enrolled</h1>
+            <div class="box">
 
-            <div class="stacked-div">
-                <!--stacked img container -->
-                <div class="top-img">
-                    <!--top image -->
+                <c:forEach var="course" items="${requestScope.courseList}">
                     <div class="card">
-                        <img id="ava" src="img/char.png" alt="Avatar" style="width:100%">
+                        <div onclick="location.href = 'choosediff?courseId=${course.id}';" class="content">
+                            <div class="course"> 
+                                <div class="back"> <!-- back -->
+                                    aaaaaaaaaaasdasdgasdh
+                                    ashdash
+                                    ajsdfj
+                                    aaaaaaaaaaaa
+                                </div>   
+                                <div class="front"><!-- front -->
+                                    <img id="img2" src="${pageContext.request.contextPath}/img/pix.png" alt=""/>
+                                    <div class="link">
+                                        <div class="coursename"> ${course.name}</div>
+                                        rating 10/10
+                                        enroll: 1000+?
+                                    </div>
+                                </div>             
+                            </div>
 
-                        <div class="center">
-                            <p><b>${requestScope.user.name}</b></p>
-                            <p>Exp: <b>${requestScope.user.exp}</b></p> 
-                            <p>Level: <b>${requestScope.user.level}</b></p> 
-                        </div>    
+                        </div>  
                     </div>
-                    <div class="overlay">
 
-                    </div>
-                    <!--overlay -->
+                </c:forEach>
+
+
+                <div class="pagination">
+                    <a href="#">&laquo;</a>
+                    <a href="#">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                    <a href="#">5</a>
+                    <a href="#">6</a>
+                    <a href="#">&raquo;</a>
+
                 </div>
-
             </div>
         </div>
         <%@ include file="inventory.jsp" %>
+
+
+
+
     </body>
 </html>
