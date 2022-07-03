@@ -21,7 +21,7 @@ $(document).ready(function () {
             var data = {
                 postID: postID
             };
-            $.get("/SWP391Project/PostComment", $.param(data), function (response) {
+            $.get("/swp391project/PostComment", $.param(data), function (response) {
                 console.log("At least we get something");
                 postComment.html(response);
             });
@@ -44,7 +44,7 @@ $(document).ready(function () {
             postID: postID,
             comment: commentDetail
         };
-        $.post("/SWP391Project/PostComment", $.param(data), function (response) {
+        $.post("/swp391project/PostComment", $.param(data), function (response) {
             console.log("response: " + response);
             console.log($('#post-comments' + postID));
             $('#post-comments' + postID).prepend(response);
@@ -62,7 +62,7 @@ $(document).ready(function () {
         var data = {
             postID: postID
         };
-        $.post("/SWP391Project/LikePostController", $.param(data), function (response) {
+        $.post("/swp391project/LikePostController", $.param(data), function (response) {
             console.log("It works");
             if (response == "true") {
                 likeNum++;

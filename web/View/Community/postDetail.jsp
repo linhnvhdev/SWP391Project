@@ -187,7 +187,7 @@
                                 postID: postID,
                                 editContent: editContent
                             };
-                            $.post("/SWP391Project/EditPost", $.param(data), function (response) {
+                            $.post("/swp391project/EditPost", $.param(data), function (response) {
                                 console.log("Post response: " + response);
                                 if (response === "true") {
                                     $('#postDetail' + postID).html(editContent);
@@ -203,7 +203,7 @@
                         var confirmDelete = confirm("Are you sure you want to delete this post?");
                         if (confirmDelete) {
                             var mainPostID = ${mainPost.ID};
-                            document.location.href = '/SWP391Project/DeletePost?mainPostID=' + mainPostID + '&postID=' + postID;
+                            document.location.href = '/swp391project/DeletePost?mainPostID=' + mainPostID + '&postID=' + postID;
                         }
                     });
                 });

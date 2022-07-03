@@ -166,7 +166,7 @@
                 var data = {
                     pageIndex: pageIndex
                 };
-                $.get("/SWP391Project/LoadMorePost", $.param(data), function (response) {
+                $.get("/swp391project/LoadMorePost", $.param(data), function (response) {
                     console.log("At least we get something");
                     $('.post-table').append(response);
                     pageIndex++;
@@ -193,7 +193,7 @@
 
             $('.resetSearchButton').on('click', function (event) {
                 console.log("reset??");
-                window.location.href = "/SWP391Project/community";
+                window.location.href = "/swp391project/community";
             });
         });
     </script>
