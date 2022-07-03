@@ -43,7 +43,12 @@ public class ReviewController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<div class=\"card review-content\" style=\"width: auto;\">                      \n" +
 "                                            <div class=\"card-body\">          \n" +
-"                                                <h5 class=\"card-title\"><img src=\"https://i.pinimg.com/236x/93/a0/0a/93a00a3684652031a0c398c5d54d3d10.jpg\" alt=\"Avatar\" class=\"avatar\"> Your review | <i class=\"rate-person\">Rated: "+rating+"</i></h5>\n" +
+"                                                <div class=\"row\">\n" +
+"                                                    <h5 class=\"card-title\">\n" +
+"                                                <div class=\"row\">\n" +
+"                                                    <div class=\"col-1\"><img src=\"https://i.pinimg.com/236x/93/a0/0a/93a00a3684652031a0c398c5d54d3d10.jpg\" alt=\"Avatar\" class=\"avatar\"></div>\n" +
+"                                                    <div class=\"col-11\">\n" +
+"                                                        Your review | <i class=\"rate-person\">Rated: "+rating+"</i></h5>\n" +
 "                                                <div class=\"row\">\n" +
 "                                                    <div class=\"col-10\"><input class=\"card-text review\" name=\"userReview\" readonly value=\""+reviewContent+"\"></div>\n" +
 "                                                    <div class=\"col-2 edit-button\" id=\"review-button\"><input type=\"button\" class=\"btn btn-outline-primary\" id=\"edit\" onclick=\"edit()\" value=\"Edit\"></div>\n" +

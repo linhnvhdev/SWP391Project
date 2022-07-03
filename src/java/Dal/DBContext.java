@@ -20,9 +20,9 @@ public class DBContext {
     
     public DBContext(){
         try {
-           String username ="tqd";
-            String password="123456789";
-            String url="jdbc:sqlserver://LAPTOP-0VID8KU2\\DUNG:1433;databaseName=SWP391Project";
+           String username ="justtva";
+            String password="123";
+            String url="jdbc:sqlserver://DESKTOP-9DJECVQ\\SQLEXPRESS:1433;databaseName=SWP391Project";
 
          
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
