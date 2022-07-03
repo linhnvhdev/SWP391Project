@@ -1,4 +1,86 @@
-.homescreen-content {
+body{
+    background-image: url(../img/caveentrance.jpg);
+    background-color: #cccccc;
+    background-attachment: fixed;
+    background-size: cover;
+
+}
+.heading{
+    text-align: center;
+    font-family:"courseName";
+    color:white;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-shadow: -8px 5px 0 #453535, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+.title{
+    font-size: 100px;
+}
+@font-face {
+    font-family: "courseName";
+    src: url('../font/Game Of Squids.woff2') format('woff2');
+}
+.infomation{
+    padding: 10px;
+    opacity: 1;
+}
+.container{
+    height: 90vh;
+    position: relative;
+    text-align: center;
+}
+.bottom-container{
+    width:60%;
+    position: absolute;
+    bottom: 0px;
+    right:20%;
+    left:auto;
+    background-color: rgba(255,255,255,0.3);
+    border-radius: 10px;
+    border: 5px solid gray;
+
+}
+.button-start{
+    text-align: center;
+}
+.col-4.left{
+    padding-top: 2%;
+    border-radius: 10px;
+    background-color: rgba(255,255,255,0.6);
+    box-shadow: 5px 8px #888888;
+}
+.col-4.right{
+    padding-top: 2%;
+    border-radius: 10px;
+    background-color: rgba(255,255,255,0.6);
+    box-shadow: 5px 8px #888888;
+}
+.button-start{
+    margin-bottom: 2%;
+}
+.link-start:link{
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    color: whitesmoke;
+    transition: all .25s;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+.link-start:visited{
+    color: whitesmoke;
+}
+.link-start:hover{
+    font-size: 30px;
+    font-style: italic;
+    color: whitesmoke;
+    background-image: url(../img/lua.gif);
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+}
+/*.homescreen-content {
     height: 100%;
     display: flex;
   }
@@ -53,4 +135,4 @@ a:hover {
     color: red;
     background-color: transparent;
     text-decoration: underline;
-}
+}*/

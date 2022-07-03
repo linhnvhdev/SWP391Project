@@ -72,11 +72,12 @@ input.text-search{
     background: transparent;
     border-radius: 2px;
     border-bottom: 1px solid black;
-    width: 100%;
+    width: 100%;   
 }
 input.text-search:hover{
     box-shadow: 0 0 11px rgba(33,33,33,.2);
     background-color: rgba(194, 219, 255, .3);
+    
 }
 .search-title{
     text-align: center;
@@ -89,9 +90,11 @@ input.text-search:hover{
     position: fixed;
     border-radius: 25px;
     opacity: 0.5;
+    transition: opacity .25s;
 }
 .card.search:hover{
     opacity:1;
+    transition: opacity .25s;
 }
 .col-9.content{
     margin-top: 50px;

@@ -48,7 +48,7 @@ public class DifficultyDBContext extends DBContext {
         try {
             String sql = "SELECT [Difficulty_ID]\n"
                     + "      ,[Difficulty_Name]\n"
-                    + "      ,[Exp]\n"
+                    + "      ,[Exp_Flashcard]\n"
                     + "      ,[DamagetoBoss]\n"
                     + "  FROM [dbo].[Difficulty]\n"
                     + "  WHERE Difficulty_ID = ?";
@@ -60,7 +60,7 @@ public class DifficultyDBContext extends DBContext {
                 Difficulty d = new Difficulty();
                 d.setId(rs.getInt("Difficulty_ID"));
                 d.setName(rs.getString("Difficulty_Name"));
-                d.setExp(rs.getInt("Exp"));
+                d.setExp(rs.getInt("Exp_Flashcard"));
                 d.setDamageToBoss(rs.getInt("DamagetoBoss"));
                 return d;
             }

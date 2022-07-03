@@ -183,17 +183,59 @@ public class UserCourseDBContext extends DBContext {
         return 0;
     }
 
-    public int getAvgReview(int courseId) {
+    public float getAvgReview(int courseId) {
         try {
-            String sql = "select\n"
-                    + "AVG(Review_Score)\n"
-                    + "from [User] u inner join User_Course uc \n"
-                    + "on u.User_ID = uc.User_ID\n"
-                    + "where Course_ID = ? AND Review_Detail is not NULL";
+            String sql = "select\n" +
+"                    AVG(Cast(Review_Score as Float))\n" +
+"                    from [User] u inner join User_Course uc \n" +
+"                    on u.User_ID = uc.User_ID\n" +
+"                    where Course_ID = ? AND Review_Detail is not NULL";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, courseId);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
+                return rs.getFloat(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserCourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    public int getNumQuestionRemain(int courseId, int userId) {
+        try {
+            String sql = "SELECT COUNT(*)\n"
+                    + "FROM Question\n"
+                    + "WHERE Question_ID NOT IN (SELECT Question_ID FROM User_Question\n"
+                    + "WHERE [User_ID] = ?) AND [Course_ID] = ? ";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, userId);
+            stm.setInt(2, courseId);
+
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserCourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    public int getNumFlascardRemain(int courseId, int userId) {
+        try {
+            String sql = "SELECT COUNT(*)\n"
+                    + "FROM Flashcard\n"
+                    + "WHERE Flashcard_ID NOT IN (SELECT Flashcard_ID FROM User_Flashcard\n"
+                    + "WHERE [User_ID] = ?) AND [Course_ID] = ?";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, userId);
+            stm.setInt(2, courseId);
+
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
                 return rs.getInt(1);
             }
         } catch (SQLException ex) {

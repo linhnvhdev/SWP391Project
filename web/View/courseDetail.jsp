@@ -44,6 +44,8 @@
                     reviewNum++;
                 }
             }
+            ArrayList<Integer> percentCompletes = (ArrayList<Integer>) request.getAttribute("percentCompletes");
+            int index = 0;
         %>
         <div class="container">
             <!--Title-->
@@ -118,10 +120,10 @@
                                     <c:if test="${requestScope.hasReview == true}">
                                         <div class="card review-content" style="width: auto;">                      
                                             <div class="card-body">          
-                                                <h5 class="card-title"><img src="https://i.pinimg.com/236x/93/a0/0a/93a00a3684652031a0c398c5d54d3d10.jpg" alt="Avatar" class="avatar"> <%=review.getUserName()%> | <i class="rate-person">Rated: <%=review.getRating()%></i></h5>
+                                                <h5 class="card-title"><img src="https://i.pinimg.com/236x/93/a0/0a/93a00a3684652031a0c398c5d54d3d10.jpg" alt="Avatar" class="avatar"> Your review | <i class="rate-person">Rated: <%=review.getRating()%></i></h5>
                                                 <div class="row">
                                                     <div class="col-10"><input class="card-text review" name="userReview" readonly value="<%=review.getDetail()%>"></div>
-                                                    <div class="col-2 edit-button" id="review-button"><input type="button" class="btn btn-outline-primary" id="edit" value="Edit"></div>
+                                                    <div class="col-2 edit-button" id="review-button"><input type="button" class="btn btn-outline-primary" id="edit" onclick="edit()" value="Edit"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -130,8 +132,18 @@
                                     <%if (r.getDetail() != null && (r.getUserId() != user.getId())) {%>
                                     <div class="card review-content" style="width: auto;">                      
                                         <div class="card-body">          
-                                            <h5 class="card-title"><img src="https://i.pinimg.com/236x/93/a0/0a/93a00a3684652031a0c398c5d54d3d10.jpg" alt="Avatar" class="avatar"> <%=r.getUserName()%> | <i class="rate-person">Rated: <%=r.getRating()%></i></h5>
-                                            <p class="card-text"><%=r.getDetail()%></p>
+                                            <h5 class="card-title">
+                                                <div class="row">
+                                                    <div class="col-1"><img src="https://i.pinimg.com/236x/93/a0/0a/93a00a3684652031a0c398c5d54d3d10.jpg" alt="Avatar" class="avatar"></div>
+                                                    <div class="col-11">
+                                                        <%=r.getUserName()%> | <i class="rate-person">Rated: <%=r.getRating()%></i></br>
+                                                        <progress id="progress" value="<%=percentCompletes.get(index)%>" max="100"></progress>
+                                                        <div class="hide"><%=percentCompletes.get(index)%>% completion</div>
+                                                    </div>
+                                                </div>                                      
+                                            </h5>
+                                            <p class="card-text"><%=r.getDetail()%></p>                                                                                        
+                                            <%index++;%>
                                         </div>
                                     </div>
                                     <%}%>
@@ -178,24 +190,20 @@
             </div>
         </div>
         <div class="footer">
+
         </div>                            
         <script>
 
-            $(document).ready(function ()
-            {
-                $("#edit").click(function ()
-                {
-                    console.log($("input[name='userReview']").val());
-                    $("input[name='userReview']").removeAttr("readonly");
-                    $("input[name='userReview']").css("border", "1px solid black");
-                    $("input[name='userReview']").css("background-color", "white");
-                    $("input[name='userReview']").css("width", "100%");
-                    var row = document.getElementById("review-button");
-                    $("#edit").remove();
-                    row.innerHTML += '<input type="button" class="btn btn-outline-primary" onclick="editReview()" id="save" value="Save">';
-                    ;
-                });
-            });
+            function edit() {
+                console.log($("input[name='userReview']").val());
+                $("input[name='userReview']").removeAttr("readonly");
+                $("input[name='userReview']").css("border", "1px solid black");
+                $("input[name='userReview']").css("background-color", "white");
+                $("input[name='userReview']").css("width", "100%");
+                var row = document.getElementById("review-button");
+                $("#edit").remove();
+                row.innerHTML += '<input type="button" class="btn btn-outline-primary" onclick="editReview()" id="save" value="Save">';
+            }
 
             function editReview() {
                 var reviewContent = $("input[name='userReview']").val();
@@ -220,7 +228,7 @@
                         $("input[name='userReview']").attr("readonly", "readonly");
                         $("input[name='userReview']").css("border", "none");
                         $("input[name='userReview']").css("background", "transparent");
-                        row.innerHTML += '<input type="button" class="btn btn-outline-primary" id="edit" value="Edit">';
+                        row.innerHTML += '<input type="button" class="btn btn-outline-primary" id="edit" onclick="edit()" value="Edit">';
                     }
                     ,
                     error: function (xhr) {

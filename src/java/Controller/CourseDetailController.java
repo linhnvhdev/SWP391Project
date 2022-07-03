@@ -51,13 +51,24 @@ public class CourseDetailController extends HttpServlet {
         ArrayList<UserCourse> reviews = userCourseDB.getReviews(courseId);
         UserCourse review = userCourseDB.getReview(courseId, user.getId());
         int reviewNum = userCourseDB.getNumReview(courseId);
-        int avgScore = userCourseDB.getAvgReview(courseId);
-        
+        float avgScore = userCourseDB.getAvgReview(courseId);
+
         Course course = courseDB.getCourse(courseId);
         int numFlashcard = courseDB.getNumFlashcard(courseId);
         int numQuestion = courseDB.getNumQuestion(courseId);
         boolean isEnrolled = userCourseDB.checkUserCourse(user.getId(), courseId);
-        
+        int numTotal = numFlashcard + numQuestion;
+        ArrayList<Integer> percentCompletes = new ArrayList<>();
+        //Calculate progress
+        for (UserCourse r : reviews) {
+            if(r.getUserId()!=user.getId()){
+            int numRemain = userCourseDB.getNumQuestionRemain(courseId, r.getUserId()) + userCourseDB.getNumFlascardRemain(courseId, r.getUserId());
+            int percentComplete = (int) ((1 - (double) numRemain / numTotal) * 100);
+            percentCompletes.add(percentComplete);
+            }
+        }
+
+        request.setAttribute("percentCompletes", percentCompletes);
         request.setAttribute("avgScore", avgScore);
         request.setAttribute("reviewNum", reviewNum);
         request.setAttribute("user", user);
