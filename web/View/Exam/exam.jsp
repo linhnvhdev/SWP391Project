@@ -13,6 +13,7 @@
 
 
         <title>Exam Page</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="<%=application.getContextPath()%>/css/exam.css?version=1" rel="stylesheet" type="text/css"/>
         <!--        <link rel="icon" href="data:;base64,iVBORw0KGgo="> <!--    bug do browser-->
         <link href="${pageContext.request.contextPath}/css/inventory.css?version=1" rel="stylesheet" type="text/css"/>
@@ -58,7 +59,6 @@
                 <input type="hidden" name="pageindex" value="${requestScope.pageindex}"/>
                 <td >Question: ${q.detail}</td>
             </tr>
-
             <div class="footer">
                 <div class="row">
                     <c:forEach items = "${requestScope.answerList}" var="ans">

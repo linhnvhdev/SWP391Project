@@ -8,6 +8,7 @@ and open the template in the editor.
     Author     : LENOVO
 */
 
+
 body,html{
     width: 100%;
 }
@@ -50,8 +51,6 @@ body,html{
     color: black;
     width: 30%;
     height: 45%;
-
-
 }
 .creep
 {
@@ -93,9 +92,7 @@ body,html{
 #name
 {
     margin-left:19%; 
-
 }
-
 /* Create four equal columns that floats next to each other */
 .column {
     float: left;

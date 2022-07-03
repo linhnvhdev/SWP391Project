@@ -177,6 +177,30 @@
         <servlet-class>Controller.Exam.UpdateExamQuestionController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>CommunityController</servlet-name>
+        <servlet-class>Controller.Community.CommunityController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PostDetailController</servlet-name>
+        <servlet-class>Controller.Community.PostDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LikePostController</servlet-name>
+        <servlet-class>Controller.Community.LikePostController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PostCommentController</servlet-name>
+        <servlet-class>Controller.Community.PostCommentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditPostController</servlet-name>
+        <servlet-class>Controller.Community.EditPostController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeletePostController</servlet-name>
+        <servlet-class>Controller.Community.DeletePostController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ReviewController</servlet-name>
         <servlet-class>Controller.Course.ReviewController</servlet-class>
     </servlet>
@@ -315,6 +339,30 @@
     <servlet-mapping>
         <servlet-name>UpdateExamQuestionController</servlet-name>
         <url-pattern>/updateexamquestion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CommunityController</servlet-name>
+        <url-pattern>/community</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PostDetailController</servlet-name>
+        <url-pattern>/post</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LikePostController</servlet-name>
+        <url-pattern>/LikePostController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PostCommentController</servlet-name>
+        <url-pattern>/PostComment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditPostController</servlet-name>
+        <url-pattern>/EditPost</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeletePostController</servlet-name>
+        <url-pattern>/DeletePost</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ReviewController</servlet-name>

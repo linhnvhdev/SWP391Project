@@ -4,7 +4,10 @@
  */
 package Model;
 
+import Dal.CourseDBContext;
+import Dal.UserDBContext;
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  *
@@ -12,20 +15,22 @@ import java.sql.Date;
  */
 public class Post {
     private int ID;
-    private String name;
+    private String title;
     private int creatorID;
+    private Post parentPost;
     private String postDetail;
     private boolean isEdited;
     private int likes;
-    private String image;
     private Date createdDate;
+    private String category;
+    private int relatedCourseID;
 
     public int getID() {
         return ID;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
     public int getCreatorID() {
@@ -44,10 +49,6 @@ public class Post {
         return likes;
     }
 
-    public String getImage() {
-        return image;
-    }
-
     public Date getCreatedDate() {
         return createdDate;
     }
@@ -56,8 +57,8 @@ public class Post {
         this.ID = ID;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public void setCreatorID(int creatorID) {
@@ -76,11 +77,43 @@ public class Post {
         this.likes = likes;
     }
 
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Post getParentPost() {
+        return parentPost;
+    }
+
+    public void setParentPost(Post parentPost) {
+        this.parentPost = parentPost;
+    }
+    
+    public User getCreator(){
+        UserDBContext userDB = new UserDBContext();
+        User user = userDB.getUser(creatorID);
+        return user;
+    }
+
+    public int getRelatedCourseID() {
+        return relatedCourseID;
+    }
+
+    public void setRelatedCourseID(int relatedCourseID) {
+        this.relatedCourseID = relatedCourseID;
+    }
+    
+    public Course getRelatedCourse(){
+        CourseDBContext courseDB = new CourseDBContext();
+        Course course = courseDB.getCourse(relatedCourseID);
+        return course;
     }
 }

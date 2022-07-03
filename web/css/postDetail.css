@@ -1,0 +1,7 @@
+.add-comment-detail {
+    height: 1em !important;
+}
+
+.add-comment-detail:focus {
+    height: 5em !important;
+}
