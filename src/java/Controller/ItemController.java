@@ -43,7 +43,7 @@ public class ItemController extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(json);
-        //request.getRequestDispatcher("View/test.jsp").forward(request, response);
+//        request.getRequestDispatcher("View/test.jsp").forward(request, response);
     }
 
     /**

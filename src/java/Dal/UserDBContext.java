@@ -111,6 +111,7 @@ public class UserDBContext extends DBContext {
         }
         return 0;
     }
+
     public int getUserLevel(int userId) {
         try {
             String sql = "SELECT [Level]\n"
@@ -339,4 +340,68 @@ public class UserDBContext extends DBContext {
         }
         return userList;
     }
+
+    public User getUserInfor(int userId) {
+        try {
+            String sql = "SELECT [User_ID]\n"
+                    + "      ,[Name]\n"
+                    + "      ,[Mail]\n"
+                    + "      ,[Gender]\n"
+                    + "      ,[Dob]\n"
+                    + "      ,[Exp]\n"
+                    + "      ,[Level]\n"
+                    + "      ,[Role_ID]\n"
+                    + "      ,[Like_number]\n"
+                    + "  FROM [User]"
+                    + "  WHERE [User_ID]=?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, userId);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("User_ID"));
+                user.setName(rs.getString("Name"));
+                user.setGmail(rs.getString("Mail"));
+                user.setGender(rs.getBoolean("Gender"));
+                user.setDob(rs.getDate("Dob"));
+                user.setExp(rs.getInt("Exp"));
+                user.setLevel(rs.getInt("Level"));
+                user.setRole(rs.getInt("Role_ID"));
+                user.setLikenumber(rs.getInt("Like_number"));
+                return user;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public void NumberLikeForBought(User user, int item_Price) {
+        try {
+            String sql = "UPDATE [User]\n"
+                    + "   SET [Like_number] = [Like_number] - ?\n"
+                    + " WHERE [User_ID]=?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, item_Price);
+            stm.setInt(2, user.getId());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void AddItemForUser(User user, String item_id_bought) {
+        try {
+            String sql = "UPDATE [dbo].[User_Items]\n"
+                    + "   SET [Item_Number] = [Item_Number]+1\n"
+                    + " WHERE [Item_ID] = ? and [User_ID] = ? ";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, Integer.parseInt(item_id_bought));
+            stm.setInt(2, user.getId());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }

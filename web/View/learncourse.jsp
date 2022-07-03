@@ -6,7 +6,9 @@
 
 
 
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="Model.Flashcard"%>
+<%@page import="Model.User_Flashcard"%>
 <%@page import="java.util.ArrayList"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 
@@ -20,9 +22,17 @@
         <%
             ArrayList<Flashcard> ListFC =(ArrayList<Flashcard>) request.getAttribute("ListFC");
             int index = (Integer) request.getAttribute("index");
+            User_Flashcard UserFlashcard=(User_Flashcard)request.getAttribute("ExpbonusInfor");
+            DecimalFormat decimalFormat = new DecimalFormat("#.##");
+            float exp_bonus = Float.valueOf(decimalFormat.format(UserFlashcard.getExp_bonus()));
         %>
     </head>
     <body>
+        
+        <g5>Exp bonus:<%=exp_bonus%></g5><br/>
+        <g5>Date:<%=UserFlashcard.getDue_date()%></g5>
+        
+        <div class="aaa">
         <%if(ListFC.size()==0){%>
         <g5>List of FLashcards are empty</g5>
         <%}else{%>
@@ -58,5 +68,6 @@
                flipCardContainer.classList.toggle("flip");
             });
         </script>
+        </div>
     </body>
 </html>

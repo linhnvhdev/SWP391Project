@@ -3,15 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package Controller.Shop;
 
-import Dal.CourseDBContext;
-import Dal.FlashcardDBContext;
+import Dal.ItemDBContext;
+import Dal.UserDBContext;
 import Model.Account;
-import Model.Course;
-import Model.Flashcard;
+import Model.Item;
 import Model.User;
-import Model.User_Flashcard;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -24,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Admin
  */
-public class FlashCardController extends HttpServlet {
+public class ShopController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,52 +35,19 @@ public class FlashCardController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //getParameter
-        String next = request.getParameter("next");
-        String back = request.getParameter("back");
-        String index_raw = request.getParameter("index_raw");
-        int courseId = Integer.parseInt(request.getParameter("courseId"));
-        int difficulties = (Integer) request.getSession().getAttribute("diffid");
-        User_Flashcard ExpbonusInfor = new User_Flashcard();
-        //getData
-        FlashcardDBContext fcDB = new FlashcardDBContext();
-        CourseDBContext courseDB = new CourseDBContext();
-        
-        ArrayList<Flashcard> ListFC = fcDB.getlistFC(courseId,difficulties);
-        Account acc = (Account) request.getSession().getAttribute("account");
-        User user = acc.getUser();
-        Course course = courseDB.getCourse(courseId);
-        if (index_raw == null) {
-            index_raw = "0";
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ShopController</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ShopController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-             
-        int index = Integer.parseInt(index_raw);
-        //isRead
-        if(ListFC.size()!=0){
-        
-        if(fcDB.IsreadFC(ListFC.get(index), user, course)==true){
-        fcDB.ExpBonus(ListFC.get(index), user,course);
-        }
-        }
-        //if next
-        if (next != null) {
-            index = index + 1;
-            if (ListFC.size() < index + 1) {
-                index = 0;
-            }
-        }
-        //if back
-        if (back != null && index != 0) {
-            index = index - 1;
-        }
-        ExpbonusInfor=fcDB.ExpbonusInfor(ListFC.get(index), user);
-        request.setAttribute("ExpbonusInfor", ExpbonusInfor);
-        request.setAttribute("index", index);
-        request.setAttribute("ListFC", ListFC);
-        request.setAttribute("courseId", courseId);
-        response.getWriter().print("ok");
-        request.getRequestDispatcher("/View/learncourse.jsp").forward(request, response);
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -97,7 +62,16 @@ public class FlashCardController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String isBuySuccess = request.getParameter("isBuySuccess");
+        Account acc = (Account) request.getSession().getAttribute("account");
+        UserDBContext uDB = new UserDBContext();
+        User user = uDB.getUserInfor(acc.getUser().getId());
+        ItemDBContext iDB = new ItemDBContext();
+        ArrayList<Item> ItemList = iDB.ListItem();
+        request.setAttribute("isBuySuccess", isBuySuccess);
+        request.setAttribute("user", user);
+        request.setAttribute("ItemList", ItemList);
+        request.getRequestDispatcher("/View/Shop/shop.jsp").forward(request, response);
     }
 
     /**
@@ -111,7 +85,21 @@ public class FlashCardController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String item_id_bought = request.getParameter("item_bought");
+        int item_Price = Integer.parseInt(request.getParameter("item_Price"));
+        Account acc = (Account) request.getSession().getAttribute("account");
+        UserDBContext uDB = new UserDBContext();
+        User user = uDB.getUserInfor(acc.getUser().getId());
+        String isBuySuccess;
+        if (user.getLikenumber() < item_Price) {
+            isBuySuccess ="Buy item fail.Your Like number is not enough!" ;
+        } else {
+            uDB.NumberLikeForBought(user, item_Price);
+            uDB.AddItemForUser(user, item_id_bought);
+            isBuySuccess = "Buy item successful!";
+        }
+        String url = "shop?isBuySuccess=" + isBuySuccess;
+        response.sendRedirect(url);
     }
 
     /**
@@ -123,7 +111,5 @@ public class FlashCardController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
- 
 
 }

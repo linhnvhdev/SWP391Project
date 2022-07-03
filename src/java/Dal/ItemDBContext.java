@@ -179,4 +179,31 @@ public class ItemDBContext extends DBContext {
             Logger.getLogger(ItemDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public ArrayList<Item> ListItem() {
+        ArrayList<Item> list_item = new ArrayList<>();
+        try {
+            String sql = "SELECT [Item_ID]\n"
+                    + "      ,[Item_Name]\n"
+                    + "      ,[Item_Description]\n"
+                    + "      ,[Item_Duration]\n"
+                    + "      ,[Item_Image]\n"
+                    + "      ,[Item_Price]\n"
+                    + "  FROM [Items]";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                Item item = new Item();
+                item.setId(rs.getInt("Item_ID"));
+                item.setName(rs.getString("Item_Name"));
+                item.setDuration(rs.getInt("Item_Duration"));
+                item.setDescription(rs.getString("Item_Description"));
+                item.setImage(rs.getString("Item_Image"));
+                item.setPrice(rs.getInt("Item_Price"));
+                list_item.add(item);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ItemDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list_item;
+    }
 }
