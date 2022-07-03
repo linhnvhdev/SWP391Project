@@ -8,111 +8,176 @@ and open the template in the editor.
     Author     : sioni
 */
 body{
-    background-color: grey;
+    background-image: url(../img/backgroundnight.png);
+    background-color: #cccccc;
+    background-attachment: fixed;
+    
 }
 .header{
 
-   
+
+}
+.container{  
+    margin-top: 30px;
+    margin-left: 5%;
 }
 
-.column {
-    float: left;
-    width: 33%;
-    text-align: center;
-    font-size: 30px;
-}
-a:link {
+.course_name{
     color: white;
-    background-color: transparent;
-   text-decoration: none;
-}
-a:visited {
-    color: black;
-    background-color: transparent;
-    text-decoration: none;
-}
-a:hover {
-    color: red;
-    background-color: transparent;
-    text-decoration: underline;
-}
-.left{
-    padding:100px;
-    flex:30%;
-    margin-top: 10px;
-    font-size:50px;
-    
+    font-family: "courseName";
+    margin-bottom: 0px;
 }
 
-.right{
-    padding:100px;
-    flex:70%;
-    font-size:40px;
+.rating{
+    color: gray;
 }
-.main-content{
-    display: flex;
+.ratin-review{
+    color:black;
 }
-.button {
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 50px;
-  margin: 4px 2px;
-  cursor: pointer;
+.creator_link{
+    color: rgb(75, 91, 201);
 }
-.button1{
-    font-size:50px;
-
+img.course_image{
+    width: 100%;
+    height:auto;
+    object-fit: contain;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
-.button4
-{    color: white;
-    font-size:50px;
-background-image: url("../img/study.gif");
+.card.professor:hover {
+    box-shadow: 0 0 4px 2px rgba(0, 140, 186, 0.5);
 }
-.button4:hover{
-        color: blue;
-    background-color: transparent;
+.profession{
+    color:gray;
+    font-family: "textFont";
 }
-.button2
-{    color: white;
-    font-size:50px;
-background-image: url("../img/learn.gif");
+.card.description{
+    object-fit: contain;
+    background-color: rgba(255, 255, 255,.4);
 }
-.button2:hover{
-        color: green;
-    background-color: transparent;
+.card.professor{
+    object-fit: contain;
 }
-.button3
-{
-    color: white;
-    font-size:50px;
-background-image: url("../img/lua.gif");
-}
-.button3:hover{
-        color:lightsalmon ;
-    background-color: transparent;
-}
-.button5
-{
-    font-size:50px;
-
-}
-.button5:hover{
+.card-title.description{
     color:white;
-    background-image: url("../img/lua.gif");
+    font-family: "textFont";
 }
-td {
-  padding-top:20px;
-  padding-bottom:20px;
-  padding-right:20px;   
-    padding-left:20px
+@font-face {
+    font-family: "courseName";
+    src: url('../font/Game Of Squids.woff2') format('woff2');
 }
 
-td:first-child {
-  padding-left:20px;
-  padding-right:0;
+@font-face {
+    font-family: "textFont";
+    src: url('../font/BigSpace-rPKx.woff2') format('woff2');
+}
+.card-text{
+    font-family: "textFont";
+}
+.card-text.review{
+    border: none;
+    outline: none;
+    background: transparent;
+    width:100%;
+}
+.col-2.edit-button{
+    text-align: right;
+}
+.card-title{
+    font-family: "textFont";
+}
+
+.btn.btn-primary{
+    color:rgb(81, 66, 245);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.buttons{
+    text-align: center;
+}
+.button-content{
+    color:white;
+    text-decoration: none;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.card.review{
+    background-color: rgba(255, 255, 255,.4);
+    margin-top: 30px;
+    font-family: "textFont";
+}
+.card.review-content{
+    margin-top: 15px;
+    background-color: rgba(255, 255, 255,.6);
+    font-family: "textFont";
+}
+.avatar {
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+.rate-person{
+    color:gray;
+    font-size: 15px;
+}
+.btn.btn-outline-primary.post{
+    margin-top: 10px;
+}
+
+.line{
+    width: 100%;
+    position: inherit;
+    border-bottom: 2px solid gray;
+}
+.percentComplete{
+    font-size: 12px;
+    color: gray;
+}
+#progress{
+    padding-top: 3vh;
+    width: 10vw;
+    text-align:center
+}
+#progress:hover + .hide {
+    display: block;
+}
+.hide{
+    display: none;
+    font-size: 15px;
+}
+.rate {
+    float: left;
+    height: 46px;
+    padding: 0 10px;
+}
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+.rate:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+.rate:not(:checked) > label:before {
+    content: '★ ';
+}
+.rate > input:checked ~ label {
+    color: yellow;    
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: yellow;  
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #c59b08;
 }

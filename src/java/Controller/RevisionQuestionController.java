@@ -76,10 +76,11 @@ public class RevisionQuestionController extends HttpServlet {
         int questionId = Integer.parseInt(request.getParameter("id"));
         int answerID = Integer.parseInt(request.getParameter("answer"));
         int courseId = Integer.parseInt(request.getParameter("courseId"));
+        int difficultyId = Integer.parseInt(request.getParameter("difficultyId"));
+
         QuestionDBContext db = new QuestionDBContext();
         AnswerDBContext answerDB = new AnswerDBContext();
         UserQuestionDBContext userQuestionDB = new UserQuestionDBContext();
-        int difficultyId = Integer.parseInt(request.getParameter("difficultyId"));
         UserDBContext userDb = new UserDBContext();
         int exp = userDb.getUserExp(userId);
         request.setAttribute("exp", exp);
@@ -117,11 +118,26 @@ public class RevisionQuestionController extends HttpServlet {
         }
        
         if (!db.getRemainingQuestions(userId, courseId, difficultyId).isEmpty()) {
-            request.setAttribute("courseId", courseId);
-            request.setAttribute("difficultyId", difficultyId);
-            response.sendRedirect("question?id=" + getRandomID(userId, courseId, difficultyId) + "&courseId=" + courseId + "&difficultyId=" + difficultyId);
+            Question newQuestion = db.getQuestion(getRandomID(userId, courseId, difficultyId));
+            String newQuestionDetail = newQuestion.getDetail();
+            int newQuestionId = newQuestion.getId();
+            ArrayList<Answer> newAnswers = answerDB.getAnswers(newQuestionId);
+            response.getWriter().write(newQuestionDetail+"|"
+                    +newAnswers.get(0).getDetail()+"|"
+                    +newAnswers.get(1).getDetail()+"|"
+                    +newAnswers.get(2).getDetail()+"|"
+                    +newAnswers.get(3).getDetail()+"|"
+                    +newAnswers.get(0).isIsCorrect()+"|"
+                    +newAnswers.get(1).isIsCorrect()+"|"
+                    +newAnswers.get(2).isIsCorrect()+"|"
+                    +newAnswers.get(3).isIsCorrect()+"|"
+                    +newQuestionId);
+            
+//            request.setAttribute("courseId", courseId);
+//            request.setAttribute("difficultyId", difficultyId);
+//            response.sendRedirect("question?id=" + getRandomID(userId, courseId, difficultyId) + "&courseId=" + courseId + "&difficultyId=" + difficultyId);
         } else {
-            response.sendRedirect("../revision?courseId=" + courseId + "&difficultyId=" + difficultyId);
+            response.getWriter().write("end" +"|"+courseId+"|"+difficultyId);
         }
 
     }

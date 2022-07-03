@@ -1,5 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
+/* To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -28,7 +27,9 @@ public class DBContext {
          
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, username, password);
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
