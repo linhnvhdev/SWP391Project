@@ -84,12 +84,20 @@ public class AddQuestionController extends HttpServlet {
         // add answer to that question in the database
         int index = 0;
         for (int i = 0; i < questions.length; i++) {
-            for (int j = 0; j < 4; j++) {
-                String answer = answers[index];
-                int questionId = questionIds.get(i);
-                boolean isCorrect = Boolean.parseBoolean(request.getParameter("isCorrect" + (index + 1)));
-                answerDB.addAnswer(answer, questionId, isCorrect);
-                index++;
+            if (questions[i] == null || questions[i].trim().equals("")) {
+                //Print question blank error
+            } else {
+                for (int j = 0; j < 4; j++) {
+                    String answer = answers[index];
+                    if (answer == null || answer.trim().equals("")) {
+                        //Print answer blank error
+                    } else {
+                        int questionId = questionIds.get(i);
+                        boolean isCorrect = Boolean.parseBoolean(request.getParameter("isCorrect" + (index + 1)));
+                        answerDB.addAnswer(answer, questionId, isCorrect);
+                        index++;
+                    }
+                }
             }
         }
         response.sendRedirect("../question/add?courseId=" + courseId);
