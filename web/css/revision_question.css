@@ -8,7 +8,172 @@ and open the template in the editor.
     Author     : sioni
 */
 
-body, html {
+
+body{
+    background-image: url(../img/revisionquestion.png);
+    background-color: #cccccc;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position-y: 40%;
+}
+.container{
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    margin: 0 !important;
+}
+.row.bottom{
+    position: absolute;
+    bottom:0;
+    left:4%;   
+    width: 95vw;
+    background-color: rgb(0,191,255);
+
+    border-radius: 10px;
+
+}
+.col.answer{
+    border: 2px solid black;
+    width: 16vw;
+    margin: 10px !important;
+    height: 29vh;
+    border-radius: 10px;
+    background-color: rgba(140, 238, 255,1);
+    animation-duration: 2s;
+
+}
+.skill{
+    text-align: center;
+    font-weight: bold;
+    margin: 5px;
+}
+.answer-detail.one{
+    font-size: 12px;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid black;
+    height:22vh;
+    padding: 2px 0px 5px 5px !important;
+    word-wrap: break-word;
+}
+.answer-detail.two{
+    font-size: 12px;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid black;
+    height:22vh;
+    padding: 2px 0px 5px 5px !important;
+    word-wrap: break-word;
+}
+.answer-detail.three{
+    font-size: 12px;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid black;
+    height:22vh;
+    padding: 2px 0px 5px 5px !important;
+    word-wrap: break-word;
+}
+.answer-detail.four{
+    font-size: 12px;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid black;
+    height:22vh;
+    padding: 2px 0px 5px 5px !important;
+    word-wrap: break-word;
+}
+.question{
+    position: absolute;
+    bottom: 33vh;
+    width: 65vw;
+    left:4%;
+    background-color: white;
+    word-wrap: break-word;
+    border-radius: 10px;
+    padding: 6px;
+    border: 2px solid black;
+}
+.col-6.function{
+    height: 25vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.row.above{
+    text-align: center;
+
+}
+#player{
+    top:1vh;
+    left: 10vw;
+    height: 55%;
+    width:auto;
+    position: absolute;   
+    animation-duration: 0.5s;
+    animation-timing-function: ease;
+}
+#monster{
+    height: 55%;
+    width:auto;
+    position: absolute;
+}
+.hit{
+    position: absolute;
+    font-size: 40px;
+    font-weight: bold;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    color: white;
+    top:25vh;
+    left:72vw;  
+    opacity: 0;
+}
+.miss{
+    position: absolute;
+    font-size: 40px;
+    font-weight: bold;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    color: white;
+    top:25vh;
+    left:72vw;
+    opacity: 0;
+    /*    animation-name: noti;
+        animation-duration: 5s;*/
+}
+.exp{
+    position: absolute;
+    font-size: 40px;
+    font-weight: bold;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    color: white;
+    top:25vh;
+    left:15vw;  
+    opacity: 0;
+}
+@keyframes noti{
+    0%{opacity:1;top:25vh;}
+    100%{opacity:0;top:20vh;}
+}
+@keyframes attack{
+    0%{top:1vh;left:10vw;}
+    50%{top:1vh;left:45vw;}
+    100%{top:1vh;left:10vw;}
+}
+@keyframes hit{
+    0%{filter: brightness(1) invert(0);}
+    100%{filter: brightness(0) invert(1);}
+}
+@keyframes disappear {
+    0% { opacity: 1; }
+    50% { opacity: 0; filter:grayscale(100%) }
+    100% { opacity: 0; }
+}
+@keyframes dodge{
+    0%{top:0vh;}
+    100%{top:0vh;left:70vw;}
+}
+
+/*body, html {
     height: 100%;
     margin: 0;
 }
@@ -18,7 +183,7 @@ body, html {
 
     height: 100%; 
 
-    /* Center and scale the image nicely */
+     Center and scale the image nicely 
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -37,7 +202,7 @@ body, html {
 
 }
 
-/* Clear floats after the columns */
+ Clear floats after the columns 
 .row:after {
     content: "";
     display: table;
@@ -81,7 +246,7 @@ button{
   width: 15%;
 }
 
-/* Clear floats after the columns */
+ Clear floats after the columns 
 .header:after {
   content: "";
   display: table;
@@ -99,4 +264,4 @@ button{
     right:70%;
     top: 100px;
    
-}
+}*/
