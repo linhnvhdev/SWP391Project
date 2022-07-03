@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -24,6 +25,7 @@ public class ChooseExamController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+         HttpSession session = request.getSession();
         Account acc = (Account) request.getSession().getAttribute("account");
         int courseId = Integer.parseInt(request.getParameter("courseId"));
         ExamDBContext examDB = new ExamDBContext();
@@ -31,6 +33,11 @@ public class ChooseExamController extends HttpServlet {
         for (Exam e : examList) {
            e.setTotalQuestion(examDB.countQuesPerExam(e.getId()));
         }
+         session.removeAttribute("eid");
+         session.removeAttribute("answerList");
+         session.removeAttribute("score");
+         session.removeAttribute("answeredQuestionList");
+         session.removeAttribute("currentBossHP");
         request.setAttribute("examList",examList );
         request.setAttribute("courseId", courseId);
         request.getRequestDispatcher("View/Exam/chooseexam.jsp").forward(request, response);

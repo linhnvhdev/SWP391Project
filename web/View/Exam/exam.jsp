@@ -95,6 +95,7 @@
                         <input type="hidden" name="maxScore" value="${requestScope.maxScore}"/>
                         <input type="hidden" name="passScore" value="${requestScope.passScore}"/>
                         <input type="hidden" name="courseId" value="${requestScope.courseId}"/>
+                        <input type="hidden" name="time" value="${sessionScope.finishTime}"/>
                         </tr>
                         <tr>
                             <td>
@@ -145,6 +146,7 @@
                         var courseId =${requestScope.courseId};
         </script>
         <%@ include file="../inventory.jsp" %>
-        <script src="js/progressbar.js?ver=1" type="text/javascript"></script>
+        <script src="js/progressbar.js?ver=2" type="text/javascript"></script>
     </body>
 </html>
+
