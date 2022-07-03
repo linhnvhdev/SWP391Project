@@ -131,7 +131,10 @@ public class AuthorizationSettingController extends HttpServlet {
             // Change active status from 1(active) to 0(active)  
             case "Inactive":
                 accountDB.updateStatus(username,Boolean.FALSE);
-                break;    
+                break;
+            default:
+                // Not yet implemented
+                break;
         }
     }
 
