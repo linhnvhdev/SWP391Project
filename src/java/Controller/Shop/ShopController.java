@@ -6,7 +6,10 @@
 package Controller.Shop;
 
 import Dal.ItemDBContext;
+import Dal.UserDBContext;
+import Model.Account;
 import Model.Item;
+import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -38,7 +41,7 @@ public class ShopController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ShopController</title>");            
+            out.println("<title>Servlet ShopController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ShopController at " + request.getContextPath() + "</h1>");
@@ -59,9 +62,15 @@ public class ShopController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ItemDBContext iDB= new ItemDBContext();
-//        ArrayList<Item> ItemList = iDB.ListItem();
-//        request.setAttribute("ItemList", ItemList);
+        String isBuySuccess = request.getParameter("isBuySuccess");
+        Account acc = (Account) request.getSession().getAttribute("account");
+        UserDBContext uDB = new UserDBContext();
+        User user = uDB.getUserInfor(acc.getUser().getId());
+        ItemDBContext iDB = new ItemDBContext();
+        ArrayList<Item> ItemList = iDB.ListItem();
+        request.setAttribute("isBuySuccess", isBuySuccess);
+        request.setAttribute("user", user);
+        request.setAttribute("ItemList", ItemList);
         request.getRequestDispatcher("/View/Shop/shop.jsp").forward(request, response);
     }
 
@@ -76,7 +85,21 @@ public class ShopController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String item_id_bought = request.getParameter("item_bought");
+        int item_Price = Integer.parseInt(request.getParameter("item_Price"));
+        Account acc = (Account) request.getSession().getAttribute("account");
+        UserDBContext uDB = new UserDBContext();
+        User user = uDB.getUserInfor(acc.getUser().getId());
+        String isBuySuccess;
+        if (user.getLikenumber() < item_Price) {
+            isBuySuccess ="Buy item fail.Your Like number is not enough!" ;
+        } else {
+            uDB.NumberLikeForBought(user, item_Price);
+            uDB.AddItemForUser(user, item_id_bought);
+            isBuySuccess = "Buy item successful!";
+        }
+        String url = "shop?isBuySuccess=" + isBuySuccess;
+        response.sendRedirect(url);
     }
 
     /**

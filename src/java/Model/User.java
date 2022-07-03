@@ -21,7 +21,17 @@ public class User {
     private int level;
     private int role;
     private String image;
+    private int likenumber;
 
+    public int getLikenumber() {
+        return likenumber;
+    }
+
+    public void setLikenumber(int likenumber) {
+        this.likenumber = likenumber;
+    }
+
+  
     public User() {
     }
     
