@@ -6,7 +6,7 @@
 $(document).ready(function(){
     getItem();
     function getItem(){
-        console.log("get");
+        console.log("ge");
         $.ajax({
            type: 'GET',
            url: '/swp391project/item',
@@ -43,7 +43,7 @@ $(document).ready(function(){
     });
     $(document).on("click",".inventory-list-item-use > .use-item",function(){
         var itemID = $(this).attr('id');
-        var questionID = $('input[name="thisQuestionID"]').attr("value");
+        var questionID = $('input[name="questionId"]').attr("value");
         //var courseID = $('input[name="thisCourseID"]').attr("value");
         var playerHealth = $('.playerhp').length;
         var amount = parseInt($('.inventory-list-item-number.item'+itemID).html());
@@ -93,14 +93,14 @@ $(document).ready(function(){
             switch(itemID){
                 // Answer_tracker item
                 case "2":
+                    $('.answer[value="'+data[1]+'"]').find('.answer-detail').css("color","green");
+                    $('.answer[value="'+data[1]+'"]').find('.answer-detail').css("font-weight","bold");
                     $('input[name="ansid"][value="'+data[1]+'"]').parent().css("color","green");
                     $('input[name="ansid"][value="'+data[1]+'"]').parent().css("font-weight","bold");
-                    $('input[name="answer"][value="'+data[1]+'"]').parent().css("color","green");
-                    $('input[name="answer"][value="'+data[1]+'"]').parent().css("font-weight","bold");
                     break;
                 // Wrong_answer_detector item
                 case "3":
-                    $('input[name="answer"][value="'+data[1]+'"]').parent().css("text-decoration","line-through");
+                    $('.answer[value="'+data[1]+'"]').find('.answer-detail').css("text-decoration","line-through");
                     $('input[name="ansid"][value="'+data[1]+'"]').parent().css("text-decoration","line-through");
                     break;
                 // Health potion

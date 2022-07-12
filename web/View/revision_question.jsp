@@ -213,6 +213,20 @@
                                     $(".answer-detail.two").text(data[2]);
                                     $(".answer-detail.three").text(data[3]);
                                     $(".answer-detail.four").text(data[4]);
+                                    // reset css of using item
+                                    $(".answer-detail.one").css("color","black");
+                                    $(".answer-detail.one").css("font-weight","normal");
+                                    $(".answer-detail.one").css("text-decoration","initial");
+                                    $(".answer-detail.two").css("color","black");
+                                    $(".answer-detail.two").css("font-weight","normal");
+                                    $(".answer-detail.two").css("text-decoration","initial");
+                                    $(".answer-detail.three").css("color","black");
+                                    $(".answer-detail.three").css("font-weight","normal");
+                                    $(".answer-detail.three").css("text-decoration","initial");
+                                    $(".answer-detail.four").css("color","black");
+                                    $(".answer-detail.four").css("font-weight","normal");
+                                    $(".answer-detail.four").css("text-decoration","initial");
+                                    //
                                     $(".col.answer.one").attr("condition", data[5]);
                                     $(".col.answer.two").attr("condition", data[6]);
                                     $(".col.answer.three").attr("condition", data[7]);

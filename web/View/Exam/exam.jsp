@@ -107,7 +107,7 @@
                         <c:forEach items="${requestScope.questionList}" var="q">
 
                             <tr  id="question">
-                            <input type="hidden" name="thisQuestionID" value="${q.id}">
+                            <input type="hidden" name="questionId" value="${q.id}">
                             <input type="hidden" name="thisCourseID" value="${requestScope.courseId}"> 
                             <input type="hidden" name="qid" value="${q.id}"/>
                             <input type="hidden" name="pageindex" value="${requestScope.pageindex}"/>
