@@ -86,6 +86,7 @@ public class RevisionQuestionController extends HttpServlet {
         Boolean isExpBoost = (Boolean) request.getSession().getAttribute("expBoost");
         if (isExpBoost != null && isExpBoost) {
             expGet *= 2;
+            request.getSession().removeAttribute("expBoost");
         }
         String levelupMessage = "LEVEL UP";
         if (answerID == correctAnswer.getId()) {
