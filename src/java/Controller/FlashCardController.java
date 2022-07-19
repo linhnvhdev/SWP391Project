@@ -42,7 +42,7 @@ public class FlashCardController extends HttpServlet {
         String back = request.getParameter("back");
         String index_raw = request.getParameter("index_raw");
         int courseId = Integer.parseInt(request.getParameter("courseId"));
-        int difficulties = (Integer) request.getSession().getAttribute("diffid");
+        int difficulties = Integer.parseInt(request.getParameter("diffid")) ;
         User_Flashcard ExpbonusInfor = new User_Flashcard();
         //getData
         FlashcardDBContext fcDB = new FlashcardDBContext();

@@ -49,15 +49,14 @@ public class ChooseDifficultyController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
+        String action = request.getParameter("action");
+        int courseId = Integer.parseInt(request.getParameter("courseId"));
         DifficultyDBContext difficultyDb = new DifficultyDBContext();
         ArrayList<Difficulty> difficulties = difficultyDb.getDifficulties();
-        session.removeAttribute("diffid");
-        int courseId = Integer.parseInt(request.getParameter("courseId"));
-        request.setAttribute("difficulties", difficulties);
+        request.setAttribute("action", action);
         request.setAttribute("courseId", courseId);
+        request.setAttribute("difficulties", difficulties);
         request.getRequestDispatcher("View/choosediff.jsp").forward(request, response);
-
     }
 
     /**

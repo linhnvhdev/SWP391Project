@@ -7,27 +7,47 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
+    <head>      
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-        <link href="../css/header.css" rel="stylesheet" type="text/css"/>
         <link href="${pageContext.request.contextPath}/css/inventory.css?version=1" rel="stylesheet" type="text/css"/>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cssforadd.css?version=1" />
-
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <link rel="stylesheet" href="../css/cssforadd.css" />
+        <link href="../css/header.css?ver=1" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        <script>
+            function show(f) {
+                var reader = new FileReader();//Create file read object
+                var files = f.files[0];//Get the file in the file component
+                reader.readAsDataURL(files);//File read and install to base64 type
+                reader.onloadend = function (e) {
+                    //After loading, get the result and assign it to img
+                    document.getElementById("showimg").src = this.result;
+                }
+            }
+        </script>
         <%@ include file="../header.jsp" %>
-        <div class= "background-img">
-            <form action="add" method="POST">
-                Course name: <input type="text" name="courseName"></br>
-                Description: <input type="text" name="description">
+        <div class="heading">
+            <h1>Create Course</h1>
+        </div>
+        <div class="container">
+            <form action="add" method="POST" enctype="multipart/form-data">
+                <div style="margin-top: 10px; margin-bottom: 10px">
+                    <label class="form-label">Course Name</label>
+                    <input type="text" class="form-control" name="courseName" placeholder="Course Name">
+                </div>
+                <div class="course-description" style="margin-top: 10px; margin-bottom: 10px">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" name="description" placeholder="Description of the course"></textarea>
+                </div>      
+                <input type="file" name="photo" value="Upload"/>
+                
                 <input id="create1" type="submit" value="Create course">
 
             </form>
-
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
         <%@ include file="../inventory.jsp" %>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     </body> 
 </html>

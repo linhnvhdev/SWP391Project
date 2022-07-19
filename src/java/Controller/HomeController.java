@@ -7,6 +7,7 @@ package Controller;
 
 import Dal.CourseDBContext;
 import Dal.LevelDBContext;
+import Dal.UserCourseDBContext;
 import Dal.UserDBContext;
 import Model.Account;
 import Model.Course;
@@ -43,7 +44,23 @@ public class HomeController extends HttpServlet {
         UserDBContext userDB = new UserDBContext();
         User user = userDB.getUser(acc.getUser().getId());
         CourseDBContext courseDB = new CourseDBContext();
+        UserCourseDBContext usercourseDB = new UserCourseDBContext();
         ArrayList<Course> courseList = courseDB.getCourseList(user.getId());
+        ArrayList<Integer> numEnrolls = new ArrayList<>();
+        ArrayList<Float> ratings = new ArrayList<>();
+        ArrayList<Integer> percentCompletes = new ArrayList<>();
+        for (Course c : courseList) {
+            int numEnroll = courseDB.getNumEnroll(c.getId());
+            float rating = usercourseDB.getAvgReview(c.getId());
+            int numQuestionRemain = usercourseDB.getNumQuestionRemain(c.getId(), user.getId());
+            int numFlashcardRemain = usercourseDB.getNumFlascardRemain(c.getId(), user.getId());
+            int numRemain = numQuestionRemain + numFlashcardRemain;
+            int numTotal = courseDB.getNumFlashcard(c.getId()) + courseDB.getNumQuestion(c.getId());
+            int percentComplete = (int) ((1 - (double) numRemain / numTotal) * 100);
+            numEnrolls.add(numEnroll);
+            ratings.add(rating);
+            percentCompletes.add(percentComplete);
+        }
         LevelDBContext levelDB = new LevelDBContext();
         ArrayList<LevelSetUp> levelList =(ArrayList<LevelSetUp> ) request.getSession().getAttribute("levelList");
         if (levelList == null) {
@@ -52,6 +69,9 @@ public class HomeController extends HttpServlet {
         }
         HttpSession session = request.getSession();
         session.removeAttribute("lvUMessage");
+        request.setAttribute("numEnrolls", numEnrolls);
+        request.setAttribute("ratings", ratings);
+        request.setAttribute("percentCompletes", percentCompletes);
         request.setAttribute("courseList", courseList);
         request.setAttribute("user", user);
         request.getRequestDispatcher("View/home.jsp").forward(request, response);

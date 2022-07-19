@@ -6,10 +6,15 @@
 package Dal;
 
 import Model.Course;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,7 +27,7 @@ public class CourseDBContext extends DBContext {
     public ArrayList<Course> getCourseList(int userId) {
         ArrayList<Course> courseList = new ArrayList<>();
         try {
-            String sql = "SELECT c.Course_ID,c.Course_Name,c.Creator_ID\n"
+            String sql = "SELECT c.Image, c.Course_Description, c.Course_ID,c.Course_Name,c.Creator_ID\n"
                     + "FROM [User] u INNER JOIN [User_Course] uc ON u.[User_ID]= uc.[User_ID]\n"
                     + "	INNER JOIN Course c ON uc.Course_ID = c.Course_ID\n"
                     + "	WHERE u.[User_ID] = ?";
@@ -35,6 +40,7 @@ public class CourseDBContext extends DBContext {
                 c.setId(rs.getInt("Course_ID"));
                 c.setName(rs.getString("Course_Name"));
                 c.setCreator(userDB.getUser(rs.getInt("Creator_ID")));
+                c.setDescription(rs.getString("Course_Description"));
                 courseList.add(c);
             }
         } catch (SQLException ex) {
@@ -46,37 +52,58 @@ public class CourseDBContext extends DBContext {
     public Course getCourse(int Course_ID) {
         try {
             String sql = "SELECT [Course_ID]\n"
-                    + "      ,[Course_Name]\n"
-                    + "      ,[Creator_ID]\n"
-                    + "      ,[Course_Description]\n"
-                    + "  FROM [dbo].[Course]"
-                    + "WHERE [Course_ID] = ?";
+                    + "                          ,[Course_Name]\n"
+                    + "                          ,[Creator_ID]\n"
+                    + "                         ,[Course_Description]\n"
+                    + "                          ,[Image]\n"
+                    + "                      FROM [dbo].[Course]\n"
+                    + "                    WHERE [Course_ID] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, Course_ID);
             ResultSet rs = stm.executeQuery();
             UserDBContext userDB = new UserDBContext();
-            while (rs.next()) {
+            if (rs.next()) {
                 Course course = new Course();
                 course.setId(rs.getInt("Course_ID"));
                 course.setName(rs.getString("Course_Name"));
                 course.setCreator(userDB.getUser(rs.getInt("Creator_ID")));
                 course.setDescription(rs.getString("Course_Description"));
+                if (rs.getBlob("Image") != null) {
+                    Blob blob = rs.getBlob("Image");
+                    InputStream inputStream = blob.getBinaryStream();
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+                    inputStream.close();
+                    outputStream.close();
+                    course.setImage(base64Image);
+                }
                 return course;
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
-    public ArrayList<Course> getCourseList() {
+    public ArrayList<Course> getCourseList() throws IOException {
         ArrayList<Course> courseList = new ArrayList<>();
         try {
             String sql = "SELECT [Course_ID]\n"
-                    + "      ,[Course_Name]\n"
-                    + "      ,[Creator_ID]\n"
-                    + "      ,[Course_Description]\n"
-                    + "  FROM [dbo].[Course]";
+                    + ",[Course_Name]\n"
+                    + ",[Creator_ID]\n"
+                    + ",[Course_Description]\n"
+                    + ",[Image]\n"
+                    + "FROM [dbo].[Course]";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             UserDBContext userDB = new UserDBContext();
@@ -86,6 +113,24 @@ public class CourseDBContext extends DBContext {
                 course.setName(rs.getString("Course_Name"));
                 course.setCreator(userDB.getUser(rs.getInt("Creator_ID")));
                 course.setDescription(rs.getString("Course_Description"));
+
+                if (rs.getBlob("Image") != null) {
+                    Blob blob = rs.getBlob("Image");
+                    InputStream inputStream = blob.getBinaryStream();
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+                    inputStream.close();
+                    outputStream.close();
+                    course.setImage(base64Image);
+                }
                 courseList.add(course);
             }
         } catch (SQLException ex) {
@@ -152,7 +197,7 @@ public class CourseDBContext extends DBContext {
         }
         return 0;
     }
-    
+
     public int getNumQuestion(int courseId) {
         try {
             String sql = "SELECT COUNT(*)\n"
@@ -170,21 +215,29 @@ public class CourseDBContext extends DBContext {
         return 0;
     }
 
-    public int addCourse(String courseName, int creatorId, String description) {
+    public int addCourse(String courseName, int creatorId, String description, InputStream photo) {
         try {
             String sql = "INSERT INTO [dbo].[Course]\n"
-                    + "           ([Course_Name]\n"
-                    + "           ,[Creator_ID]\n"
-                    + "           ,[Course_Description])\n"
-                    + "     VALUES\n"
-                    + "           (?\n"
-                    + "           ,?\n"
-                    + "           ,?)";
+                    + "                              ([Course_Name]\n"
+                    + "                              ,[Creator_ID]\n"
+                    + "                               ,[Course_Description]\n"
+                    + "                               ,[Image])\n"
+                    + "                     	OUTPUT INSERTED.Course_ID\n"
+                    + "                       VALUES\n"
+                    + "                                (?\n"
+                    + "                               ,?\n"
+                    + "                               ,?\n"
+                    + "                              ,?)";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, courseName);
             stm.setInt(2, creatorId);
             stm.setString(3, description);
+            stm.setBlob(4, photo);
             stm.execute();
+            ResultSet rs = stm.getResultSet();
+            if(rs.next()){
+                return rs.getInt(1);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -205,5 +258,23 @@ public class CourseDBContext extends DBContext {
         } catch (SQLException ex) {
             Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public int getNumEnroll(int courseId) {
+        try {
+            String sql = "select COUNT(*)from \n"
+                    + "Course c inner join User_Course uc \n"
+                    + "on c.Course_ID = uc.Course_ID \n"
+                    + "where c.Course_ID=?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, courseId);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 }

@@ -32,7 +32,6 @@
         </style>
         <%@ include file="header.jsp" %>
         <%
-            ArrayList<Difficulty> difficulties = (ArrayList<Difficulty>) request.getAttribute("difficulties");
             Course course = (Course) request.getAttribute("course");
             String description = course.getDescription();
             ArrayList<UserCourse> reviews = (ArrayList<UserCourse>) request.getAttribute("reviews");
@@ -57,7 +56,7 @@
             <div class="Block1 row" style="margin-top:30px;">
                 <div class="col-9">
                     <a>
-                        <img class="course_image" src="https://langgo.edu.vn/public/files/upload/default/images/ielts/ielts-speaking-part-1-2-3-chu-de-environment-va-mau-tra-loi.jpg" alt="Italian Trulli">
+                        <img src="data:image/jpg;base64,${course.image}" width="100%" height="auto"/>
                     </a>
                 </div>
                 <div class="col-3">
@@ -97,9 +96,12 @@
                                                     <div class="col-1"><img src="https://i.pinimg.com/236x/93/a0/0a/93a00a3684652031a0c398c5d54d3d10.jpg" alt="Avatar" class="avatar"></div>
                                                     <div class="col-11 username">${sessionScope.account.user.name}</div>
                                                 </div>        
-                                                </h5>
+                                            </h5>
                                             <div class="input-group">
-                                                <textarea name="reviewContent" class="form-control" aria-label="With textarea"></textarea>
+                                                <textarea name="reviewContent" class="form-control" aria-label="With textarea" maxlength="500"></textarea>
+                                            </div>
+                                            <div id="error1" style="color:red">
+
                                             </div>
                                             <button class="btn btn-outline-primary post" type="button" value="Post" onclick="postReview()">Post</button>
                                             <div class="rate">
@@ -128,7 +130,7 @@
                                                 <h5 class="card-title">
                                                     <div class="row">
                                                         <div class="col-1">
-                                                             <img src="https://i.pinimg.com/236x/93/a0/0a/93a00a3684652031a0c398c5d54d3d10.jpg" alt="Avatar" class="avatar">
+                                                            <img src="https://i.pinimg.com/236x/93/a0/0a/93a00a3684652031a0c398c5d54d3d10.jpg" alt="Avatar" class="avatar">
                                                         </div>
                                                         <div class="col-11">
                                                             Your review | <i class="rate-person">Rated: <%=review.getRating()%></i>
@@ -136,7 +138,10 @@
                                                     </div>           
                                                 </h5>
                                                 <div class="row">
-                                                    <div class="col-10"><input class="card-text review" name="userReview" readonly value="<%=review.getDetail()%>"></div>
+                                                    <div class="col-10">
+                                                        <input class="card-text review" name="userReview" readonly value="<%=review.getDetail()%>" maxlength="500">
+                                                        <span id="error2" style="color:red"></span>
+                                                    </div>
                                                     <div class="col-2 edit-button" id="review-button"><input type="button" class="btn btn-outline-primary" id="edit" onclick="edit()" value="Edit"></div>
                                                 </div>
                                             </div>
@@ -172,13 +177,13 @@
                     <c:if test="${requestScope.isEnrolled == true}">
                         <div class="buttons">
                             <div>                        
-                                <a class="button" href="flashcard?courseId=${course.id}&difficultyId=${requestScope.difficultyId}"><button type="submit" class="btn btn-primary btn-lg"><b class="button-content">LEARN</b></button></a>
+                                <a class="button" href="choosediff?courseId=${course.id}&action=flashcard"><button type="submit" class="btn btn-primary btn-lg"><b class="button-content">LEARN</b></button></a>
                             </div>
                             <div>
-                                <a class="button" href="revision?courseId=${course.id}&difficultyId=${requestScope.difficultyId}"><button type="submit" class="btn btn-primary btn-lg"><b class="button-content">PRACTICE</b></button></a>
+                                <a class="button" href="choosediff?courseId=${course.id}&action=revision"><button type="submit" class="btn btn-primary btn-lg"><b class="button-content">PRACTICE</b></button></a>
                             </div>
                             <div>
-                                <a class="button" href="chooseexam?courseId=${course.id}&difficultyId=${requestScope.difficultyId}" ><button type="submit" class="btn btn-primary btn-lg"><b class="button-content">EXAM</b></button></a>
+                                <a class="button" href="choosediff?courseId=${course.id}&action=test"><button type="submit" class="btn btn-primary btn-lg"><b class="button-content">EXAM</b></button></a>
                             </div>
 
                             <div>
@@ -223,33 +228,39 @@
                 var reviewContent = $("input[name='userReview']").val();
                 var courseId = $("input[name='courseId']").val();
                 var userId = $("input[name='userId']").val();
-                console.log(reviewContent);
-                console.log(courseId);
-                console.log(userId);
-                $.ajax({
-                    url: "/swp391project/reviewupdate",
-                    type: "get", //send it through get method
 
-                    data: {
-                        userId: userId,
-                        courseId: courseId,
-                        reviewContent: reviewContent
+                if ($("input[name='userReview']").val().trim() !== "") {
+                    $.ajax({
+                        url: "/swp391project/reviewupdate",
+                        type: "get", //send it through get method
+
+                        data: {
+                            userId: userId,
+                            courseId: courseId,
+                            reviewContent: reviewContent
+                        }
+                        ,
+                        success: function () {
+                            var row = document.getElementById("review-button");
+                            $('#error2').empty();
+                            $("#save").remove();
+                            $("input[name='userReview']").attr("readonly", "readonly");
+                            $("input[name='userReview']").css("border", "none");
+                            $("input[name='userReview']").css("background", "transparent");
+                            row.innerHTML += '<input type="button" class="btn btn-outline-primary" id="edit" onclick="edit()" value="Edit">';
+                        }
+                        ,
+                        error: function (xhr) {
+                            //Do Something to handle error
+                        }
                     }
-                    ,
-                    success: function () {
-                        var row = document.getElementById("review-button");
-                        $("#save").remove();
-                        $("input[name='userReview']").attr("readonly", "readonly");
-                        $("input[name='userReview']").css("border", "none");
-                        $("input[name='userReview']").css("background", "transparent");
-                        row.innerHTML += '<input type="button" class="btn btn-outline-primary" id="edit" onclick="edit()" value="Edit">';
-                    }
-                    ,
-                    error: function (xhr) {
-                        //Do Something to handle error
-                    }
+                    );
+                } else {
+                    var errormsg = document.getElementById("error2");
+                    console.log();
+                    errormsg.innerHTML = "Your review is empty";
                 }
-                );
+
             }
 
 
@@ -259,35 +270,39 @@
                 var name = $("#name").text();
                 var courseId = $("input[name='courseId']").val();
                 var userId = $("input[name='userId']").val();
-                console.log(reviewContent);
-                console.log(rating);
-                console.log(name);
-                console.log(courseId);
-                console.log(userId);
-                $.ajax({
-                    url: "/swp391project/review",
-                    type: "get", //send it through get method
 
-                    data: {
-                        userId: userId,
-                        courseId: courseId,
-                        reviewContent: reviewContent,
-                        rating: rating,
-                        name: name
+                if ($("textarea[name='reviewContent']").val().trim() !== "") {
+                    $.ajax({
+                        url: "/swp391project/review",
+                        type: "get", //send it through get method
 
+                        data: {
+                            userId: userId,
+                            courseId: courseId,
+                            reviewContent: reviewContent,
+                            rating: rating,
+                            name: name
+
+                        }
+                        ,
+                        success: function (data) {
+                            $('#error1').empty();
+                            var row = document.getElementById("review");
+                            row.innerHTML += data;
+                            $("#post-review").remove();
+                        }
+                        ,
+                        error: function (xhr) {
+                            //Do Something to handle error
+                        }
                     }
-                    ,
-                    success: function (data) {
-                        var row = document.getElementById("review");
-                        row.innerHTML += data;
-                        $("#post-review").remove();
-                    }
-                    ,
-                    error: function (xhr) {
-                        //Do Something to handle error
-                    }
+                    );
+                } else {
+                    var errormsg = document.getElementById("error1");
+                    console.log();
+                    errormsg.innerHTML = "Your review is empty";
                 }
-                );
+
             }
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>

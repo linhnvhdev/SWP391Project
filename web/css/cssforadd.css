@@ -9,66 +9,27 @@ and open the template in the editor.
 */
 
 body{
-    margin:0;
-    padding:0;
-    color: black;
-}
-
-
-.background-img  {
-    background-image: url("../img/background4.gif");
-    background-size: cover; /* Resize the background image to cover the entire container */
-    background-repeat: no-repeat;
-    height: 100vh;
-}
-form{
-     position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-top: -50px;
-    margin-left: -70px;
-    width: 350px;
-    height: 200px;
-    text-align: center;
+    background-image: url(../img/backgroundnight.png);
+    background-color: #cccccc;
+    background-attachment: fixed;
     
 }
-input[type=text] {
-    width: 20em;  height: 2em;
-    margin-top: 5px;
-    margin-bottom:5px;
-    
-    
+@font-face {
+    font-family: "courseName";
+    src: url('../font/Game Of Squids.woff2') format('woff2');
 }
-a{
-    margin-left: 48%;
-    margin-right: 50px;
-    text-align: center;
-}
-a:link {
+.heading{
     color: white;
-    background-color: transparent;
-    text-decoration: none;
+    font-family: "courseName";
+    margin-bottom: 0px;
+    text-align: center;
+    margin-top: 2%;
 }
-a:visited {
-    color: white;
-    background-color: transparent;
-    text-decoration: none;
+.container{
+    margin-top: 30px;
+    margin-left: 5%;
 }
-a:hover {
-    color: red;
-    background-color: transparent;
-    text-decoration: underline;
-}
-input[type=submit] {
-    width: 230px;
-    height: 50px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    margin-left: 30px;
-    padding-right: 20px;
-    color: black;
-
-}
-#create1:hover{
-    font-size: 35px;
+.form-label{
+    font-weight: bold;
+    font-size: 20px;
 }
