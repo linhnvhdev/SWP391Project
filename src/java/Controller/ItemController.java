@@ -70,7 +70,13 @@ public class ItemController extends HttpServlet {
         if(itemID == ItemHandler.EXP_BOOSTER){
             request.getSession().setAttribute("expBoost",true);
         }
-        else responseData = useItem(itemID,raw_questionID);
+        else{
+            if(itemID == ItemHandler.SALES){
+                request.getSession().setAttribute("sales", true);
+            }
+            else responseData = useItem(itemID,raw_questionID,account.getUser().getId());
+        }
+        
         response.getWriter().write(newNumItem.toString()+"|"+responseData);
     }
 
@@ -84,8 +90,8 @@ public class ItemController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private String useItem(int itemID, String raw_questionID) {
-        int questionID = (raw_questionID != null || raw_questionID.length() > 0)
+    private String useItem(int itemID, String raw_questionID,int userId) {
+        int questionID = (raw_questionID != null && raw_questionID.length() > 0)
                         ? Integer.parseInt(raw_questionID)
                         : -1;
         switch(itemID){
@@ -93,6 +99,12 @@ public class ItemController extends HttpServlet {
                 return ItemHandler.useAnswerChecker(itemID,questionID);
             case ItemHandler.WRONG_QUESTION_DETECTOR:
                 return ItemHandler.useWrongQuestionDetector(itemID,questionID);
+            case ItemHandler.DROPPED_COIN:
+                return ItemHandler.useReceiveMoneyItem(10,10,userId);
+            case ItemHandler.LUCKY_MONEY:
+                return ItemHandler.useReceiveMoneyItem(100,500,userId);
+            case ItemHandler.MILLIONAIRE:
+                return ItemHandler.useReceiveMoneyItem(200,1000,userId);
             default:
                 return "";
         }   

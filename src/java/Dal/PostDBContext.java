@@ -456,4 +456,12 @@ public class PostDBContext extends DBContext {
         }
         return false;
     }
+    
+    public Post getMainPost(int postID){
+        Post p = getPost(postID);
+        while(p.getCategory().equals("Replies Post") || p.getCategory().equals("Comment")){
+            p = p.getParentPost();
+        }
+        return p;
+    }
 }

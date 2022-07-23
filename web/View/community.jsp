@@ -124,8 +124,8 @@
                     <thead>
                         <tr>
                             <th scope="col">Title</th>
-                            <th scope="col">Creator</th>
                             <th scope="col">Category</th>
+                            <th scope="col">Creator</th>
                             <th scope="col">Like</th>
                             <th scope="col">Replies</th>
                             <th scope="col">Created date</th>

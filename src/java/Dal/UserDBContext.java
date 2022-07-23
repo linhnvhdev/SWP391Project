@@ -403,5 +403,8 @@ public class UserDBContext extends DBContext {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
+    public void ReceiveMoney(User user, int item_Price) {
+        NumberLikeForBought(user, -item_Price);
+    }
 }

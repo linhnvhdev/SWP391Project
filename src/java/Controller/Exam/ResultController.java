@@ -8,6 +8,7 @@ package Controller.Exam;
 import Dal.ExamDBContext;
 import Dal.ItemDBContext;
 import Dal.LevelDBContext;
+import Dal.NotificationDBContext;
 import Dal.UserDBContext;
 import Model.Account;
 import Model.Answer;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.lang.Math;
+import java.sql.Date;
 import java.util.ArrayList;
 import javafx.util.Pair;
 
@@ -84,22 +86,29 @@ public class ResultController extends HttpServlet {
         int questionAnswered = answeredQuestionList.size();
         int experience = 0;
         //condition to pass the course
+        Boolean isExpBoost = (Boolean) request.getSession().getAttribute("expBoost");
         if (percentageScore >= passScore) {
             experience = currentScore * 4;
+            if (isExpBoost != null && isExpBoost) {
+                experience *= 2;
+                request.getSession().removeAttribute("expBoost");
+            }
         } else {
             experience = currentScore / 10;
+            if (isExpBoost != null && isExpBoost) {
+                experience = -experience * 10;
+                request.getSession().removeAttribute("expBoost");
+            }
         }
         double examScore = Math.round((currentScore * 100.0) / (10.0 * numQues));
-        Boolean isExpBoost = (Boolean) request.getSession().getAttribute("expBoost");
-        if (isExpBoost != null && isExpBoost) {
-            experience *= 2;
-            request.getSession().removeAttribute("expBoost");
-        }
+        
+
         int oldexperience = userDB.getUserExp(account.getUser().getId());
         int newexperience = experience + oldexperience;
         userDB.updateUserExp(account.getUser().getId(), newexperience);
         LevelDBContext levelDB = new LevelDBContext();
         ItemDBContext itemDB = new ItemDBContext();
+        NotificationDBContext nDB = new NotificationDBContext();
         int userId = account.getUser().getId();
         int userCurrentExp = userDB.getUserExp(userId);
         int countLevelUp = 0;
@@ -116,11 +125,13 @@ public class ResultController extends HttpServlet {
                     levelupMessage += "<br>" + "You have reached level " + account.getUser().getLevel() + "!<br>"
                             + "You have earned 1 " + level.getItem().getName() + "<br>";
                     countLevelUp++;
+                    nDB.InsertNotification("You have reached level " + account.getUser().getLevel() + "!"
+                            + "You have earned 1 " + level.getItem().getName(), "none", new Date(System.currentTimeMillis()), userId, true);
                 }
             }
         }
         request.setAttribute("lvupMessage", levelupMessage);
-        
+
         request.setAttribute("numQues", numQues);
         request.setAttribute("exam", exam);
         request.setAttribute("correctAnswered", correctAnswered);

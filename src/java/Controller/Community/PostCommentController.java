@@ -4,6 +4,7 @@
  */
 package Controller.Community;
 
+import Dal.NotificationDBContext;
 import Dal.PostDBContext;
 import Model.Account;
 import Model.Post;
@@ -36,11 +37,13 @@ public class PostCommentController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Account account = (Account) request.getSession().getAttribute("account");
+        User user = account.getUser();
         int postID = Integer.parseInt(request.getParameter("postID"));
         PostDBContext postDB = new PostDBContext();
         ArrayList<Post> comments = postDB.getChildPost(postID, "Comment");
         for(Post comment : comments){
-            response.getWriter().write(userComment(comment));
+            response.getWriter().write(userComment(comment,user));
         }
     }
 
@@ -61,10 +64,15 @@ public class PostCommentController extends HttpServlet {
         int postID = Integer.parseInt(request.getParameter("postID"));
         Date createdDate = new Date(System.currentTimeMillis());
         PostDBContext postDB = new PostDBContext();
+        NotificationDBContext nDB = new NotificationDBContext();
         int commentID = postDB.insertComment(postID,user.getId(),commentDetail,createdDate);
+        Post mainPost = postDB.getMainPost(postID);
+        Post beingCommentedPost = postDB.getPost(postID);
+        String url = "post?postID=" + mainPost.getID();
+        nDB.InsertNotification("You have a comment from user " + user.getName() +  " to your post", url, createdDate,beingCommentedPost.getCreatorID(),false);
         Post comment = postDB.getPost(commentID);
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(userComment(comment));
+        response.getWriter().write(userComment(comment,user));
     }
 
     /**
@@ -77,7 +85,7 @@ public class PostCommentController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private String userComment(Post comment) {
+    private String userComment(Post comment,User user) {
         PostDBContext postDB = new PostDBContext();
         boolean isLike = postDB.getLikeStatus(comment.getID(), comment.getCreatorID());
         int numComment = postDB.getNumComment(comment.getID());
@@ -86,7 +94,7 @@ public class PostCommentController extends HttpServlet {
 "                                <div class=\"row add-comment-section\">\n" +
 "                                    <div class=\"col-1 user-avatar\"></div>\n" +
 "                                    <div class=\"col-2 username\" >\n" +
-"                                        <div class=\"row fw-bold\">"+comment.getCreator().getName()+"</div>\n" +
+"                                        <div class=\"row fw-bold\">"+user.getName()+"</div>\n" +
 "                                    </div>\n" +
 "                                    <div class=\"col-9\">\n" +
 "                                        <div class=\"row\">\n" +
