@@ -14,6 +14,7 @@ import Dal.UserDBContext;
 import Dal.UserQuestionDBContext;
 import Model.Account;
 import Model.Answer;
+import Model.Item;
 import Model.LevelSetUp;
 import Model.Question;
 import java.io.IOException;
@@ -88,6 +89,7 @@ public class RevisionQuestionController extends HttpServlet {
         Boolean isExpBoost = (Boolean) request.getSession().getAttribute("expBoost");
 
         String levelupMessage = "LEVEL UP";
+        String dropItemMessage = "none";
         if (answerID == correctAnswer.getId()) {
             userQuestionDB.insertUserQuestion(userId, questionId, true);
             // if currently using item expboost
@@ -117,6 +119,18 @@ public class RevisionQuestionController extends HttpServlet {
                     } else {
                         break;
                     }
+                }
+            }
+            // receive drop item
+            ArrayList<Item> itemDrops = itemDB.getRandomItemDrop();
+            if(itemDrops == null || itemDrops.isEmpty()){
+                dropItemMessage = "none";
+            }
+            else{
+                dropItemMessage = "<br>Monster drops item:";
+                for(Item item : itemDrops){
+                    dropItemMessage += "<br>" + "You have earned 1 " + item.getName();
+                    itemDB.updateUserItem(userId, item.getId(), 1);
                 }
             }
         } else {
@@ -153,7 +167,8 @@ public class RevisionQuestionController extends HttpServlet {
                     + newAnswers.get(2).getId() + "|"
                     + newAnswers.get(3).getId() + "|"
                     + newQuestionId + "|"
-                    + lvUMessage);
+                    + lvUMessage + "|"
+                    + dropItemMessage);
 
 //            request.setAttribute("courseId", courseId);
 //            request.setAttribute("difficultyId", difficultyId);

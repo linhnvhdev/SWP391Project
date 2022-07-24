@@ -13,26 +13,26 @@ public class Item {
     private int id;
     private String name;
     private String description;
-    private int duration;
+    private int droprate;
     private String image;
     private int price;
 
     public Item() {
     }
 
-    public Item(int id, String name, String description, int duration, String image) {
+    public Item(int id, String name, String description, int droprate, String image) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.duration = duration;
+        this.droprate = droprate;
         this.image = image;
     }
 
-    public Item(int id, String name, String description, int duration, String image, int price) {
+    public Item(int id, String name, String description, int droprate, String image, int price) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.duration = duration;
+        this.droprate = droprate;
         this.image = image;
         this.price = price;
     }
@@ -57,8 +57,8 @@ public class Item {
         return description;
     }
 
-    public int getDuration() {
-        return duration;
+    public int getDroprate() {
+        return droprate;
     }
 
     public String getImage() {
@@ -77,8 +77,8 @@ public class Item {
         this.description = description;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
+    public void setDroprate(int droprate) {
+        this.droprate = droprate;
     }
 
     public void setImage(String image) {

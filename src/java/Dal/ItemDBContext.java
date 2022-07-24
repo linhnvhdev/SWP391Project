@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.util.Pair;
@@ -26,7 +27,7 @@ public class ItemDBContext extends DBContext {
             String sql = "SELECT i.Item_ID,\n"
                     + "		i.Item_Name,\n"
                     + "		i.Item_Description,\n"
-                    + "		i.Item_Duration,\n"
+                    + "		i.Item_DropRate,\n"
                     + "		i.Item_Image,\n"
                     + "		ui.Item_Number\n"
                     + "FROM Items i INNER JOIN User_Items ui ON i.Item_ID = ui.Item_ID\n"
@@ -39,7 +40,7 @@ public class ItemDBContext extends DBContext {
                 item.setId(rs.getInt("Item_ID"));
                 item.setName(rs.getString("Item_Name"));
                 item.setDescription(rs.getString("Item_Description"));
-                item.setDuration(rs.getInt("Item_Duration"));
+                item.setDroprate(rs.getInt("Item_DropRate"));
                 item.setImage(rs.getString("Item_Image"));
                 int itemNumber = rs.getInt("Item_Number");
                 userItems.add(new Pair<Item, Integer>(item, itemNumber));
@@ -55,7 +56,7 @@ public class ItemDBContext extends DBContext {
             String sql = "SELECT i.Item_ID,\n"
                     + "		i.Item_Name,\n"
                     + "		i.Item_Description,\n"
-                    + "		i.Item_Duration,\n"
+                    + "		i.Item_DropRate,\n"
                     + "		i.Item_Image,\n"
                     + "		ui.Item_Number\n"
                     + "FROM Items i INNER JOIN User_Items ui ON i.Item_ID = ui.Item_ID\n"
@@ -69,7 +70,7 @@ public class ItemDBContext extends DBContext {
                 item.setId(rs.getInt("Item_ID"));
                 item.setName(rs.getString("Item_Name"));
                 item.setDescription(rs.getString("Item_Description"));
-                item.setDuration(rs.getInt("Item_Duration"));
+                item.setDroprate(rs.getInt("Item_DropRate"));
                 item.setImage(rs.getString("Item_Image"));
                 int itemNumber = rs.getInt("Item_Number");
                 return new Pair<Item, Integer>(item, itemNumber);
@@ -122,7 +123,7 @@ public class ItemDBContext extends DBContext {
             String sql = "SELECT [Item_ID]\n"
                     + "      ,[Item_Name]\n"
                     + "      ,[Item_Description]\n"
-                    + "      ,[Item_Duration]\n"
+                    + "      ,[Item_DropRate]\n"
                     + "      ,[Item_Image]\n"
                     + "      ,[Item_Price]\n"
                     + "  FROM [dbo].[Items]\n"
@@ -135,7 +136,7 @@ public class ItemDBContext extends DBContext {
                 i.setId(rs.getInt("Item_ID"));
                 i.setName(rs.getString("Item_Name"));
                 i.setDescription(rs.getString("Item_Description"));
-                i.setDuration(rs.getInt("Item_Duration"));
+                i.setDroprate(rs.getInt("Item_DropRate"));
                 i.setPrice(rs.getInt("Item_Price"));
                 i.setImage(rs.getString("Item_Image"));
                 return i;
@@ -185,7 +186,7 @@ public class ItemDBContext extends DBContext {
             String sql = "SELECT [Item_ID]\n"
                     + "      ,[Item_Name]\n"
                     + "      ,[Item_Description]\n"
-                    + "      ,[Item_Duration]\n"
+                    + "      ,[Item_DropRate]\n"
                     + "      ,[Item_Image]\n"
                     + "      ,[Item_Price]\n"
                     + "  FROM [Items]";
@@ -195,7 +196,7 @@ public class ItemDBContext extends DBContext {
                 Item item = new Item();
                 item.setId(rs.getInt("Item_ID"));
                 item.setName(rs.getString("Item_Name"));
-                item.setDuration(rs.getInt("Item_Duration"));
+                item.setDroprate(rs.getInt("Item_DropRate"));
                 item.setDescription(rs.getString("Item_Description"));
                 item.setImage(rs.getString("Item_Image"));
                 item.setPrice(rs.getInt("Item_Price"));
@@ -205,5 +206,18 @@ public class ItemDBContext extends DBContext {
             Logger.getLogger(ItemDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list_item;
+    }
+    
+    public ArrayList<Item> getRandomItemDrop() {
+        ArrayList<Item> listItem = ListItem();
+        ArrayList<Item> listDropItem = new ArrayList<>();
+        Random rd = new Random();
+        for(Item item : listItem){
+            int randomValue = rd.nextInt(100);
+            if(randomValue <= item.getDroprate()){
+                listDropItem.add(item);
+            }
+        }
+        return listDropItem;
     }
 }

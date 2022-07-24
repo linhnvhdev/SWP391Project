@@ -4,14 +4,17 @@
  */
 
 $(document).ready(function(){
-    getItem();
     function getItem(){
-        console.log("ge");
+        console.log("getttttt");
+        var inventoryHeader = $(".inventory-table-header").detach();
+        $("#inventory-table").html("");
+        $("#inventory-table").append(inventoryHeader);
         $.ajax({
            type: 'GET',
            url: '/swp391project/item',
            success: function(data){
                $('#testajax').add(data);
+               
                // Add each item the the inventory table
                $.each(data,function(index,element){
                    $("#inventory-table tr:last").after(
@@ -36,6 +39,7 @@ $(document).ready(function(){
         });
     }
     $('#btnInventory').click(function(){
+        getItem();
         $('#inventory').toggle();
     });
     $('#closeInventory').click(function(){

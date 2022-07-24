@@ -13,6 +13,7 @@ import Dal.UserDBContext;
 import Model.Account;
 import Model.Answer;
 import Model.Exam;
+import Model.Item;
 import Model.LevelSetUp;
 import Model.Question;
 import java.io.IOException;
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpSession;
 import java.lang.Math;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Random;
 import javafx.util.Pair;
 
 /**
@@ -87,11 +89,27 @@ public class ResultController extends HttpServlet {
         int experience = 0;
         //condition to pass the course
         Boolean isExpBoost = (Boolean) request.getSession().getAttribute("expBoost");
+        String dropItemMessage = "none";
         if (percentageScore >= passScore) {
             experience = currentScore * 4;
             if (isExpBoost != null && isExpBoost) {
                 experience *= 2;
                 request.getSession().removeAttribute("expBoost");
+            }
+            ItemDBContext itemDB = new ItemDBContext();
+            // drop item
+            ArrayList<Item> itemDrops = itemDB.getRandomItemDrop();
+            if(itemDrops == null || itemDrops.isEmpty()){
+                dropItemMessage = "none";
+            }
+            else{
+                dropItemMessage = "<br>Monster drops item:";
+                for(Item item : itemDrops){
+                    Random rd = new Random();
+                    int dropItemNumber = rd.nextInt(3) + 1;
+                    dropItemMessage += "<br>" + "You have earned " + dropItemNumber + " " + item.getName();
+                    itemDB.updateUserItem(account.getUser().getId(), item.getId(), dropItemNumber);
+                }
             }
         } else {
             experience = currentScore / 10;
@@ -129,6 +147,10 @@ public class ResultController extends HttpServlet {
                             + "You have earned 1 " + level.getItem().getName(), "none", new Date(System.currentTimeMillis()), userId, true);
                 }
             }
+        }
+        if(!dropItemMessage.equals("none")){
+            if(levelupMessage.equals("LEVEL UP")) levelupMessage = dropItemMessage;
+            else levelupMessage += dropItemMessage;
         }
         request.setAttribute("lvupMessage", levelupMessage);
 
