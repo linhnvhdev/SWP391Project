@@ -282,17 +282,20 @@ button{
 
 /* Modal Content */
 .modal-content {
-  background-image: url("../img/background4.gif");
+  background-image: url(" https://c4.wallpaperflare.com/wallpaper/355/663/650/anime-original-creature-original-anime-scenery-hd-wallpaper-preview.jpg");
+  background-size: 100%;
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
   width: 40vw;
+  color: black;
   font-size: 30px;
   font-style: oblique;
+  font-weight: bold;
   text-align: center;
   height: 50vh;
   overflow: auto;
-  white-space: nowrap;
+    white-space: nowrap;
 }
 
  The Close Button 
