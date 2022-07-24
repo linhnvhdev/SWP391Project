@@ -8,17 +8,23 @@ package Controller.Course;
 import Dal.CourseDBContext;
 import Model.Course;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author Bi
  */
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2,
+        maxFileSize = 1024 * 1024 * 10,
+        maxRequestSize = 1024 * 1024 * 50)
 public class CourseDetailSettingController extends HttpServlet {
 
     /**
@@ -30,7 +36,6 @@ public class CourseDetailSettingController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -65,9 +70,24 @@ public class CourseDetailSettingController extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
         String description = request.getParameter("description");
+        InputStream inputStream = null;
+        Part filePart = request.getPart("photo");
         CourseDBContext db = new CourseDBContext();
-        db.updateCourse(id, name, description);
-        response.sendRedirect("course?courseId="+id);
+        if (filePart != null) {
+            // prints out some information for debugging
+            System.out.println(filePart.getName());
+            System.out.println(filePart.getSize());
+            System.out.println(filePart.getContentType());
+
+            // obtains input stream of the upload file
+            inputStream = filePart.getInputStream();
+        }
+        if (filePart.getSize()==0) {
+            db.updateCourseNoImg(id, name, description);
+        } else {
+            db.updateCourse(id, name, description, inputStream);
+        }
+        response.sendRedirect("course?courseId=" + id);
     }
 
     /**

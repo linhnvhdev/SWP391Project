@@ -80,7 +80,14 @@
             <h4>List of enrolled courses</h4>
             <c:forEach var="course" items="${requestScope.courseList}">  
                 <div class="card bg-white text-black">
-                    <img id="<%=i%>" class="card-img" src="https://c4.wallpaperflare.com/wallpaper/355/663/650/anime-original-creature-original-anime-scenery-hd-wallpaper-preview.jpg" alt="Card image">
+                    <img id="<%=i%>" class="card-img" src="                        
+                         <c:if test="${course.image != null}">
+                             data:image/jpg;base64,${course.image}
+                         </c:if>
+                             <c:if test="${course.image == null}">
+                             https://c4.wallpaperflare.com/wallpaper/355/663/650/anime-original-creature-original-anime-scenery-hd-wallpaper-preview.jpg
+                         </c:if>
+                         " alt="Card image">
                     <div class="card-img-overlay <%=i%>">
                         <a href="course?courseId=${course.id}"><h5 class="card-title">${course.name}</h5></a>
                         <div class="hide"> 

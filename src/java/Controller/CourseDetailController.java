@@ -93,13 +93,11 @@ public class CourseDetailController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
-        int diffId = Integer.parseInt(request.getParameter("diffId"));
         int courseId = Integer.parseInt(request.getParameter("courseId"));
         User user = acc.getUser();
         UserCourseDBContext userCourseDB = new UserCourseDBContext();
         userCourseDB.insertUserCourse(user.getId(), courseId);
-        request.setAttribute("difficultyId", diffId);
-        response.sendRedirect("course?courseId=" + courseId + "&difficultyId=" + diffId);
+        response.sendRedirect("course?courseId=" + courseId);
     }
 
     /**

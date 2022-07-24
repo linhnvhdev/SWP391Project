@@ -67,9 +67,16 @@
                             <c:forEach var="i" begin="0" end="${requestScope.courseList.size()-1}">
                                 <c:set var="course" value="${requestScope.courseList.get(i)}" ></c:set>
                                     <div class="card" style="width: auto; flex-direction:row; margin-top: 20px;">
-                                        <img src="https://c4.wallpaperflare.com/wallpaper/355/663/650/anime-original-creature-original-anime-scenery-hd-wallpaper-preview.jpg" class="card-img-top" alt="...">
-                                        <div class="card-body">
-                                            <h5 class="card-title">${course.name} <i class="creator">${course.creator.name}</i></h5>
+                                        <img src="
+                                        <c:if test="${course.image != null}">
+                                            data:image/jpg;base64,${course.image}
+                                        </c:if>
+                                        <c:if test="${course.image == null}">
+                                            https://c4.wallpaperflare.com/wallpaper/355/663/650/anime-original-creature-original-anime-scenery-hd-wallpaper-preview.jpg
+                                        </c:if>
+                                        " class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${course.name} <i class="creator">${course.creator.name}</i></h5>
                                         <p class="enroll">Enroll: <%=numEnrolls.get(i)%></p>
                                         <p class="card-text">${course.description}</p>
                                         <a href="../course?courseId=${course.id}" class="btn btn-primary">Go to course</a>

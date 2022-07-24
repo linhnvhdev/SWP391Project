@@ -12,7 +12,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="${pageContext.request.contextPath}/css/inventory.css?version=1" rel="stylesheet" type="text/css"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-        <link href="css/csscoursesetting.css?ver=1" rel="stylesheet" type="text/css"/>
+        <link href="css/csscoursesetting.css?ver=2" rel="stylesheet" type="text/css"/>
         <link href="css/header.css" rel="stylesheet" type="text/css"/>
 
         <title>JSP Page</title>    
@@ -27,7 +27,7 @@
             <div class="heading">
                 <h1>Course Setting</h1>
             </div>
-            <form action="coursesetting" method="post">
+            <form action="coursesetting" method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col">
                         <div class="card" style="width: auto;">
@@ -57,9 +57,13 @@
                 <div class="row">
                     <div class="col-8">
                         <div class="card" style="width: auto;">
-                            <div class="card-body">
+                            <div class="card-body description">
                                 <h5 class="card-title">Description</h5>
                                 <textarea class="form-control" name="description" value="<%=course.getDescription()%>"><%=course.getDescription()%></textarea>
+                                <div class="mb-3">
+                                    <label for="formFileSm" class="form-label"><b>Select an image</b></label>
+                                    <input name="photo" class="form-control form-control-sm" id="formFileSm" type="file">
+                                </div>
                             </div>
                         </div>
                         <div class="save">

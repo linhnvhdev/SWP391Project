@@ -56,7 +56,14 @@
             <div class="Block1 row" style="margin-top:30px;">
                 <div class="col-9">
                     <a>
-                        <img src="data:image/jpg;base64,${course.image}" width="100%" height="auto"/>
+                        <img src="
+                             <c:if test="${course.image != null}">
+                             data:image/jpg;base64,${course.image}
+                         </c:if>
+                             <c:if test="${course.image == null}">
+                             https://c4.wallpaperflare.com/wallpaper/355/663/650/anime-original-creature-original-anime-scenery-hd-wallpaper-preview.jpg
+                         </c:if>
+                             " width="100%" height="auto"/>
                     </a>
                 </div>
                 <div class="col-3">

@@ -41,9 +41,29 @@ public class CourseDBContext extends DBContext {
                 c.setName(rs.getString("Course_Name"));
                 c.setCreator(userDB.getUser(rs.getInt("Creator_ID")));
                 c.setDescription(rs.getString("Course_Description"));
+
+                if (rs.getBlob("Image") != null) {
+                    Blob blob = rs.getBlob("Image");
+                    InputStream inputStream = blob.getBinaryStream();
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+                    inputStream.close();
+                    outputStream.close();
+                    c.setImage(base64Image);                   
+                }
                 courseList.add(c);
             }
         } catch (SQLException ex) {
+            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return courseList;
@@ -235,7 +255,7 @@ public class CourseDBContext extends DBContext {
             stm.setBlob(4, photo);
             stm.execute();
             ResultSet rs = stm.getResultSet();
-            if(rs.next()){
+            if (rs.next()) {
                 return rs.getInt(1);
             }
         } catch (SQLException ex) {
@@ -244,12 +264,31 @@ public class CourseDBContext extends DBContext {
         return 0;
     }
 
-    public void updateCourse(int id, String name, String description) {
+    public void updateCourse(int id, String name, String description, InputStream photo) {
         try {
             String sql = "UPDATE [dbo].[Course]\n"
                     + "   SET [Course_Name] = ?\n"
                     + "      ,[Course_Description] = ?\n"
+                    + "      ,[Image] = ?\n"
                     + " WHERE [Course_ID] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, name);
+            stm.setString(2, description);
+            stm.setBlob(3, photo);
+            stm.setInt(4, id);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void updateCourseNoImg(int id, String name, String description) {
+        try {
+            String sql = "UPDATE [dbo].[Course]\n"
+                    + "   SET [Course_Name] = ?\n"
+                    + "      ,[Course_Description] = ?\n"
+                    + "\n"
+                    + " WHERE Course_ID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, name);
             stm.setString(2, description);
