@@ -155,7 +155,7 @@ public class ExamController extends HttpServlet {
         Pair<Integer, Boolean> questionpair = new Pair<>(question_id, false);
         if (correct.isIsCorrect()) {
             int score = currentScore + 10;
-            examDB.updateScore(eid, account.getUser().getId(), score);
+           // examDB.updateScore(eid, account.getUser().getId(), score);
             int currentBossHP = bossHP - 10;
             session.setAttribute("currentBossHP", currentBossHP);
             session.setAttribute("score", score);

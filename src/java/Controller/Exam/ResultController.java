@@ -101,12 +101,11 @@ public class ResultController extends HttpServlet {
             ItemDBContext itemDB = new ItemDBContext();
             // drop item
             ArrayList<Item> itemDrops = itemDB.getRandomItemDrop();
-            if(itemDrops == null || itemDrops.isEmpty()){
+            if (itemDrops == null || itemDrops.isEmpty()) {
                 dropItemMessage = "none";
-            }
-            else{
+            } else {
                 dropItemMessage = "<br>Monster drops item:";
-                for(Item item : itemDrops){
+                for (Item item : itemDrops) {
                     Random rd = new Random();
                     int dropItemNumber = rd.nextInt(3) + 1;
                     dropItemMessage += "<br>" + "You have earned " + dropItemNumber + " " + item.getName();
@@ -122,7 +121,6 @@ public class ResultController extends HttpServlet {
             passed = false;
         }
         double examScore = Math.round((currentScore * 100.0) / (10.0 * numQues));
-        
 
         int oldexperience = userDB.getUserExp(account.getUser().getId());
         int newexperience = experience + oldexperience;
@@ -139,9 +137,15 @@ public class ResultController extends HttpServlet {
             examDB.insertUserExam(ue);
         } else {
             for (UserExam userexam : userexams) {
-                if (userexam.getId() == ue.getId() && userexam.getUser().getId() == ue.getUser().getId() && userexam.getScore() <= ue.getScore()) {
-                    examDB.UpdateUserExam(ue);
-                    break;
+                float newScore = ue.getScore();
+                float oldScore = userexam.getScore();
+                if (userexam.getId() == ue.getId() && userexam.getUser().getId() == ue.getUser().getId()) {
+                     newScore = ue.getScore();
+                     oldScore = userexam.getScore();
+                    if (ue.getScore() >= userexam.getScore()) {
+                        examDB.UpdateUserExam(ue);
+                        break;
+                    }
                 } else {
                     examDB.insertUserExam(ue);
                 }
@@ -172,9 +176,12 @@ public class ResultController extends HttpServlet {
                 }
             }
         }
-        if(!dropItemMessage.equals("none")){
-            if(levelupMessage.equals("LEVEL UP")) levelupMessage = dropItemMessage;
-            else levelupMessage += dropItemMessage;
+        if (!dropItemMessage.equals("none")) {
+            if (levelupMessage.equals("LEVEL UP")) {
+                levelupMessage = dropItemMessage;
+            } else {
+                levelupMessage += dropItemMessage;
+            }
         }
         request.setAttribute("lvupMessage", levelupMessage);
 

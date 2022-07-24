@@ -8,17 +8,167 @@ and open the template in the editor.
     Author     : LENOVO
 */
 
-body, html {
-    height: 100%;
-    margin: 0;
+
+body{
+    background-image: url(../img/examArena.png);
+    background-color: #cccccc;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position-y: 40%;
+    width: 99%;
+}
+.container{
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    margin: 0 !important;
+}
+#progressBar {
+    width: 50%;
+    background-color: #0a5f44;
+    margin-left: 30px;
 }
 
+#progressBar div {
+    height: 100%;
+    text-align: right;
+    padding: 0 10px;
+    line-height: 22px; 
+    width: 0;
+    background-color: #cbea00;
+    box-sizing: border-box;
+}
+.row.above{
+    text-align: center;
+
+}
+.question{
+    position: absolute;
+    bottom: 40vh;
+    width: 65vw;
+    left:4%;
+    background-color: white;
+    word-wrap: break-word;
+    border-radius: 10px;
+    border: 2px solid black;
+    font-size: 24px;
+}
+.answer-detail.one{
+    font-size: 12px;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid black;
+    height:22vh;
+    padding: 2px 0px 5px 5px !important;
+    word-wrap: break-word;
+}
+.col.answer{
+    border: 2px solid black;
+    width: 16vw;
+    margin: 10px !important;
+/*    height: 29vh;*/
+    border-radius: 10px;
+    background-color: rgba(140, 238, 255,1);
+    animation-duration: 2s;
+
+}
+.skill{
+    font-weight: bold;
+    margin: 5px;
+}
+.answer-detail.one{
+    font-size: 30px;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid black;
+    height:18vh;
+    padding: 2px 0px 5px 5px !important;
+    word-wrap: break-word;
+}
+.row.bottom{
+    position: absolute;
+    bottom:0;
+    left:4%;   
+    width: 95vw;
+    background-color: rgb(0,191,255);
+    border-radius: 10px;
+}
+/* animation*/
+#player{
+    top:1vh;
+    left: 10vw;
+    height: 55%;
+    width:auto;
+    position: absolute;   
+    animation-duration: 0.5s;
+    animation-timing-function: ease;
+}
+#monster{
+    height: 55%;
+    width:auto;
+    position: absolute;
+}
+.hit{
+    position: absolute;
+    font-size: 40px;
+    font-weight: bold;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    color: white;
+    top:25vh;
+    left:72vw;  
+    opacity: 0;
+}
+.miss{
+    position: absolute;
+    font-size: 40px;
+    font-weight: bold;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    color: white;
+    top:25vh;
+    left:72vw;
+    opacity: 0;
+    /*    animation-name: noti;
+        animation-duration: 5s;*/
+}
+.exp{
+    position: absolute;
+    font-size: 40px;
+    font-weight: bold;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    color: white;
+    top:25vh;
+    left:15vw;  
+    opacity: 0;
+}
+@keyframes noti{
+    0%{opacity:1;top:25vh;}
+    100%{opacity:0;top:20vh;}
+}
+@keyframes attack{
+    0%{top:1vh;left:10vw;}
+    50%{top:1vh;left:45vw;}
+    100%{top:1vh;left:10vw;}
+}
+@keyframes hit{
+    0%{filter: brightness(1) invert(0);}
+    100%{filter: brightness(0) invert(1);}
+}
+@keyframes disappear {
+    0% { opacity: 1; }
+    50% { opacity: 0; filter:grayscale(100%) }
+    100% { opacity: 0; }
+}
+@keyframes dodge{
+    0%{top:0vh;}
+    100%{top:0vh;left:70vw;}
+}
+/*
 .background-img  {
     background-image: url("../img/background5.png");
 
     height: 100%; 
 
-    /* Center and scale the image nicely */
+     Center and scale the image nicely 
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -38,7 +188,7 @@ body, html {
 
 }
 
-/* Clear floats after the columns */
+ Clear floats after the columns 
 .row:after {
     content: "";
     display: table;
@@ -107,23 +257,6 @@ span
 {
     font-size: 30px; 
 }
-#progressBar {
-    width: 50%;
-
-    background-color: #0a5f44;
-}
-
-#progressBar div {
-    height: 100%;
-    text-align: right;
-    padding: 0 10px;
-    line-height: 22px; 
-    width: 0;
-    background-color: #cbea00;
-    box-sizing: border-box;
-}
-
-
 #answer{
     margin-top: 10px;
     font-size: 40px;
@@ -138,9 +271,11 @@ input[type="submit"]:hover
 }
 #table2
 {
-
 font-family: “Open Sans”, sans-serif;
 color: #f2606f;
 text-shadow: 1px -3px 5px #fff, 1px -3px 11px #FF3, 1px -11px 21px         #F90, 1px -21px 41px #C33;
+}*/
 
-}
+
+
+
