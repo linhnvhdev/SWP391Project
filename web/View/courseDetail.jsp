@@ -190,7 +190,7 @@
                                 <a class="button" href="choosediff?courseId=${course.id}&action=revision"><button type="submit" class="btn btn-primary btn-lg"><b class="button-content">PRACTICE</b></button></a>
                             </div>
                             <div>
-                                <a class="button" href="choosediff?courseId=${course.id}&action=test"><button type="submit" class="btn btn-primary btn-lg"><b class="button-content">EXAM</b></button></a>
+                                <a class="button" href="chooseexam?courseId=${course.id}"><button type="submit" class="btn btn-primary btn-lg"><b class="button-content">EXAM</b></button></a>
                             </div>
 
                             <div>

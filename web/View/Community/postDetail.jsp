@@ -28,13 +28,15 @@
         <div class="container text-white">
             <div class="row">
                 <div class="col-1">
-
+                    
                 </div>
                 <div class="col-10">
                     <c:forEach items="${posts}" var="post">
                         <div class="post container border border-light rounded mt-3">
                             <div class="row user mt-3">
-                                <div class="col-1 user-avatar"></div>
+                                <div class="col-1 user-avatar">
+                                    <img  src="data:image/jpg;base64,${post.getCreator().image}" class="img-fluid" alt="user-avatar"/>
+                                </div>
                                 <div class="col-10 user-name" >
                                     <div class="row fw-bold">${post.getCreator().name}</div>
                                     <small class="row">Post ${post.createdDate}</small>
@@ -81,7 +83,9 @@
                                 </div>
                                 <div class="row mt-3 comment-section" id="comment-section${post.ID}" style="display: none">
                                     <div class="row add-comment-section">
-                                        <div class="col-1 user-avatar"></div>
+                                        <div class="col-1 user-avatar">
+                                            <img  src="data:image/jpg;base64,${user.image}" class="img-fluid" alt="user-avatar"/>
+                                        </div>
                                         <div class="col-2 username" >
                                             <div class="row fw-bold">${user.name}</div>
                                         </div>
