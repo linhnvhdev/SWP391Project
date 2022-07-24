@@ -20,19 +20,19 @@
         <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
         <link href="css/header.css?version=4" rel="stylesheet" type="text/css"/>
-        <link href="css/postDetail.css?version=4" rel="stylesheet" type="text/css"/>
+        <link href="css/postDetail.css?version=2" rel="stylesheet" type="text/css"/>
         <title>Post</title>
     </head>
-    <body class="bg-dark">
+    <body>
         <jsp:include page="/View/header.jsp"/>
-        <div class="container text-white">
+        <div class="container bg-light text-dark">
             <div class="row">
                 <div class="col-1">
                     
                 </div>
-                <div class="col-10">
+                <div class="col-10 ">
                     <c:forEach items="${posts}" var="post">
-                        <div class="post container border border-light rounded mt-3">
+                        <div class="post container border-bottom border-top border-dark m-3 p-3">
                             <div class="row user mt-3">
                                 <div class="col-1 user-avatar">
                                     <img  src="data:image/jpg;base64,${post.getCreator().image}" class="img-fluid" alt="user-avatar"/>
@@ -72,7 +72,7 @@
                                         </c:if>
                                         <span class="post-like-num">${post.likes}</span>
                                     </div>
-                                    <div class="col-2 btn btn-outline-light comment-button" id="comment-button${post.ID}">
+                                    <div class="col-2 btn btn-outline-secondary comment-button" id="comment-button${post.ID}">
                                         <input type="hidden" value="${post.ID}">
                                         <i class="bi bi-chat"></i>
                                         <span id="comment-number${post.ID}">${postComments.get(post.ID)}</span>
@@ -106,7 +106,7 @@
                             </div>
                         </div>
                         <c:if test="${post.ID == mainPost.ID}">
-                            <form class='mt-3 sortPostForm' action="post" method="GET">
+                            <form class='mt-3 mb-3 ml-3 sortPostForm' action="post" method="GET">
                                 <input type="hidden" name='postID' value='${post.ID}'>
                                 <select name="sortBy" onchange="this.form.submit()">
                                     <option value="newest"
