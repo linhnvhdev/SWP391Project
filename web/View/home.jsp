@@ -53,8 +53,12 @@
             <p id="myDropdown" class="dropdown-content">
                 <a href="${pageContext.request.contextPath}/leaderboard"><img src="img/Looks one 1.png" alt="" style="max-width: 40px"/></a>             
                 <a id="btnInventory"><img src="img/Backpack 1.png" alt="" style="max-width: 40px"/></a>  
-                <a href="${pageContext.request.contextPath}/notification"><img src="img/Notifications 2.png" alt=""/>2</a> 
-                <a><img src="img/Notifications active 1.png" alt=""/></a>
+                <c:if test="${requestScope.numNotifyUnRead > 0}">
+                    <a href="${pageContext.request.contextPath}/notification"><img src="img/Notifications active 1.png" alt=""/>${requestScope.numNotifyUnRead}</a> 
+                </c:if>
+                <c:if test="${requestScope.numNotifyUnRead <= 0}">
+                    <a href="${pageContext.request.contextPath}/notification"><img src="img/Notifications 2.png" alt=""/>0</a>
+                </c:if>
             </p>
         </div>
         <div class="user-info">

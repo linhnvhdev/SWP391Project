@@ -108,7 +108,7 @@ public class NotificationDBContext extends DBContext {
         try {
             String sql="SELECT COUNT(*) \"Unread\"\n" +
             "  FROM [dbo].[Notification]\n" +
-            "  WHERE [Receiver_ID] = 1 AND IsRead = 0";
+            "  WHERE [Receiver_ID] = ? AND IsRead = 0";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, userId);
             ResultSet rs = stm.executeQuery();

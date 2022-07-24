@@ -6,6 +6,7 @@ package Controller.Community;
 
 import Dal.NotificationDBContext;
 import Dal.PostDBContext;
+import Dal.UserDBContext;
 import Model.Account;
 import Model.Post;
 import Model.User;
@@ -38,7 +39,8 @@ public class PostCommentController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account account = (Account) request.getSession().getAttribute("account");
-        User user = account.getUser();
+        UserDBContext userDB = new UserDBContext();
+        User user = userDB.getUser(account.getUser().getId());
         int postID = Integer.parseInt(request.getParameter("postID"));
         PostDBContext postDB = new PostDBContext();
         ArrayList<Post> comments = postDB.getChildPost(postID, "Comment");
@@ -69,7 +71,8 @@ public class PostCommentController extends HttpServlet {
         Post mainPost = postDB.getMainPost(postID);
         Post beingCommentedPost = postDB.getPost(postID);
         String url = "post?postID=" + mainPost.getID();
-        nDB.InsertNotification("You have a comment from user " + user.getName() +  " to your post", url, createdDate,beingCommentedPost.getCreatorID(),false);
+        if(user.getId() != beingCommentedPost.getCreatorID())
+            nDB.InsertNotification("You have a comment from user " + user.getName() +  " to your post", url, createdDate,beingCommentedPost.getCreatorID(),false);
         Post comment = postDB.getPost(commentID);
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(userComment(comment,user));
@@ -92,7 +95,7 @@ public class PostCommentController extends HttpServlet {
         String commentSection = 
                             "<div class=\"row mt-3 comment-section\"  style=\"display: none\" id=\"comment-section"+comment.getID()+"\">\n" +
 "                                <div class=\"row add-comment-section\">\n" +
-"                                    <div class=\"col-1 user-avatar\"></div>\n" +
+"                                    <div class=\"col-1 user-avatar\"><img src=\"data:image/jpg;base64,"+user.getImage()+"\" alt=\"user avatar\" class=\"img-fluid\" /></div>\n" +
 "                                    <div class=\"col-2 username\" >\n" +
 "                                        <div class=\"row fw-bold\">"+user.getName()+"</div>\n" +
 "                                    </div>\n" +
@@ -111,7 +114,7 @@ public class PostCommentController extends HttpServlet {
 "                                </div>\n" +
 "                            </div>\n";
         String userCommentHTML = 
-"               <div class=\"col-1 user-avatar\"></div>\n" +
+"               <div class=\"col-1 user-avatar\"><img  src=\"data:image/jpg;base64,"+comment.getCreator().getImage()+"\" class=\"img-fluid\" alt=\"user-avatar\"/></div>\n" +
 "               <div class=\"col-11 user-comment\">\n" +
 "                  <div class=\"row\">\n" +                        
 "                        <input type=\"hidden\" name=\"postID\" value=\""+comment.getID()+"\">\n" +

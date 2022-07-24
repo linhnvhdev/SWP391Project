@@ -7,6 +7,7 @@ package Controller;
 
 import Dal.CourseDBContext;
 import Dal.LevelDBContext;
+import Dal.NotificationDBContext;
 import Dal.UserCourseDBContext;
 import Dal.UserDBContext;
 import Model.Account;
@@ -42,9 +43,12 @@ public class HomeController extends HttpServlet {
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
         UserDBContext userDB = new UserDBContext();
+        NotificationDBContext nDB = new NotificationDBContext();
         User user = userDB.getUser(acc.getUser().getId());
         CourseDBContext courseDB = new CourseDBContext();
         UserCourseDBContext usercourseDB = new UserCourseDBContext();
+        
+        int numNotifyUnRead = nDB.getNumUnread(acc.getUser().getId());
         ArrayList<Course> courseList = courseDB.getCourseList(user.getId());
         ArrayList<Integer> numEnrolls = new ArrayList<>();
         ArrayList<Float> ratings = new ArrayList<>();
@@ -74,6 +78,7 @@ public class HomeController extends HttpServlet {
         request.setAttribute("percentCompletes", percentCompletes);
         request.setAttribute("courseList", courseList);
         request.setAttribute("user", user);
+        request.setAttribute("numNotifyUnRead", numNotifyUnRead);
         request.getRequestDispatcher("View/home.jsp").forward(request, response);
     }
 

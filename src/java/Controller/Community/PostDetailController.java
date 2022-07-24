@@ -6,8 +6,10 @@ package Controller.Community;
 
 import Dal.NotificationDBContext;
 import Dal.PostDBContext;
+import Dal.UserDBContext;
 import Model.Account;
 import Model.Post;
+import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
@@ -40,6 +42,8 @@ public class PostDetailController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account account = (Account) request.getSession().getAttribute("account");
+        UserDBContext userDB = new UserDBContext();
+        User user = userDB.getUser(account.getUser().getId());
         int userID = account.getUser().getId();
         int postID = Integer.parseInt(request.getParameter("postID"));
         String sortBy = request.getParameter("sortBy");
@@ -60,7 +64,7 @@ public class PostDetailController extends HttpServlet {
         request.setAttribute("mainPost", mainPost);
         request.setAttribute("posts", posts);
         request.setAttribute("postLikes", postLikes);
-        request.setAttribute("user", account.getUser());
+        request.setAttribute("user", user);
         request.setAttribute("postComments", postComments);
         request.setAttribute("sortBy", sortBy);
         request.getRequestDispatcher("View/Community/postDetail.jsp").forward(request, response);
@@ -93,7 +97,8 @@ public class PostDetailController extends HttpServlet {
         int postID = postDB.insertPost(postTitle, parentPostID, userID, postDetail, isEdited, postLike, createdDate, postCategory,postCourseID);
         Post parentPost = postDB.getPost(parentPostID);
         String url = "post?postID=" + mainPostID;
-        nDB.InsertNotification("You have a reply from user " + account.getUser().getName() + " to your post", url, createdDate, parentPost.getCreatorID(),false);
+        if(account.getUser().getId() != parentPost.getCreatorID())
+            nDB.InsertNotification("You have a reply from user " + account.getUser().getName() + " to your post", url, createdDate, parentPost.getCreatorID(),false);
         response.sendRedirect(url);
     }
 
