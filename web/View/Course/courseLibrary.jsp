@@ -4,6 +4,7 @@
     Author     : Linhnvhdev
 --%>
 
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -18,6 +19,11 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
+        <%
+            ArrayList<Integer> numEnrolls = (ArrayList<Integer>) request.getAttribute("numEnrolls");
+            ArrayList<Float> ratings = (ArrayList<Float>) request.getAttribute("ratings");
+            int i = 0;
+        %>
         <%@ include file="../header.jsp" %>
         <div class="container">
             <div class="heading">
@@ -61,15 +67,23 @@
                             <c:forEach var="i" begin="0" end="${requestScope.courseList.size()-1}">
                                 <c:set var="course" value="${requestScope.courseList.get(i)}" ></c:set>
                                     <div class="card" style="width: auto; flex-direction:row; margin-top: 20px;">
-                                        <img src="https://c4.wallpaperflare.com/wallpaper/355/663/650/anime-original-creature-original-anime-scenery-hd-wallpaper-preview.jpg" class="card-img-top" alt="...">
-                                        <div class="card-body">
-                                            <h5 class="card-title">${course.name} <i class="creator">${course.creator.name}</i></h5>
-                                        <p class="enroll">Enroll: 10000</p>
+                                        <img src="
+                                        <c:if test="${course.image != null}">
+                                            data:image/jpg;base64,${course.image}
+                                        </c:if>
+                                        <c:if test="${course.image == null}">
+                                            https://c4.wallpaperflare.com/wallpaper/355/663/650/anime-original-creature-original-anime-scenery-hd-wallpaper-preview.jpg
+                                        </c:if>
+                                        " class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${course.name} <i class="creator">${course.creator.name}</i></h5>
+                                        <p class="enroll">Enroll: <%=numEnrolls.get(i)%></p>
                                         <p class="card-text">${course.description}</p>
                                         <a href="../course?courseId=${course.id}" class="btn btn-primary">Go to course</a>
-                                        <span class="fa fa-star checked top-right-star"></span><span class="rating top-right"> 4.5 / 5.0</a></span>
+                                        <span class="fa fa-star checked top-right-star"></span><span class="rating top-right"> <%=ratings.get(i)%> / 5.0</a></span>
                                     </div>                
                                 </div>
+                                <%i++;%>
                             </c:forEach>
                         </div>
                         <div class="col-3">

@@ -7,6 +7,7 @@ package Controller.Exam;
 import Dal.ExamDBContext;
 import Model.Account;
 import Model.Exam;
+import Model.UserExam;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class ChooseExamController extends HttpServlet {
         int courseId = Integer.parseInt(request.getParameter("courseId"));
         ExamDBContext examDB = new ExamDBContext();
         ArrayList<Exam> examList = examDB.getExamListByCourse(courseId);
+        ArrayList<UserExam> userexams = examDB.getUserExamList(acc.getUser().getId());
         for (Exam e : examList) {
            e.setTotalQuestion(examDB.countQuesPerExam(e.getId()));
         }
@@ -38,6 +40,7 @@ public class ChooseExamController extends HttpServlet {
          session.removeAttribute("score");
          session.removeAttribute("answeredQuestionList");
          session.removeAttribute("currentBossHP");
+         request.setAttribute("userexams", userexams);
         request.setAttribute("examList",examList );
         request.setAttribute("courseId", courseId);
         request.getRequestDispatcher("View/Exam/chooseexam.jsp").forward(request, response);

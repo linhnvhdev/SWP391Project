@@ -220,6 +220,10 @@
         <servlet-name>NotificationController</servlet-name>
         <servlet-class>Controller.NotificationController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AccomplishmentController</servlet-name>
+        <servlet-class>Controller.Course.AccomplishmentController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -399,6 +403,10 @@
     <servlet-mapping>
         <servlet-name>NotificationController</servlet-name>
         <url-pattern>/notification</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccomplishmentController</servlet-name>
+        <url-pattern>/Accomplishment</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>10000</session-timeout>

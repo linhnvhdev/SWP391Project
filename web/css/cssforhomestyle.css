@@ -2,10 +2,171 @@ body{
     background-image: url(../img/home.jpg);
     background-color: #cccccc;
     background-attachment: fixed;
-    
+    background-size: 100%;
+
 }
-.left {
-    position: fixed; /* or absolute */
+@font-face {
+    font-family: "courseName";
+    src: url('../font/Game Of Squids.woff2') format('woff2');
+}
+.user-info{
+    position: absolute;
+    left:8vw;
+    top:15vw;
+    height: 70%;
+    width: 50%;
+    border-radius: 10px;
+    /*    background-color: rgba(255,255,255,0.4);*/
+}
+.course-list{
+    position: absolute;
+    right: 8vw;
+    top:15vw;
+    height:70%;
+    width: 30%;
+    border-radius: 10px;
+/*    background-color: rgba(255,255,255,0.4);*/
+    text-align: center;
+}
+.image{
+    position: inherit;
+    padding-top:5%;
+    padding-bottom: 5%;
+    height: 100%;
+    width: 65%;
+    display: flex;
+    justify-content: center;
+
+
+}
+.player-img{
+    max-width: 100%;
+    max-height: 100%;
+    text-align: center;
+}
+.detail{
+    position: inherit;
+    padding-top:5%;
+    padding-bottom: 5%;
+    right:0;
+    height: 100%;
+    width:35%;
+
+/*    border: 1px solid black;*/
+}
+.personal-detail{
+    border-radius: 10px;
+    background-color: rgba(255,255,255,0.6);
+    padding-top: 5%;
+    padding-bottom: 5%;
+    padding-left: 5%;
+}
+.achivements{
+    border-radius: 10px;
+    background-color: rgba(255,255,255,0.6);
+    margin-top: 8%;   
+}
+.title{
+    padding-top:3%;
+    text-align: center;
+}
+.content{
+    padding-left:5%;
+    padding-bottom: 3%;
+}
+.card.bg-white.text-black{
+    background-color: white;
+    margin: 5% 2% !important;
+}
+.pagination{
+    display: flex;
+    justify-content: center;
+}
+.card-img-overlay{
+    text-align: center;
+}
+.card-title{
+    font-size: 30px;
+    transition: 1s;
+}
+.hide{
+    display: none;
+}
+.card-img-overlay:hover{
+}
+.card-img-overlay:hover .card-title{
+    font-size: 25px;
+}
+.card-img-overlay:hover .hide{
+    display:block;  
+    font-style: italic;
+}
+.card-img-overlay:hover + .card-img{
+    opacity: 0 ;
+}
+.card-img{
+    opacity: 0.8 ;
+}
+.heading{
+    font-family: "courseName";
+    text-align: center;
+    margin-top: 5%;
+}
+a:link{
+    color:black;
+    text-decoration: none;
+}
+a:hover {
+  text-decoration: underline black;
+}
+.dropbtn {
+  background-color: white;
+  color: white;
+  padding: 16px;
+  font-size: 20px;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover, .dropbtn:focus {
+  background-color: rgb(219, 211, 189);
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropbox {
+  position:absolute;
+  left: 5vw;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: transparent;
+/*  min-width: 160px;*/
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  margin-top: 10px;
+  padding: 12px;
+  text-decoration: none;
+  display: block;
+  border-radius: 100px;
+  background-color: white;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;}
+/*.left {
+    position: fixed;  or absolute 
     top: 20%;
     left: 10%;
     width: 40%;
@@ -17,7 +178,7 @@ body{
 .right {
     background:rgb(237,237,237);
     text-align: center;
-    position: fixed; /* or absolute */
+    position: fixed;  or absolute 
     top: 10%;
     right: 15%;
     width: 20%;
@@ -26,7 +187,7 @@ body{
         
 }
 .middle-left{
-    position: fixed; /* or absolute */
+    position: fixed;  or absolute 
     top: 24%;
     left: 20%;
     width: 20%;
@@ -40,7 +201,7 @@ body{
     max-height:200%;
 }
 .left-corner-l{
-    position: fixed; /* or absolute */
+    position: fixed;  or absolute 
     top: 60%;
     font-weight:bold;
     left: 17%;
@@ -56,7 +217,7 @@ body{
     margin-left: 5%;
 }
 .left-corner-r{
-    position: fixed; /* or absolute */
+    position: fixed;  or absolute 
     top: 60%;
     left: 36%;
     width: 10%;
@@ -194,4 +355,4 @@ position: absolute;
 .down {
   transform: rotate(45deg);
 
-}
+}*/

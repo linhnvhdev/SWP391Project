@@ -15,7 +15,8 @@ public class UserCourse {
     int rating;
     String userName;
     int userId;
-
+    float score;
+    Course course;
     public UserCourse() {
     }
 
@@ -26,6 +27,33 @@ public class UserCourse {
         this.userId = userId;
     }
 
+    public UserCourse(String detail, int rating, String userName, int userId, float score, Course course) {
+        this.detail = detail;
+        this.rating = rating;
+        this.userName = userName;
+        this.userId = userId;
+        this.score = score;
+        this.course = course;
+    }
+    
+    public float getScore() {
+        return score;
+    }
+
+    public void setScore(float score) {
+        this.score = score;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+    
+    
+    
     public int getUserId() {
         return userId;
     }

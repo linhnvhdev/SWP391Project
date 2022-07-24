@@ -53,6 +53,8 @@
                     <th scope="col">Number of questions</th>
                     <th scope="col">Score to pass</th>
                     <th scope="col">Time(s)</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Highest Score</th>
                 </tr>
             </thead>
             <tbody>
@@ -63,6 +65,23 @@
                         <td>${e.totalQuestion}</td>
                         <td>${e.passed}</td>
                         <td>${e.time}</td>
+                        <c:set var="contains" value="false" />
+                        <c:forEach items="${requestScope.userexams}" var="ue" varStatus="ueStatus"> 
+                            <c:if test="${e.id == ueStatus.current.id}">
+                                <c:if test="${!ue.passed}">
+                                    <td style="color: red;">Not Passed</td>
+                                </c:if>
+                                <c:if test="${ue.passed}">
+                                    <td style="color: green;">Passed</td>
+                                </c:if>
+                                <td>${ue.score}</td>
+                                <c:set var="contains" value="true" />
+                            </c:if>
+                        </c:forEach>
+                        <c:if test="${!contains}">
+                            <td style="color: red;">Not Completed</td>
+                            <td>0.0</td>
+                        </c:if>       
                     </tr>
                 </c:forEach>
             </tbody>

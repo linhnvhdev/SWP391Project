@@ -8,17 +8,28 @@ package Controller.Course;
 import Dal.CourseDBContext;
 import Dal.UserCourseDBContext;
 import Model.Account;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.Iterator;
+import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author Linhnvhdev
  */
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2,
+        maxFileSize = 1024 * 1024 * 10,
+        maxRequestSize = 1024 * 1024 * 50)
 public class AddCourseController extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -50,11 +61,24 @@ public class AddCourseController extends HttpServlet {
         Account acc = (Account) request.getSession().getAttribute("account");
         String courseName = request.getParameter("courseName");
         String description = request.getParameter("description");
+
+        InputStream inputStream = null;
+        Part filePart = request.getPart("photo");
+        if (filePart != null) {
+            // prints out some information for debugging
+            System.out.println(filePart.getName());
+            System.out.println(filePart.getSize());
+            System.out.println(filePart.getContentType());
+             
+            // obtains input stream of the upload file
+            inputStream = filePart.getInputStream();
+        }
+
         CourseDBContext courseDB = new CourseDBContext();
-        int courseId = courseDB.addCourse(courseName,acc.getUser().getId(),description);
+        int courseId = courseDB.addCourse(courseName, acc.getUser().getId(), description, inputStream);
         UserCourseDBContext userCourseDB = new UserCourseDBContext();
         userCourseDB.insertUserCourse(acc.getUser().getId(), courseId);
-        response.sendRedirect("../course?courseId="+courseId);
+        response.sendRedirect("../course?courseId=" + courseId);
     }
 
     /**
@@ -66,5 +90,4 @@ public class AddCourseController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

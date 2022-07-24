@@ -6,6 +6,7 @@
 package Controller.Course;
 
 import Dal.CourseDBContext;
+import Dal.UserCourseDBContext;
 import Dal.UserDBContext;
 import Model.Account;
 import Model.Course;
@@ -40,6 +41,9 @@ public class CourseLibraryController extends HttpServlet {
         UserDBContext userDB = new UserDBContext();
         User user = userDB.getUser(acc.getUser().getId());
         CourseDBContext courseDB = new CourseDBContext();
+        UserCourseDBContext usercourseDB = new UserCourseDBContext();
+        ArrayList<Integer> numEnrolls = new ArrayList<>();
+        ArrayList<Float> ratings = new ArrayList<>();
         
         ArrayList<Course> courseList = courseDB.getCourseList();
         ArrayList<Integer> numFlashcard = new ArrayList<>();
@@ -48,7 +52,13 @@ public class CourseLibraryController extends HttpServlet {
         for(Course course : courseList){
             numFlashcard.add(courseDB.getNumFlashcard(course.getId()));
             numQuestion.add(courseDB.getNumQuestion(course.getId()));
+            int numEnroll = courseDB.getNumEnroll(course.getId());
+            float rating = usercourseDB.getAvgReview(course.getId());
+            numEnrolls.add(numEnroll);
+            ratings.add(rating);
         }
+        request.setAttribute("numEnrolls", numEnrolls);
+        request.setAttribute("ratings", ratings);
         request.setAttribute("courseList", courseList);
         request.setAttribute("numFlashcard", numFlashcard);
         request.setAttribute("numQuestion", numQuestion);
@@ -72,6 +82,7 @@ public class CourseLibraryController extends HttpServlet {
         String searchCreator = request.getParameter("searchCreator");
         String isSearch = request.getParameter("isSearch");
         CourseDBContext courseDB = new CourseDBContext();
+        UserCourseDBContext usercourseDB = new UserCourseDBContext();
         
         ArrayList<Course> courseList = courseDB.getCourseList();
         // get course list sastify search criteria
@@ -103,11 +114,19 @@ public class CourseLibraryController extends HttpServlet {
         
         ArrayList<Integer> numFlashcard = new ArrayList<>();
         ArrayList<Integer> numQuestion = new ArrayList<>();
+        ArrayList<Integer> numEnrolls = new ArrayList<>();
+        ArrayList<Float> ratings = new ArrayList<>();
         
         for(Course course : courseList){
             numFlashcard.add(courseDB.getNumFlashcard(course.getId()));
             numQuestion.add(courseDB.getNumQuestion(course.getId()));
+            int numEnroll = courseDB.getNumEnroll(course.getId());
+            float rating = usercourseDB.getAvgReview(course.getId());
+            numEnrolls.add(numEnroll);
+            ratings.add(rating);
         }
+        request.setAttribute("numEnrolls", numEnrolls);
+        request.setAttribute("ratings", ratings);
         request.setAttribute("courseList", courseList);
         request.setAttribute("numFlashcard", numFlashcard);
         request.setAttribute("numQuestion", numQuestion);

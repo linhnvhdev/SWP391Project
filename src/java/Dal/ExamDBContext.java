@@ -8,6 +8,7 @@ package Dal;
 import Model.Answer;
 import Model.Exam;
 import Model.Question;
+import Model.UserExam;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -536,7 +537,7 @@ public class ExamDBContext extends DBContext {
         return questions;
     }
 
-    public ArrayList<Answer> getAnswersRemain(int eid,  int courseId) {
+    public ArrayList<Answer> getAnswersRemain(int eid, int courseId) {
         ArrayList<Answer> answers = new ArrayList();
         try {
             String sql = "select  a.Answer_Detail,a.Answer_ID,a.IsCorrect,a.Question_ID\n"
@@ -676,7 +677,7 @@ public class ExamDBContext extends DBContext {
             stm.setInt(4, Question_ID);
             stm.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(QuestionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ExamDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -701,9 +702,127 @@ public class ExamDBContext extends DBContext {
                 return e;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ExamDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public ArrayList<UserExam> getUserExamList(int uid) {
+        ArrayList<UserExam> userexams = new ArrayList<>();
+        try {
+            String sql = "SELECT [Exam_ID]\n"
+                    + "      ,[User_ID]\n"
+                    + "      ,[Score]\n"
+                    + "      ,[Passed]\n"
+                    + "      ,[TimeComplete]\n"
+                    + "  FROM [dbo].[User_Exam]"
+                    + " WHERE [User_ID] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, uid);
+            UserDBContext uDB = new UserDBContext();
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                UserExam ue = new UserExam();
+                ue.setId(rs.getInt("Exam_ID"));
+                ue.setUser(uDB.getUser(rs.getInt("User_ID")));
+                ue.setScore(rs.getFloat("Score"));
+                ue.setPassed(rs.getBoolean("Passed"));
+                ue.setTimeComplete(rs.getString("TimeComplete"));
+                userexams.add(ue);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ExamDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return userexams;
+    }
+
+    public void UpdateUserExam(UserExam ue) {
+        try {
+            String sql = "        UPDATE [dbo].[User_Exam]\n"
+                    + "   SET [Exam_ID] = ?\n"
+                    + "      ,[User_ID] = ?\n"
+                    + "      ,[Score] = ?\n"
+                    + "      ,[Passed] = ?\n"
+                    + "      ,[TimeComplete] = ?\n"
+                    + " WHERE [Exam_ID] = ? \n"
+                    + " AND [User_ID] = ?\n";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, ue.getId());
+            stm.setInt(2, ue.getUser().getId());
+            stm.setFloat(3, ue.getScore());
+            stm.setBoolean(4, ue.isPassed());
+            stm.setString(5, ue.getTimeComplete());
+            stm.setInt(6, ue.getId());
+            stm.setInt(7, ue.getUser().getId());
+
+            stm.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ExamDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void insertUserExam(UserExam ue) {
+        try {
+            String sql = "IF NOT EXISTS(SELECT * FROM User_Exam WHERE [User_ID] = ? AND [Exam_ID] = ?)\n"
+                    + "BEGIN\n"
+                    + "INSERT INTO [dbo].[User_Exam]\n"
+                    + "           ([Exam_ID]\n"
+                    + "           ,[User_ID]\n"
+                    + "           ,[Score]\n"
+                    + "           ,[Passed]\n"
+                    + "           ,[TimeComplete])\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?)\n"
+                    + "END\n";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, ue.getId());
+            stm.setInt(2, ue.getUser().getId());
+            stm.setInt(3, ue.getId());
+            stm.setInt(4, ue.getUser().getId());
+            stm.setFloat(5, ue.getScore());
+            stm.setBoolean(6, ue.isPassed());
+            stm.setString(7, ue.getTimeComplete());
+            stm.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ExamDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public ArrayList<UserExam> getUserExamListbyCourse(int uid, int cid) {
+        ArrayList<UserExam> userexams = new ArrayList<>();
+        try {
+            String sql = "SELECT ue.[Exam_ID],ue.[User_ID] ,ue.[Score]  ,ue.[Passed] , ue.[TimeComplete]\n"
+                    + "  FROM [User_Exam] ue INNER JOIN [Exam] e\n"
+                    + "  ON ue.Exam_ID = e.Exam_ID\n"
+                    + "  INNER JOIN Course c\n"
+                    + "  ON e.Course_ID = c.Course_ID\n"
+                    + "WHERE  ue.[User_ID] = ?\n"
+                    + "AND c.Course_ID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, uid);
+            stm.setInt(2, cid);
+            UserDBContext uDB = new UserDBContext();
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                UserExam ue = new UserExam();
+                ue.setId(rs.getInt("Exam_ID"));
+                ue.setUser(uDB.getUser(rs.getInt("User_ID")));
+                ue.setScore(rs.getFloat("Score"));
+                ue.setPassed(rs.getBoolean("Passed"));
+                ue.setTimeComplete(rs.getString("TimeComplete"));
+                userexams.add(ue);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ExamDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return userexams;
     }
 
 }

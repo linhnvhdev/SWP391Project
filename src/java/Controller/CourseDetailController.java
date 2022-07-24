@@ -40,10 +40,6 @@ public class CourseDetailController extends HttpServlet {
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
         int courseId = Integer.parseInt(request.getParameter("courseId"));
-        Integer diffid = Integer.parseInt(request.getParameter("diffid"));
-
-        request.getSession().setAttribute("diffid", diffid);
-
         User user = acc.getUser();
         CourseDBContext courseDB = new CourseDBContext();
         UserCourseDBContext userCourseDB = new UserCourseDBContext();
@@ -54,6 +50,7 @@ public class CourseDetailController extends HttpServlet {
         float avgScore = userCourseDB.getAvgReview(courseId);
 
         Course course = courseDB.getCourse(courseId);
+        
         int numFlashcard = courseDB.getNumFlashcard(courseId);
         int numQuestion = courseDB.getNumQuestion(courseId);
         boolean isEnrolled = userCourseDB.checkUserCourse(user.getId(), courseId);
@@ -61,10 +58,10 @@ public class CourseDetailController extends HttpServlet {
         ArrayList<Integer> percentCompletes = new ArrayList<>();
         //Calculate progress
         for (UserCourse r : reviews) {
-            if(r.getUserId()!=user.getId()){
-            int numRemain = userCourseDB.getNumQuestionRemain(courseId, r.getUserId()) + userCourseDB.getNumFlascardRemain(courseId, r.getUserId());
-            int percentComplete = (int) ((1 - (double) numRemain / numTotal) * 100);
-            percentCompletes.add(percentComplete);
+            if (r.getUserId() != user.getId()) {
+                int numRemain = userCourseDB.getNumQuestionRemain(courseId, r.getUserId()) + userCourseDB.getNumFlascardRemain(courseId, r.getUserId());
+                int percentComplete = (int) ((1 - (double) numRemain / numTotal) * 100);
+                percentCompletes.add(percentComplete);
             }
         }
 
@@ -80,7 +77,6 @@ public class CourseDetailController extends HttpServlet {
         request.setAttribute("numQuestion", numQuestion);
         request.setAttribute("isEnrolled", isEnrolled);
         request.setAttribute("courseId", courseId);
-        request.setAttribute("difficultyId", diffid);
         request.getRequestDispatcher("View/courseDetail.jsp").forward(request, response);
 
     }
@@ -97,13 +93,11 @@ public class CourseDetailController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account acc = (Account) request.getSession().getAttribute("account");
-        int diffId = Integer.parseInt(request.getParameter("diffId"));
         int courseId = Integer.parseInt(request.getParameter("courseId"));
         User user = acc.getUser();
         UserCourseDBContext userCourseDB = new UserCourseDBContext();
         userCourseDB.insertUserCourse(user.getId(), courseId);
-        request.setAttribute("difficultyId", diffId);
-        response.sendRedirect("course?courseId=" + courseId + "&difficultyId=" + diffId);
+        response.sendRedirect("course?courseId=" + courseId);
     }
 
     /**
