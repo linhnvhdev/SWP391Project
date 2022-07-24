@@ -5,3 +5,9 @@
 .add-comment-detail:focus {
     height: 5em !important;
 }
+
+body{
+    background-image: url(../img/backgroundnight.png);
+    background-color: #cccccc;
+    background-attachment: fixed;
+}

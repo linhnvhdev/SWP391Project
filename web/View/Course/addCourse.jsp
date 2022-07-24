@@ -41,7 +41,7 @@
                 <div class="card" style="width: auto;">
                     <div class="card-body description">
                         <h5 class="card-title">Description</h5>
-                        <textarea class="form-control" name="description" placeholder="Description of the course"></textarea>
+                        <textarea class="form-control" name="description" placeholder="Description of the course" maxlength="500"></textarea>
                         <div class="mb-3">
                             <label for="formFileSm" class="form-label"><b>Select an image</b></label>
                             <input name="photo" class="form-control form-control-sm" id="formFileSm" type="file">
