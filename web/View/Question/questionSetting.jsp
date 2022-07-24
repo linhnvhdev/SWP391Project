@@ -13,7 +13,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css?ver=1" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-        <link href="css/cssquestionsetting.css?ver=1" rel="stylesheet" type="text/css"/>
+        <link href="css/cssquestionsetting.css?ver=2" rel="stylesheet" type="text/css"/>
         <link href="css/header.css" rel="stylesheet" type="text/css"/>
         <link href="${pageContext.request.contextPath}/css/inventory.css?version=1" rel="stylesheet" type="text/css"/>
         <title>JSP Page</title>
@@ -30,6 +30,9 @@
             <div class="heading">
                 <h1>Question List</h1>
             </div>
+            <div class="function">
+              <a class="sticky-top btn btn-primary" href="question/add">Create question</a>  
+            </div>           
             <form action="deletequestion" method="post" class="form">
                 <input type="hidden" name="courseId" value="${requestScope.courseId}"/>
                 <table class="table table-hover" id="checkboxTable">
@@ -56,7 +59,7 @@
                             <td>           
                                 <table>
                                     <tr>
-                                        <td><i <%if(answer.isIsCorrect()){%>style="color:green"<%}%>><%=answer.getDetail()%></i></td>
+                                        <td><i <%if (answer.isIsCorrect()) {%>style="color:green"<%}%>><%=answer.getDetail()%></i></td>
                                     </tr>
                                 </table>                                      
                             </td>                      
@@ -66,28 +69,27 @@
                         <%}%>
                     </tbody>   
                 </table>
-
-                <div class="button-delete d-none">
+                
+                <div class="sticky-top button-delete d-none">
                     <button type="submit" class="btn btn-danger btn-lg">Delete</button> 
                 </div>
             </form>
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
-            $(function () {
-                console.log(123);
-                $(".checkbox").click(function () {
-                    console.log($(".checkbox:checked").length);
-                    //get the number of checked 
-                    
-                    if ($(".checkbox:checked").length){
-                        console.log("trueeeee");
-                        $('.button-delete').removeClass("d-none");
-                    }
-                    else
-                        $(".button-delete").addClass('d-none');
-                });
+        $(function () {
+            console.log(123);
+            $(".checkbox").click(function () {
+                console.log($(".checkbox:checked").length);
+                //get the number of checked 
+
+                if ($(".checkbox:checked").length) {
+                    console.log("trueeeee");
+                    $('.button-delete').removeClass("d-none");
+                } else
+                    $(".button-delete").addClass('d-none');
             });
+        });
         </script>
         <%@ include file="../inventory.jsp" %>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>

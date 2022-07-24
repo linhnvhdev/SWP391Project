@@ -14,15 +14,18 @@ nav{
     width: 100%;
     display: flex;
     max-height: 60px;
+    z-index: 1;
+    text-decoration: none;
 }
 
 nav > ul{
     margin:0;
-    paddding:0;
+    padding:0;
     list-style-type:none;
     display:flex;
     position:absolute;
     right:50px;
+    z-index: 1;
 }
 
 nav > ul > li{
@@ -32,26 +35,31 @@ nav > ul > li{
     text-align:center;
     display:inline-block;
     min-width:150px;
+    z-index: 1;
 }
 
 nav > ul > li > a{
     position:relative;
     margin: 0 20px;
     color:white;
+    z-index: 1;
 }
 
 nav > ul > li:hover {
   border-bottom: 2px solid white;
   background-color: #0088ff;
+  z-index: 1;
 }
 
 nav > ul > .dropdown:hover {
   border-bottom:none;
+  z-index: 1;
 }
 
 nav > ul > .dropdown:hover >  .drop-down
 {
   display:block;
+  z-index: 1;
 }
 
 nav > ul > li > div {
@@ -62,27 +70,32 @@ nav > ul > li > div {
   display:none;
   background-color:aliceblue;
   min-width:150px;
+  z-index: 1;
 }
 
 nav > ul > li > div > ul {
   margin:0px 0 10px 0;
   padding:0;
   list-style:none;
+  z-index: 1;
 }
 
 nav > ul > li> div > ul > li:hover {
   background-color:rgba(0,0,0,0.2);
+  z-index: 1;
 }
 
 nav > ul > li > div > ul > li > a {
   padding : 5px;
     color:black;
     text-decoration: none;
+    z-index: 1;
 }
 
 nav > ul > li > a{
     text-decoration: none !important;
     color:white !important;
+    z-index: 1;
 }
 
 .logo{
@@ -93,4 +106,5 @@ nav > ul > li > a{
     width:40%;
     letter-spacing:2px;
     text-shadow:2px 2px 5px;
+    text-decoration: none !important;
 }

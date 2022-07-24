@@ -32,6 +32,12 @@ body{
     text-align: center;
 }
 .save{
-    margin-top: 10vh;
+    margin-top: 5vh;
     text-align: center;
+}
+.form-label{
+    margin-top: 1vh;
+}
+.card-body.description{
+    padding-bottom: 0 !important;
 }

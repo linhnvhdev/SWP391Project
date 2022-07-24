@@ -9,17 +9,23 @@ import Dal.UserDBContext;
 import Model.Account;
 import Model.User;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Date;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author Linhnvhdev
  */
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2,
+        maxFileSize = 1024 * 1024 * 10,
+        maxRequestSize = 1024 * 1024 * 50)
 public class UserProfileController extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -31,6 +37,7 @@ public class UserProfileController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -59,9 +66,25 @@ public class UserProfileController extends HttpServlet {
         String gmail = request.getParameter("gmail");
         int exp = Integer.parseInt(request.getParameter("exp"));
         int level = Integer.parseInt(request.getParameter("level"));
+        InputStream inputStream = null;
+        Part filePart = request.getPart("photo");
+        if (filePart != null) {
+            // prints out some information for debugging
+            System.out.println(filePart.getName());
+            System.out.println(filePart.getSize());
+            System.out.println(filePart.getContentType());
+             
+            // obtains input stream of the upload file
+            inputStream = filePart.getInputStream();
+        }
         UserDBContext userDB = new UserDBContext();
         User user = userDB.getUser(acc.getUser().getId());
-        userDB.updateUser(user.getId(),name, gmail, gender, dob, exp,level);
+        if(filePart.getSize()==0){
+            userDB.updateUser(user.getId(),name, gmail, gender, dob, exp,level);
+        }else{
+            userDB.updateUserWithAva(user.getId(), name, gmail, gender, dob, exp, level, inputStream);
+        }
+    
         request.setAttribute("SuccessMessage","Change profile success");
         user = userDB.getUser(acc.getUser().getId());
         request.setAttribute("user", user);
