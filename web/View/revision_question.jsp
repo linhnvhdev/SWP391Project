@@ -18,14 +18,17 @@
         <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css?ver=1" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <link href="${pageContext.request.contextPath}/css/inventory.css?version=5" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.request.contextPath}/css/effectcss.css?ver=1" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+
         <% Question question = (Question) request.getAttribute("q");
             ArrayList<Answer> answers = (ArrayList<Answer>) request.getAttribute("answers");
             // Answer correctAns = (Answer) request.getAttribute("answer");
             int index = 1;
             String isCorrect = "false";
         %>
+        <%@ include file="effect.jsp" %>
         <div class="container">
             <div class="row above">
                 <div class="col">
@@ -120,9 +123,7 @@
                 {
                     console.log("col answer");
                     $("#player").css("animation-name", "attack");
-                    console.log($("input[name='questionId']").val());
-                    console.log($(this).attr('value'));
-                    console.log($(this).attr('condition'));
+                    $(".row.bottom").css("pointer-events", "none");
                     if ($(this).attr('condition') === 'true') {
 
                         setTimeout(
@@ -180,7 +181,7 @@
                             function () {
                                 $("#player").css("animation-name", "");
                             }, 500);
-
+                    
                     var questionId = $("input[name='questionId']").val();
                     var courseId = $("input[name='courseId']").val();
                     var difficultyId = $("input[name='difficultyId']").val();
@@ -214,18 +215,18 @@
                                     $(".answer-detail.three").text(data[3]);
                                     $(".answer-detail.four").text(data[4]);
                                     // reset css of using item
-                                    $(".answer-detail.one").css("color","black");
-                                    $(".answer-detail.one").css("font-weight","normal");
-                                    $(".answer-detail.one").css("text-decoration","initial");
-                                    $(".answer-detail.two").css("color","black");
-                                    $(".answer-detail.two").css("font-weight","normal");
-                                    $(".answer-detail.two").css("text-decoration","initial");
-                                    $(".answer-detail.three").css("color","black");
-                                    $(".answer-detail.three").css("font-weight","normal");
-                                    $(".answer-detail.three").css("text-decoration","initial");
-                                    $(".answer-detail.four").css("color","black");
-                                    $(".answer-detail.four").css("font-weight","normal");
-                                    $(".answer-detail.four").css("text-decoration","initial");
+                                    $(".answer-detail.one").css("color", "black");
+                                    $(".answer-detail.one").css("font-weight", "normal");
+                                    $(".answer-detail.one").css("text-decoration", "initial");
+                                    $(".answer-detail.two").css("color", "black");
+                                    $(".answer-detail.two").css("font-weight", "normal");
+                                    $(".answer-detail.two").css("text-decoration", "initial");
+                                    $(".answer-detail.three").css("color", "black");
+                                    $(".answer-detail.three").css("font-weight", "normal");
+                                    $(".answer-detail.three").css("text-decoration", "initial");
+                                    $(".answer-detail.four").css("color", "black");
+                                    $(".answer-detail.four").css("font-weight", "normal");
+                                    $(".answer-detail.four").css("text-decoration", "initial");
                                     //
                                     $(".col.answer.one").attr("condition", data[5]);
                                     $(".col.answer.two").attr("condition", data[6]);
@@ -236,8 +237,11 @@
                                     $(".col.answer.three").attr("value", data[11]);
                                     $(".col.answer.four").attr("value", data[12]);
                                     $("input[name=questionId]").val(data[13]);
-                                    
+
                                 }, 1500);
+                                setTimeout(function () {
+                                    $(".row.bottom").css("pointer-events", "");
+                                }, 2000);                              
                             }
                             var levelupMessage = data[14];
                             var dropItemMessage = data[15];
@@ -250,7 +254,8 @@
 //                            if (!isEmpty(levelupMessage)) {
                             if (levelupMessage != "null") {
                                 var msg = data[14];
-                                if(dropItemMessage !== "none") msg += data[15];
+                                if (dropItemMessage !== "none")
+                                    msg += data[15];
                                 LevelUpAlert(msg);
                             }
                             function LevelUpAlert(message) {
@@ -258,14 +263,15 @@
                                 $('#modal-detail').html(message);
                             }
                             // Drop item
-                            
-                            if(dropItemMessage !== "none"){
+
+                            if (dropItemMessage !== "none") {
                                 var msg = "";
-                                if(levelupMessage != "null") msg= data[14];
+                                if (levelupMessage != "null")
+                                    msg = data[14];
                                 msg += data[15];
                                 DropItemAlert(msg);
                             }
-                            
+
                             function DropItemAlert(message) {
                                 modal.style.display = "block";
                                 $('#modal-detail').html(message);

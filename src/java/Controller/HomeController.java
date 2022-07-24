@@ -71,7 +71,10 @@ public class HomeController extends HttpServlet {
             levelList = levelDB.getLevelList();
             request.getSession().setAttribute("levelList", levelList);
         }
+        
+        ArrayList<String> top3CourseName = usercourseDB.getTop3Finished(user.getId());
         HttpSession session = request.getSession();
+        request.setAttribute("courseNames", top3CourseName);
         session.removeAttribute("lvUMessage");
         request.setAttribute("numEnrolls", numEnrolls);
         request.setAttribute("ratings", ratings);

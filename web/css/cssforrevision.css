@@ -80,6 +80,29 @@ body{
     padding-right: 10px;
     border-radius: 10px;
 }
+.open-button {
+    background-color: white;
+    color: black;
+    border-radius: 100px;
+    cursor: pointer;
+    border:solid black 1px;
+    position: absolute;
+    right: 10px;
+    top :10px;
+}
+.form-popup {
+    padding:2%;
+    display: none;
+    position: absolute;
+    width: 30%;
+    height: 50vh;
+    top: 10%;
+    right: 0;
+    background-color: white;
+    border: 3px solid black;
+    border-radius: 50px;
+    z-index: 9;
+}
 /*.homescreen-content {
     height: 100%;
     display: flex;
