@@ -290,8 +290,8 @@ button{
   font-size: 30px;
   font-style: oblique;
   text-align: center;
-  height: 30vh;
-  overflow: hidden;
+  height: 50vh;
+  overflow: auto;
   white-space: nowrap;
 }
 

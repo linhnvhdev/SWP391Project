@@ -38,7 +38,7 @@
             %>
             <tr>
                 <td><%=i.getName()%></td>
-                <td><img src="<%=i.getImage()%>"></td>
+                <td><img src="<%=i.getImage()%>"></td>                
                 <td><%=i.getPrice()%></td>
             <form action="shop" method="POST">
                 <td><input type="submit" value="Buy"></td>

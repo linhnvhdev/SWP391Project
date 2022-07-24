@@ -217,6 +217,10 @@
         <servlet-class>Controller.Shop.ShopController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>NotificationController</servlet-name>
+        <servlet-class>Controller.NotificationController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>AccomplishmentController</servlet-name>
         <servlet-class>Controller.Course.AccomplishmentController</servlet-class>
     </servlet>
@@ -395,6 +399,10 @@
     <servlet-mapping>
         <servlet-name>ShopController</servlet-name>
         <url-pattern>/shop</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NotificationController</servlet-name>
+        <url-pattern>/notification</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AccomplishmentController</servlet-name>

@@ -68,9 +68,11 @@ public class ShopController extends HttpServlet {
         User user = uDB.getUserInfor(acc.getUser().getId());
         ItemDBContext iDB = new ItemDBContext();
         ArrayList<Item> ItemList = iDB.ListItem();
+        Boolean isSales = (Boolean) request.getSession().getAttribute("sales");
         request.setAttribute("isBuySuccess", isBuySuccess);
         request.setAttribute("user", user);
         request.setAttribute("ItemList", ItemList);
+        request.setAttribute("isSales", (isSales == null) ? false : isSales);
         request.getRequestDispatcher("/View/Shop/shop.jsp").forward(request, response);
     }
 
@@ -91,12 +93,17 @@ public class ShopController extends HttpServlet {
         UserDBContext uDB = new UserDBContext();
         User user = uDB.getUserInfor(acc.getUser().getId());
         String isBuySuccess;
+        Boolean isSales = (Boolean) request.getSession().getAttribute("sales");
+        if(isSales != null && isSales == true){
+            item_Price = item_Price / 2;
+        }
         if (user.getLikenumber() < item_Price) {
             isBuySuccess ="Buy item fail.Your Like number is not enough!" ;
         } else {
             uDB.NumberLikeForBought(user, item_Price);
             uDB.AddItemForUser(user, item_id_bought);
             isBuySuccess = "Buy item successful!";
+            request.getSession().removeAttribute("sales");
         }
         String url = "shop?isBuySuccess=" + isBuySuccess;
         response.sendRedirect(url);

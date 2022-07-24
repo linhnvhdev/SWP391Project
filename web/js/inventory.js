@@ -4,14 +4,17 @@
  */
 
 $(document).ready(function(){
-    getItem();
     function getItem(){
-        console.log("ge");
+        console.log("getttttt");
+        var inventoryHeader = $(".inventory-table-header").detach();
+        $("#inventory-table").html("");
+        $("#inventory-table").append(inventoryHeader);
         $.ajax({
            type: 'GET',
            url: '/swp391project/item',
            success: function(data){
                $('#testajax').add(data);
+               
                // Add each item the the inventory table
                $.each(data,function(index,element){
                    $("#inventory-table tr:last").after(
@@ -36,6 +39,7 @@ $(document).ready(function(){
         });
     }
     $('#btnInventory').click(function(){
+        getItem();
         $('#inventory').toggle();
     });
     $('#closeInventory').click(function(){
@@ -60,6 +64,10 @@ $(document).ready(function(){
             return;
         }
         switch(itemID){
+            case "1":
+                if(!confirm("If using this item and answer wrong or not pass the exam, you will lose that the exp of the question. Are you sure?"))
+                    return;
+                break;
             case "2":
                 if(questionID == null){ 
                     alert("You need to be in the exam or practice to use this item");
@@ -73,6 +81,12 @@ $(document).ready(function(){
                 }
                 break;
             case "4":
+                if(playerHealth == 0){
+                    alert("You need to be in the exam to use this item");
+                    return;
+                }
+                break;
+            case "5":
                 if(playerHealth == 0){
                     alert("You need to be in the exam to use this item");
                     return;
@@ -106,7 +120,22 @@ $(document).ready(function(){
                 // Health potion
                 case "4":
                     $('input[name = "health-potion-active"]').attr("value",60);
+                    break;
+                case "5":
+                    $('input[name = "health-potion-active"]').attr("value",120);
+                    break;
+                case "6":
                     
+                    break;
+                case "7":
+                    alert("You receive " + data[1] + " money");
+                    break;
+                case "8":
+                    alert("You receive " + data[1] + " money");
+                    break;
+                case "9":
+                    alert("You receive " + data[1] + " money");
+                    break;
             }
         });
     });

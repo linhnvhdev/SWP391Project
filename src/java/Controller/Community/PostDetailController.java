@@ -4,6 +4,7 @@
  */
 package Controller.Community;
 
+import Dal.NotificationDBContext;
 import Dal.PostDBContext;
 import Model.Account;
 import Model.Post;
@@ -80,6 +81,7 @@ public class PostDetailController extends HttpServlet {
         int mainPostID = Integer.parseInt(request.getParameter("mainPostID"));
         String postDetail = request.getParameter("post-detail");
         PostDBContext postDB = new PostDBContext();
+        NotificationDBContext nDB = new NotificationDBContext();
         String postTitle = "Reply post";
         String postCategory = "Replies Post";
         int userID = account.getUser().getId();
@@ -89,7 +91,10 @@ public class PostDetailController extends HttpServlet {
         int postCourseID = 0;
         Date createdDate = new Date(System.currentTimeMillis());
         int postID = postDB.insertPost(postTitle, parentPostID, userID, postDetail, isEdited, postLike, createdDate, postCategory,postCourseID);
-        response.sendRedirect("post?postID=" + mainPostID);
+        Post parentPost = postDB.getPost(parentPostID);
+        String url = "post?postID=" + mainPostID;
+        nDB.InsertNotification("You have a reply from user " + account.getUser().getName() + " to your post", url, createdDate, parentPost.getCreatorID(),false);
+        response.sendRedirect(url);
     }
 
     /**

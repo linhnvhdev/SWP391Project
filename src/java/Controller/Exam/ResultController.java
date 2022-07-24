@@ -8,10 +8,12 @@ package Controller.Exam;
 import Dal.ExamDBContext;
 import Dal.ItemDBContext;
 import Dal.LevelDBContext;
+import Dal.NotificationDBContext;
 import Dal.UserDBContext;
 import Model.Account;
 import Model.Answer;
 import Model.Exam;
+import Model.Item;
 import Model.LevelSetUp;
 import Model.Question;
 import Model.UserExam;
@@ -23,7 +25,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.lang.Math;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Random;
 import javafx.util.Pair;
 
 /**
@@ -86,18 +90,40 @@ public class ResultController extends HttpServlet {
         int experience = 0;
         boolean passed = true;
         //condition to pass the course
+        Boolean isExpBoost = (Boolean) request.getSession().getAttribute("expBoost");
+        String dropItemMessage = "none";
         if (percentageScore >= passScore) {
             experience = currentScore * 4;
+            if (isExpBoost != null && isExpBoost) {
+                experience *= 2;
+                request.getSession().removeAttribute("expBoost");
+            }
+            ItemDBContext itemDB = new ItemDBContext();
+            // drop item
+            ArrayList<Item> itemDrops = itemDB.getRandomItemDrop();
+            if(itemDrops == null || itemDrops.isEmpty()){
+                dropItemMessage = "none";
+            }
+            else{
+                dropItemMessage = "<br>Monster drops item:";
+                for(Item item : itemDrops){
+                    Random rd = new Random();
+                    int dropItemNumber = rd.nextInt(3) + 1;
+                    dropItemMessage += "<br>" + "You have earned " + dropItemNumber + " " + item.getName();
+                    itemDB.updateUserItem(account.getUser().getId(), item.getId(), dropItemNumber);
+                }
+            }
         } else {
             experience = currentScore / 10;
+            if (isExpBoost != null && isExpBoost) {
+                experience = -experience * 10;
+                request.getSession().removeAttribute("expBoost");
+            }
             passed = false;
         }
         double examScore = Math.round((currentScore * 100.0) / (10.0 * numQues));
-        Boolean isExpBoost = (Boolean) request.getSession().getAttribute("expBoost");
-        if (isExpBoost != null && isExpBoost) {
-            experience *= 2;
-            request.getSession().removeAttribute("expBoost");
-        }
+        
+
         int oldexperience = userDB.getUserExp(account.getUser().getId());
         int newexperience = experience + oldexperience;
         userDB.updateUserExp(account.getUser().getId(), newexperience);
@@ -124,6 +150,7 @@ public class ResultController extends HttpServlet {
 
         LevelDBContext levelDB = new LevelDBContext();
         ItemDBContext itemDB = new ItemDBContext();
+        NotificationDBContext nDB = new NotificationDBContext();
         int userId = account.getUser().getId();
         int userCurrentExp = userDB.getUserExp(userId);
         int countLevelUp = 0;
@@ -140,8 +167,14 @@ public class ResultController extends HttpServlet {
                     levelupMessage += "<br>" + "You have reached level " + account.getUser().getLevel() + "!<br>"
                             + "You have earned 1 " + level.getItem().getName() + "<br>";
                     countLevelUp++;
+                    nDB.InsertNotification("You have reached level " + account.getUser().getLevel() + "!"
+                            + "You have earned 1 " + level.getItem().getName(), "none", new Date(System.currentTimeMillis()), userId, true);
                 }
             }
+        }
+        if(!dropItemMessage.equals("none")){
+            if(levelupMessage.equals("LEVEL UP")) levelupMessage = dropItemMessage;
+            else levelupMessage += dropItemMessage;
         }
         request.setAttribute("lvupMessage", levelupMessage);
 

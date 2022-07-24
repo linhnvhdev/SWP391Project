@@ -14,10 +14,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <link href="${pageContext.request.contextPath}/css/revision_question.css?ver=1" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.request.contextPath}/css/revision_question.css?ver=2" rel="stylesheet" type="text/css"/>
         <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css?ver=1" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-        <link href="${pageContext.request.contextPath}/css/inventory.css?version=1" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.request.contextPath}/css/inventory.css?version=5" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <% Question question = (Question) request.getAttribute("q");
@@ -240,9 +240,7 @@
                                 }, 1500);
                             }
                             var levelupMessage = data[14];
-                            console.log(data[14]);
-                            console.log(levelupMessage);
-                            console.log(isEmpty(levelupMessage));
+                            var dropItemMessage = data[15];
                             var modal = document.getElementById("myModal");
 // Get the <span> element that closes the modal
                             var span = document.getElementsByClassName("close")[0];
@@ -251,16 +249,26 @@
                             }
 //                            if (!isEmpty(levelupMessage)) {
                             if (levelupMessage != "null") {
-                                LevelUpAlert();
-                                console.log("message not null");
-                            } else {
-                                console.log("message null");
+                                var msg = data[14];
+                                if(dropItemMessage !== "none") msg += data[15];
+                                LevelUpAlert(msg);
                             }
-                            function LevelUpAlert() {
-                                // alert(levelupMessage);
-                                console.log("Level Up alert");
+                            function LevelUpAlert(message) {
                                 modal.style.display = "block";
-                                $('#modal-detail').html(data[14]);
+                                $('#modal-detail').html(message);
+                            }
+                            // Drop item
+                            
+                            if(dropItemMessage !== "none"){
+                                var msg = "";
+                                if(levelupMessage != "null") msg= data[14];
+                                msg += data[15];
+                                DropItemAlert(msg);
+                            }
+                            
+                            function DropItemAlert(message) {
+                                modal.style.display = "block";
+                                $('#modal-detail').html(message);
                             }
 // When the user clicks on <span> (x), close the modal
                             span.onclick = function () {
