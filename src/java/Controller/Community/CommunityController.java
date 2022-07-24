@@ -45,6 +45,7 @@ public class CommunityController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Account account = (Account) request.getSession().getAttribute("account");
         // Get parameter
         String searchTitle = request.getParameter("searchTitle");
         String category = request.getParameter("category");
@@ -73,6 +74,7 @@ public class CommunityController extends HttpServlet {
         request.setAttribute("courseID", courseID);
         request.setAttribute("sortBy", sortBy);
         request.setAttribute("results", results);
+        request.setAttribute("user", account.getUser());
         request.getRequestDispatcher("View/community.jsp").forward(request, response);
     }
 

@@ -1,0 +1,9 @@
+body{
+    background-image: url(../img/backgroundnight.png);
+    background-color: #cccccc;
+    background-attachment: fixed;
+}
+.row-table{
+    background-color: white;
+    padding: 40px;
+}

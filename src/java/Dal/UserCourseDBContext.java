@@ -43,6 +43,26 @@ public class UserCourseDBContext extends DBContext {
         }
     }
 
+    public ArrayList<String> getTop3Finished(int userId) {
+        ArrayList<String> courseName = new ArrayList<>();
+        try {
+            String sql = "select top 3 c.Course_Name\n"
+                    + "from User_Course uc join Course c\n"
+                    + "on uc.Course_ID = c.Course_ID\n"
+                    + "where uc.IsFinished = 1 AND uc.User_ID=?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, userId);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                courseName.add(rs.getString("Course_Name"));
+            }
+            return courseName;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserCourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     public boolean checkUserCourse(int userId, int courseId) {
         try {
             String sql = "SELECT [User_ID]\n"

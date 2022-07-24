@@ -18,7 +18,8 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-        <link href="css/header.css?version=4" rel="stylesheet" type="text/css"/>
+        <link href="css/header.css?version=1" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.request.contextPath}/css/community.css?version=4" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <jsp:include page="header.jsp"/>
@@ -119,8 +120,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <table class="table mt-3">
+            <div class="row row-table mt-3" >
+                <table class="table mt-3 ">
                     <thead>
                         <tr>
                             <th scope="col">Title</th>
@@ -158,7 +159,6 @@
             var postPerPage = ${requestScope.postPerPage};
 
             if (pageIndex * postPerPage >= maxPostNum) {
-                console.log("it should hide");
                 $('.load-more-post').hide();
             }
 
@@ -167,7 +167,6 @@
                     pageIndex: pageIndex
                 };
                 $.get("/swp391project/LoadMorePost", $.param(data), function (response) {
-                    console.log("At least we get something");
                     $('.post-table').append(response);
                     pageIndex++;
                     if (pageIndex * postPerPage >= maxPostNum) {
@@ -192,7 +191,6 @@
             });
 
             $('.resetSearchButton').on('click', function (event) {
-                console.log("reset??");
                 window.location.href = "/swp391project/community";
             });
         });

@@ -110,7 +110,7 @@ public class UpdateQuestionController extends HttpServlet {
         }
 
         if (numberOfCorrect == 1) {
-            for (int i = 0; i < newAnswersNum; i++) {
+            for (int i = 0; i < answersDetail.length; i++) {
                 String answerDetail = answersDetail[i];
                 int answerId = Integer.parseInt(raw_answerId[i]);
                 boolean isCorrect = Boolean.parseBoolean(request.getParameter("isCorrect" + (i + 1)));
