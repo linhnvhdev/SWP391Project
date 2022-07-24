@@ -11,7 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login</title>
-        <link href="css/cssforlogin.css?version=1" rel="stylesheet" type="text/css"/>
+        <link href="css/cssforlogin.css?version=2" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <div id="tsparticles"></div>
