@@ -36,17 +36,6 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
         maxRequestSize = 1024 * 1024 * 50)
 public class AddCourseController extends HttpServlet {
 
-    private String extractFileName(Part part) {
-        String contentDisp = part.getHeader("content-disposition");
-        String[] items = contentDisp.split(";");
-        for (String item : items) {
-            if (item.trim().startsWith("filename")) {
-                return item.substring(item.indexOf("=") + 2, item.length() - 1);
-            }
-        }
-        return "";
-    }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

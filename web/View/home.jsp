@@ -51,8 +51,10 @@
         <div class="dropbox">       
             <img onclick="myFunction()" class="dropbtn" src="img/Chevron down large 8.png" alt=""/>
             <p id="myDropdown" class="dropdown-content">
-                <a href="${pageContext.request.contextPath}/leaderboard"><img src="img/Looks one 1.png" alt=""/></a>             
-                <a id="btnInventory"><img src="img/Shopping bag 1.png" alt=""/></a>               
+                <a href="${pageContext.request.contextPath}/leaderboard"><img src="img/Looks one 1.png" alt="" style="max-width: 40px"/></a>             
+                <a id="btnInventory"><img src="img/Backpack 1.png" alt="" style="max-width: 40px"/></a>  
+                <a href="${pageContext.request.contextPath}/notification"><img src="img/Notifications 2.png" alt=""/>2</a> 
+                <a><img src="img/Notifications active 1.png" alt=""/></a>
             </p>
         </div>
         <div class="user-info">
@@ -72,6 +74,7 @@
                         <p><img src="img/Check circle 1.png" alt=""/> Course 2</p>
                         <p><img src="img/Check circle 1.png" alt=""/> Course 3</p>
                         <p><img src="img/Check circle 1.png" alt=""/> Course 4</p>   
+                        <p id="space"><a href="Accomplishment" role="button" >Accomplishment</a></p>
                     </div>
                 </div>            
             </div>
@@ -84,7 +87,7 @@
                          <c:if test="${course.image != null}">
                              data:image/jpg;base64,${course.image}
                          </c:if>
-                             <c:if test="${course.image == null}">
+                         <c:if test="${course.image == null}">
                              https://c4.wallpaperflare.com/wallpaper/355/663/650/anime-original-creature-original-anime-scenery-hd-wallpaper-preview.jpg
                          </c:if>
                          " alt="Card image">
@@ -93,13 +96,13 @@
                         <div class="hide"> 
                             <div class="row">
                                 <div class="col-8">
-                                    ${course.description}</br>
+                                    <b>${course.description}</b></br>
                                     <progress id="progress" value="<%=percentCompletes.get(i)%>" max="100"></progress>
 
                                 </div>
                                 <div class="col-4">
-                                    Enroll: <%=numEnrolls.get(i)%></br>
-                                    Rating: <%=ratings.get(i)%>
+                                    <b>Enroll: <%=numEnrolls.get(i)%></b></br>
+                                    <b>Rating: <%=ratings.get(i)%></b>
                                 </div>
                             </div>
                         </div>
@@ -108,6 +111,7 @@
                 <%i++;%>
             </c:forEach>
         </div>   
+        <%@ include file="inventory.jsp" %>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </body>
