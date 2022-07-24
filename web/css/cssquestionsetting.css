@@ -23,8 +23,13 @@ body{
     background-attachment: fixed;
 }
 
+.function{
+    position: fixed;
+    left:1.25%;
+    top: 25%;
+}
 .table{
-    margin-top: 5vh;
+    margin-top: 3vh;
     width: 90%;
     background-color: rgb(192, 192, 192);
     margin-left: auto;
@@ -38,6 +43,7 @@ body{
     margin-top: 30px;
 }
 .button-delete{
-    text-align: center;
-    
+    position: fixed;
+    left:3%;
+    top:33vh;
 }

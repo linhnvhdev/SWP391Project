@@ -19,13 +19,16 @@
         <%@ include file="header.jsp" %>
         <div class="main-content">
             <div class="left">
-                <img src="img/char.png" alt="avatar"/>
+                <img src="
+                     data:image/jpg;base64,${user.image}
+
+                     " alt="avatar" style="width: 100%"/>
                 <div class="level">Level ${requestScope.user.level}</div>
                 <div class="exp">
                     <div class="exp-bar exp-bar--green">
                         <span class="exp-bar__label">EXP</span>
                         <span class="exp-bar__fill--wrap">
-                          <span class="exp-bar__fill" style="width: ${requestScope.user.exp*100/9999}%"></span>
+                            <span class="exp-bar__fill" style="width: ${requestScope.user.exp*100/9999}%"></span>
                         </span>
                         <span class="exp-bar__text">${requestScope.user.exp}/9999</span>
                     </div>
@@ -36,22 +39,24 @@
                     <div style="color: green">${requestScope.SuccessMessage}</div>
                 </c:if>
                 <h2>User profile</h2>
-                <form action="profile" method="POST">
+                <form action="profile" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="exp" value="${requestScope.user.exp}">
                     <input type="hidden" name="level" value="${requestScope.user.level}">
                     <label for="name" >Name</label>
-                        <input type="text" id="name" name="name" value="${requestScope.user.name}">
-                        <label for="gender" >Gender</label><br>
-                        <span>Male:</span>
-                        <input type="radio" class="radio" id="male" name="gender" value="True"
-                                   ${requestScope.user.gender?"checked":""}>
-                        <span>Female:</span>
-                        <input type="radio" class="radio" id="female" name="gender" value="False" 
-                               ${!requestScope.user.gender?"checked":""}><br>
+                    <input type="text" id="name" name="name" value="${requestScope.user.name}">
+                    <label for="gender" >Gender</label><br>
+                    <span>Male:</span>
+                    <input type="radio" class="radio" id="male" name="gender" value="True"
+                           ${requestScope.user.gender?"checked":""}>
+                    <span>Female:</span>
+                    <input type="radio" class="radio" id="female" name="gender" value="False" 
+                           ${!requestScope.user.gender?"checked":""}><br>
                     <label for="dob" >DOB</label>
-                        <input type="date" id="dob" name="dob" value="${requestScope.user.dob}">
+                    <input type="date" id="dob" name="dob" value="${requestScope.user.dob}">
                     <label for="gmail" >Gmail</label>
-                        <input type="text" id="gmail" name="gmail" value="${requestScope.user.gmail}">
+                    <input type="text" id="gmail" name="gmail" value="${requestScope.user.gmail}">
+                    <label for="avatar" >Avatar</label>
+                    <input name="photo" class="form-control form-control-sm" id="formFileSm" type="file">
                     <input class="submit" type="submit" value="Update">
                 </form>
             </div>

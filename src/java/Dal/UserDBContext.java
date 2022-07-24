@@ -8,12 +8,17 @@ package Dal;
 import Model.Course;
 import Model.User;
 import Model.Pagging.UserPagging;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -71,6 +76,7 @@ public class UserDBContext extends DBContext {
                     + "      ,[Exp]\n"
                     + "      ,[Level]\n"
                     + "      ,[Role_ID]\n"
+                    + "      ,[Avatar]\n"
                     + "  FROM [SWP391Project].[dbo].[User]\n"
                     + "  WHERE [User_ID]=?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -86,9 +92,28 @@ public class UserDBContext extends DBContext {
                 user.setExp(rs.getInt("Exp"));
                 user.setLevel(rs.getInt("Level"));
                 user.setRole(rs.getInt("Role_ID"));
+                if (rs.getBlob("Avatar") != null) {
+                    Blob blob = rs.getBlob("Avatar");
+                    InputStream inputStream = blob.getBinaryStream();
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+                    inputStream.close();
+                    outputStream.close();
+                    user.setImage(base64Image);                   
+                }
                 return user;
             }
         } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -198,6 +223,32 @@ public class UserDBContext extends DBContext {
             stm.setInt(5, exp);
             stm.setInt(6, level);
             stm.setInt(7, id);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void updateUserWithAva(int id, String name, String gmail, boolean gender, Date dob, int exp, int level, InputStream ava) {
+        try {
+            String sql = "UPDATE [dbo].[User]\n"
+                    + "   SET [Name] = ?\n"
+                    + "      ,[Mail] = ?\n"
+                    + "      ,[Gender] = ?\n"
+                    + "      ,[Dob] = ?\n"
+                    + "      ,[Exp] = ?\n"
+                    + "      ,[Level] = ?\n"
+                    + "      ,[Avatar] = ?\n"
+                    + "WHERE [User_ID] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, name);
+            stm.setString(2, gmail);
+            stm.setBoolean(3, gender);
+            stm.setDate(4, dob);
+            stm.setInt(5, exp);
+            stm.setInt(6, level);
+            stm.setBlob(7, ava);
+            stm.setInt(8, id);
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
