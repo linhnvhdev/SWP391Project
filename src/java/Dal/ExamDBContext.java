@@ -781,8 +781,8 @@ public class ExamDBContext extends DBContext {
                     + "           ,?)\n"
                     + "END\n";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, ue.getId());
-            stm.setInt(2, ue.getUser().getId());
+            stm.setInt(1, ue.getUser().getId());
+            stm.setInt(2, ue.getId());
             stm.setInt(3, ue.getId());
             stm.setInt(4, ue.getUser().getId());
             stm.setFloat(5, ue.getScore());

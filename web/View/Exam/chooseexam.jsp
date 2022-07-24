@@ -58,32 +58,37 @@
                 </tr>
             </thead>
             <tbody>
-                <c:forEach items="${requestScope.examList}" var="e"> 
-                    <tr style="transform: rotate(0);">
-                        <th scope="row"><a href="exam?courseId=${requestScope.courseId}&eid=${e.id}" class="stretched-link">${e.id}</a></th>
-                        <td>${e.name}</td>
-                        <td>${e.totalQuestion}</td>
-                        <td>${e.passed}</td>
-                        <td>${e.time}</td>
-                        <c:set var="contains" value="false" />
-                        <c:forEach items="${requestScope.userexams}" var="ue" varStatus="ueStatus"> 
-                            <c:if test="${e.id == ueStatus.current.id}">
-                                <c:if test="${!ue.passed}">
-                                    <td style="color: red;">Not Passed</td>
+                <c:if test="${requestScope.examList.size() ne 0 }">
+                    <c:forEach items="${requestScope.examList}" var="e"> 
+                        <tr style="transform: rotate(0);">
+                            <th scope="row"><a href="exam?courseId=${requestScope.courseId}&eid=${e.id}" class="stretched-link">${e.id}</a></th>
+                            <td>${e.name}</td>
+                            <td>${e.totalQuestion}</td>
+                            <td>${e.passed}</td>
+                            <td>${e.time}</td>
+                            <c:set var="contains" value="false" />
+                            <c:forEach items="${requestScope.userexams}" var="ue" varStatus="ueStatus"> 
+                                <c:if test="${e.id == ueStatus.current.id}">
+                                    <c:if test="${!ue.passed}">
+                                        <td style="color: red;">Not Passed</td>
+                                    </c:if>
+                                    <c:if test="${ue.passed}">
+                                        <td style="color: green;">Passed</td>
+                                    </c:if>
+                                    <td>${ue.score}</td>
+                                    <c:set var="contains" value="true" />
                                 </c:if>
-                                <c:if test="${ue.passed}">
-                                    <td style="color: green;">Passed</td>
-                                </c:if>
-                                <td>${ue.score}</td>
-                                <c:set var="contains" value="true" />
-                            </c:if>
-                        </c:forEach>
-                        <c:if test="${!contains}">
-                            <td style="color: red;">Not Completed</td>
-                            <td>0.0</td>
-                        </c:if>       
-                    </tr>
-                </c:forEach>
+                            </c:forEach>
+                            <c:if test="${!contains}">
+                                <td style="color: red;">Not Completed</td>
+                                <td>0.0</td>
+                            </c:if>       
+                        </tr>
+                    </c:forEach>
+                </c:if>
+                <c:if test="${requestScope.examList.size() eq 0 }">
+                    There is no exam in this courses
+                </c:if>
             </tbody>
         </table>
     </body>

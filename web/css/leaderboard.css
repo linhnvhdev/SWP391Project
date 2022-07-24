@@ -8,14 +8,21 @@ and open the template in the editor.
     Author     : LENOVO
 */
 
-
+@font-face {
+    font-family: "courseName";
+    src: url('../font/Game Of Squids.woff2') format('woff2');
+}
 
 *,
 *::before,
 *::after {
     box-sizing: border-box;
 }
-
+.heading{
+    text-align: center;
+    font-family:"courseName";
+    color:white;
+}
 body {
     min-height: 450px;
     height: 100vh;
@@ -23,6 +30,10 @@ body {
     background: radial-gradient(ellipse farthest-corner at center top, #f39264 0%, #f2606f 100%);
     color: black;
     font-family: "Open Sans", sans-serif;
+    background-image: url(../img/backgroundnight.png);
+    background-color: #cccccc;
+    background-attachment: fixed;
+    font-size: 14px;
 }
 
 /*--------------------
