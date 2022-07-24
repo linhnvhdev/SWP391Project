@@ -152,7 +152,7 @@ public class CourseDBContext extends DBContext {
         }
         return 0;
     }
-    
+
     public int getNumQuestion(int courseId) {
         try {
             String sql = "SELECT COUNT(*)\n"

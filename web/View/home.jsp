@@ -59,10 +59,11 @@
         </div>
         <div class="left-corner-r">
             <p id="space"> List of trophies:</p>
+            <p id="space"><a href="Accomplishment" role="button" >Accomplishment</a></p>
             <p id="space">Exp: <b>${requestScope.user.exp}</b></p>
             <p id="space">Exp: <b>${requestScope.user.exp}</b></p>
             <p id="space">Exp: <b>${requestScope.user.exp}</b></p>
-            <p id="space">Exp: <b>${requestScope.user.exp}</b></p>
+            
         </div>
     </div>
     <div class="right">
