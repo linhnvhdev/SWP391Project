@@ -5,6 +5,11 @@ body{
     background-size: 100%;
 
 }
+#space{
+    text-align: right;
+    margin-right: 7%;
+    margin-bottom: 0 !important;
+}
 @font-face {
     font-family: "courseName";
     src: url('../font/Game Of Squids.woff2') format('woff2');

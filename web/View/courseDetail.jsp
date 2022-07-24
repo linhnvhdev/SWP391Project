@@ -15,7 +15,6 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
         <title>Course</title>
         <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
         <link href="css/cssforcoursedetail.css?ver=1" rel="stylesheet" type="text/css"/>
@@ -46,6 +45,7 @@
             ArrayList<Integer> percentCompletes = (ArrayList<Integer>) request.getAttribute("percentCompletes");
             int index = 0;
         %>
+        
         <div class="container">
             <!--Title-->
             <div class="course_name_title">
@@ -58,11 +58,11 @@
                     <a>
                         <img src="
                              <c:if test="${course.image != null}">
-                             data:image/jpg;base64,${course.image}
-                         </c:if>
+                                 data:image/jpg;base64,${course.image}
+                             </c:if>
                              <c:if test="${course.image == null}">
-                             https://c4.wallpaperflare.com/wallpaper/355/663/650/anime-original-creature-original-anime-scenery-hd-wallpaper-preview.jpg
-                         </c:if>
+                                 https://c4.wallpaperflare.com/wallpaper/355/663/650/anime-original-creature-original-anime-scenery-hd-wallpaper-preview.jpg
+                             </c:if>
                              " width="100%" height="auto"/>
                     </a>
                 </div>

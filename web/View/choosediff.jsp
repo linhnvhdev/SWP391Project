@@ -13,7 +13,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link href="css/header.css?ver=1" rel="stylesheet" type="text/css"/>
-        <link href="css/choosediff.css?ver=1" rel="stylesheet" type="text/css"/>
+        <link href="css/choosediff.css?ver=3" rel="stylesheet" type="text/css"/>
 
         <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
@@ -29,14 +29,83 @@
         </div>
         <form action="${requestScope.action}" method="get" >
             <input type="hidden" name="courseId" value="${requestScope.courseId}">
-            <%for (Difficulty d : difficulties) {%>
-            <div class="column">           
-                <button  class="block<%=d.getId()%>" type="submit" name="difficultyId"  value="<%=d.getId()%>"><%=d.getName()%></button>  
-                <div class="img<%=d.getId()%>">                   
-                </div>
-            </div>
-            <%}%>
+            <div class="row">
+                <%for (Difficulty d : difficulties) {%>
+                <div class="column">
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <button  class="block<%=d.getId()%>" type="submit" name="difficultyId"  value="<%=d.getId()%>">
+                                    <%if (d.getId() == 1) {%>
+                                    Easy
+                                    <%}%>
+                                    <%if (d.getId() == 2) {%>
+                                    Medium
+                                    <%}%>
+                                    <%if (d.getId() == 3) {%>
+                                    Hard
+                                    <%}%>
+                                    <%if (d.getId() == 4) {%>
+                                    Extreme
+                                    <%}%>
+                                </button>  
+                                <%if (d.getId() == 1) {%>
+                                <img src="img/es1.png" style="width:100%;height:60vh;">
+                                <%}%>
+                                <%if (d.getId() == 2) {%>
+                                <img src="img/es.jpg" style="width:100%;height:60vh;">
+                                <%}%>
+                                <%if (d.getId() == 3) {%>
+                                <img src="img/es3.jpg" style="width:100%;height:60vh;">
+                                <%}%>
+                                <%if (d.getId() == 4) {%>
+                                <img src="img/ex.jpg" style="width:100%;height:60vh;">
+                                <%}%>
+                            </div>
+                            <div class="flip-card-back">
+                                <%if (d.getId() == 1) {%>
+                                <h2>Easy</h2>
+                                An excellent choice for starter</br>
+                                --------------------</br>
+                                Experience: ★</br>
+                                Loot: ★</br>
+                                </br>
+                                <button type="submit" name="difficultyId" value="<%=d.getId()%>">Let's go</button>
+                                <%}%>
+                                <%if (d.getId() == 2) {%>
+                                <h2>Medium</h2>
+                                Amazing if you have a sense of what you are dealing with</br>
+                                --------------------</br>
+                                Experience: ★★</br>
+                                Loot: ★
+                                </br></br>
+                                <button type="submit" name="difficultyId" value="<%=d.getId()%>">Let's go</button>
+                                <%}%>
+                                <%if (d.getId() == 3) {%>
+                                <h2>Hard</h2>
+                                The challenge you will face might be harder but the reward is worth it</br>
+                                --------------------</br>
+                                Experience: ★★★</br>
+                                Loot: ★★
+                                </br></br>
+                                <button type="submit" name="difficultyId" value="<%=d.getId()%>">Let's go</button>
+                                <%}%>
+                                <%if (d.getId() == 4) {%>
+                                <h2>Extreme</h2>
+                                For the best of the best with incomparable reward</br>
+                                --------------------</br>
+                                Experience: ★★★★</br>
+                                Loot: ★★★★
+                                </br></br>
+                                <button type="submit" name="difficultyId" value="<%=d.getId()%>">Let's go</button>
+                                <%}%>
+                            </div>
+                        </div>
+                    </div>
 
+                </div>
+                <%}%>
+            </div>
         </form>
 
 

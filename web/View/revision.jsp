@@ -12,21 +12,40 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <link href="css/cssforrevision.css?ver=2" rel="stylesheet" type="text/css"/>
+        <link href="css/cssforrevision.css?ver=3" rel="stylesheet" type="text/css"/>
         <link href="css/header.css?version=1" rel="stylesheet" type="text/css"/>
         <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <link href="${pageContext.request.contextPath}/css/inventory.css?version=1" rel="stylesheet" type="text/css"/>
     </head>
+    <script>
+        var isOpen = false;
+        function openForm() {
+            if(isOpen===false){
+              document.getElementById("instruction").style.display = "block";  
+              isOpen = true;
+            }else{
+               document.getElementById("instruction").style.display = "none"; 
+               isOpen = false;
+            }
+            
+        }
+    </script>
     <body>
         <%@ include file="header.jsp" %>       
         <div class="container">
+            <div class="form-popup" id="instruction">
+                    <h3>How does this work?</h3>
+                    1) You will have to answer the question correctly in order to defeat the monster that guards it and earn rewards</br>
+                    2) You can run away from the battle anytime you want, if you're a chicken.
+            </div>
             <div class="background-container">
                 <div class="heading">
                     <h1 class="title">Revision</h1>
                 </div>
             </div>
             <div class="bottom-container">
+                <button class="open-button" onclick="openForm()"> <b>?</b> </button>
                 <div class="infomation">
                     <div class="button-start">
                         <a class="link-start" href="revision/question?id=${requestScope.randomID}&courseId=${requestScope.courseId}&difficultyId=${requestScope.difficultyId}"/>LET THE HUNT BEGIN!</a>
@@ -57,6 +76,6 @@
     </body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    
+
     <%@ include file="inventory.jsp" %>
 </html>

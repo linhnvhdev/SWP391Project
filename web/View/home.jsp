@@ -13,8 +13,9 @@
     <title>Trang chủ</title>
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <link href="css/cssforhomestyle.css?version=2" rel="stylesheet" type="text/css"/>
+    <link href="css/cssforhomestyle.css?version=1" rel="stylesheet" type="text/css"/>
     <link href="css/header.css?ver=2" rel="stylesheet" type="text/css"/>
+    <link href="css/effectcss.css" rel="stylesheet" type="text/css"/>
     <link href="${pageContext.request.contextPath}/css/inventory.css?version=1" rel="stylesheet" type="text/css"/>
 </head>
 <body>
@@ -44,6 +45,7 @@
         int i = 0;
     %>
     <%@ include file="header.jsp" %>
+    <%@ include file="effect.jsp" %>
     <div class="container">
         <div class="heading">
             <h1>Welcome home master !</h1>
@@ -53,12 +55,12 @@
             <p id="myDropdown" class="dropdown-content">
                 <a href="${pageContext.request.contextPath}/leaderboard"><img src="img/Looks one 1.png" alt="" style="max-width: 40px"/></a>             
                 <a id="btnInventory"><img src="img/Backpack 1.png" alt="" style="max-width: 40px"/></a>  
-                <c:if test="${requestScope.numNotifyUnRead > 0}">
+                    <c:if test="${requestScope.numNotifyUnRead > 0}">
                     <a href="${pageContext.request.contextPath}/notification"><img src="img/Notifications active 1.png" alt=""/>${requestScope.numNotifyUnRead}</a> 
-                </c:if>
-                <c:if test="${requestScope.numNotifyUnRead <= 0}">
+                    </c:if>
+                    <c:if test="${requestScope.numNotifyUnRead <= 0}">
                     <a href="${pageContext.request.contextPath}/notification"><img src="img/Notifications 2.png" alt=""/>0</a>
-                </c:if>
+                    </c:if>
             </p>
         </div>
         <div class="user-info">
@@ -74,11 +76,12 @@
                 <div class="achivements">
                     <div class="title"><p> <b>List of trophies</b></p></div>    
                     <div class="content">                       
-                        <p><img src="img/Check circle 1.png" alt=""/> Course 1</p>
-                        <p><img src="img/Check circle 1.png" alt=""/> Course 2</p>
-                        <p><img src="img/Check circle 1.png" alt=""/> Course 3</p>
-                        <p><img src="img/Check circle 1.png" alt=""/> Course 4</p>   
-                        <p id="space"><a href="Accomplishment" role="button" >Accomplishment</a></p>
+                        <c:forEach var = "courseName" items="${requestScope.courseNames}">
+                            <p><img src="img/Check circle 1.png" alt=""/> ${courseName}</p>  
+                            </c:forEach>                          
+                        <div class="button-achieve">
+                            <p id="space"><a href="Accomplishment" class="btn btn-dark" >See more</a></p>   
+                        </div>                    
                     </div>
                 </div>            
             </div>

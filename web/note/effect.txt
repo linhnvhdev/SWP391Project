@@ -1,0 +1,2 @@
+<link href="css/effectcss.css" rel="stylesheet" type="text/css"/>
+<%@ include file="effect.jsp" %>
