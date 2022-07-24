@@ -14,11 +14,11 @@
         <link href="${pageContext.request.contextPath}/css/inventory.css?version=1" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <link href="css/header.css" rel="stylesheet" type="text/css"/>
-        <link href="${pageContext.request.contextPath}/css/examresult.css?version=4" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.request.contextPath}/css/examresult.css?version=1" rel="stylesheet" type="text/css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     </head>
-    <body style="background-color: #FFFEE8">
+    <body >
         <%@ include file="../header.jsp" %>
         <div class="body">
             <h1 style="text-align: center;">My Result</h1>

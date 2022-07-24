@@ -1,0 +1,35 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jul 24, 2022, 4:47:29 PM
+    Author     : LENOVO
+*/
+@font-face {
+    font-family: "courseName";
+    src: url('../font/Game Of Squids.woff2') format('woff2');
+}
+.heading{
+    margin-top: 30px;
+    text-align: center;
+    font-family:"courseName";
+    color:white;
+}
+
+body{
+    background-image: url(../img/backgroundnight.png);
+    background-color: #cccccc;
+    background-attachment: fixed;
+    font-size: 14px;
+}
+.heading{
+    margin-top: 30px;
+    text-align: center;
+    font-family:"courseName";
+    color:white;
+}
+.button{
+    margin-top: 8vh;
+    text-align: center;
+}

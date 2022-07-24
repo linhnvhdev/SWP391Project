@@ -7,6 +7,12 @@ and open the template in the editor.
     Created on : Jun 4, 2022, 9:29:48 AM
     Author     : LENOVO
 */
+body{
+    background-image: url(../img/backgroundnight.png);
+    background-color: #cccccc;
+    background-attachment: fixed;
+    font-size: 14px;
+}
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
@@ -23,14 +29,16 @@ and open the template in the editor.
 
 /* Modal Content */
 .modal-content {
-  background-image: url("../img/background4.gif");
+  background-image: url(" https://c4.wallpaperflare.com/wallpaper/355/663/650/anime-original-creature-original-anime-scenery-hd-wallpaper-preview.jpg");
+  background-size: 100%;
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
   width: 60vw;
-  color: #ff6699;
-  font-size: 22px;
+  color: black;
+  font-size: 30px;
   font-style: oblique;
+  font-weight: bold;
   text-align: center;
   height: 50vh;
   overflow: auto;

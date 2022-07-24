@@ -9,13 +9,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Add Exam Question Page</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="${pageContext.request.contextPath}/css/inventory.css?version=1" rel="stylesheet" type="text/css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <link href="css/addexamquestion.css?ver=2" rel="stylesheet" type="text/css"/>
         <link href="css/header.css" rel="stylesheet" type="text/css"/>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
     </head>
     <body style="background-color: #CFCED4">
 
@@ -84,10 +84,15 @@
                     </tbody>
                 </table>
                 <c:if test="${requestScope.questionList.size() ne 0}">  
-                    <div>Number of questions selected:
-                        <span id="checkNum"></span>
+                    <div><label class="form-label " style="font-size: 20px; color: white">Number of questions selected:</label>
+                        <span style="font-size: 20px; color: white" id="checkNum"></span>
                     </div>
-                    <input class="btn btn-primary" role="button" type = "submit" value = "Add Selected questions to exam:  ${requestScope.exam.name}" />
+                    <div class="row" ; style="width: auto; padding-top: 10px;">
+                        <div class="col">
+                            <input class="btn btn-primary" role="button" type = "submit" value = "Add Selected questions to exam:  ${requestScope.exam.name}" />
+                        </div>
+                    </div>
+
                 </c:if>
             </form>
             <c:if test="${(requestScope.questionList.size() eq 0) and (requestScope.eid ne -1)}">  
