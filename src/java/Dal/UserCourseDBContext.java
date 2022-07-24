@@ -5,6 +5,7 @@
  */
 package Dal;
 
+import Model.Course;
 import Model.UserCourse;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,7 +25,7 @@ public class UserCourseDBContext extends DBContext {
             String sql = "INSERT INTO [dbo].[User_Course]\n"
                     + "           ([User_ID]\n"
                     + "           ,[Course_ID]\n"
-                    + "           ,[Exp]\n"
+                    + "           ,[Score]\n"
                     + "           ,[Level]\n"
                     + "           ,[IsFinished])\n"
                     + "     VALUES\n"
@@ -46,7 +47,7 @@ public class UserCourseDBContext extends DBContext {
         try {
             String sql = "SELECT [User_ID]\n"
                     + "      ,[Course_ID]\n"
-                    + "      ,[Exp]\n"
+                    + "      ,[Score]\n"
                     + "      ,[Level]\n"
                     + "      ,[IsFinished]\n"
                     + "  FROM [SWP391Project].[dbo].[User_Course]\n"
@@ -185,11 +186,11 @@ public class UserCourseDBContext extends DBContext {
 
     public float getAvgReview(int courseId) {
         try {
-            String sql = "select\n" +
-"                    AVG(Cast(Review_Score as Float))\n" +
-"                    from [User] u inner join User_Course uc \n" +
-"                    on u.User_ID = uc.User_ID\n" +
-"                    where Course_ID = ? AND Review_Detail is not NULL";
+            String sql = "select\n"
+                    + "                    AVG(Cast(Review_Score as Float))\n"
+                    + "                    from [User] u inner join User_Course uc \n"
+                    + "                    on u.User_ID = uc.User_ID\n"
+                    + "                    where Course_ID = ? AND Review_Detail is not NULL";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, courseId);
             ResultSet rs = stm.executeQuery();
@@ -237,6 +238,98 @@ public class UserCourseDBContext extends DBContext {
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserCourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    public ArrayList<UserCourse> getUserCourseAccomplished(int id) {
+        ArrayList<UserCourse> usercourses = new ArrayList<>();
+        try {
+            String sql = "Select c.Course_ID, c.Course_Name, c.Creator_ID, c.Course_Description, c.Course_Image, uc.Score \n"
+                    + "	FROM [Course] c INNER JOIN [User_Course] uc\n"
+                    + "	ON c.Course_ID = uc.Course_ID\n"
+                    + "	WHERE uc.[User_ID] = ?\n"
+                    + "	AND uc.IsFinished = 1";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            UserDBContext userDB = new UserDBContext();
+            CourseDBContext courseDB = new CourseDBContext();
+            while (rs.next()) {
+                UserCourse uc = new UserCourse();
+                uc.setUserId(id);
+                uc.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
+                uc.setScore(rs.getFloat("Score"));
+                usercourses.add(uc);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return usercourses;
+    }
+
+    public ArrayList<UserCourse> getUserUnAcomplishedCourse(int uid) {
+        ArrayList<UserCourse> usercourses = new ArrayList<>();
+        try {
+            String sql = "Select c.Course_ID, c.Course_Name, c.Creator_ID, c.Course_Description, c.Course_Image, uc.Score \n"
+                    + "	FROM [Course] c INNER JOIN [User_Course] uc\n"
+                    + "	ON c.Course_ID = uc.Course_ID\n"
+                    + "	WHERE uc.[User_ID] = ?\n"
+                    + "	AND uc.IsFinished = 0";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, uid);
+            ResultSet rs = stm.executeQuery();
+            UserDBContext userDB = new UserDBContext();
+            CourseDBContext courseDB = new CourseDBContext();
+            while (rs.next()) {
+                UserCourse uc = new UserCourse();
+                uc.setUserId(uid);
+                uc.setCourse(courseDB.getCourse(rs.getInt("Course_ID")));
+                uc.setScore(rs.getFloat("Score"));
+                usercourses.add(uc);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return usercourses;
+    }
+
+    public void updateUserCourseAccomplished(int uid, int cid, float avgScore) {
+        try {
+            String sql = "UPDATE [dbo].[User_Course]\n"
+                    + "   SET [Score] = ?\n"
+                    + "      ,[IsFinished] = 1\n"
+                    + " WHERE [User_ID] = ?\n"
+                    + " AND [Course_ID] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setFloat(1, avgScore);
+            stm.setInt(2, uid);
+            stm.setInt(3, cid);
+
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserCourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public float getAvgScore(int uid, int cid) {
+        try {
+            String sql = "SELECT AVG(ue.[Score]) AS AverageScore  \n"
+                    + "  FROM [User_Exam] ue INNER JOIN [Exam] e\n"
+                    + "  ON ue.Exam_ID = e.Exam_ID\n"
+                    + "  INNER JOIN Course c\n"
+                    + "  ON e.Course_ID = c.Course_ID\n"
+                    + "WHERE  ue.[User_ID] = ?\n"
+                    + "AND c.Course_ID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, uid);
+            stm.setInt(2, cid);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getFloat(1);
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserCourseDBContext.class.getName()).log(Level.SEVERE, null, ex);

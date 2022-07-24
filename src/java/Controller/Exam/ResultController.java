@@ -14,6 +14,7 @@ import Model.Answer;
 import Model.Exam;
 import Model.LevelSetUp;
 import Model.Question;
+import Model.UserExam;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -83,11 +84,13 @@ public class ResultController extends HttpServlet {
         int wrongAnswered = wrongQuestionList.size();
         int questionAnswered = answeredQuestionList.size();
         int experience = 0;
+        boolean passed = true;
         //condition to pass the course
         if (percentageScore >= passScore) {
             experience = currentScore * 4;
         } else {
             experience = currentScore / 10;
+            passed = false;
         }
         double examScore = Math.round((currentScore * 100.0) / (10.0 * numQues));
         Boolean isExpBoost = (Boolean) request.getSession().getAttribute("expBoost");
@@ -98,6 +101,27 @@ public class ResultController extends HttpServlet {
         int oldexperience = userDB.getUserExp(account.getUser().getId());
         int newexperience = experience + oldexperience;
         userDB.updateUserExp(account.getUser().getId(), newexperience);
+
+        ArrayList<UserExam> userexams = examDB.getUserExamList(account.getUser().getId());
+        UserExam ue = new UserExam();
+        ue.setId(eid);
+        ue.setUser(account.getUser());
+        ue.setPassed(passed);
+        ue.setScore((float) examScore);
+        ue.setTimeComplete(completeTime);
+        if (userexams.size() == 0) {
+            examDB.insertUserExam(ue);
+        } else {
+            for (UserExam userexam : userexams) {
+                if (userexam.getId() == ue.getId() && userexam.getUser().getId() == ue.getUser().getId() && userexam.getScore() <= ue.getScore()) {
+                    examDB.UpdateUserExam(ue);
+                    break;
+                } else {
+                    examDB.insertUserExam(ue);
+                }
+            }
+        }
+
         LevelDBContext levelDB = new LevelDBContext();
         ItemDBContext itemDB = new ItemDBContext();
         int userId = account.getUser().getId();
@@ -120,7 +144,7 @@ public class ResultController extends HttpServlet {
             }
         }
         request.setAttribute("lvupMessage", levelupMessage);
-        
+
         request.setAttribute("numQues", numQues);
         request.setAttribute("exam", exam);
         request.setAttribute("correctAnswered", correctAnswered);
