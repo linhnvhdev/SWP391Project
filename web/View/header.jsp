@@ -10,7 +10,7 @@
             <%}%>
             <li><a href="${pageContext.request.contextPath}/community">Community</a></li>
             <li><a href="${pageContext.request.contextPath}/course/library">Course Library</a></li>
-            <li><a href="#">About</a></li>
+            <li><a href="${pageContext.request.contextPath}/shop">Shop</a></li>
             <li class="dropdown">
                 <a href="#">Setting</a>
                 <div class="drop-down">

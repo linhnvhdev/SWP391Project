@@ -21,23 +21,23 @@
     <script>
         var isOpen = false;
         function openForm() {
-            if(isOpen===false){
-              document.getElementById("instruction").style.display = "block";  
-              isOpen = true;
-            }else{
-               document.getElementById("instruction").style.display = "none"; 
-               isOpen = false;
+            if (isOpen === false) {
+                document.getElementById("instruction").style.display = "block";
+                isOpen = true;
+            } else {
+                document.getElementById("instruction").style.display = "none";
+                isOpen = false;
             }
-            
+
         }
     </script>
     <body>
         <%@ include file="header.jsp" %>       
         <div class="container">
             <div class="form-popup" id="instruction">
-                    <h3>How does this work?</h3>
-                    1) You will have to answer the question correctly in order to defeat the monster that guards it and earn rewards</br>
-                    2) You can run away from the battle anytime you want, if you're a chicken.
+                <h3>How does this work?</h3>
+                1) You will have to answer the question correctly in order to defeat the monster that guards it and earn rewards</br>
+                2) You can run away from the battle anytime you want, if you're a chicken.
             </div>
             <div class="background-container">
                 <div class="heading">
@@ -55,6 +55,14 @@
                         <div class="col-4 left">
                             <p>Total Question: ${requestScope.totalQuestion}</p>
                             <p> Remaining Question: ${requestScope.remainingQuestion}</p>
+                            <c:if test="${requestScope.remainingQuestion==0}">
+                                <form action="resetquestion" method="post">
+                                    <input name="userId" value="${requestScope.userId}" type="hidden">
+                                    <input name="difficultyId" value="${requestScope.difficultyId}" type="hidden">
+                                    <input name="courseId" value="${requestScope.courseId}" type="hidden">
+                                    <button type="submit" class="btn btn-danger">Reset question</button>
+                                </form>
+                            </c:if>
                         </div>
                         <div class="col-1"></div>
                         <div class="col-1"></div>

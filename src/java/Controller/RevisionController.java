@@ -65,6 +65,7 @@ public class RevisionController extends HttpServlet {
         int remainingQuestion = remainingQuestions.size();
         int randomID = getRandomID(userId, courseId, difficultyId);
         
+        request.setAttribute("userId", userId);
         request.setAttribute("difficultyId", difficultyId);
         request.setAttribute("courseId", courseId);
         request.setAttribute("randomID", randomID);
