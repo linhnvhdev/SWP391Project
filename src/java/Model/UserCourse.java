@@ -17,6 +17,9 @@ public class UserCourse {
     int userId;
     float score;
     Course course;
+    User user;
+
+ 
     public UserCourse() {
     }
 
@@ -35,6 +38,26 @@ public class UserCourse {
         this.score = score;
         this.course = course;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public UserCourse(String detail, int rating, String userName, int userId, float score, Course course, User user) {
+        this.detail = detail;
+        this.rating = rating;
+        this.userName = userName;
+        this.userId = userId;
+        this.score = score;
+        this.course = course;
+        this.user = user;
+    }
+
+
     
     public float getScore() {
         return score;
