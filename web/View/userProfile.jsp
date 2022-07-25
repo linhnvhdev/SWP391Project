@@ -19,9 +19,13 @@
         <%@ include file="header.jsp" %>
         <div class="main-content">
             <div class="left">
-                <img src="
-                     data:image/jpg;base64,${user.image}
-
+                <img src="                   
+                     <c:if test="${user.image != null}">
+                         data:image/jpg;base64,${user.image}
+                     </c:if>
+                     <c:if test="${user.image == null}">
+                         https://i.pinimg.com/236x/93/a0/0a/93a00a3684652031a0c398c5d54d3d10.jpg
+                     </c:if>
                      " alt="avatar" style="width: 100%"/>
                 <div class="level">Level ${requestScope.user.level}</div>
                 <div class="exp">

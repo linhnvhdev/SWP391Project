@@ -45,7 +45,7 @@
             ArrayList<Integer> percentCompletes = (ArrayList<Integer>) request.getAttribute("percentCompletes");
             int index = 0;
         %>
-        
+
         <div class="container">
             <!--Title-->
             <div class="course_name_title">
@@ -68,7 +68,14 @@
                 </div>
                 <div class="col-3">
                     <div class="card professor" style="width: auto;">
-                        <img class="card-img-top" src="https://i.pinimg.com/236x/93/a0/0a/93a00a3684652031a0c398c5d54d3d10.jpg" alt="Creator image">
+                        <img class="card-img-top" src="
+                             <c:if test="${course.creator.image != null}">
+                                 data:image/jpg;base64,${course.creator.image}
+                             </c:if>
+                             <c:if test="${course.creator.image == null}">
+                                 https://i.pinimg.com/236x/93/a0/0a/93a00a3684652031a0c398c5d54d3d10.jpg
+                             </c:if>
+                             " alt="Creator image">
                         <div class="card-body">
                             <h4 class="card-title">${course.creator.name}</h4>
                             <span class="profession">Professor/Teacher</span>
@@ -100,7 +107,15 @@
                                         <div class="card-body post">                                                                  
                                             <h5 id="name" class="card-title">
                                                 <div class="row">
-                                                    <div class="col-1"><img src="https://i.pinimg.com/236x/93/a0/0a/93a00a3684652031a0c398c5d54d3d10.jpg" alt="Avatar" class="avatar"></div>
+                                                    
+                                                    <div class="col-1"><img src="
+                                                                            <c:if test="${sessionScope.account.user.image != null}">
+                                                                                data:image/jpg;base64,${sessionScope.account.user.image}
+                                                                            </c:if>
+                                                                            <c:if test="${sessionScope.account.user.image == null}">
+                                                                                https://i.pinimg.com/236x/93/a0/0a/93a00a3684652031a0c398c5d54d3d10.jpg
+                                                                            </c:if>
+                                                                            " alt="Avatar" class="avatar"></div>
                                                     <div class="col-11 username">${sessionScope.account.user.name}</div>
                                                 </div>        
                                             </h5>
@@ -137,7 +152,15 @@
                                                 <h5 class="card-title">
                                                     <div class="row">
                                                         <div class="col-1">
-                                                            <img src="https://i.pinimg.com/236x/93/a0/0a/93a00a3684652031a0c398c5d54d3d10.jpg" alt="Avatar" class="avatar">
+                                                            
+                                                            <img src="
+                                                                 <c:if test="${sessionScope.account.user.image != null}">
+                                                                     data:image/jpg;base64,${sessionScope.account.user.image}
+                                                                 </c:if>
+                                                                 <c:if test="${sessionScope.account.user.image == null}">
+                                                                     https://i.pinimg.com/236x/93/a0/0a/93a00a3684652031a0c398c5d54d3d10.jpg
+                                                                 </c:if>
+                                                                 " alt="Avatar" class="avatar">
                                                         </div>
                                                         <div class="col-11">
                                                             Your review | <i class="rate-person">Rated: <%=review.getRating()%></i>
@@ -160,7 +183,15 @@
                                         <div class="card-body">          
                                             <h5 class="card-title">
                                                 <div class="row">
-                                                    <div class="col-1"><img src="https://i.pinimg.com/236x/93/a0/0a/93a00a3684652031a0c398c5d54d3d10.jpg" alt="Avatar" class="avatar"></div>
+                                                    
+                                                    <div class="col-1"><img src="
+                                                                            <%if(r.getUser().getImage()!=null){%>
+                                                                                data:image/jpg;base64,<%=r.getUser().getImage()%>
+                                                                            <%}%>
+                                                                            <%if(r.getUser().getImage()==null){%>
+                                                                                https://i.pinimg.com/236x/93/a0/0a/93a00a3684652031a0c398c5d54d3d10.jpg
+                                                                            <%}%>
+                                                                            " alt="Avatar" class="avatar"></div>
                                                     <div class="col-11">
                                                         <%=r.getUserName()%> | <i class="rate-person">Rated: <%=r.getRating()%></i></br>
                                                         <progress id="progress" value="<%=percentCompletes.get(index)%>" max="100"></progress>
@@ -270,13 +301,14 @@
 
             }
 
-
+            console.log($("#user_ava").val());
             function postReview() {
                 var reviewContent = $("textarea[name='reviewContent']").val();
                 var rating = $('input[name="rate"]:checked').val();
                 var name = $("#name").text();
                 var courseId = $("input[name='courseId']").val();
                 var userId = $("input[name='userId']").val();
+                var user_ava = $("input[name='user_ava']").val();
 
                 if ($("textarea[name='reviewContent']").val().trim() !== "") {
                     $.ajax({
@@ -288,7 +320,8 @@
                             courseId: courseId,
                             reviewContent: reviewContent,
                             rating: rating,
-                            name: name
+                            name: name,
+                            user_ava: user_ava
 
                         }
                         ,
