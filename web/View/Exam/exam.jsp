@@ -30,13 +30,13 @@
                     </div>
                     <img id="player" class="player" src="img/player (1).png" alt=""/>
                 </div>
-                <div class="col">
-                    <p style="font-size: 20px; color: white">Boss name</p> 
+                <div class="col boss">
                     <div>
+                        <p style="font-size: 20px; color: white">Boss name</p> 
                         <p style="font-size: 20px; color: white">Boss HP</p> 
                         <div style="font-size: 20px; color: white">${requestScope.currentBossHP}   / ${requestScope.maxScore}</div>
+                        <img id="Boss" src='${pageContext.request.contextPath}/img/boss.gif'>
                     </div>
-                    <img id="Boss" src='${pageContext.request.contextPath}/img/boss.gif'>
                 </div>
             </div>
             <div class="row bottom">
@@ -77,7 +77,7 @@
                 </form>
                 <div class="row">
                     <div class="col">
-                         <a id="btnInventory" class="btn btn-primary" style="width: auto;">Inventory</a>
+                        <a id="btnInventory" class="btn btn-primary" style="width: auto;">Inventory</a>
                     </div>
                     <div class="col">
                         <a class="btn btn-primary" href="result?eid=${requestScope.eid}&courseId=${requestScope.courseId}">FINISH</a>
