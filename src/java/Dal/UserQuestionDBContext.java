@@ -35,5 +35,18 @@ public class UserQuestionDBContext extends DBContext {
             Logger.getLogger(UserCourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+public void ResetQuestion(int userId, int difficultyId, int courseId) {
+        try {
+            String sql = "DELETE FROM [dbo].[User_Question]\n"
+                    + "      WHERE User_ID = ? AND Question_ID in\n"
+                    + "	  (select Question_ID from Question where Difficulty_ID = ? AND Course_ID=?)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, userId);
+            stm.setInt(2, difficultyId);
+            stm.setInt(3, courseId);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserCourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
