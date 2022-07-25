@@ -94,6 +94,9 @@ public class ShopController extends HttpServlet {
         User user = uDB.getUserInfor(acc.getUser().getId());
         String isBuySuccess;
         Boolean isSales = (Boolean) request.getSession().getAttribute("sales");
+        String num=request.getParameter("num");
+        int numb=Integer.parseInt(num);
+        item_Price=item_Price*numb;
         if(isSales != null && isSales == true){
             item_Price = item_Price / 2;
         }
@@ -101,7 +104,7 @@ public class ShopController extends HttpServlet {
             isBuySuccess ="Buy item fail.Your Like number is not enough!" ;
         } else {
             uDB.NumberLikeForBought(user, item_Price);
-            uDB.AddItemForUser(user, item_id_bought);
+            uDB.AddItemForUser(user, item_id_bought,num);
             isBuySuccess = "Buy item successful!";
             request.getSession().removeAttribute("sales");
         }

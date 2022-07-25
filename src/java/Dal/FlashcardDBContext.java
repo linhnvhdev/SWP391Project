@@ -6,6 +6,7 @@
 package Dal;
 
 import Model.Course;
+import Model.Difficulty;
 import Model.Flashcard;
 import Model.User;
 import Model.User_Flashcard;
@@ -102,7 +103,7 @@ public class FlashcardDBContext extends DBContext {
         ArrayList<Flashcard> List = new ArrayList<>();
         if (courses.size() != 0) {
             try {
-                String sql = "select Flashcard_ID,Flash_front,Flash_back,Course_ID from Flashcard\n";
+                String sql = "select Flashcard_ID,Difficulty_ID,Flash_front,Flash_back,Course_ID from Flashcard\n";
 
                 for (int i = 0; i < courses.size(); i++) {
                     if (i == 0) {
@@ -119,10 +120,13 @@ public class FlashcardDBContext extends DBContext {
                 while (rs.next()) {
                     Flashcard f = new Flashcard();
                     Course c = new Course();
+                    Difficulty d = new Difficulty();
                     c.setId(rs.getInt("Course_ID"));
                     f.setId(rs.getInt("Flashcard_ID"));
                     f.setFront(rs.getString("Flash_front"));
                     f.setBack(rs.getString("Flash_back"));
+                    d.setId(rs.getInt("Difficulty_ID"));
+                    f.setDifficulty(d);
                     f.setCourse(c);
                     List.add(f);
                 }
@@ -137,7 +141,7 @@ public class FlashcardDBContext extends DBContext {
         ArrayList<Flashcard> List = new ArrayList<>();
         if (courses.size() != 0) {
             try {
-                String sql = "select Flashcard_ID,Flash_front,Flash_back,Course_ID from Flashcard\n";
+                String sql = "select Flashcard_ID,Difficulty_ID,Flash_front,Flash_back,Course_ID from Flashcard\n";
 
                 for (int i = 0; i < courses.size(); i++) {
                     if (i == 0) {
@@ -149,7 +153,7 @@ public class FlashcardDBContext extends DBContext {
                         sql += ")\n";
                     }
                 }
-                if (flashcardcontent != null) {
+                if (flashcardcontent != null&&!(flashcardcontent.equals("null"))) {
                     if (waytofind.equals("Flashcard_ID")) {
                         sql += "and " + waytofind + " = ?\n";
                     } else {
@@ -161,7 +165,7 @@ public class FlashcardDBContext extends DBContext {
                 for (int i = 0; i < courses.size(); i++) {
                     stm.setInt(i + 1, courses.get(i).getId());
                 }
-                if (flashcardcontent != null) {
+                if (flashcardcontent != null&&!(flashcardcontent.equals("null"))) {
                     if (waytofind.equals("Flashcard_ID")) {
                         if (isDigit(flashcardcontent) == true) {
                             stm.setInt(courses.size() + 1, Integer.parseInt(flashcardcontent));
@@ -176,10 +180,13 @@ public class FlashcardDBContext extends DBContext {
                 while (rs.next()) {
                     Flashcard f = new Flashcard();
                     Course c = new Course();
+                     Difficulty d = new Difficulty();
                     c.setId(rs.getInt("Course_ID"));
                     f.setId(rs.getInt("Flashcard_ID"));
                     f.setFront(rs.getString("Flash_front"));
                     f.setBack(rs.getString("Flash_back"));
+                    d.setId(rs.getInt("Difficulty_ID"));
+                    f.setDifficulty(d);
                     f.setCourse(c);
                     List.add(f);
                 }
@@ -282,18 +289,20 @@ public class FlashcardDBContext extends DBContext {
         }
     }
 
-    public void UpdateFlashcard(int flashcard_id, String back, String front, int course_id) {
+    public void UpdateFlashcard(int flashcard_id, String back, String front, int course_id,int diff) {
         try {
             String sql = "UPDATE [Flashcard]\n"
                     + "   SET [Flash_Front] = ?\n"
                     + "      ,[Flash_Back] = ?\n"
                     + "      ,[Course_ID] = ?\n"
+                    + "      ,[Difficulty_ID] = ?\n"
                     + " WHERE [Flashcard_ID]=?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, front);
             stm.setString(2, back);
             stm.setInt(3, course_id);
-            stm.setInt(4, flashcard_id);
+            stm.setInt(4, diff);
+            stm.setInt(5, flashcard_id);
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(FlashcardDBContext.class.getName()).log(Level.SEVERE, null, ex);
