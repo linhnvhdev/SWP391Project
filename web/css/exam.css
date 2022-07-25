@@ -105,7 +105,8 @@ body{
 }
 .boss {
     position: absolute;  
-    right: -40vw;
+    right: -30vw;
+    max-width: 20%;
 }
 #monster{
     height: 55%;

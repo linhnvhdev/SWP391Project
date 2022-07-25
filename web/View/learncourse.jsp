@@ -22,8 +22,10 @@
         <title>JSP Page</title>
 
         <link href="css/header.css?version=2" rel="stylesheet" type="text/css"/>
-        <link href="css/flashcard.css?version=1" rel="stylesheet" type="text/css"/>
-
+        <link href="css/flashcard.css?version=2" rel="stylesheet" type="text/css"/>
+        <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <link href="${pageContext.request.contextPath}/css/inventory.css?version=1" rel="stylesheet" type="text/css"/>
         <%
             ArrayList<Flashcard> ListFC = (ArrayList<Flashcard>) request.getAttribute("ListFC");
             int index = (Integer) request.getAttribute("index");
@@ -35,68 +37,86 @@
                 DecimalFormat decimalFormat = new DecimalFormat("#.##");
                 exp_bonus = Float.valueOf(decimalFormat.format(UserFlashcard.getExp_bonus()));
             }
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy"); 
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             String date = dateFormat.format(UserFlashcard.getDue_date());
         %>
     </head>
     <body>
         <%@ include file="header.jsp" %>
-    <div class="infor">
+        <div class="infor">
+            <div class="form-popup" id="instruction">
+                <h3>How does this work?</h3>
+                1) You flip the Flash card to learn and gain experience<br>
+                2) Everytime you learn you earn 1exp<br>
+                3) After that if you review at the right due date you can earn bonus experience<br>
+                GOOD LUCK MY FRIEND
+            </div>
+            <button class="open-button" onclick="openForm()"><b>?</b></button>
             <table>
-            <tr>
-                <td>User Exp:</td>
-                <td><%=getUserExp%></td>
-            </tr>
-             <%if (UserFlashcard != null) {%>
-            <tr>
-                <td>Exp bonus:</td>
-                <td><%=exp_bonus%></td>
-            </tr>
-             <tr>
-                <td>Due:</td>
-                <td><%=date%></td>
-            </tr>
-               <%}%>          
-        </table>
-                </div>
-    <div class="flashcardcontrol">                
+                <tr>
+                    <td>User Exp:</td>
+                    <td><%=getUserExp%></td>
+                </tr>
+                <%if (UserFlashcard != null) {%>
+                <tr>
+                    <td>Exp bonus:</td>
+                    <td><%=exp_bonus%></td>
+                </tr>
+                <tr>
+                    <td>Due:</td>
+                    <td><%=date%></td>
+                </tr>
+                <%}%>          
+            </table>
+        </div>
+        <div class="flashcardcontrol">                
 
-        <%if (ListFC.size() == 0) {%>
-        <g5>List of FLashcards are empty</g5>
-            <%} else {%>
-        <form action="flashcard" method="POST">
-            <input type="hidden" value="${requestScope.courseId}" name="courseId">
-            <div class="flip-card-container">
-                <div class="flip-card">
+            <%if (ListFC.size() == 0) {%>
+            <g5>List of FLashcards are empty</g5>
+                <%} else {%>
+            <form action="flashcard" method="POST">
+                <input type="hidden" value="${requestScope.courseId}" name="courseId">
+                <div class="flip-card-container">
+                    <div class="flip-card">
 
-                    <div class="flip-card-front">
-                        <%=ListFC.get(index).getFront()%>
+                        <div class="flip-card-front">
+                            <%=ListFC.get(index).getFront()%>
+                        </div>
+                        <div class="flip-card-back">
+                            <%=ListFC.get(index).getBack()%>
+                        </div>
+
                     </div>
-                    <div class="flip-card-back">
-                        <%=ListFC.get(index).getBack()%>
-                    </div>
-
                 </div>
-            </div>
-            <div class="other-card">
-                <input type="submit" value="back" name="back"> 
-               <div class="other-card-location">   <h2><%=index + 1%>/<%=ListFC.size()%></h2></div>
-              <input type="submit" value="next" name="next"> 
-                <input type="hidden" value="<%=index%>" name="index_raw">
-                  <input type="hidden" value="<%=difficulties%>" name="difficultyId">
-            </div>
-<!--            <a href="course?courseId=${requestScope.courseId}">Back to course</a>-->
-        </form>
-        <%}%>
+                <div class="other-card">
+                    <input type="submit" value="back" name="back"> 
+                    <div class="other-card-location">   <h2><%=index + 1%>/<%=ListFC.size()%></h2></div>
+                    <input type="submit" value="next" name="next"> 
+                    <input type="hidden" value="<%=index%>" name="index_raw">
+                    <input type="hidden" value="<%=difficulties%>" name="difficultyId">
+                </div>
+    <!--            <a href="course?courseId=${requestScope.courseId}">Back to course</a>-->
+            </form>
+            <%}%>
 
 
-        <script>
-            const flipCardContainer = document.querySelector(".flip-card-container");
-            flipCardContainer.addEventListener("click", function () {
-                flipCardContainer.classList.toggle("flip");
-            });
-           
-        </script>
-    </div>
-</body>
+            <script>
+                const flipCardContainer = document.querySelector(".flip-card-container");
+                flipCardContainer.addEventListener("click", function () {
+                    flipCardContainer.classList.toggle("flip");
+                });
+                var isOpen = false;
+                function openForm() {
+                    if (isOpen === false) {
+                        document.getElementById("instruction").style.display = "block";
+                        isOpen = true;
+                    } else {
+                        document.getElementById("instruction").style.display = "none";
+                        isOpen = false;
+                    }
+
+                }
+            </script>
+        </div>
+    </body>
 </html>
