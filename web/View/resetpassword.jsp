@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-                <link href="css/cssforresetpassword.css" rel="stylesheet" type="text/css"/>
+                <link href="css/cssforresetpassword.css?version=2" rel="stylesheet" type="text/css"/>
         <%
             String reset_success = (String) request.getAttribute("resetpassword_successful");
             String user_exist = (String) request.getAttribute("user_exist");
@@ -26,23 +26,23 @@
         <form class="pb-3" action="resetpassword" method="POST">
             <%if (user_exist.equals("Unknown") || user_exist.equals("No")) {%>
             <%if (user_exist.equals("No")) {%>
-            <p>username does not exist</p>
+            <div class="fail" <p>username does not exist</p></div>
             <%}%>
-            <input type="text" name="username" placeholder="enter your username"><br/>
-            <input type="submit" value="Continue">
+            <input type="text" class="textbox" name="username" placeholder="enter your username"><br/>
+            <input type="submit" class="continue" value="Continue">
             <%} else {%>
             <%if (email_valid.equals("Unknown") || email_valid.equals("No")) {%>
             <%if (email_valid.equals("No")) {%>
-            <p>incorrect email</p>
+            <div class="fail" <p>incorrect email</p></div>
             <%}%>
             <input type="hidden" name="username" value="<%=usernamehidden%>"><br/>
-            <input type="text" name="email" placeholder="enter your email"><br/>
-            <input type="submit" class="btn" value="Continue">
+            <input type="text" class="textbox" name="email" placeholder="enter your email"><br/>
+            <input type="submit" class="continue" class="btn" value="Continue">
             <%}%>
             <%}%>
         </form> 
           <%}else{%>
-          <p>Reset Password successful!Please Check New password in your email!</p>
+        <div class="success"   <p>Reset Password successful!Please Check New password in your email!</p> </div>
             <%}%>
             </div>
 <!--            </div>-->
