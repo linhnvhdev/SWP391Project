@@ -7,6 +7,7 @@ package Controller;
 
 import Dal.CourseDBContext;
 import Dal.FlashcardDBContext;
+import Dal.UserDBContext;
 import Model.Account;
 import Model.Course;
 import Model.Flashcard;
@@ -14,6 +15,8 @@ import Model.User;
 import Model.User_Flashcard;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -42,7 +45,7 @@ public class FlashCardController extends HttpServlet {
         String back = request.getParameter("back");
         String index_raw = request.getParameter("index_raw");
         int courseId = Integer.parseInt(request.getParameter("courseId"));
-        int difficulties = Integer.parseInt(request.getParameter("difficultyId")) ;
+        int difficulties = Integer.parseInt(request.getParameter("difficultyId"));
         User_Flashcard ExpbonusInfor = new User_Flashcard();
         //getData
         FlashcardDBContext fcDB = new FlashcardDBContext();
@@ -57,13 +60,6 @@ public class FlashCardController extends HttpServlet {
         }
              
         int index = Integer.parseInt(index_raw);
-        //isRead
-        if(ListFC.size()!=0){
-        
-        if(fcDB.IsreadFC(ListFC.get(index), user, course)==true){
-        fcDB.ExpBonus(ListFC.get(index), user,course);
-        }
-        }
         //if next
         if (next != null) {
             index = index + 1;
@@ -75,12 +71,22 @@ public class FlashCardController extends HttpServlet {
         if (back != null && index != 0) {
             index = index - 1;
         }
+        //isRead
+        if(ListFC.size()!=0){
+            
+                if(fcDB.IsreadFC(ListFC.get(index), user, course)==true){
+                fcDB.ExpBonus(ListFC.get(index), user,course);
+                }
+        }   
+        UserDBContext udbc = new UserDBContext();
+        int getUserExp = udbc.getUserExp(user.getId());
         ExpbonusInfor=fcDB.ExpbonusInfor(ListFC.get(index), user);
+        request.setAttribute("getUserExp", getUserExp);
         request.setAttribute("ExpbonusInfor", ExpbonusInfor);
+        request.setAttribute("difficulties", difficulties);
         request.setAttribute("index", index);
         request.setAttribute("ListFC", ListFC);
         request.setAttribute("courseId", courseId);
-        response.getWriter().print("ok");
         request.getRequestDispatcher("/View/learncourse.jsp").forward(request, response);
 
     }

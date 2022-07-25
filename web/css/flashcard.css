@@ -7,48 +7,64 @@ and open the template in the editor.
     Created on : May 19, 2022, 10:22:38 PM
     Author     : Admin
 */
-
 *{
+    
     margin:0;
     padding:0;
     box-sizing: border-box;
+   
 }
-.aaa{
+body{
+    background-image: url(../img/Learnbackground.png);
+    background-color: #cccccc;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 100%;
+
+}
+.flashcardcontrol{
     font-family: Arial,Helvetica,sans-serif;
-    width:100vw;
-    height:100vh;
+    height:100%;
     display:flex;
     justify-content: center;
     align-items:center;
-    background-color: pink;
+    margin-top: 5%;
+
 }
 .flip-card-container{
-    width:300px;
+    margin-top: 10%;
+    width:600px;
     height:400px;
 }
 .flip-card-container.flip .flip-card{
      transform:rotateY(180deg);
 }
 .flip-card{
+
     position:relative;
-     width:100%;
+    width:100%;
     height:100%;
     transition:transform 1s;
     transform-style: preserve-3d;
 }
 .flip-card-front,.flip-card-back{
     position: absolute;
-     width:100%;
+    width:100%;
     height:100%;
     backface-visibility: hidden;
     display:flex;
     justify-content: center;
     align-content: center;
     align-items: center;
-    font-size: 2rem;
+    font-size: 1.7rem;
+    border-radius: 20px;
+/*    border:10px;
+    margin: 10px;*/
+    padding: 50px;
+/*    overflow: scroll;*/
 }
 .flip-card-front{
-     background-color: white;
+    background-color: white;
     color: black;
 }
 .flip-card-back{
@@ -58,20 +74,37 @@ and open the template in the editor.
 }
 .other-card{
     display:flex;
-    margin-left:10%;
-     
-       
-     height: 30px;
-     margin-top: 5px;
+    margin-left:25%;
+    height: 30px;
+    margin-top: 10px;
     margin-bottom:10px;
     
 }
 input[type=submit] {
     margin-left: 5px;
-       margin-right: 5px;
-     
+    margin-right: 5px;
     height: 40px;
-       width:80px  ;
-       text-align: center;
+    width:80px  ;
+    text-align: center;
+    border-radius: 30px;
+    background-color: #7B68EE;
+    color: white;
+    font-size: 15px;
    
+}
+.other-card-location{
+   margin-top: 7px;
+   margin-left: 10%;
+   margin-right: 10%;
+}
+table, td {
+    height: 30px;
+    background-color: #F0F8FF;
+    border:0.4px solid background ;
+    border-radius: 8px;
+}
+.infor{
+    position:fixed;
+    margin-left: 75%;
+    top: 26.5%;
 }

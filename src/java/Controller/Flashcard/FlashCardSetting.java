@@ -39,12 +39,12 @@ public class FlashCardSetting extends HttpServlet {
         String flashcardcontent = request.getParameter("flashcardcontent");
         String waytofind = request.getParameter("waytofind");
         String editid = request.getParameter("editid");
-        String removeid = request.getParameter("removeid");
+        String delete = request.getParameter("deleteid");
         String updateid_raw = request.getParameter("updateid");
         String save = request.getParameter("save");
         String reset = request.getParameter("reset");
+        String search = request.getParameter("search");
         if(reset!=null)flashcardcontent=null;
-        
         Account acc = (Account) request.getSession().getAttribute("account");
         User user = acc.getUser();
         int updateid = 0;
@@ -57,9 +57,10 @@ public class FlashCardSetting extends HttpServlet {
             int Course_ID = Integer.parseInt(request.getParameter("Course_ID"));
             String Back = request.getParameter("Back");
             String Front = request.getParameter("Front");
-            fDB.UpdateFlashcard(Integer.parseInt(updateid_raw), Back, Front, Course_ID);
+            int Diff =  Integer.parseInt(request.getParameter("Diff"));
+            fDB.UpdateFlashcard(Integer.parseInt(updateid_raw), Back, Front, Course_ID,Diff);
         }
-        if ("remove".equals(removeid)) {
+        if (delete!=null) {
             fDB.RemoveFlashCard(updateid);
         }
         ArrayList<Course> CourseList = cBD.getCourseListByCreator(user.getId());

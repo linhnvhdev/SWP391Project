@@ -12,18 +12,51 @@ body{
     background-color:#DDDDDD;
     display: flex;
     flex-direction: column;
+     background-image: url(../img/backgroundnight.png);
+     
 }
 .title{
     text-align: center;
-    font-size: 30px;
+    font-size: 50px;
+    color:white;
 }
 table{
-    border-collapse: collapse;
-    width: 100%;
-    background-color: #CCFFFF;
+/*    border-collapse: collapse;
+    width: 70%;
+    background-color: white;
+    border-radius: 10px;
+    margin-left: 12%;*/
+    border-radius: 6px;
+    margin-top: 5vh;
+    width: 90%;
+    background-color: rgb(192, 192, 192);
+    margin-left: auto;
+    margin-right: auto;
 }
 th,td{
    padding: 8px;
   text-align: left;
   border-bottom: 1px solid #ddd; 
+}
+.delete-button{
+    background: white;
+}
+.find{
+ 
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.findbutton{
+    border-radius: 8px;
+    background-color: #7B68EE;
+    color:#C0C0C0;
+}
+.findbutton1{
+    border-radius: 10px;
+    background-color: #C0C0C0;
+}
+.editbutton{
+     border-radius: 5px;
+    background-color: #C0C0C0;
 }

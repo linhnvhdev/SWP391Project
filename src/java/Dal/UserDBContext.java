@@ -441,10 +441,10 @@ public class UserDBContext extends DBContext {
         }
     }
 
-    public void AddItemForUser(User user, String item_id_bought) {
+   public void AddItemForUser(User user, String item_id_bought,String num) {
         try {
             String sql = "UPDATE [dbo].[User_Items]\n"
-                    + "   SET [Item_Number] = [Item_Number]+1\n"
+                    + "   SET [Item_Number] = [Item_Number]+"+num+"\n"
                     + " WHERE [Item_ID] = ? and [User_ID] = ? ";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, Integer.parseInt(item_id_bought));
