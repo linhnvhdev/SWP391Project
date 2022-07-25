@@ -7,10 +7,15 @@ package Dal;
 
 import Model.Course;
 import Model.UserCourse;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -140,18 +145,20 @@ public class UserCourseDBContext extends DBContext {
         try {
             String sql = "select\n"
                     + "u.User_ID,Name, Review_Score, Review_Detail\n"
-                    + "from [User] u inner join User_Course uc \n"
+                    + "from [User] u inner join User_Course uc\n"
                     + "on u.User_ID = uc.User_ID\n"
                     + "where Course_ID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, courseId);
             ResultSet rs = stm.executeQuery();
+            UserDBContext db = new UserDBContext();
             while (rs.next()) {
                 UserCourse review = new UserCourse();
                 review.setUserName(rs.getString("Name"));
                 review.setUserId(rs.getInt("User_ID"));
                 review.setDetail(rs.getString("Review_Detail"));
                 review.setRating(rs.getInt("Review_Score"));
+                review.setUser(db.getUser(rs.getInt("User_ID")));
                 reviews.add(review);
             }
         } catch (SQLException ex) {
